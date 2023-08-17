@@ -3,17 +3,53 @@
 Some of the questions are just theortical concepts that we have to know.
 
 
-##### Tables, Live Tables and Stream Live Tables, what are the difference ?
+#### Tables, Live Tables and Stream Live Tables, what are the difference ?
 
 `Tables`: Made for data processing in batch mode
+
+`Stream Table`: continuously ingest and update data from streaming sources, presenting a real-time view of data as it's being received. 
+
 
 `Live Tables`: Reflects the results of the query that defines it, including when the query defining the table or view is updated,
  or an input data source is updated. Like a traditional materialized view, a live table or view may be entirely computed when possible to optimize computation resources and time.
  
+ in a very very simple way to think about that could be a table that is automatically refresh, 
+ 
 `streaming live table`: Processes data that has been added only since the last pipeline update.
 
+#### Scenario of Stream table.
 
-##### Scenario of Live Table and Stream Live Table
+**Real-time Fraud Detection:**
+
+**Scenario:**
+Imagine a bank that offers online banking services to its customers. With millions of transactions occurring every day,
+it's critical for the bank to quickly identify potentially fraudulent transactions to protect its customers.
+
+**Stream Table Use:**
+The bank sets up a streaming system where every transaction is instantly sent to a stream table. 
+As each transaction comes in, it's analyzed in real-time against a set of rules or machine learning models to identify if it looks suspicious.
+If a transaction is deemed suspicious, an alert is generated, and the bank can take immediate action, such as blocking the transaction, notifying the customer,
+or flagging it for further investigation.
+
+**Why Not Batch Processing?**
+If the bank used batch processing, they'd collect transactions over a set period (e.g., an hour or a day) and then analyze them all at once. 
+The problem with this approach in the fraud detection scenario is the delay.
+
+A fraudulent transaction might not be detected until the batch is processed, which could be hours after the transaction occurred. By that time:
+
+The fraudster may have already caused significant financial damage.
+The actual customer may face inconvenience if, for example, their card is used elsewhere or they check their account and find unauthorized transactions.
+The bank might face reputational damage and potential financial liabilities.
+Conclusion:
+For scenarios like fraud detection, where instant response is crucial, stream tables and real-time processing are essential. Batch processing, due to its inherent delay, would not be suitable for such time-sensitive applications.
+
+
+
+
+
+
+
+#### Scenario of Live Table and Stream Live Table
 
 **Live Table Example: E-Commerce Inventory Management**
 
