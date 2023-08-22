@@ -4,7 +4,10 @@
 **Auto Loader** is when you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion mprocess more timely and cost-effective.
 
-
+**DLT** Delta Live Tables in Databricks provide structured streaming capabilities, which allow data to be continuosly ingested, processed and written to Delta tables.
+When you query a DLT in a notebook that is not attached to a DLT pipeline, you are querying the table as it is at that moment, no the live streaming version.
+When you are querying a DLT outside of the pipeline, you are essentially querying the current state of the Delta table. Whether the table was defined as batch or streaming doesnt´
+influence this fact.
 
 
 #### A data engineer is creating a live streaming table to be used by other members of their team. They want to indicate that the table contains silver quality data.
@@ -241,11 +244,10 @@ The data engineer can create a new temporary view by querying the history and up
 
 The data engineer can create a new common table expression from the history table that queries the updated_history table.
 Single Choice
-14)
-A data engineer wants to query metrics on the latest update made to their pipeline. The pipeline has multiple data sources. Despite the input data sources having low data retention, the data engineer needs to retain the results of the query indefinitely.
 
- 
 
+#### A data engineer wants to query metrics on the latest update made to their pipeline. The pipeline has multiple data sources.
+Despite the input data sources having low data retention, the data engineer needs to retain the results of the query indefinitely.
 Which of the following statements identifies the type of table that needs to be used and why? Select one response.
 
  
@@ -334,25 +336,27 @@ Auto Loader only detects new data files during scheduled update intervals.
 
 Auto Loader automatically detects new data files during manual or scheduled updates.
 Single Choice
-19)
-A data engineer wants to query metrics on the latest update made to their pipeline. They need to be able to see the event type and timestamp for each update.
 
- 
 
+#### A data engineer wants to query metrics on the latest update made to their pipeline. They need to be able to see the event type and timestamp for each update.
 Which of the following approaches allows the data engineer to complete this task? Select one response.
 
- 
 
+The data engineer can view the update ID from the Pipeline Details page in the user_action table.  
+*This option does not explicit mention querying for the event type or timestamp*
 
-The data engineer can view the update ID from the Pipeline Details page in the user_action table.
+**The data engineer can query the update ID from the events log where the event type is create_update.**
+*That seem to be the correct one cause sounds like it might refer to updates made to the pipeline*  
 
-The data engineer can query the update ID from the events log where the event type is create_update.
-
-The data engineer can query the update ID from the events log where the action type is user_action.
+The data engineer can query the update ID from the events log where the action type is user_action.  
+*It doesn´t specify thatt this action type would have the event type and timestamp of pipeline updates*
 
 The data engineer can query the update ID from the events log where the event type is last_update.
+*last update could be the most recent update but we need to see "each update"*
 
 The data engineer can view the update ID from the Pipeline Details page in the create_update table.
+*Does not explicitly state that the data engineer can see the event type and timestamp*
+
 Single Choice
 20)
 A data engineer needs to query a Delta Live Table (DLT) in a notebook. The notebook is not attached to a DLT pipeline.
