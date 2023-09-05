@@ -7,7 +7,18 @@ Auto Loader will automatically pick up an process just the new data as it arrive
 **DLT** Delta Live Tables in Databricks provide structured streaming capabilities, which allow data to be continuosly ingested, processed and written to Delta tables.
 When you query a DLT in a notebook that is not attached to a DLT pipeline, you are querying the table as it is at that moment, no the live streaming version.
 When you are querying a DLT outside of the pipeline, you are essentially querying the current state of the Delta table. Whether the table was defined as batch or streaming doesnt´
+
+**How much time could preserve the data the DLT*
+
+ Databricks' Delta Live Tables (DLT) and the associated streaming mechanisms are built on top of Delta Lake. Delta Lake allows you to maintain a versioned history of your data, 
+ which supports operations like auditing, rollbacks, and fine-grained time-travel queries.
+
 influence this fact.
+
+**What DAG primarily does?**
+DAG visualizes the sequence and dependencies of taks.
+
+**Task Details** Typically provide information about the task´s execution, status, duration.	
 
 
 #### A data engineer is creating a live streaming table to be used by other members of their team. They want to indicate that the table contains silver quality data.
@@ -23,6 +34,10 @@ COMMENT "This is a silver table"EXPECT QUALITY = SILVER"
 
 #### A data engineer needs to examine how data is flowing through tables within their pipeline.
 Which of the following correctly describes how they can accomplish this? Select one response.
+
+**checkpoint directory** is mainly used for storing the progress of streaming queries to ensure fault-tolerance
+
+
 
  
 
@@ -113,15 +128,21 @@ Which of the following lines of code correctly fills in the blank? Select two re
 
 FROM STREAMING LIVE.transactionsFROM DELTA STREAM(LIVE.transactions)FROM STREAM(LIVE.transactions)FROM STREAMING LIVE (transactions)FROM LIVE.transactions
 Multiple Choice
-7)
-Which of the following data quality metrics are captured through row_epectations in a pipeline’s event log? Select three responses.
+
+
+#### Which of the following data quality metrics are captured through row_epectations in a pipeline’s event log? Select three responses.
 
  
 
-Failed recordsNameFlow progressDatasetUpdate ID
-Single Choice
-8)
-A data engineer is using the code below to create a new table transactions_silver from the table transaction_bronze. However, when running the code, an error is thrown.
+**Failed records**  
+Name  
+Flow progress  
+**Dataset**  
+**Update ID**  
+
+
+#### A data engineer is using the code below to create a new table transactions_silver from the table transaction_bronze. 
+However, when running the code, an error is thrown.
 
  
 
@@ -173,16 +194,13 @@ Metrics for live tables can be collected and reported, while data quality metric
 The results of live tables can be viewed through a Directed Acyclic Graph (DAG), while the results for live views cannot.
 
 
-Single Choice
-10)
-A data engineer needs to add a file path to their DLT pipeline. They want to use the file path throughout the pipeline as a parameter for various statements and functions.
 
- 
-
+#### A data engineer needs to add a file path to their DLT pipeline. They want to use the file path throughout the pipeline as a parameter for various statements and functions.
 Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.
 
 
 They can add a widget to the notebook and then perform a string substitution of the file path.
+*Widgets in Databricks notebooks allow for paremeteized inputs* However requires human interaction to set its.
 
 They can specify the file path in the job scheduler when deploying the pipeline.
 
@@ -190,7 +208,10 @@ They can set the variable in a notebook command and then perform a variable subs
 
 They can add a key-value pair in the Configurations field and then perform a string substitution of the file path.
 
-They can add a parameter when scheduling the pipeline job and then perform a variable substitution of the file path.
+**They can add a parameter when scheduling the pipeline job and then perform a variable substitution of the file path.**
+
+
+
 Single Choice
 11)
 Which of the following correctly describes how code from one library notebook can be referenced by code from another library notebook? Select one response.
@@ -206,25 +227,30 @@ Within a DLT Pipeline, code in a notebook library can reference tables and views
 
 Within a DLT Pipeline, code in notebook libraries cannot reference tables and views created in a different notebook library.
 Single Choice
-12)
-A data engineer needs to review the events related to their pipeline and the pipeline’s configurations.
 
+
+#### A data engineer needs to review the events related to their pipeline and the pipeline’s configurations.
 Which of the following approaches can the data engineer take to accomplish this? Select one response.
 
  
 
 
 The data engineer can select events of type user_action in the resultant DAG.
+*Dag display sequence and dependencies of task*
 
 The data engineer can query events of type user_action from the configured storage location.
+*vague option*
 
-The data engineer can query events of type user_action from the event log.
+**The data engineer can query events of type user_action from the event log.**
 
 The data engineer can query events of type user_action from the checkpoint directory.
+*The checkpoint directory is mainly used for storing the progress of streaming queries to ensure fault-tolerance. It does not store pipeline-specific events or configurations.*
 
 The data engineer can select events of type user_action in the output table of the pipeline.
-Single Choice
-13)
+
+
+
+
 A data engineer needs to ensure the table updated_history, which is derived from the table history, contains all records from history. Each record in both tables contains a value for the column user_id.
 
  
@@ -253,21 +279,23 @@ Which of the following statements identifies the type of table that needs to be 
  
 
 
-Streaming live table; streaming live tables can preserve data indefinitely.
+**Streaming live table; streaming live tables can preserve data indefinitely.**
 
 Streaming live table; streaming live tables record live metrics on the query.
+*recording metrics doesnt´ necessarily correlate with indefinite data retention*
 
 Streaming live table; streaming live tables are always "correct", meaning their contents will match their definition after any update.
 
 Live table; live tables retain the results of a query for up to 30 days.
+*30 days would not be enought *
 
 Live table; live tables only support reading from "append-only" streaming sources.
 Single Choice
-15)
-A data engineer has configured and deployed a DLT pipeline that contains an error. The error is thrown at the third stage of the pipeline, but since DLT resolves the order of tables in the pipeline at different steps, they are not sure if the first stage succeeded.
 
- 
 
+
+#### A data engineer has configured and deployed a DLT pipeline that contains an error. The error is thrown at the third stage of the pipeline,
+but since DLT resolves the order of tables in the pipeline at different steps, they are not sure if the first stage succeeded.
 Which of the following is considered a good practice to determine this? Select one response.
 
  
@@ -277,14 +305,17 @@ The data engineer can fix the tables using iterative logic, starting at their ea
 
 The data engineer can fix the tables using iterative logic, starting at the dataset containing the error.
 
-The data engineer can fix the tables from the Directed Acyclic Graph (DAG), starting at their earliest dataset.
+**The data engineer can fix the tables from the Directed Acyclic Graph (DAG), starting at their earliest dataset.**
+ensures that the data engineer understands the flow and dependencies of the entire pipeline. Starting from the earliest dataset provides a systematic 
+approach to understanding which stages succeeded and which did not.
 
 The data engineer can fix the tables from the Directed Acyclic Graph (DAG), starting at the dataset containing the error.
 
 The data engineer can fix one table at a time, starting at their earliest dataset.
-Multiple Choice
-16)
-Which of the following are guaranteed when processing a change data capture (CDC) feed with APPLY CHANGES INTO? Select three responses.
+
+
+
+#### Which of the following are guaranteed when processing a change data capture (CDC) feed with APPLY CHANGES INTO? Select three responses.
 
  
 
@@ -378,8 +409,9 @@ Queries outside of DLT will return snapshot results from DLT tables only if they
 
 Queries outside of DLT will return snapshot results from DLT tables, regardless of how they were defined.
 Single Choice
-21)
-A data engineer needs to identify the cloud provider and region of origin for each event within their DLT pipeline.
+
+
+#### A data engineer needs to identify the cloud provider and region of origin for each event within their DLT pipeline.
 
  
 
@@ -389,14 +421,20 @@ Which of the following approaches allows the data engineer to view this informat
 
 
 The data engineer can view this information in the Task Details page for each task in the pipeline.
+*The Task Details page would typically provide information about the task's execution status, duration,*
 
-The data engineer can use a SELECT query to directly query the cloud_details field of the event.
+**The data engineer can use a SELECT query to directly query the cloud_details field of the event.**
 
 The data engineer can use a utility command in Python to list information about each update made to a particular data object.
+*This doesn´t address the specific need*
 
 The data engineer can view the event details for the pipeline from the resultant Directed Acyclic Graph (DAG).
+*While the DAG visualizes the sequence and dependencies of tasks, it doesnt typically display detailed event information*
 
 The data engineer can load the contents of the event log into a view and display the view.
+*This method would be suitable if the event log already captures the required information*
+
+
 Single Choice
 22)
 A data engineer is running a Delta Live Tables (DLT) notebook. They notice that several commands display the following message:
