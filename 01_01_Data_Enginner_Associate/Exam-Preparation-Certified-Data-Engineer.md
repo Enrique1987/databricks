@@ -5,20 +5,42 @@
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion mprocess more timely and cost-effective.
 
 **DLT** Delta Live Tables in Databricks provide structured streaming capabilities, which allow data to be continuosly ingested, processed and written to Delta tables.
+
+**What happend when you query a DLT that is not attached to a DLT pipeline inside of a notebook ?**
 When you query a DLT in a notebook that is not attached to a DLT pipeline, you are querying the table as it is at that moment, no the live streaming version.
 When you are querying a DLT outside of the pipeline, you are essentially querying the current state of the Delta table. Whether the table was defined as batch or streaming doesnt´
 
-**How much time could preserve the data the DLT*
+**How much time could preserve the data the DLT ?**
+Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
+But... retention perios matter, if every change is retained idenfinitely you storage usage would grow rapidly, especially in active dataset with frequent modification. 
+Thats why Delta LAke allows you to set a retention prediod for how long to keep old versionof th data.
 
- Databricks' Delta Live Tables (DLT) and the associated streaming mechanisms are built on top of Delta Lake. Delta Lake allows you to maintain a versioned history of your data, 
- which supports operations like auditing, rollbacks, and fine-grained time-travel queries.
+**Metastore**
+Metastore keeps track of all the table metadatga, like the schema and the location of the datga. When you create a table in Delta Lake or DAtabricks, the details bout the table,
+including where its data is stored, are saved in the metastored
 
-influence this fact.
+**Table directory**
+We are referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
+The table directory could be a path like abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/ whithn this directory, you´d find 
+multiple Parquet Files and Transaction Logs. _delta_log
+
+**Event Log**
+Event log is more about logging events or changes. In context of Delta Lake, the event log keeps track of transactions but doesn´t serve as a direct way to
+view the contents of the table directory.
+
+**Checkpointing directory** Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
 
 **What DAG primarily does?**
 DAG visualizes the sequence and dependencies of taks.
 
 **Task Details** Typically provide information about the task´s execution, status, duration.	
+
+
+**Example of Silver and Gold**
+Silver tables enrich data by joining fields from bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.
+
+**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those from DLT pipelines.
+Clicking on individual tables or task within a job run will providespecifics bout that task.
 
 
 #### A data engineer is creating a live streaming table to be used by other members of their team. They want to indicate that the table contains silver quality data.
@@ -87,25 +109,31 @@ The contents of the table directory can be viewed through the flow definition’
 
 The contents of the table directory can be viewed through the event log
 Single Choice
-5)
-A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task.
 
- 
 
+
+#### A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task.
 Which of the following describes how to explore the output for each task in the pipeline? Select one response.
 
  
 
 
 They can run the commands connected to each task from within the DLT notebook after deploying the pipeline.
+*Not typically how pipelines are debugged, command manually from the notebook to verify task outpus can be inefficient and can also create unnecessary executions*
 
 They can display the output for each individual command from within the notebook using the %run command.
+*doenst make sense that answer*
 
 They can specify a folder for the task run details during pipeline configuration.
 
 They can go to the Job Runs page and click on the individual tables in the job run history.
 
 They can go to the Pipeline Details page and click on the individual tables in the resultant Directed Acyclic Graph (DAG).
+
+
+
+
+
 Multiple Choice
 6)
 A data engineer has created the following query to create a streaming live table from transactions.
