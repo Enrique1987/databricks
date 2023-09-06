@@ -2,7 +2,7 @@
 
 
 **Auto Loader** is when you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
-Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion mprocess more timely and cost-effective.
+Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.
 
 **DLT** Delta Live Tables in Databricks provide structured streaming capabilities, which allow data to be continuosly ingested, processed and written to Delta tables.
 
@@ -13,19 +13,19 @@ When you are querying a DLT outside of the pipeline, you are essentially queryin
 **How much time could preserve the data the DLT ?**
 Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
 But... retention perios matter, if every change is retained idenfinitely you storage usage would grow rapidly, especially in active dataset with frequent modification. 
-Thats why Delta LAke allows you to set a retention prediod for how long to keep old versionof th data.
+Thats why Delta Lake allows you to set a retention prediod for how long to keep old versionof th data.
 
 **Metastore**
 Metastore keeps track of all the table metadatga, like the schema and the location of the datga. When you create a table in Delta Lake or DAtabricks, the details bout the table,
 including where its data is stored, are saved in the metastored
 
 **Table directory**
-We are referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
+Is referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
 The table directory could be a path like abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/ whithn this directory, you´d find 
 multiple Parquet Files and Transaction Logs. _delta_log
 
 **Event Log**
-Event log is more about logging events or changes. In context of Delta Lake, the event log keeps track of transactions but doesn´t serve as a direct way to
+Event log is about logging events or changes. In context of Delta Lake, the event log keeps track of transactions but doesn´t serve as a direct way to
 view the contents of the table directory.
 
 **Checkpointing directory** Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
@@ -41,6 +41,14 @@ Silver tables enrich data by joining fields from bronze tables. Gold tables prov
 
 **Job Runs Page**: Provide a detailed overview of all the jobs executed, including those from DLT pipelines.
 Clicking on individual tables or task within a job run will providespecifics bout that task.
+
+
+**Table directory** In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage where the data is stored.
+
+**Databricks Tables** Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
+parquet, Avro, CSV, JSON, etc
+
+**Storage Systems** Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
 
 
 #### A data engineer is creating a live streaming table to be used by other members of their team. They want to indicate that the table contains silver quality data.
@@ -94,21 +102,22 @@ Triggered; triggered pipelines run once and then shut down until the next manual
 Continuous; continuous pipelines run at set intervals and then shut down until the next manual or scheduled update.
 
 
-Single Choice
-4)
-Which of the following correctly describes how to access contents of the table directory? Select one response.
+
+#### Which of the following correctly describes how to access contents of the table directory? Select one response.
 
 
 The contents of the table directory can be viewed through the checkpointing directory.
 
 The contents of the table directory can be viewed through the Auto Loader directory.
 
-The contents of the table directory can be viewed through the metastore.
+**The contents of the table directory can be viewed through the metastore.**
+*The metastore is where the metadata of tables, including their locations schema and other properties are sotred. By querying the metastore you can find out wherethe data 
+for a particular table is stored and access its directory path.
 
 The contents of the table directory can be viewed through the flow definition’s output dataset.
 
 The contents of the table directory can be viewed through the event log
-Single Choice
+
 
 
 
