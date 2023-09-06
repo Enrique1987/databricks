@@ -1,5 +1,17 @@
-### Data Pipelines with Delta Live Tables and Spark SQL
+## Data Pipelines with Delta Live Tables, Spark SQL & PySpark
 
+
+### Theorie
+
+**DLT vs Stream DLT
+DLT for batch processing and automates data managemen, while Stream DLT enables real-time.
+
+**DLT vs DT**
+DLT are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.
+
+**Stream Live Table (SLT):** For real-time streaming data ingestion and processing.
+**Delta Live Table (DLT):** For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.
+**Delta Table:** For less frequent batch updates (e.g., daily or weekly). Provides the foundational features for versioning, ACID transactions, and optimized querying.
 
 **Auto Loader** is when you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.
@@ -40,7 +52,35 @@ DAG visualizes the sequence and dependencies of taks.
 
 **Task Details** Typically provide information about the task´s execution, status, duration.	
 
-**row_epectations
+** Workflow vs Pipeline**  
+Task orchestration = Workflow  
+Data transofrmation and movement (pipeline=
+
+
+
+#### Workflow orchestration patterns.
+
+**Fan-out Pattern:**
+
+	**Description** A single task or job is followed by multiple tasks that can be executed in parallel
+	**Use Case** Imagine an ETL process where raw data is initially preprocessed(single task) and then multiple transformation are applied on this preprocessed data in parallel
+
+**Funnel Pattern** Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
+
+**Hourglas Pattern** Combine Fan-out and Funnel
+
+**Sequence Pattern** Tas or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+
+**Multi-sequence Pattern** Multi sequences of task that can run in parallel with each other.
+
+
+
+
+
+
+
+
+
 
 
 **Example of Silver and Gold**
@@ -88,8 +128,7 @@ The data engineer can query the flow definition for the direct successor of the 
 
 
 
-#### A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.
-They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
+#### A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
 Which of the following modes do they need to use and why? Select one response
 
  
@@ -541,3 +580,607 @@ CONSTRAINT valid_operation EXPECT (operation IS NOT NULL)
 we would need "ON VIOLATION FAIL UPDATE" 
 
 CONSTRAINT valid_operation EXCEPT (operation) ON VIOLATION DROP ROW
+
+
+```
+
+Code block:
+
+@dlt.table
+
+def orders_bronze():
+
+    return (
+
+        spark.readStream
+
+            .format("cloudFiles")
+
+            .option("cloudFiles.format", "json")
+
+            .option("cloudFiles.inferColumnTypes", True)
+
+            _____
+
+            .select(
+
+                F.current_timestamp().alias("processing_time"), 
+
+                F.input_file_name().alias("source_file"), 
+
+                "*"
+
+            )
+
+    )
+
+ ```
+
+Which of the following lines of code correctly fills in the blank? Assume the variable path represents the string file path to the data source. Select one response.
+
+ 
+
+
+.loadStream(f"{path}")   
+
+**.load(f"{path}")**  
+
+.writeStream(f"{path}")  
+
+.read(f"{path}")  
+
+.write(f"{path}")  
+
+
+
+#### A data engineer has created the following code block to create the view subscribed_order_emails from orders_silver and customers_silver.
+
+ 
+
+
+```
+@dlt.view
+
+def subscribed_order_emails_v():
+
+    return (
+
+        dlt.read("orders_silver").filter("notifications = 'Y'").alias("a")
+
+            _____
+
+            ).select(
+
+                "a.customer_id", 
+
+                "a.order_id", 
+
+                "b.email"
+
+            )
+
+    )
+
+```
+
+.join(
+dlt.read("customers_silver").alias("a"),
+on="customer_id"   
+
+**.join(dlt.read("customers_silver").alias("b"),on="customer_id"** 
+
+.join(
+dlt.readStream("customers_silver").alias("a"),
+on="customer_id"   
+
+.join(
+dlt.merge("customers_silver").alias("b"),
+on="customer_id"  
+
+
+.join(
+dlt.readStream("customers_silver").alias("b"),
+on="customer_id"  
+
+
+####A data engineer has created the following code block to create a streaming live table from orders_bronze.
+
+```
+
+@dlt.table
+
+def orders_bronze():
+
+    return (
+
+        spark.readStream
+
+            .format("cloudFiles")
+
+            .option("cloudFiles.format", "json")
+
+            .option("cloudFiles.inferColumnTypes", True)
+
+            _____
+
+            .select(
+
+                F.current_timestamp().alias("processing_time"), 
+
+                F.input_file_name().alias("source_file"), 
+
+                "*"
+
+            )
+
+    )
+```
+Which of the following lines of code correctly fills in the blank? Assume the variable path represents the string file path to the data source. Select one response.
+
+
+.loadStream(f"{path}")  
+.load(f"{path}")  
+.writeStream(f"{path}")  
+**.read(f"{path}")** 
+.write(f"{path}")  
+
+A data engineer is using the following code block to create a live table. After running the code block, they notice an error. 
+
+ 
+
+```
+
+@dlt.view
+
+def subscribed_order_emails():
+
+    return (
+
+        dlt.read("orders_silver").filter("notifications = 'Y'").alias("a")
+
+            .join(
+
+                dlt.read("status_silver").alias("b"), 
+
+                on="status_id"
+
+            ).select(
+
+                "a.status_id", 
+
+                "a.order_id", 
+
+                "b.email"
+
+            )
+
+    )
+
+```
+Which of the following statements correctly identifies the error? Select one response.
+
+ 
+
+"a.status_id" needs to be changed to "b.status_id" in the .select() function.
+"left" needs to be added to the .join() function.
+The .join() function needs to be changed to .merge().
+None of these statements correctly identifies the error.
+**The .read() function needs to be changed to .readStream().**
+
+
+
+
+## Deploy Workloads with Databricks Workflows
+
+
+**Databricks Workflows: ** refers to the orchestration and automation capabilities in Databricks that allow users to create, schedule and monitoring complex data pipelines.
+Its purpose is to streamline and simplify the creation and management of end-to-end data processing task, ensuring efficient execution and timely delivery of datga insights
+
+**Platform administrator** is a user role with the highest level of privileges, A platform administrator can manage all aspects of the Databricks workspace including user acces, cluster, jobs and worspace settings
+Their primary responsibility is to oversee the entire Dtabricks platformm, ensuring user have the approviate permissions and resources are used efficiently.
+
+**Workspace administrator** has comprehensive permissions within a specific Databricks workspace, can manage users, groups and access permissions within that workspace.
+
+
+
+#### A data engineering team needs to be granted access to metrics on a job run. Each team member has user access without any additional privileges.
+Which of the following tasks can be performed by an administrator so that each member of the team has access to the metrics? Select one response.
+
+ 
+
+
+The workspace administrator can set the maximum number of users who can access the table at the group level.
+
+**The platform administrator can set who can view job results or manage runs of a job with access control lists at the user or group level.**
+
+The platform administrator can set who can search for jobs by id or grant access permissions with access control lists at the user or group level.
+
+The platform administrator can set who can grant access permissions or view job history with access control lists at the user level.
+
+The workspace administrator can set the maximum number of users who can access the table at the user level.
+
+
+#### A data engineer has a notebook that ingests data from a single data source and stores it in an object store. 
+The engineer has three other notebooks that read from the data in the object store and perform various data transformations.
+ The engineer would like to run these three notebooks in parallel after the ingestion notebook finishes running.
+
+ 
+
+Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
+
+ 
+
+
+Funnel pattern
+
+Hourglass pattern
+
+Multi-sequence pattern
+
+**Fan-out pattern**
+
+Sequence pattern
+
+#### A data engineer is running a workflow orchestration on a shared job cluster. They notice that the job they are running is failing and want to use the repair tool to fix the pipeline. 
+
+Which of the following statements describes how Databricks assigns a cluster to the repaired job run? Select one response.
+
+ 
+
+
+A new job cluster will be automatically created with the same configuration as the shared job cluster to run the repair tool on the job run.
+
+The same job cluster will temporarily pause until the job has been repaired. A new job cluster will be created to run the repair tool on the job run.
+
+**A new single-user job cluster will be created to run the repair tool on the job run.**
+
+A new all-purpose job cluster will be created to run the repair tool on the job run.
+
+The same shared job cluster will be used to run the repair tool on the job run.
+
+
+#### A data engineer needs to view whether each task within a job run succeeded.
+
+ 
+
+Which of the following steps can the data engineer complete to view this information? Select one response.
+
+ 
+
+
+**They can review the job run history from the Job run details page.**
+
+They can review the task output from the notebook commands.
+
+They can review the job run history from the Workflow Details page.
+
+They can review job run output from the resultant directed acyclic graph (DAG).
+
+They can review the task history by clicking on each task in the workflow.
+
+
+#### A data engineering team has been using a Databricks SQL query to monitor the performance of an ELT job. 
+The ELT job is triggered when a specific number of input records are ready to be processed. 
+The Databricks SQL query returns the number of records added since the job’s most recent runtime.
+ The team has manually reviewed some of the records and knows that at least one of them will be successfully processed without violating any constraints.
+Which of the following approaches can the data engineering team use to be notified if the ELT job did not complete successfully? Select one response.
+
+ 
+
+
+They can set up an alert for the job to notify them when a record has been added to the target dataset.
+
+**They can set up an alert for the job to notify them if the returned value of the SQL query is less than 1.**
+
+This type of alerting is not possible in Databricks.
+
+They can set up an alert for the job to notify them when a record has been flagged as invalid.
+
+They can set up an alert for the job to notify them when a constraint has been violated.
+
+
+
+#### Which of the following tools can be used to create a Databricks Job? Select three responses.
+
+**Job Scheduler UI**
+External Git repository
+**Databricks CLI**
+**Jobs REST API**
+Data Explorer
+Single Choice
+
+#### A data engineer is using Workflows to run a multi-hop (medallion) ETL workload. They notice that the workflow will not complete because one of the tasks is failing.
+
+Which of the following describes the order of execution when running the repair tool? Select one response.
+
+
+**The data engineer can use the repair feature to re-run only the failed task and sub-tasks.**
+
+The data engineer can use the repair feature to re-run only the sub-tasks of the failed task.
+
+The data engineer can use the repair feature to re-run only the failed task and the task it depends on.
+
+The data engineer can use the repair feature to re-run only the failed task and the tasks following it.
+
+The data engineer can use the repair feature to re-run only the failed sub-tasks.
+
+
+
+#### Which of the following workloads can be configured using Databricks Workflows? Select three responses.
+
+**A job running on a triggered schedule with dependent tasks**
+**An ETL job with batch and streaming data**
+A job with Python, SQL, and Scala tasks
+A data analysis job that uses R notebooks
+**A custom task where data is extracted from a JAR file**
+
+
+
+####A data engineer needs their pipeline to run every 12 minutes. 
+Which of the following approaches automates this process? Select one response.
+
+ 
+
+
+**The data engineer can set the job’s schedule with custom cron syntax.**
+
+The data engineer can call the Apache AirFlow API to set the job’s schedule.
+
+The data engineer can use custom Python code to set the job’s schedule.
+
+The data engineer can manually pause and start the job every 12 minutes.
+
+This type of scheduling cannot be done with Databricks Workflows.
+
+
+
+#### A data engineer needs to configure the order of tasks to run in their ETL workload. The workload has two tasks, Task A and Task B, where Task B can only be run if Task A succeeds.
+Which of the following statements describes the dependencies that the data engineer needs to configure and the order they need to be run in? Select one response.
+
+ 
+
+
+**They need to add Task B as a dependency of Task A and run the tasks in sequence.**
+
+They need to add Task B as a subtask of Task A and run the tasks in sequence.
+
+They need to add Task B as a dependency of Task A and run the tasks in parallel.
+
+They need to add Task B as a subtask of Task A and run the tasks in parallel.
+
+They need to add Task A as a dependency of Task B and run the tasks in sequence.
+
+
+
+#### A data engineer has a job that creates and displays a result set of baby names by year, where each row has a unique year. 
+They want to display the results for baby names from the past three years only.
+
+ 
+
+Which of the following approaches allows them to filter rows from the table by year? Select one response.
+
+ 
+
+
+They can add a filter condition to the job’s configuration.
+
+**They can re-run the job with new parameters for the task.**
+
+They can add widgets to the notebook and re-run the job.
+
+They can add an import statement to input the year.
+
+They can edit the table to remove certain rows in the Job Details page.
+
+
+#### A data engineer has a workload that includes transformations of batch and streaming data, with built-in constraints to ensure each record meets certain conditions.
+Which of the following task types is considered best practice for the data engineer to use to configure this workload? Select one response.
+
+
+**Delta Live Tables pipeline**
+
+Python script
+
+Notebook
+
+Spark submit
+
+dbt
+
+
+#### A data engineer has a Python workload they want to run as a job. The code for the workload is located in an external cloud storage location.
+Which of the following task types and sources can the data engineer use to configure this job? Select one response.
+
+ 
+
+
+Python script with Workspace source
+
+Delta Live Tables pipeline with Workspace source
+
+Notebook with local path source
+
+Notebook with DBFS source
+
+**Python script with DBFS source**
+
+
+
+#### A data engineer has multiple data sources that they need to combine into one. The combined data sources then need to go through a multi-task 
+ETL process to refine the data using multi-hop (medallion) architecture. It is a requirement that the source data jobs need to be run in parallel.
+
+ 
+
+Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
+
+ 
+
+
+Funnel to fan-out pattern
+
+Sequence to fan-out pattern
+
+Parallel to multi-sequence pattern
+
+**Funnel to sequence pattern**
+
+Fan-out to sequence pattern
+
+
+
+#### A data engineer has a notebook in a remote Git repository. The data from the notebook needs to be ingested into a second notebook that is hosted in Databricks Repos.
+Which of the following approaches can the data engineer use to meet the above requirements? Select one response.
+
+ 
+
+
+The data engineer can configure the notebook in a new local repository as a task and make the second notebook dependent on it.
+
+**The data engineer can configure the notebook in the remote repository as a job and make the second notebook dependent on it.**
+
+The data engineer can configure the notebook in the remote repository as a task and make it a dependency of the second notebook.
+
+The data engineer can configure the notebook in a new local remote repository as a job and make it a dependency of the second notebook.
+
+The data engineer can configure the notebook in a new local repository as a job and make the second notebook dependent on it.
+Single Choice
+
+
+
+
+
+#### A data engineer is running multiple notebooks that are triggered on different job schedules. Each notebook is part of a different task orchestration workflow.
+They want to use a cluster with the same configuration for each notebook.
+
+ 
+
+Which of the following describes how the data engineer can use a feature of Workflows to meet the above requirements? Select one response.
+
+ 
+
+
+They can refresh the cluster after each notebook has finished running in order to use the cluster on a new notebook.
+
+**They can use the same cluster to run the notebooks as long as the cluster is a shared cluster.**
+
+They can use a sequence pattern to make the notebooks depend on each other in a task orchestration workflow and run the new workflow on the cluster.
+
+They can configure each notebook’s job schedule to swap out the cluster after the job has finished running.
+
+They can use an alert schedule to swap out the clusters after each job has completed.
+
+
+
+#### A data engineer has run a Delta Live Tables pipeline and wants to see if there are records that were not added to the target dataset due to constraint violations.
+Which of the following approaches can the data engineer use to view metrics on failed records for the pipeline? Select two responses.
+
+ 
+
+They can view how many records were added to the target dataset from the accompanying SQL dashboard.
+They can view information on the percentage of records that succeeded each data expectation from the audit log.
+They can view the duration of each task from the Pipeline details page.
+**They can view how many records were dropped from the Pipeline details page.**
+**They can view the percentage of records that failed each data expectation from the Pipeline details page.**
+
+
+Single Choice
+
+
+
+#### A data engineer needs to view the metadata concerning the order that events in a DLT pipeline were executed.
+
+Which of the following steps can the data engineer complete to view this information? Select one response.
+
+ 
+
+
+The data engineer can query the event log from a new notebook.
+
+**The data engineer can view the DLT metrics from the Pipeline Details page.**
+
+The data engineer can view the DLT metrics from the resultant Directed Acyclic Graph (DAG).
+
+The data engineer can view the DLT metrics from the bar graph that is generated within the notebook.
+
+The data engineer can query the metrics column of the event log for DLT metrics
+
+
+
+#### Which of the following statements about the advantages of using Workflows for task orchestration are correct? Select three responses.
+
+Workflows provides a centralized repository for data visualization tools.
+**Workflows supports built-in data quality constraints for logging purposes.**
+**Workflows can be used to make external API calls.**
+**Workflows is fully managed, which means users do not need to worry about infrastructure.**
+Workflows can be configured to use external access control permissions.
+
+
+
+#### A lead data engineer needs the rest of their team to know when an update has been made to the status of a job run within a Databricks Job. How can the data engineer notify their team of the status of the job? Select one response.
+
+ 
+
+
+They can schedule an email alert to themselves for when the job begins.
+
+They can schedule a Dashboard alert to the whole team for when the job succeeds.
+
+**They can schedule an email alert to the whole team for when the job completes.**
+
+They can schedule a Dashboard alert to themselves for when the job succeeds.
+
+They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
+
+
+
+
+#### Which of the following configurations are required to specify when scheduling a job? Select two responses. 
+
+ 
+
+Time zone
+**Trigger type**
+Start time
+**Trigger frequency**
+Maximum number of runs
+
+
+#### Which of the following are managed by Databricks Workflows? Select three responses.
+
+**Cluster management**  
+**Error reporting**  
+Git version control  
+Table access control lists (ACLs)  
+**Task orchestration**
+
+
+#### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.
+
+Which of the following allows the data engineer to stop the job during this interval and then start it again without losing the job’s configuration? Select two responses.
+
+ 
+They can stop the job schedule and then refresh the query within the job after an hour.  
+They can stop the job schedule and then refresh the notebook that is attached to the task after an hour.  
+**They can set the Schedule Type to Manual in the Job details panel and change it back to Scheduled after an hour.**  
+**They can click Pause in the Job details panel.**  
+They can detach the job from its accompanying dashboard and then reattach and refresh the dashboard after an hour  
+
+
+
+#### Which of the following task types can be combined into a single workflow? Select three responses.
+
+ 
+
+**SQL notebooks**  
+SQL warehouses  
+**JAR files**  
+**Python notebooks**
+Alert destinations
+
+#### Which of the following components are necessary to create a Databricks Workflow? Select three responses.
+
+**Tasks**
+**Schedule**
+Alert
+Experiment
+**Cluster**
