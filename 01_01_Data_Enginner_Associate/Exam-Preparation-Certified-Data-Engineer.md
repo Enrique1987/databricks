@@ -1118,18 +1118,17 @@ Workflows can be configured to use external access control permissions.
 
 #### A lead data engineer needs the rest of their team to know when an update has been made to the status of a job run within a Databricks Job. How can the data engineer notify their team of the status of the job? Select one response.
 
- 
 
 
-They can schedule an email alert to themselves for when the job begins.
+	They can schedule an email alert to themselves for when the job begins.
 
-They can schedule a Dashboard alert to the whole team for when the job succeeds.
+	They can schedule a Dashboard alert to the whole team for when the job succeeds.
 
-**They can schedule an email alert to the whole team for when the job completes.**
+	**They can schedule an email alert to the whole team for when the job completes.**
 
-They can schedule a Dashboard alert to themselves for when the job succeeds.
+	They can schedule a Dashboard alert to themselves for when the job succeeds.
 
-They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
+	They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
 
 
 
