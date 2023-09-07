@@ -1108,40 +1108,39 @@ The data engineer can query the metrics column of the event log for DLT metrics
 
 #### Which of the following statements about the advantages of using Workflows for task orchestration are correct? Select three responses.
 
-Workflows provides a centralized repository for data visualization tools.  
-**Workflows supports built-in data quality constraints for logging purposes.**  
-**Workflows can be used to make external API calls.**  
-**Workflows is fully managed, which means users do not need to worry about infrastructure.**  
-Workflows can be configured to use external access control permissions.  
+&nbsp;&nbsp;&nbsp;&nbsp;Workflows provides a centralized repository for data visualization tools.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workflows supports built-in data quality constraints for logging purposes.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workflows can be used to make external API calls.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workflows is fully managed, which means users do not need to worry about infrastructure.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Workflows can be configured to use external access control permissions.  
 
 
 
-#### A lead data engineer needs the rest of their team to know when an update has been made to the status of a job run within a Databricks Job. How can the data engineer notify their team of the status of the job? Select one response.
+#### A lead data engineer needs the rest of their team to know when an update has been made to the status of a job run within a Databricks Job.
+#### How can the data engineer notify their team of the status of the job? Select one response.
 
 
 
-They can schedule an email alert to themselves for when the job begins.
+&nbsp;&nbsp;&nbsp;&nbsp;They can schedule an email alert to themselves for when the job begins.
 
-They can schedule a Dashboard alert to the whole team for when the job succeeds.
+&nbsp;&nbsp;&nbsp;&nbsp;They can schedule a Dashboard alert to the whole team for when the job succeeds.
 
-**They can schedule an email alert to the whole team for when the job completes.**
+&nbsp;&nbsp;&nbsp;&nbsp;**They can schedule an email alert to the whole team for when the job completes.**
 
-They can schedule a Dashboard alert to themselves for when the job succeeds.
+&nbsp;&nbsp;&nbsp;&nbsp;They can schedule a Dashboard alert to themselves for when the job succeeds.
 
-They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
 
 
-#### Which of the following configurations are required to specify when scheduling a job? Select two responses. 
 
- 
 
-Time zone
-**Trigger type**
-Start time
-**Trigger frequency**
-Maximum number of runs
+#### Which of the following configurations are required to specify when scheduling a job? Select two responses.   
+
+&nbsp;&nbsp;&nbsp;&nbsp;Time zone  
+&nbsp;&nbsp;&nbsp;&nbsp;**Trigger type**  
+&nbsp;&nbsp;&nbsp;&nbsp;Start time  
+&nbsp;&nbsp;&nbsp;&nbsp;**Trigger frequency**  
+&nbsp;&nbsp;&nbsp;&nbsp;Maximum number of runs  
 
 
 #### Which of the following are managed by Databricks Workflows?  Select three responses.
