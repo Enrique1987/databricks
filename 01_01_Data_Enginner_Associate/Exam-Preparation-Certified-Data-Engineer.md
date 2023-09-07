@@ -1153,15 +1153,16 @@ Maximum number of runs
 &nbsp;&nbsp;&nbsp;&nbsp;***Task orchestration**
 
 
-#### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.    
-#### Which of the following allows the data engineer to stop the job during this interval and then start it again without losing the job’s configuration? Select two responses.
+#### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again. 
+#### Which of the following allows the data engineer to stop the job during this interval and then 
+#### start it again without losing the job’s configuration? Select two responses.
 
  
-They can stop the job schedule and then refresh the query within the job after an hour.  
-They can stop the job schedule and then refresh the notebook that is attached to the task after an hour.  
-**They can set the Schedule Type to Manual in the Job details panel and change it back to Scheduled after an hour.**  
-**They can click Pause in the Job details panel.**  
-They can detach the job from its accompanying dashboard and then reattach and refresh the dashboard after an hour  
+&nbsp;&nbsp;&nbsp;&nbsp;They can stop the job schedule and then refresh the query within the job after an hour.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can stop the job schedule and then refresh the notebook that is attached to the task after an hour.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can set the Schedule Type to Manual in the Job details panel and change it back to Scheduled after an hour.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can click Pause in the Job details panel.**  
+&nbsp;&nbsp;&nbsp;&nbsp;They can detach the job from its accompanying dashboard and then reattach and refresh the dashboard after an hour  
 
 
 
