@@ -1153,7 +1153,7 @@ Maximum number of runs
 &nbsp;&nbsp;&nbsp;&nbsp;***Task orchestration**
 
 
-#### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.Which of the following allows
+#### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.Which of the following allows  
 the data engineer to stop the job during this interval and then start it again without losing the job’s configuration? Select two responses.
 
  
