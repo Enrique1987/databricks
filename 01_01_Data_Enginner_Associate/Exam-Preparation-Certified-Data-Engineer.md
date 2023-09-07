@@ -1144,8 +1144,7 @@ Start time
 Maximum number of runs
 
 
-#### Which of the following are managed by Databricks Workflows?  
-Select three responses.
+#### Which of the following are managed by Databricks Workflows?  Select three responses.
 
 &nbsp;&nbsp;&nbsp;&nbsp;***Cluster management**  
 &nbsp;&nbsp;&nbsp;&nbsp;***Error reporting**  
@@ -1155,7 +1154,7 @@ Select three responses.
 
 
 #### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.    
-Which of the following allows the data engineer to stop the job during this interval and then start it again without losing the job’s configuration? Select two responses.
+#### Which of the following allows the data engineer to stop the job during this interval and then start it again without losing the job’s configuration? Select two responses.
 
  
 They can stop the job schedule and then refresh the query within the job after an hour.  
