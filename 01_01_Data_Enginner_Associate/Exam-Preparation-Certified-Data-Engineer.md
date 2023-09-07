@@ -1148,6 +1148,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 ## Data Access Control and Unity Catalog
 
+### Theorie
+
 **Data Access Control**: Control who has access to which data.  
 **Data Access Audit**: Capture and record all access to data.  
 **Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.  
@@ -1228,5 +1230,19 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 ![](img/Security_Model.PNG)  
 
 
+**Cluter Security Model**   
+![](img/Cluster_Security_Model.PNG)  
+
+**Matrix Security Model**   
+![](img/Matrix_Security_Model.PNG)  
+
+**Security Model Principals Privileges Securables**   
+![](img/Principals_Privileges_Securables_Security_Model.PNG)
+
+**Dynamic Views**
+![](img/Dynamic_Views.PNG)
 
 
+**Storage Credentials and External Locations**
+
+![](img/Credentials_External_Locations.PNG)
