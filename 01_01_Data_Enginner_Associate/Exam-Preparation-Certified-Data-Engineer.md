@@ -1148,30 +1148,31 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 ## Data Access Control and Unity Catalog
 
-**Data Access Control**: Control who has access to which data.
-**Data Access Audit**: Capture and record all access to data.
-**Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.
-&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources** refers to the origins of datga ow where data comes from.
-&nbsp;&nbsp;&nbsp;&nbsp;**Downstream** refers where the data go ather being processed or transformed.
+**Data Access Control**: Control who has access to which data.  
+**Data Access Audit**: Capture and record all access to data.  
+**Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources** refers to the origins of datga ow where data comes from.    
+&nbsp;&nbsp;&nbsp;&nbsp;**Downstream** refers where the data go ather being processed or transformed.  
 
 
 **Challenges in the Data Lake**
-&nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls
-&nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer
-&nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model
-&nbsp;&nbsp;&nbsp;&nbsp;Hard to audit
-&nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.
+&nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls   
+&nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer  
+&nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model  
+&nbsp;&nbsp;&nbsp;&nbsp;Hard to audit  
+&nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.  
 
 **Unity Catalog**
-&nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.
-&nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.
-&nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.
+&nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.  
+&nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.  
+&nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.  
 
 
 **Key Concepts**
--- image Metastore elements
--- image Three-level Namespace
--- Before and after unity Catalog
+-- image Metastore elements  
+-- image Three-level Namespace  
+&nbsp;&nbsp;&nbsp;&nbsp;**Before and after unity Catalog**![My Local Image](img/Before_After_Unity_Catalog.PNG)
+
 
 
 **Unity Catalog Roles**
