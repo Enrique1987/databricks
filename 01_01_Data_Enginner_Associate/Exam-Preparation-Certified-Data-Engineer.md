@@ -1246,3 +1246,280 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 **Storage Credentials and External Locations**
 
 ![](img/Credentials_External_Locations.PNG)
+
+**Identity Federation** Typically means integrating an exernal identitiy provider to allow for a single source of truth for user identities and a more streamline authentication process.
+
+**Delta Sharing** Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
+
+
+
+
+
+#### A data engineer has a storage credential whose file path is represented by the variable path.
+#### They need to grant the group students permission to query the table at the external location without allowing them to edit the table.
+#### Which of the following commands does the data engineer need to run to complete this task? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;GRANT READ FILES ON STORAGE CREDENTIAL `${path}` TO `students`;  
+&nbsp;&nbsp;&nbsp;&nbsp;GRANT WRITE FILES ON STORAGE CREDENTIAL `${path}` TO `students`;  
+&nbsp;&nbsp;&nbsp;&nbsp;**GRANT READ FILES ON EXTERNAL LOCATION `${path}` TO `students`;**
+&nbsp;&nbsp;&nbsp;&nbsp;GRANT CREATE TABLE ON EXTERNAL LOCATION `${path}` TO `students`;  
+&nbsp;&nbsp;&nbsp;&nbsp;GRANT WRITE FILES ON EXTERNAL LOCATION `${path}` TO `students`;  
+
+
+#### Which of the following describes the query lifecycle within the context of Unity Catalog? Select one response.(dacoclo)
+
+&nbsp;&nbsp;&nbsp;&nbsp;**The transfer of data between the data principal, compute resources, and cloud storage.**    
+&nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the service principal, groups, and cloud storage.  
+&nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the namespace, metadata layer, and service principal.  
+&nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the service principal, compute resources, and audit log.  
+&nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the data principal, storage credentials, and cloud storage.  
+
+
+
+#### A data engineer needs to modify a table’s data and metadata. They are not the owner of the table.
+#### Which of the following steps need to be completed in order for the data engineer to make modifications to the table data and metadata? Select three responses.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to be granted USAGE permissions on the table.     
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to be granted SELECT permissions to modify the table data.    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use the INSERT and/or DELETE commands to modify the table data.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to be granted MODIFY permissions on the table.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use the ALTER command to modify the table metadata.**    
+
+
+
+#### Which of the following is a recommended best practice to segregate data within an organization? Select one response
+
+&nbsp;&nbsp;&nbsp;&nbsp;**It is recommended to segregate data using catalogs.**  
+&nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using schemas.  
+&nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using clusters.  
+&nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using tables.  
+&nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using metastores.  
+
+
+#### A data engineering team is working to migrate some existing data files into Delta format. 
+#### For the time being, they need to be able to query those files in their original data format.
+#### Which of the following tables does the data engineering team need to use and why? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables; Unity Catalog does not drop the underlying data for managed tables.  
+&nbsp;&nbsp;&nbsp;&nbsp;External tables; only external tables support Delta format.  
+&nbsp;&nbsp;&nbsp;&nbsp;**External tables; external tables support Delta and other formats.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables; only managed tables support Delta format.  
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables; Unity Catalog retains the underlying data for up to 30 days.  
+
+#### Which of the following data objects can a schema contain in a Unity Catalog namespace? Select three responses.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Views**  
+&nbsp;&nbsp;&nbsp;&nbsp;Storage credentials   
+&nbsp;&nbsp;&nbsp;&nbsp;**Functions**   
+&nbsp;&nbsp;&nbsp;&nbsp;Eternal locations  
+&nbsp;&nbsp;&nbsp;&nbsp;**Tables**  
+
+
+
+#### A data engineer needs to upgrade the Delta table records_silver from the old schema records to a Unity Catalog table updated_silver within the catalog customers and the new schema updated_records. 
+#### Which of the following queries correctly upgrades the table to be managed by Unity Catalog? Select one response.
+
+ 
+````
+CREATE TABLE customers.updated_records.updated_silver --> correct
+AS SELECT * FROM hive_metastore.records.records_silver;
+
+CREATE TABLE customers.records.records_silver
+AS SELECT * FROM hive_metastore.records.records_silver;
+
+CREATE TABLE records.customers.records_silver
+AS SELECT * FROM hive_metastore.records_silver.records;
+
+CREATE TABLE customers.records.records_silver
+AS SELECT * FROM hive_metastore.customers.records;
+
+CREATE TABLE records.customers.records_silver
+AS SELECT * FROM hive_metastore.records.records_silver;
+```
+
+
+#### A data engineer needs to configure their cluster to enable Unity Catalog. They have workspace administrator privileges only.
+#### Which of the following steps needs to be completed for the data engineer to enable Unity Catalog on their cluster? Select two responses.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must use a supported cluster mode.**    
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have a storage credential to access the cluster.    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have permission to create clusters.**   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must be the data owner of the cluster.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must be explicitly granted access to the cluster.  
+
+#### Which of the following lists the four key functional areas of data governance? Select one response.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Data history, data access control, data integrity, data validation
+&nbsp;&nbsp;&nbsp;&nbsp;Data optimization, data access audit, data analysis, data discovery
+&nbsp;&nbsp;&nbsp;&nbsp;Data integrity, data optimization, data lineage, data science
+&nbsp;&nbsp;&nbsp;&nbsp;Data science, data integrity, data lineage, data versioning
+&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery**
+
+#### Which of the following statements correctly identifies the benefits of using a managed table over an external table? Select two responses.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Additional storage credentials are not needed to manage access to the underlying cloud storage for a managed table.
+&nbsp;&nbsp;&nbsp;&nbsp;Unity Catalog supports managed tables, but does not support external tables.
+&nbsp;&nbsp;&nbsp;&nbsp;External tables support multiple formats, while managed tables only support Delta format.
+&nbsp;&nbsp;&nbsp;&nbsp;When managed tables are dropped, the underlying data and metadata are dropped as well.
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables support multiple formats, while external tables only support external formats.
+
+#### In which of the following locations are the metadata related to metastore-managed data objects (like a table’s columns and data types) stored? Select one response.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A separate cloud storage container specific to the Databricks workspace  
+&nbsp;&nbsp;&nbsp;&nbsp;A separate cloud storage container in the data plane  
+&nbsp;&nbsp;&nbsp;&nbsp;A separate external database outside of Databricks  
+&nbsp;&nbsp;&nbsp;&nbsp;**A separate cloud storage container in the control plane **   
+&nbsp;&nbsp;&nbsp;&nbsp;A separate external database managed by Databricks  
+
+
+#### Which of the following security modes supports Unity Catalog? Select two responses.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Passthrough only mode
+&nbsp;&nbsp;&nbsp;&nbsp;Table ACL only mode
+&nbsp;&nbsp;&nbsp;&nbsp;None (no security)
+&nbsp;&nbsp;&nbsp;&nbsp;**User isolation mode**
+&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode**
+
+
+#### A metastore administrator has enabled identity federation for a Unity Catalog namespace.(acawoke)
+#### Which of the following correctly describes the privileges that users who have access to the catalog now have? Select two responses.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by an account administrator through the account console.  
+&nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by the workspace administrator through their workspace administration console.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the workspace administrator through their workspace administration console.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by a workspace user through the identity provider.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the account administrators through the account console.**  
+
+
+#### A data engineering team has members at several different geographic locations. Each member of the team needs to be able to access the securables in the team's Unity Catalog namespace from their location. 
+#### How can the data be managed in a way that each team member’s region has access to the securables within the catalog? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator needs to create one metastore to be used in all regions.  
+&nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator needs to create a catalog for each region.  
+&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to create a metadata layer for each region.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The metastore administrator needs to create a metastore for each region.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to create a metadata layer to be used in all regions.  
+
+
+#### A data engineer is reading data from multiple external sources. They are only writing the data to one local file. 
+#### Which of the following recommendations is considered a best practice in this situation? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Keep the table managed and use Delta Sharing for external consumption.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Make a copy of the table in an external location and use Delta Sharing for external consumption.  
+&nbsp;&nbsp;&nbsp;&nbsp;Move the table to an external location and use Delta Sharing to capture upstream sources only.  
+&nbsp;&nbsp;&nbsp;&nbsp;Keep the table managed and use Delta Sharing to capture upstream sources only.  
+&nbsp;&nbsp;&nbsp;&nbsp;Move the table to an external location and use Delta Sharing for external consumption.  
+
+
+#### Which of the following is a major data governance challenge presented in a traditional data lake backed by cloud storage services? Select one response.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not provide scaling for storage costs.  
+&nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not allow access control for groups.  
+&nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not support unstructured and semistructured data.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cloud storage services only provide access control at the file level through cloud-specific interfaces.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services are usually based on their own proprietary data format, increasing vendor lock-in.  
+
+
+#### A metastore administrator needs to create data access control policies for a workspace. They need to provide several users access to a single file in a scalable, efficient way.
+#### Which of the following correctly describes the Databricks-recommended best practice to complete this task? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by individually assigning access to each user who needs access to the file.    
+&nbsp;&nbsp;&nbsp;&nbsp;None of the provided answer choices are correct.  
+&nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by creating a storage credential and sharing it individually with anyone who needs access to the file.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The metastore administrator can assign access to the file by creating a group of all of the users who need access to the file and assigning access to the group.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by creating a storage credential and sharing it with a group that includes everyone who needs access to the file.  
+
+
+#### A data engineer needs to copy an external table from their default Hive metastore to the Unity Catalog metastore.
+#### Which of the following are required to upgrade the table to be managed by Unity Catalog? Select three responses. 
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must create their own Hive metastore.
+&nbsp;&nbsp;&nbsp;&nbsp;T**he data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.**
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.**
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have workspace administrator level privileges.
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.**
+
+
+
+#### Which of the following privileges do storage credentials AND external locations support? Select three responses.
+
+&nbsp;&nbsp;&nbsp;&nbsp;**READ FILES**  
+&nbsp;&nbsp;&nbsp;&nbsp;**WRITE FILES**  
+&nbsp;&nbsp;&nbsp;&nbsp;EXECUTE  
+&nbsp;&nbsp;&nbsp;&nbsp;DELETE  
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE EXTERNAL TABLE**
+
+#### Which of the following statements describes the relationship between Unity Catalog and data access control in the overall Databricks Lakehouse architecture? (gema)
+
+&nbsp;&nbsp;&nbsp;&nbsp;Users, identities, and access control on securables are centrally managed across workspaces.  
+&nbsp;&nbsp;&nbsp;&nbsp;Groups, metastores, and audit control on securables are centrally managed across accounts.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Groups, metastores, and access control on securables are centrally managed across workspaces.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Identities, groups, and access control on securables are centrally managed across accounts.  
+&nbsp;&nbsp;&nbsp;&nbsp;Accounts, workspaces, and audit control on securables are centrally managed across catalogs.  
+
+
+#### A data engineer needs to connect the output of their Unity Catalog-supported Databricks SQL workload to an external BI tool.
+#### Which of the following describes what needs to be done to complete this task? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new job cluster.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new Databricks SQL dashboard.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to attach their query to a new SQL warehouse.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to an existing all-purpose cluster.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new pipeline.  
+
+#### A lead data engineer needs to create a new workspace for their team. They only have workspace administrator privileges.(iaa)
+#### Which of the following tasks needs to be performed so that the data engineer is granted the necessary permissions to create the workspace? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.  
+&nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use  
+&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.  
+&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an account administrator level**  
+
+#### Which of the following describes an additional benefit of the three-level namespace provided by Unity Catalog? Select one response.
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace provides access to advanced options to optimize data through versioning techniques.  
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces a list of privilege grants for each securable data object in the Hive metastore.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The three-level namespace provides more data segregation options while still making legacy Hive metastore data easily accessible.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces data governance through cluster modes over data objects in the Hive metastore.  
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace allows implicit access grants so permissions can easily be inherited by securable data objects.  
+
+
+
+#### A data engineer has a notebook that queries and alters a dynamic view in both Python and SQL.
+#### There are no additional libraries that need to be installed on the cluster to run the notebook.
+#### Which of the following clusters does the data engineer need to attach to their notebook? 
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;High concurrency cluster  
+&nbsp;&nbsp;&nbsp;&nbsp;Single-user cluster  
+&nbsp;&nbsp;&nbsp;&nbsp;Multi-user cluster  
+&nbsp;&nbsp;&nbsp;&nbsp;**User isolation cluster**  
+&nbsp;&nbsp;&nbsp;&nbsp;This type of workload is not supported by any cluster mode  
+
+
+
