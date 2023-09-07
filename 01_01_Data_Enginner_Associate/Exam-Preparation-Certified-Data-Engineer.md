@@ -953,156 +953,136 @@ They need to add Task A as a dependency of Task B and run the tasks in sequence.
 
 
 #### A data engineer has a job that creates and displays a result set of baby names by year, where each row has a unique year. 
-They want to display the results for baby names from the past three years only.
+#### They want to display the results for baby names from the past three years only.
+#### Which of the following approaches allows them to filter rows from the table by year? Select one response.
 
  
 
-Which of the following approaches allows them to filter rows from the table by year? Select one response.
 
- 
+&nbsp;&nbsp;&nbsp;&nbsp;They can add a filter condition to the job’s configuration.
 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can re-run the job with new parameters for the task.**
 
-They can add a filter condition to the job’s configuration.
+&nbsp;&nbsp;&nbsp;&nbsp;They can add widgets to the notebook and re-run the job.
 
-**They can re-run the job with new parameters for the task.**
+&nbsp;&nbsp;&nbsp;&nbsp;They can add an import statement to input the year.
 
-They can add widgets to the notebook and re-run the job.
-
-They can add an import statement to input the year.
-
-They can edit the table to remove certain rows in the Job Details page.
+&nbsp;&nbsp;&nbsp;&nbsp;They can edit the table to remove certain rows in the Job Details page.
 
 
 #### A data engineer has a workload that includes transformations of batch and streaming data, with built-in constraints to ensure each record meets certain conditions.
-Which of the following task types is considered best practice for the data engineer to use to configure this workload? Select one response.
+#### Which of the following task types is considered best practice for the data engineer to use to configure this workload? Select one response.
 
 
-**Delta Live Tables pipeline**
+&nbsp;&nbsp;&nbsp;&nbsp;**Delta Live Tables pipeline**
 
-Python script
+&nbsp;&nbsp;&nbsp;&nbsp;Python script
 
-Notebook
+&nbsp;&nbsp;&nbsp;&nbsp;Notebook
 
-Spark submit
+&nbsp;&nbsp;&nbsp;&nbsp;Spark submit
 
-dbt
+&nbsp;&nbsp;&nbsp;&nbsp;dbt
 
 
 #### A data engineer has a Python workload they want to run as a job. The code for the workload is located in an external cloud storage location.
-Which of the following task types and sources can the data engineer use to configure this job? Select one response.
+#### Which of the following task types and sources can the data engineer use to configure this job? Select one response.
 
  
 
 
-Python script with Workspace source
+&nbsp;&nbsp;&nbsp;&nbsp;Python script with Workspace source
 
-Delta Live Tables pipeline with Workspace source
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Live Tables pipeline with Workspace source
 
-Notebook with local path source
+&nbsp;&nbsp;&nbsp;&nbsp;Notebook with local path source
 
-Notebook with DBFS source
+&nbsp;&nbsp;&nbsp;&nbsp;Notebook with DBFS source
 
-**Python script with DBFS source**
+&nbsp;&nbsp;&nbsp;&nbsp;**Python script with DBFS source**
 
 
 
 #### A data engineer has multiple data sources that they need to combine into one. The combined data sources then need to go through a multi-task 
-ETL process to refine the data using multi-hop (medallion) architecture. It is a requirement that the source data jobs need to be run in parallel.
+#### ETL process to refine the data using multi-hop (medallion) architecture. It is a requirement that the source data jobs need to be run in parallel.
+#### Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
 
  
+&nbsp;&nbsp;&nbsp;&nbsp;Funnel to fan-out pattern
 
-Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
+&nbsp;&nbsp;&nbsp;&nbsp;Sequence to fan-out pattern
 
- 
+&nbsp;&nbsp;&nbsp;&nbsp;Parallel to multi-sequence pattern
 
+&nbsp;&nbsp;&nbsp;&nbsp;**Funnel to sequence pattern**
 
-Funnel to fan-out pattern
-
-Sequence to fan-out pattern
-
-Parallel to multi-sequence pattern
-
-**Funnel to sequence pattern**
-
-Fan-out to sequence pattern
+&nbsp;&nbsp;&nbsp;&nbsp;Fan-out to sequence pattern
 
 
 
 #### A data engineer has a notebook in a remote Git repository. The data from the notebook needs to be ingested into a second notebook that is hosted in Databricks Repos.
-Which of the following approaches can the data engineer use to meet the above requirements? Select one response.
+#### Which of the following approaches can the data engineer use to meet the above requirements? Select one response.
 
  
 
 
-The data engineer can configure the notebook in a new local repository as a task and make the second notebook dependent on it.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can configure the notebook in a new local repository as a task and make the second notebook dependent on it.
 
-**The data engineer can configure the notebook in the remote repository as a job and make the second notebook dependent on it.**
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can configure the notebook in the remote repository as a job and make the second notebook dependent on it.**
 
-The data engineer can configure the notebook in the remote repository as a task and make it a dependency of the second notebook.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can configure the notebook in the remote repository as a task and make it a dependency of the second notebook.
 
-The data engineer can configure the notebook in a new local remote repository as a job and make it a dependency of the second notebook.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can configure the notebook in a new local remote repository as a job and make it a dependency of the second notebook.
 
-The data engineer can configure the notebook in a new local repository as a job and make the second notebook dependent on it.
-Single Choice
-
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can configure the notebook in a new local repository as a job and make the second notebook dependent on it.
 
 
 #### A data engineer is running multiple notebooks that are triggered on different job schedules. Each notebook is part of a different task orchestration workflow.
-They want to use a cluster with the same configuration for each notebook.
+#### They want to use a cluster with the same configuration for each notebook.
+#### Which of the following describes how the data engineer can use a feature of Workflows to meet the above requirements? Select one response.
 
  
 
-Which of the following describes how the data engineer can use a feature of Workflows to meet the above requirements? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;They can refresh the cluster after each notebook has finished running in order to use the cluster on a new notebook.
 
- 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use the same cluster to run the notebooks as long as the cluster is a shared cluster.**
 
+&nbsp;&nbsp;&nbsp;&nbsp;They can use a sequence pattern to make the notebooks depend on each other in a task orchestration workflow and run the new workflow on the cluster.
 
-They can refresh the cluster after each notebook has finished running in order to use the cluster on a new notebook.
+&nbsp;&nbsp;&nbsp;&nbsp;They can configure each notebook’s job schedule to swap out the cluster after the job has finished running.
 
-**They can use the same cluster to run the notebooks as long as the cluster is a shared cluster.**
-
-They can use a sequence pattern to make the notebooks depend on each other in a task orchestration workflow and run the new workflow on the cluster.
-
-They can configure each notebook’s job schedule to swap out the cluster after the job has finished running.
-
-They can use an alert schedule to swap out the clusters after each job has completed.
+&nbsp;&nbsp;&nbsp;&nbsp;They can use an alert schedule to swap out the clusters after each job has completed.
 
 
 
 #### A data engineer has run a Delta Live Tables pipeline and wants to see if there are records that were not added to the target dataset due to constraint violations.
-Which of the following approaches can the data engineer use to view metrics on failed records for the pipeline? Select two responses.
+#### Which of the following approaches can the data engineer use to view metrics on failed records for the pipeline? Select two responses.
 
  
 
-They can view how many records were added to the target dataset from the accompanying SQL dashboard.
-They can view information on the percentage of records that succeeded each data expectation from the audit log.
-They can view the duration of each task from the Pipeline details page.
-**They can view how many records were dropped from the Pipeline details page.**
-**They can view the percentage of records that failed each data expectation from the Pipeline details page.**
+&nbsp;&nbsp;&nbsp;&nbsp;They can view how many records were added to the target dataset from the accompanying SQL dashboard.
+&nbsp;&nbsp;&nbsp;&nbsp;They can view information on the percentage of records that succeeded each data expectation from the audit log.
+&nbsp;&nbsp;&nbsp;&nbsp;They can view the duration of each task from the Pipeline details page.
+&nbsp;&nbsp;&nbsp;&nbsp;**They can view how many records were dropped from the Pipeline details page.**
+&nbsp;&nbsp;&nbsp;&nbsp;**They can view the percentage of records that failed each data expectation from the Pipeline details page.**
 
-
-Single Choice
 
 
 
 #### A data engineer needs to view the metadata concerning the order that events in a DLT pipeline were executed.
-
-Which of the following steps can the data engineer complete to view this information? Select one response.
-
- 
+#### Which of the following steps can the data engineer complete to view this information? Select one response.
 
 
-The data engineer can query the event log from a new notebook.
 
-**The data engineer can view the DLT metrics from the Pipeline Details page.**
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can query the event log from a new notebook.
 
-The data engineer can view the DLT metrics from the resultant Directed Acyclic Graph (DAG).
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can view the DLT metrics from the Pipeline Details page.**
 
-The data engineer can view the DLT metrics from the bar graph that is generated within the notebook.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can view the DLT metrics from the resultant Directed Acyclic Graph (DAG).
 
-The data engineer can query the metrics column of the event log for DLT metrics
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can view the DLT metrics from the bar graph that is generated within the notebook.
+
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can query the metrics column of the event log for DLT metrics
 
 
 
@@ -1145,11 +1125,11 @@ The data engineer can query the metrics column of the event log for DLT metrics
 
 #### Which of the following are managed by Databricks Workflows?  Select three responses.
 
-&nbsp;&nbsp;&nbsp;&nbsp;***Cluster management**  
-&nbsp;&nbsp;&nbsp;&nbsp;***Error reporting**  
-&nbsp;&nbsp;&nbsp;&nbsp;*Git version control  
-&nbsp;&nbsp;&nbsp;&nbsp;*Table access control lists (ACLs)  
-&nbsp;&nbsp;&nbsp;&nbsp;***Task orchestration**
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster management**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Error reporting**  
+&nbsp;&nbsp;&nbsp;&nbsp;Git version control  
+&nbsp;&nbsp;&nbsp;&nbsp;Table access control lists (ACLs)  
+&nbsp;&nbsp;&nbsp;&nbsp;**Task orchestration**
 
 
 #### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.
