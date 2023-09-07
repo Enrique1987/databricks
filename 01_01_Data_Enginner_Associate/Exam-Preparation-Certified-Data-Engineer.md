@@ -1224,7 +1224,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;**Service Principal + Service Principal with administrative privileges**  
 &nbsp;&nbsp;&nbsp;**Groups**   analyst, developers  
 
-**Security Model**  ![](img/Security_Model.PNG)  
+**Security Model**   
+![](img/Security_Model.PNG)  
 
 
 
