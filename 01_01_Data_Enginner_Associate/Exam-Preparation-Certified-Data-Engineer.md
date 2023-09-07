@@ -1169,10 +1169,12 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 **Key Concepts**
--- image Metastore elements  
-&nbsp;&nbsp;&nbsp;&nbsp;**Three-level Namespace**![](img/Three_Level_Namespace.PNG)
- 
-&nbsp;&nbsp;&nbsp;&nbsp;**Before and after unity Catalog**![](img/Before_After_Unity_Catalog.PNG)
+&nbsp;&nbsp;&nbsp;&nbsp;**Metastore elements**![](img/Metastore_Elements.PNG)  
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;**Three-level Namespace**![](img/Three_Level_Namespace.PNG)  
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;**Before and after unity Catalog**![](img/Before_After_Unity_Catalog.PNG)  
+&nbsp;&nbsp;&nbsp;&nbsp;
 
 
 
