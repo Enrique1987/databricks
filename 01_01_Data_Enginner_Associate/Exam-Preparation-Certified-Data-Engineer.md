@@ -1108,11 +1108,11 @@ The data engineer can query the metrics column of the event log for DLT metrics
 
 #### Which of the following statements about the advantages of using Workflows for task orchestration are correct? Select three responses.
 
-Workflows provides a centralized repository for data visualization tools.
-**Workflows supports built-in data quality constraints for logging purposes.**
-**Workflows can be used to make external API calls.**
-**Workflows is fully managed, which means users do not need to worry about infrastructure.**
-Workflows can be configured to use external access control permissions.
+Workflows provides a centralized repository for data visualization tools.  
+**Workflows supports built-in data quality constraints for logging purposes.**  
+**Workflows can be used to make external API calls.**  
+**Workflows is fully managed, which means users do not need to worry about infrastructure.**  
+Workflows can be configured to use external access control permissions.  
 
 
 
@@ -1120,15 +1120,15 @@ Workflows can be configured to use external access control permissions.
 
 
 
-	They can schedule an email alert to themselves for when the job begins.
+They can schedule an email alert to themselves for when the job begins.
 
-	They can schedule a Dashboard alert to the whole team for when the job succeeds.
+They can schedule a Dashboard alert to the whole team for when the job succeeds.
 
-	**They can schedule an email alert to the whole team for when the job completes.**
+**They can schedule an email alert to the whole team for when the job completes.**
 
-	They can schedule a Dashboard alert to themselves for when the job succeeds.
+They can schedule a Dashboard alert to themselves for when the job succeeds.
 
-	They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
+They can schedule a Dashboard alert to a group containing all members of the team for when the job completes.
 
 
 
@@ -1146,15 +1146,14 @@ Maximum number of runs
 
 #### Which of the following are managed by Databricks Workflows? Select three responses.
 
-**Cluster management**  
-**Error reporting**  
-Git version control  
-Table access control lists (ACLs)  
-**Task orchestration**
+&nbsp;&nbsp;&nbsp;&nbsp;***Cluster management**  
+&nbsp;&nbsp;&nbsp;&nbsp;***Error reporting**  
+&nbsp;&nbsp;&nbsp;&nbsp;*Git version control  
+&nbsp;&nbsp;&nbsp;&nbsp;*Table access control lists (ACLs)  
+&nbsp;&nbsp;&nbsp;&nbsp;***Task orchestration**
 
 
 #### A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.
-
 Which of the following allows the data engineer to stop the job during this interval and then start it again without losing the job’s configuration? Select two responses.
 
  
@@ -1168,18 +1167,16 @@ They can detach the job from its accompanying dashboard and then reattach and re
 
 #### Which of the following task types can be combined into a single workflow? Select three responses.
 
- 
-
-**SQL notebooks**  
-SQL warehouses  
-**JAR files**  
-**Python notebooks**
-Alert destinations
+&nbsp;&nbsp;&nbsp;&nbsp;**SQL notebooks**  
+&nbsp;&nbsp;&nbsp;&nbsp;SQL warehouses  
+&nbsp;&nbsp;&nbsp;&nbsp;**JAR files**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Python notebooks**
+&nbsp;&nbsp;&nbsp;&nbsp;Alert destinations
 
 #### Which of the following components are necessary to create a Databricks Workflow? Select three responses.
 
-**Tasks**
-**Schedule**
-Alert
-Experiment
-**Cluster**
+&nbsp;&nbsp;&nbsp;&nbsp;**Tasks**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Schedule**  
+&nbsp;&nbsp;&nbsp;&nbsp;Alert  
+&nbsp;&nbsp;&nbsp;&nbsp;Experiment  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster**  
