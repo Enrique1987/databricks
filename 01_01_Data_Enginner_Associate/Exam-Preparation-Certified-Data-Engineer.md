@@ -69,7 +69,7 @@ Data transofrmation and movement (pipeline=
 
 **Hourglas Pattern** Combine Fan-out and Funnel
 
-**Sequence Pattern** Tas or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+**Sequence Pattern** Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
 
 **Multi-sequence Pattern** Multi sequences of task that can run in parallel with each other.
 
@@ -784,171 +784,155 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 #### A data engineering team needs to be granted access to metrics on a job run. Each team member has user access without any additional privileges.
-Which of the following tasks can be performed by an administrator so that each member of the team has access to the metrics? Select one response.
+#### Which of the following tasks can be performed by an administrator so that each member of the team has access to the metrics? Select one response.
 
  
 
 
-The workspace administrator can set the maximum number of users who can access the table at the group level.
+&nbsp;&nbsp;&nbsp;&nbsp;The workspace administrator can set the maximum number of users who can access the table at the group level.
 
-**The platform administrator can set who can view job results or manage runs of a job with access control lists at the user or group level.**
+&nbsp;&nbsp;&nbsp;&nbsp;**The platform administrator can set who can view job results or manage runs of a job with access control lists at the user or group level.**
 
-The platform administrator can set who can search for jobs by id or grant access permissions with access control lists at the user or group level.
+&nbsp;&nbsp;&nbsp;&nbsp;The platform administrator can set who can search for jobs by id or grant access permissions with access control lists at the user or group level.
 
-The platform administrator can set who can grant access permissions or view job history with access control lists at the user level.
+&nbsp;&nbsp;&nbsp;&nbsp;The platform administrator can set who can grant access permissions or view job history with access control lists at the user level.
 
-The workspace administrator can set the maximum number of users who can access the table at the user level.
+&nbsp;&nbsp;&nbsp;&nbsp;The workspace administrator can set the maximum number of users who can access the table at the user level.
 
 
 #### A data engineer has a notebook that ingests data from a single data source and stores it in an object store. 
-The engineer has three other notebooks that read from the data in the object store and perform various data transformations.
- The engineer would like to run these three notebooks in parallel after the ingestion notebook finishes running.
-
- 
-
-Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
-
- 
-
-
-Funnel pattern
-
-Hourglass pattern
-
-Multi-sequence pattern
-
-**Fan-out pattern**
-
-Sequence pattern
-
-#### A data engineer is running a workflow orchestration on a shared job cluster. They notice that the job they are running is failing and want to use the repair tool to fix the pipeline. 
-
-Which of the following statements describes how Databricks assigns a cluster to the repaired job run? Select one response.
+#### The engineer has three other notebooks that read from the data in the object store and perform various data transformations.
+#### The engineer would like to run these three notebooks in parallel after the ingestion notebook finishes running.
+#### Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
 
  
 
 
-A new job cluster will be automatically created with the same configuration as the shared job cluster to run the repair tool on the job run.
+&nbsp;&nbsp;&nbsp;&nbsp;Funnel pattern
 
-The same job cluster will temporarily pause until the job has been repaired. A new job cluster will be created to run the repair tool on the job run.
+&nbsp;&nbsp;&nbsp;&nbsp;Hourglass pattern
 
-**A new single-user job cluster will be created to run the repair tool on the job run.**
+&nbsp;&nbsp;&nbsp;&nbsp;Multi-sequence pattern
 
-A new all-purpose job cluster will be created to run the repair tool on the job run.
+&nbsp;&nbsp;&nbsp;&nbsp;**Fan-out pattern**
 
-The same shared job cluster will be used to run the repair tool on the job run.
+&nbsp;&nbsp;&nbsp;&nbsp;Sequence pattern
+
+#### A data engineer is running a workflow orchestration on a shared job cluster.
+#### They notice that the job they are running is failing and want to use the repair tool to fix the pipeline. 
+#### Which of the following statements describes how Databricks assigns a cluster to the repaired job run? Select one response.
+
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;**A new job cluster will be automatically created with the same configuration as the shared job cluster to run the repair tool on the job run.**  
+
+&nbsp;&nbsp;&nbsp;&nbsp;The same job cluster will temporarily pause until the job has been repaired. A new job cluster will be created to run the repair tool on the job run.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A new single-user job cluster will be created to run the repair tool on the job run.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A new all-purpose job cluster will be created to run the repair tool on the job run.
+
+&nbsp;&nbsp;&nbsp;&nbsp;The same shared job cluster will be used to run the repair tool on the job run.
 
 
 #### A data engineer needs to view whether each task within a job run succeeded.
-
- 
-
-Which of the following steps can the data engineer complete to view this information? Select one response.
-
- 
+#### Which of the following steps can the data engineer complete to view this information? Select one response. CHECK!!
 
 
-**They can review the job run history from the Job run details page.**
+&nbsp;&nbsp;&nbsp;&nbsp;**They can review the job run history from the Job run details page.**
 
-They can review the task output from the notebook commands.
+&nbsp;&nbsp;&nbsp;&nbsp;They can review the task output from the notebook commands.
 
-They can review the job run history from the Workflow Details page.
+&nbsp;&nbsp;&nbsp;&nbsp;They can review the job run history from the Workflow Details page.
 
-They can review job run output from the resultant directed acyclic graph (DAG).
+&nbsp;&nbsp;&nbsp;&nbsp;They can review job run output from the resultant directed acyclic graph (DAG).
 
-They can review the task history by clicking on each task in the workflow.
+&nbsp;&nbsp;&nbsp;&nbsp;They can review the task history by clicking on each task in the workflow.
 
 
 #### A data engineering team has been using a Databricks SQL query to monitor the performance of an ELT job. 
-The ELT job is triggered when a specific number of input records are ready to be processed. 
-The Databricks SQL query returns the number of records added since the job’s most recent runtime.
- The team has manually reviewed some of the records and knows that at least one of them will be successfully processed without violating any constraints.
-Which of the following approaches can the data engineering team use to be notified if the ELT job did not complete successfully? Select one response.
-
- 
+#### The ELT job is triggered when a specific number of input records are ready to be processed. 
+#### The Databricks SQL query returns the number of records added since the job’s most recent runtime.
+#### The team has manually reviewed some of the records and knows that at least one of them will be successfully processed without violating any constraints.
+#### Which of the following approaches can the data engineering team use to be notified if the ELT job did not complete successfully? Select one response.
 
 
-They can set up an alert for the job to notify them when a record has been added to the target dataset.
+&nbsp;&nbsp;&nbsp;&nbsp;They can set up an alert for the job to notify them when a record has been added to the target dataset.
 
-**They can set up an alert for the job to notify them if the returned value of the SQL query is less than 1.**
+&nbsp;&nbsp;&nbsp;&nbsp;**They can set up an alert for the job to notify them if the returned value of the SQL query is less than 1.**
 
-This type of alerting is not possible in Databricks.
+&nbsp;&nbsp;&nbsp;&nbsp;This type of alerting is not possible in Databricks.
 
-They can set up an alert for the job to notify them when a record has been flagged as invalid.
+&nbsp;&nbsp;&nbsp;&nbsp;They can set up an alert for the job to notify them when a record has been flagged as invalid.
 
-They can set up an alert for the job to notify them when a constraint has been violated.
+&nbsp;&nbsp;&nbsp;&nbsp;They can set up an alert for the job to notify them when a constraint has been violated.
 
 
 
 #### Which of the following tools can be used to create a Databricks Job? Select three responses.
 
-**Job Scheduler UI**
-External Git repository
-**Databricks CLI**
-**Jobs REST API**
-Data Explorer
-Single Choice
+&nbsp;&nbsp;&nbsp;&nbsp;**Job Scheduler UI**  
+&nbsp;&nbsp;&nbsp;&nbsp;External Git repository  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks CLI**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Jobs REST API**  
+&nbsp;&nbsp;&nbsp;&nbsp;Data Explorer  
+&nbsp;&nbsp;&nbsp;&nbsp;Single Choice  
 
 #### A data engineer is using Workflows to run a multi-hop (medallion) ETL workload. They notice that the workflow will not complete because one of the tasks is failing.
+#### Which of the following describes the order of execution when running the repair tool? Select one response.
 
-Which of the following describes the order of execution when running the repair tool? Select one response.
 
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use the repair feature to re-run only the failed task and sub-tasks.**
 
-**The data engineer can use the repair feature to re-run only the failed task and sub-tasks.**
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use the repair feature to re-run only the sub-tasks of the failed task.
 
-The data engineer can use the repair feature to re-run only the sub-tasks of the failed task.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use the repair feature to re-run only the failed task and the task it depends on.
 
-The data engineer can use the repair feature to re-run only the failed task and the task it depends on.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use the repair feature to re-run only the failed task and the tasks following it.
 
-The data engineer can use the repair feature to re-run only the failed task and the tasks following it.
-
-The data engineer can use the repair feature to re-run only the failed sub-tasks.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use the repair feature to re-run only the failed sub-tasks.
 
 
 
 #### Which of the following workloads can be configured using Databricks Workflows? Select three responses.
 
-**A job running on a triggered schedule with dependent tasks**
-**An ETL job with batch and streaming data**
-A job with Python, SQL, and Scala tasks
-A data analysis job that uses R notebooks
-**A custom task where data is extracted from a JAR file**
+&nbsp;&nbsp;&nbsp;&nbsp;**A job running on a triggered schedule with dependent tasks**
+&nbsp;&nbsp;&nbsp;&nbsp;**An ETL job with batch and streaming data**
+&nbsp;&nbsp;&nbsp;&nbsp;A job with Python, SQL, and Scala tasks
+&nbsp;&nbsp;&nbsp;&nbsp;A data analysis job that uses R notebooks
+&nbsp;&nbsp;&nbsp;&nbsp;**A custom task where data is extracted from a JAR file**
 
 
 
-####A data engineer needs their pipeline to run every 12 minutes. 
-Which of the following approaches automates this process? Select one response.
-
- 
+#### A data engineer needs their pipeline to run every 12 minutes. 
+#### Which of the following approaches automates this process? Select one response.
 
 
-**The data engineer can set the job’s schedule with custom cron syntax.**
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can set the job’s schedule with custom cron syntax.**
 
-The data engineer can call the Apache AirFlow API to set the job’s schedule.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can call the Apache AirFlow API to set the job’s schedule.
 
-The data engineer can use custom Python code to set the job’s schedule.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use custom Python code to set the job’s schedule.
 
-The data engineer can manually pause and start the job every 12 minutes.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can manually pause and start the job every 12 minutes.
 
-This type of scheduling cannot be done with Databricks Workflows.
+&nbsp;&nbsp;&nbsp;&nbsp;This type of scheduling cannot be done with Databricks Workflows.
 
 
 
 #### A data engineer needs to configure the order of tasks to run in their ETL workload. The workload has two tasks, Task A and Task B, where Task B can only be run if Task A succeeds.
-Which of the following statements describes the dependencies that the data engineer needs to configure and the order they need to be run in? Select one response.
+#### Which of the following statements describes the dependencies that the data engineer needs to configure and the order they need to be run in? Select one response.
 
  
 
+&nbsp;&nbsp;&nbsp;&nbsp;**They need to add Task B as a dependency of Task A and run the tasks in sequence.**
 
-**They need to add Task B as a dependency of Task A and run the tasks in sequence.**
+&nbsp;&nbsp;&nbsp;&nbsp;They need to add Task B as a subtask of Task A and run the tasks in sequence.
 
-They need to add Task B as a subtask of Task A and run the tasks in sequence.
+&nbsp;&nbsp;&nbsp;&nbsp;They need to add Task B as a dependency of Task A and run the tasks in parallel.
 
-They need to add Task B as a dependency of Task A and run the tasks in parallel.
+&nbsp;&nbsp;&nbsp;&nbsp;They need to add Task B as a subtask of Task A and run the tasks in parallel.
 
-They need to add Task B as a subtask of Task A and run the tasks in parallel.
-
-They need to add Task A as a dependency of Task B and run the tasks in sequence.
+&nbsp;&nbsp;&nbsp;&nbsp;They need to add Task A as a dependency of Task B and run the tasks in sequence.
 
 
 
@@ -1060,11 +1044,11 @@ They need to add Task A as a dependency of Task B and run the tasks in sequence.
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;They can view how many records were added to the target dataset from the accompanying SQL dashboard.
-&nbsp;&nbsp;&nbsp;&nbsp;They can view information on the percentage of records that succeeded each data expectation from the audit log.
-&nbsp;&nbsp;&nbsp;&nbsp;They can view the duration of each task from the Pipeline details page.
-&nbsp;&nbsp;&nbsp;&nbsp;**They can view how many records were dropped from the Pipeline details page.**
-&nbsp;&nbsp;&nbsp;&nbsp;**They can view the percentage of records that failed each data expectation from the Pipeline details page.**
+&nbsp;&nbsp;&nbsp;&nbsp;They can view how many records were added to the target dataset from the accompanying SQL dashboard.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can view information on the percentage of records that succeeded each data expectation from the audit log.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can view the duration of each task from the Pipeline details page.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can view how many records were dropped from the Pipeline details page.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can view the percentage of records that failed each data expectation from the Pipeline details page.**  
 
 
 
@@ -1160,3 +1144,39 @@ They need to add Task A as a dependency of Task B and run the tasks in sequence.
 &nbsp;&nbsp;&nbsp;&nbsp;Alert  
 &nbsp;&nbsp;&nbsp;&nbsp;Experiment  
 &nbsp;&nbsp;&nbsp;&nbsp;**Cluster**  
+
+
+## Data Access Control and Unity Catalog
+
+**Data Access Control**: Control who has access to which data.
+**Data Access Audit**: Capture and record all access to data.
+**Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.
+&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources** refers to the origins of datga ow where data comes from.
+&nbsp;&nbsp;&nbsp;&nbsp;**Downstream** refers where the data go ather being processed or transformed.
+
+
+**Challenges in the Data Lake**
+&nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls
+&nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer
+&nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model
+&nbsp;&nbsp;&nbsp;&nbsp;Hard to audit
+&nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.
+
+**Unity Catalog**
+&nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.
+&nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.
+&nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.
+
+
+**Key Concepts**
+-- image Metastore elements
+-- image Three-level Namespace
+-- Before and after unity Catalog
+
+
+**Unity Catalog Roles**
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Cloud Administrator** Administer underlying cloud resources
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Storage accounts/buckets
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- role/service Principals/Managed Identities.
+&nbsp;&nbsp;&nbsp;&nbsp;
