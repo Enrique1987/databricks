@@ -1325,7 +1325,7 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 #### Which of the following queries correctly upgrades the table to be managed by Unity Catalog? Select one response.
 
  
-````
+```
 CREATE TABLE customers.updated_records.updated_silver --> correct
 AS SELECT * FROM hive_metastore.records.records_silver;
 
