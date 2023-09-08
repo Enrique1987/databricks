@@ -1150,6 +1150,7 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 ### Theorie
 
+**Unity Catalog**: Centralized and managed metastore that provides a unified way to manage, discover and govern data across multiple workspaces.
 **Data Access Control**: Control who has access to which data.  
 **Data Access Audit**: Capture and record all access to data.  
 **Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.  
@@ -1165,8 +1166,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.  
 
 **Unity Catalog**  
-&nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.  
-&nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.  
+&nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.    
+&nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.   
 &nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.  
 
 
@@ -1263,7 +1264,7 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT READ FILES ON STORAGE CREDENTIAL `${path}` TO `students`;  
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT WRITE FILES ON STORAGE CREDENTIAL `${path}` TO `students`;  
-&nbsp;&nbsp;&nbsp;&nbsp;**GRANT READ FILES ON EXTERNAL LOCATION `${path}` TO `students`;**
+&nbsp;&nbsp;&nbsp;&nbsp;**GRANT READ FILES ON EXTERNAL LOCATION `${path}` TO `students`;**  
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT CREATE TABLE ON EXTERNAL LOCATION `${path}` TO `students`;  
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT WRITE FILES ON EXTERNAL LOCATION `${path}` TO `students`;  
 
@@ -1324,7 +1325,14 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 #### A data engineer needs to upgrade the Delta table records_silver from the old schema records to a Unity Catalog table updated_silver within the catalog customers and the new schema updated_records. 
 #### Which of the following queries correctly upgrades the table to be managed by Unity Catalog? Select one response.
 
- 
+*Answer*:  catalog.schema.table  
+
+catalog = `customers`  
+schema = `update_records`   
+table = `updated_silver`  
+
+
+
 ```
 CREATE TABLE customers.updated_records.updated_silver --> correct
 AS SELECT * FROM hive_metastore.records.records_silver;
