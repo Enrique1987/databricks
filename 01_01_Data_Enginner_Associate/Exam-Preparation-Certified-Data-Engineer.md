@@ -1157,14 +1157,14 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;**Downstream** refers where the data go ather being processed or transformed.  
 
 
-**Challenges in the Data Lake**
+**Challenges in the Data Lake**  
 &nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls   
 &nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer  
 &nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model  
 &nbsp;&nbsp;&nbsp;&nbsp;Hard to audit  
 &nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.  
 
-**Unity Catalog**
+**Unity Catalog**  
 &nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.  
 &nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.  
 &nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.  
