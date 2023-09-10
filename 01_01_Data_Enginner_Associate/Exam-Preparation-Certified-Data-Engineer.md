@@ -3,17 +3,17 @@
 
 ### Theorie
 
-**DLT vs Stream DLT
+**DLT vs Stream DLT**  
 DLT for batch processing and automates data managemen, while Stream DLT enables real-time.
 
-**DLT vs DT**
+**DLT vs DT**  
 DLT are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.
 
-**Stream Live Table (SLT):** For real-time streaming data ingestion and processing.
-**Delta Live Table (DLT):** For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.
-**Delta Table:** For less frequent batch updates (e.g., daily or weekly). Provides the foundational features for versioning, ACID transactions, and optimized querying.
+**Stream Live Table (SLT):** For real-time streaming data ingestion and processing.  
+**Delta Live Table (DLT):** For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.  
+**Delta Table:** For less frequent batch updates (e.g., daily or weekly). Provides the foundational features for versioning, ACID transactions, and optimized querying.  
 
-**Auto Loader** is when you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
+**Auto Loader** Is when you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.
 
 **DLT** Delta Live Tables in Databricks provide structured streaming capabilities, which allow data to be continuosly ingested, processed and written to Delta tables.
@@ -1351,7 +1351,7 @@ AS SELECT * FROM hive_metastore.records.records_silver;
 ```
 
 
-#### A data engineer needs to configure their cluster to enable Unity Catalog. They have workspace administrator privileges only.
+#### A data engineer needs to configure their cluster to enable Unity Catalog. They have workspace administrator privileges only. CHECK again
 #### Which of the following steps needs to be completed for the data engineer to enable Unity Catalog on their cluster? Select two responses.
 
  
@@ -1364,19 +1364,19 @@ AS SELECT * FROM hive_metastore.records.records_silver;
 
 #### Which of the following lists the four key functional areas of data governance? Select one response.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Data history, data access control, data integrity, data validation
-&nbsp;&nbsp;&nbsp;&nbsp;Data optimization, data access audit, data analysis, data discovery
-&nbsp;&nbsp;&nbsp;&nbsp;Data integrity, data optimization, data lineage, data science
-&nbsp;&nbsp;&nbsp;&nbsp;Data science, data integrity, data lineage, data versioning
-&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery**
+&nbsp;&nbsp;&nbsp;&nbsp;Data history, data access control, data integrity, data validation  
+&nbsp;&nbsp;&nbsp;&nbsp;Data optimization, data access audit, data analysis, data discovery  
+&nbsp;&nbsp;&nbsp;&nbsp;Data integrity, data optimization, data lineage, data science  
+&nbsp;&nbsp;&nbsp;&nbsp;Data science, data integrity, data lineage, data versioning  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery**  
 
-#### Which of the following statements correctly identifies the benefits of using a managed table over an external table? Select two responses.
+#### Which of the following statements correctly identifies the benefits of using a managed table over an external table? Select two responses.CHECK
 
-&nbsp;&nbsp;&nbsp;&nbsp;Additional storage credentials are not needed to manage access to the underlying cloud storage for a managed table.
-&nbsp;&nbsp;&nbsp;&nbsp;Unity Catalog supports managed tables, but does not support external tables.
-&nbsp;&nbsp;&nbsp;&nbsp;External tables support multiple formats, while managed tables only support Delta format.
-&nbsp;&nbsp;&nbsp;&nbsp;When managed tables are dropped, the underlying data and metadata are dropped as well.
-&nbsp;&nbsp;&nbsp;&nbsp;Managed tables support multiple formats, while external tables only support external formats.
+&nbsp;&nbsp;&nbsp;&nbsp;Additional storage credentials are not needed to manage access to the underlying cloud storage for a managed table.  
+&nbsp;&nbsp;&nbsp;&nbsp;Unity Catalog supports managed tables, but does not support external tables.  
+&nbsp;&nbsp;&nbsp;&nbsp;External tables support multiple formats, while managed tables only support Delta format.  
+&nbsp;&nbsp;&nbsp;&nbsp;When managed tables are dropped, the underlying data and metadata are dropped as well.  
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables support multiple formats, while external tables only support external formats.  
 
 #### In which of the following locations are the metadata related to metastore-managed data objects (like a table’s columns and data types) stored? Select one response.
 
@@ -1389,14 +1389,14 @@ AS SELECT * FROM hive_metastore.records.records_silver;
 
 #### Which of the following security modes supports Unity Catalog? Select two responses.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Passthrough only mode
-&nbsp;&nbsp;&nbsp;&nbsp;Table ACL only mode
-&nbsp;&nbsp;&nbsp;&nbsp;None (no security)
-&nbsp;&nbsp;&nbsp;&nbsp;**User isolation mode**
-&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode**
+&nbsp;&nbsp;&nbsp;&nbsp;Passthrough only mode  
+&nbsp;&nbsp;&nbsp;&nbsp;Table ACL only mode  
+&nbsp;&nbsp;&nbsp;&nbsp;None (no security)  
+&nbsp;&nbsp;&nbsp;&nbsp;**User isolation mode**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode**  
 
 
-#### A metastore administrator has enabled identity federation for a Unity Catalog namespace.(acawoke)
+#### A metastore administrator has enabled identity federation for a Unity Catalog namespace.(acawokex2)
 #### Which of the following correctly describes the privileges that users who have access to the catalog now have? Select two responses.
 
  
@@ -1453,16 +1453,16 @@ AS SELECT * FROM hive_metastore.records.records_silver;
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by creating a storage credential and sharing it with a group that includes everyone who needs access to the file.  
 
 
-#### A data engineer needs to copy an external table from their default Hive metastore to the Unity Catalog metastore.
+#### A data engineer needs to copy an external table from their default Hive metastore to the Unity Catalog metastore.(creuppa)
 #### Which of the following are required to upgrade the table to be managed by Unity Catalog? Select three responses. 
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must create their own Hive metastore.
-&nbsp;&nbsp;&nbsp;&nbsp;T**he data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.**
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.**
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have workspace administrator level privileges.
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.**
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must create their own Hive metastore.  
+&nbsp;&nbsp;&nbsp;&nbsp;T**he data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have workspace administrator level privileges.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.**  
 
 
 
@@ -1491,10 +1491,11 @@ AS SELECT * FROM hive_metastore.records.records_silver;
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new job cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new Databricks SQL dashboard.  
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to attach their query to a new SQL warehouse.**  
+&nbsp;&nbsp;&nbsp;&nbsp;*In some scenarions, organizations might want to move their processed data to a SQL warehouse like Snowflake or Redshift*  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to an existing all-purpose cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new pipeline.  
 
-#### A lead data engineer needs to create a new workspace for their team. They only have workspace administrator privileges.(iaa)
+#### A lead data engineer needs to create a new workspace for their team. They only have workspace administrator privileges.(iaa-a)
 #### Which of the following tasks needs to be performed so that the data engineer is granted the necessary permissions to create the workspace? Select one response.
 
  
