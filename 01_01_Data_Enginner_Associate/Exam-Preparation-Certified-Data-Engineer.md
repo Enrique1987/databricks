@@ -136,7 +136,7 @@ the engineer can piece together the data flow from start to finish.*
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the checkpointing directory.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the Auto Loader directory.  
 &nbsp;&nbsp;&nbsp;&nbsp;**The contents of the table directory can be viewed through the metastore.**  
-&nbsp;&nbsp;&nbsp;&nbsp;*The metastore is where the metadata of tables, including their locations schema and other properties are sotred. By querying the metastore you can find out wherethe data 
+&nbsp;&nbsp;&nbsp;&nbsp;*The metastore is where the metadata of tables, including their locations schema and other properties are sotred.By querying the metastore you can find out wherethe data*    
 &nbsp;&nbsp;&nbsp;&nbsp;for a particular table is stored and access its directory path.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the flow definition’s output dataset.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the event log.  
@@ -147,7 +147,7 @@ the engineer can piece together the data flow from start to finish.*
 #### A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task. 
 #### Which of the following describes how to explore the output for each task in the pipeline? Select one response.
 
-*note  that the question is "ouput of task" no the ouput of every table or the result, here the focus is just on task
+*note  that the question is "ouput of task" no the ouput of every table or the result, here the focus is just on task*
 
  
 &nbsp;&nbsp;&nbsp;&nbsp;They can run the commands connected to each task from within the DLT notebook after deploying the pipeline.
@@ -200,7 +200,7 @@ Which of the following lines of code correctly fills in the blank? Select two re
 
 
 #### A data engineer is using the code below to create a new table transactions_silver from the table transaction_bronze. 
-However, when running the code, an error is thrown.
+#### However, when running the code, an error is thrown.
 
  
 ```
@@ -212,51 +212,34 @@ FROM LIVE.transactions_bronze
 
 ```
 
-Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
+#### Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
 
- 
-
-
-LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Initializing stage.
-
-**A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Initializing stage.**
-
-The EXPECT statement needs to be changed to EXPECT (order_timestamp is NOT NULL). The error will be detected during the Setting Up Tables stage.
-
-A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Setting Up Tables stage.
-
-LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Setting Up Tables stage.
+&nbsp;&nbsp;&nbsp;&nbsp;LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Initializing stage.  
+&nbsp;&nbsp;&nbsp;&nbsp;**A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Initializing stage.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The EXPECT statement needs to be changed to EXPECT (order_timestamp is NOT NULL). The error will be detected during the Setting Up Tables stage.  
+&nbsp;&nbsp;&nbsp;&nbsp;A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Setting Up Tables stage.  
+&nbsp;&nbsp;&nbsp;&nbsp;LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Setting Up Tables stage.  
 
 
-
-
-#### Which of the following statements accurately describes the difference in behavior between 	s and live tables? Select one response.
+#### Which of the following statements accurately describes the difference in behavior between 	Live Views and live tables? Select one response.  
 
 *remembering*
-
 **Live Tables**: Tables that are define within a DLT pipeline. The data within these tables is written to disk,
 they support features like enforcing data quality, versioning and transactional guarantees.  
-
 **Live Views**: They are intermediate or temporary views taht are used within the context of a DLT pipeline. They allow you to manipulate and transform datga within a pipeline,
 but do not store results to a disk as a persistent table does.
 
-knowing that definition, the most acurate answer is:
+####knowing that definition, the most acurate answer is:
 
-
-Live tables can be used to enforce data quality, while views do not have the same guarantees in schema enforcement.
-
-**The results of live tables are stored to disk, while the results of views can only be referenced from within the DLT pipeline in which they are defined.**
-
-Live tables can be used with a stream as its source, while live views are incompatible with structured streaming.
-
-Metrics for live tables can be collected and reported, while data quality metrics for views are abstracted to the user.
-
-The results of live tables can be viewed through a Directed Acyclic Graph (DAG), while the results for live views cannot.
-
+&nbsp;&nbsp;&nbsp;&nbsp;Live tables can be used to enforce data quality, while views do not have the same guarantees in schema enforcement.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The results of live tables are stored to disk, while the results of views can only be referenced from within the DLT pipeline in which they are defined.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Live tables can be used with a stream as its source, while live views are incompatible with structured streaming.  
+&nbsp;&nbsp;&nbsp;&nbsp;Metrics for live tables can be collected and reported, while data quality metrics for views are abstracted to the user.  
+&nbsp;&nbsp;&nbsp;&nbsp;The results of live tables can be viewed through a Directed Acyclic Graph (DAG), while the results for live views cannot.  
 
 
 #### A data engineer needs to add a file path to their DLT pipeline. They want to use the file path throughout the pipeline as a parameter for various statements and functions.
-Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.
+**Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.**
 
 
 They can add a widget to the notebook and then perform a string substitution of the file path.
