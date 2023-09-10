@@ -45,7 +45,7 @@ view the contents of the table directory. Are desing to capure various acxtiviti
 **Checkpointing directory** Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
 
 **What DAG primarily does?**  
-DAG visualizes the sequence and dependencies of taks.
+DAG visualizes the sequence and dependencies of taks. There you can go to the Pipeline Details page and click on the individual tables.  
 
 **Task Details** Typically provide information about the task´s execution, status, duration.	
 
@@ -115,65 +115,58 @@ the engineer can piece together the data flow from start to finish.*
 
 
 #### A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
-#### Which of the following modes do they need to use and why? 
-Select one response###
+#### Which of the following modes do they need to use and why? Select one.
+
+	**my opinion**: It depends to of how for who and how going to be that data consume, for example if we had a source raw data that is beeing incremented every 5 minutes with new resuls
+	but the at the end after the transformations from raw data to Gold data, the people taht is examinating that data they are just doing that one a week o one a day, it doesnt make
+	sense to have a DTL with his cost continuesly inserting data if we can acchive the same results with a manual trigger once a day (or a week)
 
  
-Continuous; continuous pipelines ingest new data as it arrives.
-
-Triggered; triggered pipelines update once and cannot be updated again for 24 hours.
-
-Triggered; triggered pipelines update once and cannot be updated again until they are manually run.
-
-**Triggered; triggered pipelines run once and then shut down until the next manual or scheduled update.**
-
-Continuous; continuous pipelines run at set intervals and then shut down until the next manual or scheduled update.
+&nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines ingest new data as it arrives.  
+&nbsp;&nbsp;&nbsp;&nbsp;Triggered; triggered pipelines update once and cannot be updated again for 24 hours.  
+&nbsp;&nbsp;&nbsp;&nbsp;Triggered; triggered pipelines update once and cannot be updated again until they are manually run.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Triggered; triggered pipelines run once and then shut down until the next manual or scheduled update.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines run at set intervals and then shut down until the next manual or scheduled update.
 
 
 
 #### Which of the following correctly describes how to access contents of the table directory? Select one response.
 
 
-The contents of the table directory can be viewed through the checkpointing directory.
-
-The contents of the table directory can be viewed through the Auto Loader directory.
-
-**The contents of the table directory can be viewed through the metastore.**
-*The metastore is where the metadata of tables, including their locations schema and other properties are sotred. By querying the metastore you can find out wherethe data 
-for a particular table is stored and access its directory path.
-
-The contents of the table directory can be viewed through the flow definition’s output dataset.
-
-The contents of the table directory can be viewed through the event log
+&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the checkpointing directory.  
+&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the Auto Loader directory.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The contents of the table directory can be viewed through the metastore.**  
+&nbsp;&nbsp;&nbsp;&nbsp;*The metastore is where the metadata of tables, including their locations schema and other properties are sotred. By querying the metastore you can find out wherethe data 
+&nbsp;&nbsp;&nbsp;&nbsp;for a particular table is stored and access its directory path.  
+&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the flow definition’s output dataset.  
+&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the event log.  
 
 
 
 
-#### A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task.
-Which of the following describes how to explore the output for each task in the pipeline? Select one response.
+#### A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task. 
+#### Which of the following describes how to explore the output for each task in the pipeline? Select one response.
+
+*note  that the question is "ouput of task" no the ouput of every table or the result, here the focus is just on task
 
  
-They can run the commands connected to each task from within the DLT notebook after deploying the pipeline.
-*Not typically how pipelines are debugged, command manually from the notebook to verify task outpus can be inefficient and can also create unnecessary executions*
+&nbsp;&nbsp;&nbsp;&nbsp;They can run the commands connected to each task from within the DLT notebook after deploying the pipeline.
+&nbsp;&nbsp;&nbsp;&nbsp;*Not typically how pipelines are debugged, command manually from the notebook to verify task outpus can be inefficient and can also create unnecessary executions*
 
-They can display the output for each individual command from within the notebook using the %run command.
-*doenst make sense that answer*
+&nbsp;&nbsp;&nbsp;&nbsp;They can display the output for each individual command from within the notebook using the %run command.
+&nbsp;&nbsp;&nbsp;&nbsp;*doenst make sense that answer*
 
-They can specify a folder for the task run details during pipeline configuration.
+&nbsp;&nbsp;&nbsp;&nbsp;They can specify a folder for the task run details during pipeline configuration.
 
-They can go to the Job Runs page and click on the individual tables in the job run history.
+&nbsp;&nbsp;&nbsp;&nbsp;They can go to the Job Runs page and click on the individual tables in the job run history.
 
-**They can go to the Pipeline Details page and click on the individual tables in the resultant Directed Acyclic Graph (DAG).**
-
-
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;**They can go to the Pipeline Details page and click on the individual tables in the resultant Directed Acyclic Graph (DAG).**
 
 
 #### A data engineer has created the following query to create a streaming live table from transactions.
 
  
-
+```
 Code block:
 
 CREATE OR REFRESH STREAMING LIVE TABLE transactions
@@ -182,27 +175,28 @@ AS SELECT timestamp(transaction_timestamp) AS transaction_timestamp, * EXCEPT (t
 
 ________________________
 
+```
 
 Which of the following lines of code correctly fills in the blank? Select two responses.
 
  
 
-FROM STREAMING LIVE.transactions  
-FROM DELTA STREAM(LIVE.transactions)  
-**FROM STREAM(LIVE.transactions)**  
-FROM STREAMING LIVE (transactions)  
-**FROM LIVE.transactions**  
+&nbsp;&nbsp;&nbsp;&nbsp;FROM STREAMING LIVE.transactions  
+&nbsp;&nbsp;&nbsp;&nbsp;FROM DELTA STREAM(LIVE.transactions)  
+&nbsp;&nbsp;&nbsp;&nbsp;**FROM STREAM(LIVE.transactions)**  
+&nbsp;&nbsp;&nbsp;&nbsp;FROM STREAMING LIVE (transactions)  
+&nbsp;&nbsp;&nbsp;&nbsp;**FROM LIVE.transactions**  
 
 
-#### Which of the following data quality metrics are captured through row_epectations in a pipeline’s event log? Select three responses.
+#### Which of the following data quality metrics are captured through `row_epectations´ in a pipeline’s event log? Select three responses.
 
  
 
-**Failed records**  
-**Name**
-Flow progress  
-**Dataset**  
-Update ID
+&nbsp;&nbsp;&nbsp;&nbsp;**Failed records**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Name**  
+&nbsp;&nbsp;&nbsp;&nbsp;Flow progress  
+&nbsp;&nbsp;&nbsp;&nbsp;**Dataset**  
+&nbsp;&nbsp;&nbsp;&nbsp;Update ID  
 
 
 #### A data engineer is using the code below to create a new table transactions_silver from the table transaction_bronze. 
