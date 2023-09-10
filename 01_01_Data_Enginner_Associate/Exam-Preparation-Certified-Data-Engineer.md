@@ -238,8 +238,8 @@ but do not store results to a disk as a persistent table does.
 &nbsp;&nbsp;&nbsp;&nbsp;The results of live tables can be viewed through a Directed Acyclic Graph (DAG), while the results for live views cannot.  
 
 
-#### A data engineer needs to add a file path to their DLT pipeline. They want to use the file path throughout the pipeline as a parameter for various statements and functions.
-**Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.**
+**A data engineer needs to add a file path to their DLT pipeline. They want to use the file path throughout the pipeline as a parameter for various statements and functions.
+Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.**
 
 
 They can add a widget to the notebook and then perform a string substitution of the file path.
