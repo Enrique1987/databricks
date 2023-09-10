@@ -4,10 +4,11 @@
 ### Theorie
 
 **DLT vs Stream DLT**  
-DLT for batch processing and automates data managemen, while Stream DLT enables real-time.
+`DLT` for (mini or often)batch processing and automates data managemen, while `Stream DLT` enables real-time.
 
 **DLT vs DT**  
-DLT are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.
+`DLT` are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
+`DT`: Less frequent batch updates.  
 
 **Stream Live Table (SLT):** For real-time streaming data ingestion and processing.  
 **Delta Live Table (DLT):** For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.  
