@@ -280,7 +280,7 @@ SELECT * FROM csv.`${path}`;**
 
 &nbsp;&nbsp;&nbsp;&nbsp;The query loads the contents of a directory of CSV files from a source table to a target table.  
 &nbsp;&nbsp;&nbsp;&nbsp;The query streams data from a directory of CSV files into a table.  
-&nbsp;&nbsp;&nbsp;&nbsp;The query displays the underlying file contents of a directory of CSV files.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The query displays the underlying file contents of a directory of CSV files.**
 &nbsp;&nbsp;&nbsp;&nbsp;The query converts a directory of files into CSV format.  
 &nbsp;&nbsp;&nbsp;&nbsp;The query displays the metadata of a directory of CSV files.  
 
@@ -293,7 +293,7 @@ Which of the following lines of code correctly fills in the blank by adding the 
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_time("end_date"), user_last_touch_timestamp, "MMM d, yyyy")  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_time("end_date"),user_last_touch_timestamp, "HH:mm:ss")  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("end_date", CAST(user_last_touch_timestamp) as date_format)  
-&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))  
+&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))**  
 
 
 **A data engineer has a table records with a column email. They want to check if there are null values in the email column. 
@@ -301,7 +301,7 @@ Which of the following approaches accomplishes this? Select one response.**
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.**    
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null using SELECT DISTINCT records.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by pivoting the table on null values.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.  
@@ -336,7 +336,7 @@ exploded_eventsDF
 
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")  
-&nbsp;&nbsp;&nbsp;&nbsp;array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")  
+&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")**    
 &nbsp;&nbsp;&nbsp;&nbsp;array_distinct(extract(collect_set(events.event_id))).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(extract(events.event_id)).alias("event_history")  
 
@@ -350,9 +350,9 @@ Which of the following SQL commands accomplishes this task? Select one response.
 
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;  
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;  
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;     
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;  
+&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;**  
 
 
 
@@ -363,17 +363,17 @@ Which of the following SQL commands accomplishes this task? Select one response.
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.groupBy(nulls)  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
-&nbsp;&nbsp;&nbsp;&nbsp;usersDF.distinct()  
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.distinct()**  
 
 
 
 **Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
-&nbsp;&nbsp;&nbsp;&nbsp;usersDF.selectExpr("count_if(email IS NULL)")  
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.selectExpr("count_if(email IS NULL)")**   
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.distinct()  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
-&nbsp;&nbsp;&nbsp;&nbsp;usersDF.where(col("email").isNull()).count()  
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.where(col("email").isNull()).count()**  
 
 
 
@@ -382,17 +382,18 @@ The data engineer now needs to flatten the struct fields back into individual co
 
  
 
-date string
-month string
-event_type StructType<id string, size int>
+	date string
+	month string
+	event_type StructType<id string, size int>
 
  
 
 **Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response. **   
 
- 
 
-&nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access id in event_type.  
+	Tipp: if the question says "have already been converted into structu types" answer wouls be acces via "." if not the access is via ":"
+
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use . syntax to access id in event_type.**  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use event_type.* to pull out id into its own column.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use : syntax to access id in event_type.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the columns for id.  
@@ -415,8 +416,8 @@ SELECT DISTINCT_COUNT(*) FROM emails AS OF VERSION 1;
 REFRESH TABLE emails;
 SELECT COUNT(*) FROM emails WHEN UPDATED = TRUE;
 
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails;
+**REFRESH TABLE emails;
+SELECT COUNT(*) FROM emails;**
 
 REFRESH TABLE emails;
 SELECT DISTINCT_COUNT(*) FROM emails;
@@ -446,7 +447,7 @@ first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the statement that registers the function.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can eliminate the statement that registers the function.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the parameters in the function declaration.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the import statement in the beginning of the code block.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate "sql_udf" from the statement that registers the function.  
@@ -463,7 +464,7 @@ Which of the following commands do they need to use? Select one response.**
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM path LOCATION `${path}`;  
 &nbsp;&nbsp;&nbsp;&nbsp;DISPLAY TABLE json.`${path}`;  
 &nbsp;&nbsp;&nbsp;&nbsp;RETURN json.`${path}`;  
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM json.`${path}`;  
+&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM json.`${path}`;** 
 
 
 
@@ -473,7 +474,7 @@ domain that contains the domain from the email_address column? Select one respon
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))  
+&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))**  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", flatten("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", array_distinct("email_address", "(?<=@).+", 0))  
@@ -484,11 +485,11 @@ domain that contains the domain from the email_address column? Select one respon
 
  
 
-year string
+	year string
 
-month string
+	month string
 
-avg_high_temp string
+	avg_high_temp string
 
  
 
@@ -500,7 +501,7 @@ to be in the month columns. How can the data engineer accomplish this? Select on
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .pivot() function.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .transform()clause.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .transform() clause.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .pivot() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can rotate the data from long to wide format using the .pivot() function.**  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .groupBy()clause.  
 
 
@@ -508,13 +509,11 @@ to be in the month columns. How can the data engineer accomplish this? Select on
 **A data engineer has a DataFrame events_df that has been registered against an external JSON file.  
 They need to access the field date within events_df. The events_df DataFrame has the following schema:**
 
- 
+	date string
 
-date string
+	month string
 
-month string
-
-event_type string
+	event_type string
 
  
 
@@ -525,7 +524,7 @@ event_type string
 &nbsp;&nbsp;&nbsp;&nbsp;They can index the query by subfield using events[date] syntax.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use date.* to pull out the subfields of events_df into their own columns.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access date in events_df.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can use : syntax to access date in events_df.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use : syntax to access date in events_df.**  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the column for date.  
 
 
@@ -535,7 +534,7 @@ event_type string
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.  
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.  
+&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**  
 &nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.  
@@ -547,8 +546,8 @@ event_type string
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.  
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.  
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.  
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.  
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.**  
 
 
 **A data engineer needs a reference to the results of a query that can be referenced across multiple queries within the scope of the environment session.
@@ -561,7 +560,7 @@ Which of the following approaches accomplishes this without explicitly dropping 
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a table.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a reusable user-defined function (UDF).  
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a view.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a temporary view.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can store the results of their query within a temporary view.**  
 
 
 
@@ -585,9 +584,9 @@ usersDF
 
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;A .dropDuplicates() statement needs to be added after the .agg() function.  
-&nbsp;&nbsp;&nbsp;&nbsp;A .merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.  
-&nbsp;&nbsp;&nbsp;&nbsp;A .select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;A.dropDuplicates() statement needs to be added after the .agg() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;A.merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;**A.select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.**  
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).  
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to .countDistinct(phone_number).  
 
@@ -611,7 +610,7 @@ OPTIONS (
 **Which of the following correctly identifies why running the code is resulting in an error? Select one response.**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.  
-&nbsp;&nbsp;&nbsp;&nbsp;The line dbtable = "users" needs to be added to OPTIONS.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.**  
 &nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL.  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.  
 &nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
@@ -650,12 +649,10 @@ item_purchasesDF = (sales_df
 
 &nbsp;&nbsp;&nbsp;&nbsp;.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)  
 &nbsp;&nbsp;&nbsp;&nbsp;.merge(items_df, sales_df, on = "item_id")  
-&nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales_df.sales_id == items_df.sales_id)  
+&nbsp;&nbsp;&nbsp;&nbsp;**.join(items_df, sales_df.sales_id == items_df.sales_id)**    
 &nbsp;&nbsp;&nbsp;&nbsp;.outerJoin(items_df, sales.sales_id == items_df.sales_id)  
 &nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")  
 
-
-## Theorie
 
 
 **A data engineer wants to extract lines as raw strings from a text file. Which of the following SQL commands accomplishes this task? Select one response.**
@@ -887,358 +884,26 @@ Which of the following lines of code fills in the blank to create the column eve
 &nbsp;&nbsp;&nbsp;&nbsp;DISPLAY TABLE json.`${path}`;  
 &nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLE json.`${path}`  ;
 
-# COMMAND ----------
 
-%md
-##### 14 A senior data engineer has registered the Python function create_users to be used by the rest of their team. They have written the function in Python 3.6. Another data engineer wants to know what the expected inputs are. 
 
-Which of the following is considered a best practice to do this? Select one response.
-
-
-**The data engineer can use type hints to clarify the input and return types of the function.**  
-
-The data engineer can add the input and output types to the table using @options()   
-
-The data engineer can add a return string line to the end of their UDF to specify the input and return types of the function.  
-
-The data engineer can add a comment to the table properties to clarify the input and return types of the function.  
-
-The data engineer can declare the function with @udf("string") syntax to specify the input and return types of the function.  
-
-*Example*
-
-```
-def create_users(user_id: int, user_name: str) -> User:
-    ...
-```
-
-# COMMAND ----------
-
-%md
-##### 15 A data engineer needs a reference to the results of a query that can be referenced across multiple queries within the scope of the environment session. The data engineer does not want the reference to exist outside of the scope of the environment session.
-
- 
-
-Which of the following approaches accomplishes this without explicitly dropping the data object? Select one response. 
-
- 
-
-They can store the results of their query within a common table expression (CTE).  
-**They can store the results of their query within a view.**  
-They can store the results of their query within a table.  
-They can store the results of their query within a reusable user-defined function (UDF).  
-They can store the results of their query within a temporary view.  
-
-# COMMAND ----------
-
-%md
-###### 16- A data engineer has a DataFrame with string column email_address. They are using a regular expression that returns a string with a matching pattern when it is in the following format: 
-
-user.address@domain.com
-
-Which of the following lines of code creates a new column domain that contains the domain from the email_address column? Select one response. 
-
- 
-
-**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))**  
-.withColumn("domain", flatten("email_address", "(?<=@).+", 0))  
-.withColumn("domain", array_distinct("email_address", "(?<=@).+", 0))  
-.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))   
-
-# COMMAND ----------
-
-%md
-##### 17-A data engineer has a query that directly updates the files underlying the external table emails. 
-
-
-Which of the following correctly describes how to retrieve the number of rows in the updated table? Select one response.
-
- 
-```
-REFRESH TABLE emails;
-SELECT DISTINCT_COUNT(*) FROM emails;
-
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails AS OF VERSION 1;
-
-REFRESH TABLE emails;
-SELECT DISTINCT_COUNT(*) FROM emails AS OF VERSION 1;
-
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails;
-
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails WHEN UPDATED = TRUE;
-```
-
-
-
-
-# COMMAND ----------
-
-%md
-##### 18 - A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination. 
-
- 
-
-year string
-
-month string
-
-avg_high_temp string
-
- 
-
-They need to reformat the data with years as the primary record key and months as the columns. The existing average high temperature value for each year-month combination needs to be in the month columns. 
-
- 
-
-How can the data engineer accomplish this? Select one response.
-
- 
-
-The data engineer can rotate the data from wide to long format using the .pivot() function.  
-The data engineer can rotate the data from wide to long format using the .transform() clause.  
-The data engineer can rotate the data from long to wide format using the .pivot() function.  
-**The data engineer can rotate the data from long to wide format using the .groupBy()clause.**
-The data engineer can rotate the data from long to wide format using the .transform()clause.  
-
-# COMMAND ----------
-
-%md 
-#### 19-A data engineer is using the following query to confirm that each unique string value in the phone_number column in the usersDF DataFrame is associated with at most one user_id. They want the query to return true if each phone_number is associated with at most 1 user_id. When they run the query, they notice that the query is not returning the expected result. 
-
- 
-
-```
-from pyspark.sql.functions import countDistinct
-
-
-usersDF
-
-    .groupBy("phone_number")
-
-    .agg(countDistinct("user_id").alias("unique_user_ids")) 
-
-```
-
-Which of the following explains why the query is not returning the expected result? Select one response.
-
-```
-A .select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.
-.groupBy("phone_number") needs to be changed to .countDistinct(phone_number).
-.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).
-A .merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.
-A .dropDuplicates() statement needs to be added after the .agg() function.
-```
-
-**Solution**
-
-```
-from pyspark.sql.functions import countDistinct, max
-
-result = (usersDF
-          .groupBy("phone_number")
-          .agg(countDistinct("user_id").alias("unique_user_ids"))
-          .select(max("unique_user_ids").alias("max_unique_user_ids"))
-          .collect()[0]["max_unique_user_ids"] <= 1)
-
-```
-
-
-# COMMAND ----------
-
-%md
-#### 20 A data engineer has a DataFrame events_df that has been registered against an external JSON file. The nested JSON fields have already been converted into struct types. The data engineer now needs to flatten the struct fields back into individual columns for the field event_type. The events_df DataFrame has the following schema:
-
- 
-
-date string
-month string
-event_type StructType<id string, size int>
-
-Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.    
-
- 
-
-
-They can use event_type.* to pull out id into its own column.
-
-They can index the DataFrame by id.
-
-They can use from_json() to parse the columns for id.
-
-They can use . syntax to access id in event_type.
-
-**They can use : syntax to access id in event_type.**
-
-
-Let's say your DataFrame has a single column data containing raw JSON strings:
-
-json
-```
-{"name": "John", "address": {"city": "NY"}}
-{"name": "Jane", "address": {"city": "LA"}}
-```
-
-To extract the name field from the raw JSON strings using SQL-like syntax, you might do something like:
-
-`SELECT data:name AS extracted_name FROM table`
-
-However, if you've already parsed the JSON and it's in a StructType, then you'd use the dot . syntax:
-
-`df.select("address.city")`
-
-Given your original question, where you have the date field in the DataFrame's schema and it's not a subfield within a JSON string, you wouldn't typically use the : syntax. But now that you've provided the context about the : syntax being used to access subfields in raw JSON strings, it's clearer. In your specific scenario, the dot . syntax would still be appropriate for accessing the date column since it's not a subfield within a raw JSON string.
-
-
-# COMMAND ----------
-
-%md
-##### 21 A data engineer has a DataFrame events_df that has been registered against an external JSON file. The nested JSON fields have already been converted into struct types. The data engineer now needs to flatten the struct fields back into individual columns for the field event_type. The events_df DataFrame has the following schema:
-
- 
-
-date string
-month string
-event_type StructType<id string, size int>
-
- 
-
-Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.    
-
- 
-
-They can use event_type.* to pull out id into its own column.  
-They can index the DataFrame by id.  
-They can use from_json() to parse the columns for id.  
-**They can use . syntax to access id in event_type.**  
-They can use : syntax to access id in event_ty  
-
-
-In this case the importan thing here is <span style="color: red">The nested JSON fields have already been converted into struct types</span>
-that is the difference between `.` and `:`
-
-
-
-# COMMAND ----------
-
-%md
-#### A data engineer has created the following Spark DataFrame sales_df that joins the previously created table sales with the Spark DataFrame items_df when sales and items_df have matching values in the sales_id column in both data objects. 
-
-```
-sales_df = (spark
-
-    .table("sales")
-
-    .withColumn("item", explode("items"))
-
-)
-
-items_df = spark.table("item_lookup")
-item_purchasesDF = (sales_df
-
-   ______________________)
-```
-
-Which of the following lines of code correctly fills in the blank? Select one response.
-
- 
-```
-.outerJoin(items_df, sales.sales_id == items_df.sales_id)
-.merge(items_df, sales_df, on = "item_id")
-.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)
-.join(items_df, sales.sales_id == items_df.sales_id) -- > the correct one
-.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")
-```
-
-# COMMAND ----------
-
-%md
-
-##### 23
-A data engineer has created a custom Python function that returns an input variable of type double after it has been incremented by 1.  
-
- 
-
-Which of the following identifies the most efficient type of UDF the engineer can use in terms of complexity, as well as the correct method to specify the type of UDF? Select one response.
-
-The data engineer can specify that the UDF has row-at-a-time execution using @pandas_udf("double", PandasUDFType.VECTORIZED) syntax.  
-The data engineer can specify that the UDF is vectorized using @pandas_udf("double", PandasUDFType.VECTORIZED) syntax.  
-The data engineer can specify that the UDF has row-at-a-time execution using @pandas_udf("double", PandasUDFType.SCALAR) syntax.  
-**The data engineer can specify that the UDF is vectorized using @pandas_udf("double", PandasUDFType.SCALAR) syntax.  **
-The data engineer can specify that the UDF is vectorized using type hints.
-
-
-
-# COMMAND ----------
-
-%md
-##### 24Which of the following identifies a performance challenge associated with Python UDFs? Select three responses
-
-**Python UDFs have to deserialize row data from Spark's native binary format to pass to the UDF, and the results are serialized back into Spark's native format.**
-*This is true. When a Python UDF is called, Spark's native format has to be transformed into a format Python can understand. Once the function is processed, the result needs to be converted back into Spark's format. This serialization and deserialization process can be quite costly in terms of performance.*
-
-Python UDFs cannot contain column aggregations or data optimizations.  
-*False*  
-
-Python UDFs cannot use vector or scalar transformations.    
-*False*  
-
-**Python UDFs have interprocess communication overhead between the executor and a Python interpreter running on each worker node.**  
-*True: True. For each partition of data, a Python process is started on the worker node, and there's overhead associated with this interprocess communication*  
-
-**Python UDFs cannot be optimized by the Catalyst Optimizer**
-*This is true. The Catalyst Optimizer, which is Spark's internal optimization engine, can't optimize Python UDFs because the UDF's operations are a black box to it. The optimizer can handle built-in Spark functions but not custom Python UDFs.*
-
-# COMMAND ----------
-
-%sql
---A data engineer has a query that directly updates the files underlying the external table emails. 
---Which of the following correctly describes how to retrieve the number of rows in the updated table? Select one response.
-
-
-REFRESH TABLE emails;
-SELECT DISTINCT_COUNT(*) FROM emails AS OF VERSION 1; -- using version 1 would give me the origian
-
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails WHEN UPDATED = TRUE;  -- doest exist
-
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails;  -- correct one
-
-REFRESH TABLE emails;
-SELECT DISTINCT_COUNT(*) FROM emails; -- disticnt count
-
-REFRESH TABLE emails;
-SELECT COUNT(*) FROM emails AS OF VERSION 1; -- This is trying to count rows of the table's version 1. If the table has been updated since then, it won't give the count for the updated table
-
-# COMMAND ----------
-
-A senior data engineer has registered the Python function create_users to be used by the rest of their team. They have written the function in Python 3.6. Another data engineer wants to know what the expected inputs are. 
+### Theorie
+A senior data engineer has registered the Python function create_users to be used by the rest of their team.
+They have written the function in Python 3.6. Another data engineer wants to know what the expected inputs are. 
 
 Which of the following is considered a best practice to do this? Select one response.
 
  
 
 
-The data engineer can declare the function with @udf("string") syntax to specify the input and return types of the function.
-
-The data engineer can use type hints to clarify the input and return types of the function.
-
-The data engineer can add a comment to the table properties to clarify the input and return types of the function.
-
-The data engineer can add a return string line to the end of their UDF to specify the input and return types of the function.
-
-The data engineer can add the input and output types to the table using @options()
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can declare the function with @udf("string") syntax to specify the input and return types of the function.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use type hints to clarify the input and return types of the function.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a comment to the table properties to clarify the input and return types of the function.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a return string line to the end of their UDF to specify the input and return types of the function.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add the input and output types to the table using @options()  
 
 
 
-
-# COMMAND ----------
-
-%md
-#### Extra  -  What kind of UDF functions do you know
+ Extra  -  What kind of UDF functions do you know
 
 `@udf` and `@pandas_udf`
 
@@ -1299,7 +964,6 @@ While Pandas is a powerful library, it's designed for single-node, in-memory com
 When you're dealing with truly large datasets, native Spark operations that distribute and optimize tasks across a cluster will often be the most performant.
 In conclusion, while @pandas_udf can offer significant performance advantages over traditional @udf, it's always best to first see if the task can be accomplished with native Spark operations. If custom logic is necessary and cannot be achieved through native functions, then resorting to UDFs, preferably vectorized Pandas UDFs, is a viable choice.
 
-# COMMAND ----------
 
 
 ## Data Pipelines with Delta Live Tables, Spark SQL & PySpark
