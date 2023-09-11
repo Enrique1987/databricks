@@ -123,155 +123,147 @@ Which of the following services can they employ to accomplish this? Select one r
 
 
 
-10)
-A data architect is proposing that their organization migrate from a data lake to a data lakehouse. The architect claims that this will improve and simplify the work of the data engineering team.
+**A data architect is proposing that their organization migrate from a data lake to a data lakehouse. 
+The architect claims that this will improve and simplify the work of the data engineering team.
+Which of the following describes the key benefits of why migrating from a data lake to a data lakehouse will be beneficial for the data engineering team? Select two responses.**
 
  
 
-Which of the following describes the key benefits of why migrating from a data lake to a data lakehouse will be beneficial for the data engineering team? Select two responses.
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support cost-effective scaling.
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.**
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support machine learning workloads.
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.**
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support programming languages like Python.
+
+
+
+**Which of the following correctly lists the programming languages that Databricks Notebooks can have set as the default programming language? Select one response.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Python, R, Scala, SQL**  
+&nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, SQL  
+&nbsp;&nbsp;&nbsp;&nbsp;Java, Pandas, Python, SQL  
+&nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, Scala  
+&nbsp;&nbsp;&nbsp;&nbsp;Bash script, Python, Scala, SQL  
+
+
+
+
+**Which of the following resources reside in the control plane of a Databricks deployment? Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Notebook commands**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Job scheduler**  
+&nbsp;&nbsp;&nbsp;&nbsp;JDBC and SQL data sources  
+&nbsp;&nbsp;&nbsp;&nbsp;Databricks File System (DBFS)  
+&nbsp;&nbsp;&nbsp;&nbsp;Job configurations  
+
+
+
+**A data engineer has a long-running cluster for an ETL workload. Before the next time the workload runs,
+they need to ensure that the image for the compute resources is up-to-date with the latest image version.
+Which of the following cluster operations can be used in this situation? Select one response.**
+
 
  
 
-Data lakehouses are able to support cost-effective scaling.
-Data lakehouses are able to support data quality solutions like ACID-compliant transactions.
-Data lakehouses are able to support machine learning workloads.
-Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.
-Data lakehouses are able to support programming languages like Python.
-Score: 10.00
-Single Choice
-11)
-Which of the following correctly lists the programming languages that Databricks Notebooks can have set as the default programming language? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;Delete  
+&nbsp;&nbsp;&nbsp;&nbsp;Start  
+&nbsp;&nbsp;&nbsp;&nbsp;Terminate  
+&nbsp;&nbsp;&nbsp;&nbsp;**Restart**   
+&nbsp;&nbsp;&nbsp;&nbsp;Edit  
 
-Python, R, Scala, SQL
-HTML, Python, R, SQL
-Java, Pandas, Python, SQL
-HTML, Python, R, Scala
-Bash script, Python, Scala, SQL
-Score: 10.00
-Multiple Choice
-12)
-Which of the following resources reside in the control plane of a Databricks deployment? Select two responses.
 
-Notebook commands
-Job scheduler
-JDBC and SQL data sources
-Databricks File System (DBFS)
-Job configurations
-Score: 10.00
-Single Choice
-13)
-A data engineer has a long-running cluster for an ETL workload. Before the next time the workload runs, they need to ensure that the image for the compute resources is up-to-date with the latest image version.
+**A data engineer needs to run some SQL code within a Python notebook. Which of the following will allow them to do this? Select two responses.**
 
- 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can wrap the SQL command in spark.sql().**  
+&nbsp;&nbsp;&nbsp;&nbsp;They can run the import sql statement at the beginning of their notebook.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use the %sql command at the top of the cell containing SQL code.**  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use the %md command at the top of the cell containing SQL code.  
+&nbsp;&nbsp;&nbsp;&nbsp;It is not possible to run SQL code from a Python notebook.  
 
-Which of the following cluster operations can be used in this situation? Select one response.
+
+
+**Which of the following pieces of information must be configured in the user settings of a workspace to integrate a Git service provider with a Databricks Repo? 
+Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Administrator credentials for Git service provider account  
+&nbsp;&nbsp;&nbsp;&nbsp;Username for Git service provider account  
+&nbsp;&nbsp;&nbsp;&nbsp;Personal Access Token  
+&nbsp;&nbsp;&nbsp;&nbsp;Two-factor authentication code from Git service provider  
+&nbsp;&nbsp;&nbsp;&nbsp;Workspace Access Token
+
+
+
+**A data engineer needs the results of a query contained in the third cell of their notebook.
+It has been verified by another engineer that the query runs correctly. However, when they run the cell individually, they notice an error. 
+Which of the following steps can the data engineer take to ensure the query runs without error? Select two responses.**
 
  
 
-Delete
-Start
-Terminate
-Restart
-Edit
-Score: 10.00
-Multiple Choice
-14)
-A data engineer needs to run some SQL code within a Python notebook. Which of the following will allow them to do this? Select two responses.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can choose “Run all above” from the dropdown menu within the cell.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can choose “Run all below” from the dropdown menu within the cell.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can clear the execution state before re-executing the cell individually.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can clear all cell outputs before re-executing the cell individually.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can run the notebook cells in order starting from the first command.  
 
-They can wrap the SQL command in spark.sql().
-They can run the import sql statement at the beginning of their notebook.
-They can use the %sql command at the top of the cell containing SQL code.
-They can use the %md command at the top of the cell containing SQL code.
-It is not possible to run SQL code from a Python notebook.
-Score: 10.00
-Multiple Choice
-15)
-Which of the following pieces of information must be configured in the user settings of a workspace to integrate a Git service provider with a Databricks Repo? Select two responses.
 
-Administrator credentials for Git service provider account
-Username for Git service provider account
-Personal Access Token
-Two-factor authentication code from Git service provider
-Workspace Access Token
-Score: 10.00
-Multiple Choice
-16)
-A data engineer needs the results of a query contained in the third cell of their notebook. It has been verified by another engineer that the query runs correctly. However, when they run the cell individually, they notice an error. 
+
+**A data engineering team is working on a shared repository. Each member of the team has cloned the target repository and is working in a separate branch.
+Which of the following is considered best practice for the team members to commit their changes to the centralized repository? Select one response.**
 
  
 
-Which of the following steps can the data engineer take to ensure the query runs without error? Select two responses.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each commit their changes to the main branch using an automated pipeline after a thorough code review by other members of the team.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each sync their changes with the main branch from the Git terminal, which will automatically commit their changes.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each call the Databricks Repos API to submit the code changes for review before they are merged into the main branch.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each run a job based on their branch in the Production folder of the shared repository so the changes can be merged into the main branch.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each create a pull request to be reviewed by other members of the team before merging the code changes into the main branch.  
+
+
+
+
+**Which of the following operations are supported by Databricks Repos? Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Pull
+&nbsp;&nbsp;&nbsp;&nbsp;Rebase
+&nbsp;&nbsp;&nbsp;&nbsp;Clone
+&nbsp;&nbsp;&nbsp;&nbsp;Sync
+&nbsp;&nbsp;&nbsp;&nbsp;Reset
+
+
+
+
+**A data engineer is working on an ETL pipeline. There are several utility methods needed to run the notebook, and they want to break them down into simpler, reusable components.
+Which of the following approaches accomplishes this? Select one response.**
 
  
 
-The data engineer can choose “Run all above” from the dropdown menu within the cell.
-The data engineer can choose “Run all below” from the dropdown menu within the cell.
-The data engineer can clear the execution state before re-executing the cell individually.
-The data engineer can clear all cell outputs before re-executing the cell individually.
-The data engineer can run the notebook cells in order starting from the first command.
-Score: 10.00
-Single Choice
-17)
-A data engineering team is working on a shared repository. Each member of the team has cloned the target repository and is working in a separate branch.
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate task for the utility commands and make the notebook dependent on the task from the original notebook’s Directed Acyclic Graph (DAG).  
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate notebook for the utility commands and use the %run magic command in the original notebook to run the notebook with the utility commands.  
+&nbsp;&nbsp;&nbsp;&nbsp;Create a pipeline for the utility commands and run the pipeline from within the original notebook using the %md magic command.  
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate notebook for the utility commands and use an import statement at the beginning of the original notebook to reference the notebook with the utility commands.  
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate job for the utility commands and run the job from within the original notebook using the %cmd magic command.  
 
- 
 
-Which of the following is considered best practice for the team members to commit their changes to the centralized repository? Select one response.
 
- 
+**Which of the following resources reside in the data plane of a Databricks deployment? Select one response.**
 
-The data engineers can each commit their changes to the main branch using an automated pipeline after a thorough code review by other members of the team.
-The data engineers can each sync their changes with the main branch from the Git terminal, which will automatically commit their changes.
-The data engineers can each call the Databricks Repos API to submit the code changes for review before they are merged into the main branch.
-The data engineers can each run a job based on their branch in the Production folder of the shared repository so the changes can be merged into the main branch.
-The data engineers can each create a pull request to be reviewed by other members of the team before merging the code changes into the main branch.
-Score: 10.00
-Multiple Choice
-18)
-Which of the following operations are supported by Databricks Repos? Select two responses.
+&nbsp;&nbsp;&nbsp;&nbsp;Web application  
+&nbsp;&nbsp;&nbsp;&nbsp;Job scheduler  
+&nbsp;&nbsp;&nbsp;&nbsp;Databricks File System (DBFS)  
+&nbsp;&nbsp;&nbsp;&nbsp;Notebooks  
+&nbsp;&nbsp;&nbsp;&nbsp;Cluster manager  
 
-Pull
-Rebase
-Clone
-Sync
-Reset
-Score: 10.00
-Single Choice
-19)
-A data engineer is working on an ETL pipeline. There are several utility methods needed to run the notebook, and they want to break them down into simpler, reusable components.
 
- 
 
-Which of the following approaches accomplishes this? Select one response.
 
- 
+**Which of the following statements describes how to clear the execution state of a notebook? Select two responses.**
 
-Create a separate task for the utility commands and make the notebook dependent on the task from the original notebook’s Directed Acyclic Graph (DAG).
-Create a separate notebook for the utility commands and use the %run magic command in the original notebook to run the notebook with the utility commands.
-Create a pipeline for the utility commands and run the pipeline from within the original notebook using the %md magic command.
-Create a separate notebook for the utility commands and use an import statement at the beginning of the original notebook to reference the notebook with the utility commands.
-Create a separate job for the utility commands and run the job from within the original notebook using the %cmd magic command.
-Score: 10.00
-Single Choice
-20)
-Which of the following resources reside in the data plane of a Databricks deployment? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;Use the Clear State option from the Run dropdown menu.  
+&nbsp;&nbsp;&nbsp;&nbsp;Perform a Clean operation from the terminal.  
+&nbsp;&nbsp;&nbsp;&nbsp;Detach and reattach the notebook to a cluster.  
+&nbsp;&nbsp;&nbsp;&nbsp;Perform a Clean operation from the driver logs.  
+&nbsp;&nbsp;&nbsp;&nbsp;Perform a Clear State operation from the Spark UI.  
 
-Web application
-Job scheduler
-Databricks File System (DBFS)
-Notebooks
-Cluster manager
-Score: 10.00
-Multiple Choice
-21)
-Which of the following statements describes how to clear the execution state of a notebook? Select two responses.
-
-Use the Clear State option from the Run dropdown menu.
-Perform a Clean operation from the terminal.
-Detach and reattach the notebook to a cluster.
-Perform a Clean operation from the driver logs.
-Perform a Clear State operation from the Spark UI.
-Score: 10.00
 
 
 
