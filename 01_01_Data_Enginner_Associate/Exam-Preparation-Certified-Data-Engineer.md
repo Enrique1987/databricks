@@ -2922,5 +2922,159 @@ CREATE [OR REPLACE] FUNCTION function_name ([parameter_name data_type])
 RETURN { expression | query}
 ```
 
+**When dropping a Delta table, which of the following explains why only the table´s metadata will be deleted, while the data files will be kept in storage?**
+&nbsp;&nbsp;&nbsp;&nbsp;The table is external
+
+**Given the following command**
+`CREATE DATABASE IF NOT EXISTS hr_db;`
+
+In which of the following locations will the **hr_db** database be located ?
+
+`dbfs:/user/hive/warehouse`  --> that is the default location.
 
 
+**Fill in the below blank to get the students enrolled in less that 3 courses from array column students**
+
+```
+SELECT
+	faculty_id,
+	students,
+	________ AS few_courses_students --> FILTER(students, i-> i.total_courses <3)
+	
+FROM faculties
+```
+
+	`filter(input_array, lamda_function)` is a higher order function that returns an output array from an input array by extracting 
+	elements for which the predicate of a lambda function holds.
+
+
+
+	Extracting odd numbers from an input array of integers:
+
+	`SELECT filter(array(1, 2, 3, 4), i -> i % 2 == 1);`
+
+	output: [1, 3]
+
+**Code for micro-batch to process datga every 2 minuts
+
+(spark.table("oders")
+      .withColumn("total_after_tax", col("total") + col("tax"))
+	.writeStream
+	    .option("checkpointLocation", checkpointPath)
+		.outputMode("append")
+		.___________   trigger(processingTime="2minutes")
+		.table("new_orders")
+)
+
+  
+**Wich of the following is used by Auto Loader to load data incrementally ?**
+	Spark Structrued Streaming
+	
+
+**Which of the following statements best describes Auto Loader ?**
+	Auto loader monitors a source location, in which files accumulate, to indentify and ingest only new arriving files with each command run. 
+	While the files that have already been ingested in previous runs are skipped.
+	
+
+
+**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:**
+
+`CONSTRAINT valid_id EXPECT (id IS NOT NULL) _____________ `
+
+**Fill in the above blank so records violating this constraint will be added to the target table, and reported in metrics**
+
+	There is no need to add ON VIOLATION clause. By default, records violating the constraint will be kept, and reported as invalid in the event log.
+
+
+**The data engineer team has a DLT pipeline that updates all the tables once and then stops. The compute resources of the pipeline continue running to allow for quick testing.
+Which of the following best describes the execution modes of this DLT pipeline ?**
+
+    *Typp** The word "quick-testing" indicates that is developmen.
+	The DLT pipeline executes tin Triggered Pipeline mode under Development mode.
+
+
+	Triggered pipelines update each table with whatever data is currently available and then they shut down.
+	
+	In Development mode, the Delta Live Tables system ease the development process by
+		1 Reusing a cluster to avoid the overhead of restarts. The cluster runs for two hours when development mode is enabled.´
+		2 Disabling pipeline retries so you can immediately detect and fix errors.
+
+
+**Code to quey streaming table events**
+
+`spark.readStream.table("events")`
+
+**Code to silver live table**
+
+```
+CREATE LIVE TABLE table_silver
+AS
+    SELECT store_id, sum(total)
+	FROM LIVE.cleaned_sales
+	GROUP BY store_id
+
+```
+
+**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:
+Fill in the above blank so records violating this constraint will be dropped, and reported in metrics**
+
+
+`CONSTRAINT valid_id EXPECT (id IS NOT NULL) _____________ ` -->ON VIOLATION DROP ROW
+
+
+
+**Which of the following compute resources is availabe in DAtabricks SQL**
+	SQL warehouses
+
+
+**Wich of the following is the benefit of using the Auto Stop feature of Databricks SQL wharehoues ?**
+    Minimizes the total running time of warehouse
+
+**Alerts destinations that Support Databricks SQL**
+    Slack, Webhook, Teams, Email
+
+
+**A data engineering team has a long-running multi-tasks Job. The team members need to be notified when the run of this job completes.
+Which of the following approaches can be used to send emails to the team members when the job completes ?**
+
+	They can configues email notification settings in the job page
+	
+
+A data engineer wants to increase the cluster size of an existing Databricks SQL warehouse.
+
+
+
+**Which of the following is the benefit of increasing the cluster size of Databricks SQL warehouses ?**
+	Improves the latency of the queries execution
+
+**Which of the following describes Cron syntax in Databricks Jobs ?**
+    Its an expression to represent comples job schedule that can be defined programmatically
+	
+
+**The data engineer team has a DLT pipeline that updates all the tables at defined intervals until manually stopped. 
+The compute resources terminate when the pipeline is stopped.
+Which of the following best describes the execution modes of this DLT pipeline ?**
+
+	The DLT pipeline executes in Continuous Pipeline mode under Production mode.
+
+	Explination:
+	Continuous pipelines update tables continuously as input data changes. Once an update is started, it continues to run until the pipeline is shut down.
+	
+	In Production mode, the Delta Live Tables system:
+			Terminates the cluster immediately when the pipeline is stopped.
+			Restarts the cluster for recoverable errors (e.g., memory leak or stale credentials).
+			Retries execution in case of specific errors (e.g., a failure to start a cluster)
+
+
+**Which part of the Databricks Platform can a data engineer use to grant permission on tables to user?**
+	Data Explorere
+	
+**Which of the following commands can a data engineer use to grant full permissions to the HR team on the table employees ?**
+	`GRANT ALL PRIVILEGES ON TABLE employees TO hr_team`
+	
+**A data engineer uses teh following SQL query **  
+`GRANT MODIFY ON TABLE employees TO hr_team`
+
+Which ability is given by the `MODIFY` privilege ?
+
+	ability to add data from the table, delte data from the table, modify data in the table.
