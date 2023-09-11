@@ -964,6 +964,389 @@ While Pandas is a powerful library, it's designed for single-node, in-memory com
 When you're dealing with truly large datasets, native Spark operations that distribute and optimize tasks across a cluster will often be the most performant.
 In conclusion, while @pandas_udf can offer significant performance advantages over traditional @udf, it's always best to first see if the task can be accomplished with native Spark operations. If custom logic is necessary and cannot be achieved through native functions, then resorting to UDFs, preferably vectorized Pandas UDFs, is a viable choice.
 
+## Manage Data with Delta Lake
+
+
+**Which of the following pieces of information about a table are located within the schema directory of the table? Select three responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Catalog name**   
+&nbsp;&nbsp;&nbsp;&nbsp;Last modification date  
+&nbsp;&nbsp;&nbsp;&nbsp;**Owner**  
+&nbsp;&nbsp;&nbsp;&nbsp;Creation date  
+&nbsp;&nbsp;&nbsp;&nbsp;**Location**  
+
+
+
+**A data engineer is working with the table products. They want to identify the location of products and read its metadata,
+ including the table’s format and the date that the table was created at. Which of the following commands do they need to use? Select one response.**
+
+ 
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE TABLE products;  
+&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE DETAIL products;**    
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE TABLE EXTENDED products;  
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE HISTORY products;  
+&nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLES products;  
+
+
+,
+**A data engineer is trying to create the generated column date in their table. However, when they run their query to create the table,
+they notice an error in the following line of code.Which of the following commands do they need to use? Select one response. **
+
+ 
+
+```
+
+date DATE GENERATED ALWAYS AS (
+
+    cast(cast(transaction_timestamp/1e6) AS DATE)))
+```
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The DATE GENERATED ALWAYS AS command already casts transaction_timestamp to a date, so the AS DATE cast needs to be removed.  
+&nbsp;&nbsp;&nbsp;&nbsp;The ALWAYS keyword needs to be removed to account for improperly formatted data.  
+&nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to datetime format before it is cast as a date.  
+&nbsp;&nbsp;&nbsp;&nbsp;**transaction_timestamp needs to be cast as a timestamp before it is cast as a date.**  
+&nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to an integer before it is cast as a date.  
+
+
+
+**Which of the following SQL commands can be used to remove a schema (database) at a specified location? Select two responses.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**DROP DATABASE**    
+&nbsp;&nbsp;&nbsp;&nbsp;DELETE SCHEMA  
+&nbsp;&nbsp;&nbsp;&nbsp;**DROP SCHEMA**   
+&nbsp;&nbsp;&nbsp;&nbsp;REMOVE DATABASE  
+&nbsp;&nbsp;&nbsp;&nbsp;DELETE DATABASE  
+
+
+**A data engineer needs to query a Delta table to extract rows that all meet the same condition. However, they notice that the query is running slowly,
+and that the data files used in the query are extremely small.
+Which of the following techniques can the data engineer use to improve the performance of the query? Select one response.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform vacuuming and data skipping in the query using the VACUUM and DATASKIPPING commands.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform data skipping and file compaction in the query using the DATASKIPPING and OPTIMIZE commands   
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and Z-order indexing in the query using the COMPACT and ZORDER commands.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and vacuuming in the query using the COMPACT and VACUUM commands.  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can perform file compaction and Z-order indexing in the query using the OPTIMIZE and ZORDER commands.**    
+
+
+
+**Which of the following describes a feature of Delta Lake that is unavailable in a traditional data warehouse? Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Centralized repository to share features  
+&nbsp;&nbsp;&nbsp;&nbsp;**Combined batch and streaming analytics**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Auto Loader for data ingestion of raw files**  
+&nbsp;&nbsp;&nbsp;&nbsp;Experiment tracking and model management  
+&nbsp;&nbsp;&nbsp;&nbsp;Built-in monitoring for scheduled queries  
+
+**A data engineer has a collection of tables. They need to manually remove old data files from the tables and remove access to previous versions of the tables. 
+Which of the following approaches allows the data engineer to do this? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**They need to disable the retention duration check and enable vacuum logging. Then they need to vacuum the table.**    
+&nbsp;&nbsp;&nbsp;&nbsp;They need to enable the retention duration check and disable vacuum logging. Then they need to Z-order the table.  
+&nbsp;&nbsp;&nbsp;&nbsp;They need to enable the retention duration check and vacuum logging. Then they need to optimize the table.  
+&nbsp;&nbsp;&nbsp;&nbsp;They need to disable the retention duration check and enable the last commit version in session. Then they need to vacuum the table.  
+&nbsp;&nbsp;&nbsp;&nbsp;They need to disable the last commit version in session and enable vacuum duration check. Then they need to Z-order the table.  
+
+
+
+**The code block shown below should add a constraint to the table transaction_dates where only records from after '2022-10-01' can be added to the table.
+The column date represents the date the records were created.**
+
+ 
+
+```
+
+__1__ transaction_dates __2__ valid_date __3__;
+
+```
+
+**Which of the following correctly fills in the numbered blanks within the code block to complete this task? Select one response.**
+
+```
+ALTER TABLE
+ADD CONSTRAINT
+WHERE (date > '2022-10-01')
+
+ALTER TABLE
+CONSTRAINT
+UPDATE WHEN (date > '2022-10-01')
+
+ALTER TABLE
+DROP CONSTRAINT
+NOT NULL (date > '2022-10-01')
+
+ALTER TABLE
+ADD CONSTRAINT
+CHECK (date > '2022-10-01')  --> correct one
+
+ALTER TABLE
+CONSTRAINT
+(date > '2022-10-01')
+
+```
+
+**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.** 
+
+ 
+
+```
+INSERT INTO sales
+
+SELECT *, current_timestamp() FROM parquet `${da.paths.datasets}/ecommerce/raw/sales-historical`
+```
+
+
+
+**Which of the following statements correctly explains why the query is not running as expected? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;None of the provided answer choices explain why the query is running incorrectly.  
+&nbsp;&nbsp;&nbsp;&nbsp;APPEND needs to be used instead of INSERT INTO.  
+&nbsp;&nbsp;&nbsp;&nbsp;The source file path is formatted incorrectly. Double-quotes need to be used in place of back-ticks.  
+&nbsp;&nbsp;&nbsp;&nbsp;**INSERT OVERWRITE needs to be used instead of INSERT INTO.** --> key word "replace data"    
+&nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO needs to be used instead of INSERT INTO.  
+
+
+
+**A data engineer is trying to improve the performance of their query by colocating records on a common filter column to reduce the number of files that need to be read.
+The data engineer notices that the column user_id, which contains only unique values, is used in all of their query predicates. 
+Which optimization technique does the data engineer need to use? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use ZORDER to colocate records on user_id.**    
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use DATASKIPPING to colocate records on user_id.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use COLOCATE to colocate records on user_id.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use VACUUM to colocate records on user_id.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use OPTIMIZE to colocate records on user_id.  
+
+
+
+**Which of the following statements about vacuuming with Delta Lake is true? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;On Delta tables, Databricks automatically triggers VACUUM operations as data is written.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Running VACUUM on a Delta table eliminates the ability to time travel back to a version older than the specified data retention period**  
+&nbsp;&nbsp;&nbsp;&nbsp;VACUUM will not vacuum any directories that begin with an underscore except for _delta_log.  
+&nbsp;&nbsp;&nbsp;&nbsp;Delta table metadata files will not be vacuumed unless the auto retention check is turned off.  
+&nbsp;&nbsp;&nbsp;&nbsp;Delta table data files are vacuumed according to their modification timestamps on the storage system.  
+
+
+**Data engineer wants to make changes to a very large table. They want to test their changes on a similar data object before modifying or 
+copying the original table’s associated data.Which of the following keywords can be used to create a similar data object that can be
+used for testing while meeting the above requirements? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;CLONE  
+&nbsp;&nbsp;&nbsp;&nbsp;COPY  
+&nbsp;&nbsp;&nbsp;&nbsp;**SHALLOW CLONE**  
+&nbsp;&nbsp;&nbsp;&nbsp;DEEP CLONE  
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE  
+
+
+**A data engineer wants to create an empty Delta table called student if it hasn’t already been created.
+Which of the following will create a new table named student *regardless* of whether another table with the same name has already been created? Select one response.**
+
+	Tipp: `regardless` is the key word it means if its already create we will replace it,
+
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE OR REPLACE TABLE student (id INT, name STRING, age INT);**    
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE student (id INT, name STRING, age INT);  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student AS SELECT * FROM student  
+&nbsp;&nbsp;&nbsp;&nbsp;OVERWRITE TABLE student (id INT, name STRING, age INT);  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student (id INT, name STRING, age INT);  
+
+
+**A data engineer needs to undo changes made to the table foods. They need to ensure that the second version of the table does not include the
+changes before restoring the table back to that state.**
+
+
+
+
+```
+
+SELECT * FROM foods VERSION AS OF 2;
+
+REFRESH TABLE foods;
+
+SELECT * FROM foods WHERE version_number() == 2;
+
+RESTORE TABLE foods TO VERSION AS OF 2;
+```
+ 
+
+**In what order do the lines of code above need to be run in a SQL environment in order to meet the requirements? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**1,4**  
+&nbsp;&nbsp;&nbsp;&nbsp;4  
+&nbsp;&nbsp;&nbsp;&nbsp;1,2  
+&nbsp;&nbsp;&nbsp;&nbsp;3,2  
+&nbsp;&nbsp;&nbsp;&nbsp;2  
+
+
+
+
+**A data engineer needs to create a table with additional metadata columns. 
+The columns need to specify the timestamp at which the table creation query was executed and the source data file for each record in the table. 
+Which of the following built-in Spark SQL commands can the data engineer use in their query to add these columns? Select two responses.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;input_file_block_start()  
+&nbsp;&nbsp;&nbsp;&nbsp;**input_file_name()**    
+&nbsp;&nbsp;&nbsp;&nbsp;**current_timestamp()**   
+&nbsp;&nbsp;&nbsp;&nbsp;from_utc_timestamp()  
+&nbsp;&nbsp;&nbsp;&nbsp;from_unixtime()  
+
+
+
+**A data engineer wants to review the changes that other team members have made to the table cities, including the operations that were performed on the 
+table and the time at which they were performed. The variable path represents the file path to the table.
+Which of the following commands does the data engineer need to use? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE DETAIL cities;  
+&nbsp;&nbsp;&nbsp;&nbsp;display(dbutils.fs.ls(f"{path}"))  
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE EXTENDED cities;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM cities VERSION AS OF 1;  
+&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE HISTORY cities;**  
+
+
+**A data engineer needs to atomically append new rows to an existing Delta table. 
+Which of the following approaches is considered best practice to efficiently modify the table? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use UPDATE to update the existing tables in one batch.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT ONLY to incrementally update the existing tables.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use INSERT INTO to incrementally update the existing tables.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use APPEND to update the existing tables in one batch.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT OVERWRITE to incrementally update the existing tables.  
+
+
+**A data engineer is trying to optimize the result set returned in their query by compacting their data files to avoid small files. 
+Which keyword do they need to use in their query to improve the query’s performance while keeping the data files as even as possible 
+with respect to size on disk? Select one response.i**
+
+&nbsp;&nbsp;&nbsp;&nbsp;ZORDER  
+&nbsp;&nbsp;&nbsp;&nbsp;COMPACT  
+&nbsp;&nbsp;&nbsp;&nbsp;DATASKIPPING  
+&nbsp;&nbsp;&nbsp;&nbsp;VACUUM  
+&nbsp;&nbsp;&nbsp;&nbsp;**OPTIMIZE**  
+
+
+
+**Which of the following problems are solved by the guarantee of ACID transactions? Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions combine compute and storage scaling to reduce costs.  
+&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions guarantee that appends will not fail due to conflict, even when writing from multiple sources at the same time.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions are guaranteed to either succeed or fail completely, so jobs will never fail mid way.**    
+&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions guarantee the use of proprietary storage formats.  
+&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions support the creation of interactive visualization queries.  
+
+
+
+**Which of the following table modifications can be made with a MERGE INTO statement? Select three responses.** (CHECK if time)
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Write raw data from a file location into a schema  
+&nbsp;&nbsp;&nbsp;&nbsp;Write data that generates multiple downstream tables  
+&nbsp;&nbsp;&nbsp;&nbsp;**Write data to a table with automatic deduplication**    
+&nbsp;&nbsp;&nbsp;&nbsp;**Write a stream of schema changes into a table**    
+&nbsp;&nbsp;&nbsp;&nbsp;**Write streaming aggregates in Update Mode**  
+
+
+
+**A data engineer needs to update the table people. The engineer only wants records to be updated if the existing row has a NULL
+value in the column email and the new row does not.**
+
+ 
+
+They have the following incomplete 
+```
+
+ 
+
+MERGE INTO people a
+
+USING people_update b
+
+ON a.people_id = b.people_id
+
+_____
+
+WHEN NOT MATCHED THEN DELETE
+
+```
+
+**Which of the following statements correctly fills in the blank? Select one response.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN MATCHED AND a.email IS NULL  
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN a.email IS NULL  
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN MATCHED AND a.email IS NULL THEN INSERT (email = b.email)  
+&nbsp;&nbsp;&nbsp;&nbsp;INSERT (email = b.email) WHEN MATCHED AND a.email IS NULL  
+&nbsp;&nbsp;&nbsp;&nbsp;**WHEN MATCHED AND a.email IS NULL THEN UPDATE SET email = b.email**  
+
+
+
+**A data engineer needs to create the new database clients at a location represented by the variable path. The database will only contain JSON files.
+Which of the following commands does the data engineer need to run to complete this task? Select two responses.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE IF NOT EXISTS clients '${path}';  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE SCHEMA IF NOT EXISTS clients json. '${path}';  
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE DATABASE clients LOCATION '${path}';**  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE clients DELTA json. '${path}';  
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE SCHEMA clients LOCATION '${path}';**     
+
+
+
+**Which of the following conditions must be met for data to be loaded incrementally with the COPY INTO command? Select three responses.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**COPY INTO must target an existing Delta table.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**The source file must specify the file’s format.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The schema for the data must be defined.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data must be in JSON or CSV format.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data cannot contain duplicate records.  
+
+
+**Which of the following statements about managed and external tables are true? Select two responses.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**When moving a managed table to a new database, the table’s data must be written to the new location.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**External tables will always specify a LOCATION during table creation.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables are specified with the CREATE MANAGED TABLE command in SQL.  
+&nbsp;&nbsp;&nbsp;&nbsp;When dropping an external table, the underlying data and metadata are also deleted.  
+&nbsp;&nbsp;&nbsp;&nbsp;When dropping a managed table, only the underlying metadata stays intact.  
+
+
+
+**Which of the following validates that the temporary view trees has exactly six records? Select one response.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark.load("trees").count() == 6  
+&nbsp;&nbsp;&nbsp;&nbsp;**assert spark.table("trees").count() == 6** 
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark.temp("trees").count() == 6  
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark("trees").count() == 6  
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark.view("trees").count() == 6  
+
+
 
 
 ## Data Pipelines with Delta Live Tables, Spark SQL & PySpark
@@ -1454,7 +1837,7 @@ DLT leverages additional metadata over other open source formats such as JSON, C
 
 
 ** A data engineer has built and deployed a DLT pipeline. They want to perform an update that writes a batch of data to the output directory. 
-Which of the following statements about performing this update is true? Select one response.
+Which of the following statements about performing this update is true? Select one response. (Check)
 
  
 
@@ -2454,6 +2837,90 @@ Which of the following clusters does the data engineer need to attach to their n
 &nbsp;&nbsp;&nbsp;&nbsp;Multi-user cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;**User isolation cluster**  
 &nbsp;&nbsp;&nbsp;&nbsp;This type of workload is not supported by any cluster mode  
+
+
+## Udemy Questions
+
+I bought a coruse in udemy to help me achieve the "Associate Data Engineer"
+
+
+**Which of the following locations hosts the Databricks web application ?**
+&nbsp;&nbsp;&nbsp;&nbsp;Control plane
+
+
+
+**Databricks Repos, which of the following operations a data engineer can user to update the local version of a repo from its remote Git repository ?**
+&nbsp;&nbsp;&nbsp;&nbsp;Pull
+
+**According to the Databricks Lakehouse architecture, which of the following is located in the customer's cloud account?**
+&nbsp;&nbsp;&nbsp;&nbsp;Cluster on virtual machines
+
+**Best describes Databricks Lakehause?**
+&nbsp;&nbsp;&nbsp;&nbsp;Single,flexible, high-performance system that supports data, analyticsn and machine learning workloads.
+
+
+**Wich of the following task is not supported by Databricks Repos, and must be performed in your Git provider?**
+&nbsp;&nbsp;&nbsp;&nbsp;Delete branches
+
+**True Facts about Delta Lake**
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides ACID transaction guarantees
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides scalabe datga and metadata handling
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides audit history and time travel
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake supports unified streaming and batgch datga processing
+
+
+
+**How long is the default retention period of the VACUUM command ?**
+&nbsp;&nbsp;&nbsp;&nbsp;7 days
+
+**A data engineer wants to create a relational object by pulling data from two tables. The relational object must be used by other data engineers in other
+sessions on the same cluster only. In order to save on storage costs, the date engineer wants to avoid copying and storing physical data.**
+&nbsp;&nbsp;&nbsp;&nbsp;Global Temporary view
+
+
+```
+CREATE TABLE employees
+    USING ________________  --> here come org.apache.spark.sql.jdbc
+	OPTIONS (
+	    url "jdbc:postgresql:dbserver"
+		dbtable "employees"
+	)
+	
+**Comments in Table creation**
+
+```
+CREATE TABLE juan
+COMMENT "this is a table"
+AS QUERY
+```
+
+**A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
+of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?**
+&nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO
+
+
+**A data engineer is designing a Delta Live Tables pipeline. The source system generates files containing changes captured in the source data.
+Each change event has metadata indicating whether the specified record was inserted, updated, or deleted. In addition to a timestamp column indicating
+the order in which the changes happened. The data engineer needs to update a target table based on these change events.**
+&nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO
+
+	The events described in the question represent Change Data Capture (CDC) feed. CDC is logged at the source as events that contain both the data of the records
+	along with metadata information:
+	1)  Operation column indicating whether the specified record was inserted, updated, or deleted
+	
+	2)  Sequence column that is usually a timestamp indicating the order in which the changes happened
+	    You can use the APPLY CHANGES INTO statement to use Delta Live Tables CDC functionality
+
+**In PySpark, which of the following commands can you use to query the Delta table employees created in Spark SQL?**
+&nbsp;&nbsp;&nbsp;&nbsp;spark.table("employees")
+
+
+
+**Syntax to create a UDF**
+```
+CREATE [OR REPLACE] FUNCTION function_name ([parameter_name data_type])
+RETURN { expression | query}
+```
 
 
 
