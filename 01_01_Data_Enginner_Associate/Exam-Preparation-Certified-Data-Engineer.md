@@ -8,7 +8,7 @@ Which of the following explains why collaborating in Databricks Notebooks preven
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks supports alerts and audit logs for easy monitoring and troubleshooting, so the data engineers will be alerted when changes are made to their code.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks are integrated into CI/CD pipelines by default, so the data engineers can work in separate branches without overwriting the other’s work.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks automatically handles schema variations to prevent insertion of bad records during ingestion, so the data engineers will be prevented from overwriting data that does not match the table’s schema.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks enforces serializable isolation levels, so the data engineers will never see inconsistencies in their data.  
@@ -64,11 +64,11 @@ Which of the following is a correct argument for why it is advantageous for the 
 
 **Which of the following cluster configuration options can be customized at the time of cluster creation? Select all that apply.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Access permissions
-&nbsp;&nbsp;&nbsp;&nbsp;Restart policy
-&nbsp;&nbsp;&nbsp;&nbsp;**Maximum number of worker nodes**
-&nbsp;&nbsp;&nbsp;&nbsp;**Cluster mode**
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Runtime Version**
+&nbsp;&nbsp;&nbsp;&nbsp;Access permissions  
+&nbsp;&nbsp;&nbsp;&nbsp;Restart policy  
+&nbsp;&nbsp;&nbsp;&nbsp;**Maximum number of worker nodes**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster mode**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Runtime Version**  
 
 
 
@@ -129,11 +129,11 @@ Which of the following describes the key benefits of why migrating from a data l
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support cost-effective scaling.
-&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.**
-&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support machine learning workloads.
-&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.**
-&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support programming languages like Python.
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support cost-effective scaling.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support machine learning workloads.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support programming languages like Python.  
 
 
 
@@ -273,108 +273,48 @@ Which of the following approaches accomplishes this? Select one response.**
 ---------------------
 
 
-
-Databricks Learning
-Skip to Main Content
-
-
-Search content in the platform
-Search content in the platform
-
-
-
-11
-Home
-My Courses and Learning Plans
-Data Engineer Learning Plan
-Data Engineering with Databricks V3
-
-
-
-
-
-EB
-Sign Out
-Enrique Benito Casado
-enrique.benito-casado@lhind.dlh.de
-
-Home
-My Courses and Learning Plans
-Course Catalog
-My Activities
-My Calendar
-My Checklist
-Admin Menu
-Apps & Features
-Welcome to Databricks training!
-
-Transform Data with PySpark - Test your Knowledge
-Final Score: 250/250
-Single Choice
-1)
-A data engineer has the following query, where path is a variable that represents the location of a directory.
+**A data engineer has the following query, where path is a variable that represents the location of a directory.
+SELECT * FROM csv.`${path}`;**
 
  
 
-Query:
-
-SELECT * FROM csv.`${path}`;
-
- 
-
-The query loads the contents of a directory of CSV files from a source table to a target table.
-The query streams data from a directory of CSV files into a table.
-The query displays the underlying file contents of a directory of CSV files.
-The query converts a directory of files into CSV format.
-The query displays the metadata of a directory of CSV files.
-Score: 10.00
-Single Choice
-2)
-A data engineer needs to extract the calendar date and time in human readable format from a DataFrame containing the timestamp column user_last_touch_timestamp.
+&nbsp;&nbsp;&nbsp;&nbsp;The query loads the contents of a directory of CSV files from a source table to a target table.  
+&nbsp;&nbsp;&nbsp;&nbsp;The query streams data from a directory of CSV files into a table.  
+&nbsp;&nbsp;&nbsp;&nbsp;The query displays the underlying file contents of a directory of CSV files.  
+&nbsp;&nbsp;&nbsp;&nbsp;The query converts a directory of files into CSV format.  
+&nbsp;&nbsp;&nbsp;&nbsp;The query displays the metadata of a directory of CSV files.  
 
 
-Which of the following lines of code correctly fills in the blank by adding the column end_date of type date in human readable format? Select one response.
 
-.withColumn(date_format("end_date"), user_last_touch_timestamp, "HH:mm:ss")
-.withColumn(date_time("end_date"), user_last_touch_timestamp, "MMM d, yyyy")
-.withColumn(date_time("end_date"),user_last_touch_timestamp, "HH:mm:ss")
-.withColumn("end_date", CAST(user_last_touch_timestamp) as date_format)
-.withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))
-Score: 10.00
-Single Choice
-3)
-A data engineer has a table records with a column email. They want to check if there are null values in the email column. 
+**A data engineer needs to extract the calendar date and time in human readable format from a DataFrame containing the timestamp column user_last_touch_timestamp.
+Which of the following lines of code correctly fills in the blank by adding the column end_date of type date in human readable format? Select one response.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_format("end_date"), user_last_touch_timestamp, "HH:mm:ss")  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_time("end_date"), user_last_touch_timestamp, "MMM d, yyyy")  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_time("end_date"),user_last_touch_timestamp, "HH:mm:ss")  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("end_date", CAST(user_last_touch_timestamp) as date_format)  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))  
+
+
+**A data engineer has a table records with a column email. They want to check if there are null values in the email column. 
+Which of the following approaches accomplishes this? Select one response.**
 
  
 
-Which of the following approaches accomplishes this? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null using SELECT DISTINCT records.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by pivoting the table on null values.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by creating a data expectation to drop null values.  
 
- 
 
-They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.
-They can check if there is at least one record where email is null using SELECT DISTINCT records.
-They can check if there is at least one record where email is null by pivoting the table on null values.
-They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.
-They can check if there is at least one record where email is null by creating a data expectation to drop null values.
-Score: 10.00
-Single Choice
-4)
-A data engineer has created a DataFrame exploded_eventsDF created from the table exploded_events defined here:
 
- 
-
+**A data engineer has created a DataFrame exploded_eventsDF created from the table exploded_events defined here:
 CREATE TABLE events (user_id string, event_name string, item_id string, events struct<coupon:string, event_id:string, event_revenue:double>);
+They are using the following code with multiple array transformations to return a new DataFrame that shows the unique collection of the columns event_name and items.**  
 
- 
 
-They are using the following code with multiple array transformations to return a new DataFrame that shows the unique collection of the columns event_name and items. 
-
- 
-
-Code block:
-
- 
-
+```
 from pyspark.sql.functions import array_distinct, collect_set, flatten
 
  
@@ -388,104 +328,107 @@ exploded_eventsDF
      _____
 
  
+```
 
-Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.
-
- 
-
-flatten(collect_set(explode(events:event_id))).alias("event_history")
-flatten(array_distinct(events[event_id])).alias("event_history")
-array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")
-array_distinct(extract(collect_set(events.event_id))).alias("event_history")
-flatten(extract(events.event_id)).alias("event_history")
-Score: 10.00
-Single Choice
-5)
-A data engineer wants to extract lines as raw strings from a text file. 
+**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.**  
 
  
 
-Which of the following SQL commands accomplishes this task? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")  
+&nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")  
+&nbsp;&nbsp;&nbsp;&nbsp;array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")  
+&nbsp;&nbsp;&nbsp;&nbsp;array_distinct(extract(collect_set(events.event_id))).alias("event_history")  
+&nbsp;&nbsp;&nbsp;&nbsp;flatten(extract(events.event_id)).alias("event_history")  
+
+
+
+
+**A data engineer wants to extract lines as raw strings from a text file. 
+Which of the following SQL commands accomplishes this task? Select one response.**
 
  
 
-SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;
-SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;
-SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;
-SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;
-SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;
-Score: 10.00
-Single Choice
-6)
-Which of the following commands returns a new DataFrame from the DataFrame usersDF without duplicates? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;  
 
-usersDF.select(*)
-usersDF.groupBy(nulls)
-usersDF.drop()
-usersDF.count().dropna()
-usersDF.distinct()
-Score: 10.00
-Multiple Choice
-7)
-Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.
 
-usersDF.drop()
-usersDF.selectExpr("count_if(email IS NULL)")
-usersDF.distinct()
-usersDF.count().dropna()
-usersDF.where(col("email").isNull()).count()
-Score: 10.00
-Single Choice
-8)
-A data engineer has a DataFrame events_df that has been registered against an external JSON file. The nested JSON fields have already been converted into struct types. The data engineer now needs to flatten the struct fields back into individual columns for the field event_type. The events_df DataFrame has the following schema:
+
+
+**Which of the following commands returns a new DataFrame from the DataFrame usersDF without duplicates? Select one response.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.select(*)  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.groupBy(nulls)  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.distinct()  
+
+
+
+**Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.selectExpr("count_if(email IS NULL)")  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.distinct()  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
+&nbsp;&nbsp;&nbsp;&nbsp;usersDF.where(col("email").isNull()).count()  
+
+
+
+**A data engineer has a DataFrame events_df that has been registered against an external JSON file. The nested JSON fields have already been converted into struct types.
+The data engineer now needs to flatten the struct fields back into individual columns for the field event_type. The events_df DataFrame has the following schema:**
 
  
 
 date string
-
 month string
-
 event_type StructType<id string, size int>
 
  
 
-Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.    
+**Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response. **   
 
  
 
-They can use . syntax to access id in event_type.
-They can use event_type.* to pull out id into its own column.
-They can use : syntax to access id in event_type.
-They can use from_json() to parse the columns for id.
-They can index the DataFrame by id.
-Score: 10.00
-Single Choice
-9)
-A data engineer has a query that directly updates the files underlying the external table emails. 
+&nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access id in event_type.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use event_type.* to pull out id into its own column.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use : syntax to access id in event_type.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the columns for id.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can index the DataFrame by id.  
+
+
+
+**A data engineer has a query that directly updates the files underlying the external table emails. 
+Which of the following correctly describes how to retrieve the number of rows in the updated table? Select one response.**
+
 
  
-
-Which of the following correctly describes how to retrieve the number of rows in the updated table? Select one response.
-
- 
-
+```
 REFRESH TABLE emails;
 SELECT COUNT(*) FROM emails AS OF VERSION 1;
+
 REFRESH TABLE emails;
 SELECT DISTINCT_COUNT(*) FROM emails AS OF VERSION 1;
+
 REFRESH TABLE emails;
 SELECT COUNT(*) FROM emails WHEN UPDATED = TRUE;
+
 REFRESH TABLE emails;
 SELECT COUNT(*) FROM emails;
+
 REFRESH TABLE emails;
 SELECT DISTINCT_COUNT(*) FROM emails;
-Score: 10.00
-Single Choice
-10)
-A data engineer is using the following code block to create and register a function that returns the first letter of the string email. Another data engineer points out that there is a more efficient way to do this.
+```
 
-Code block:
 
+**A data engineer is using the following code block to create and register a function that returns the first letter of the string email.
+Another data engineer points out that there is a more efficient way to do this.
+Which of the following identifies how the data engineer can eliminate redundancies in the code? Select one response.**
+
+
+```
 from pyspark.sql.functions import udf
 
  
@@ -500,52 +443,44 @@ def first_letter_function(email: str) -> str:
 
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 
- 
+```
 
-Which of the following identifies how the data engineer can eliminate redundancies in the code? Select one response. 
+&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the statement that registers the function.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the parameters in the function declaration.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the import statement in the beginning of the code block.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate "sql_udf" from the statement that registers the function.  
 
- 
 
-They can eliminate the return statement at the end of the function.
-They can eliminate the statement that registers the function.
-They can eliminate the parameters in the function declaration.
-They can eliminate the import statement in the beginning of the code block.
-They can eliminate "sql_udf" from the statement that registers the function.
-Score: 10.00
-Single Choice
-11)
-A data engineer needs to query a JSON file whose location is represented by the variable path.
+
+
+**A data engineer needs to query a JSON file whose location is represented by the variable path.
+Which of the following commands do they need to use? Select one response.**
 
  
 
-Which of the following commands do they need to use? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLE json.`${path}`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM path LOCATION `${path}`;  
+&nbsp;&nbsp;&nbsp;&nbsp;DISPLAY TABLE json.`${path}`;  
+&nbsp;&nbsp;&nbsp;&nbsp;RETURN json.`${path}`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM json.`${path}`;  
+
+
+
+**A data engineer has a DataFrame with string column email_address. They are using a regular expression that returns a string with a matching pattern
+when it is in the following format:  user.address@domain.com Which of the following lines of code creates a new column
+domain that contains the domain from the email_address column? Select one response.**  
 
  
 
-SHOW TABLE json.`${path}`;
-SELECT * FROM path LOCATION `${path}`;
-DISPLAY TABLE json.`${path}`;
-RETURN json.`${path}`;
-SELECT * FROM json.`${path}`;
-Score: 10.00
-Single Choice
-12)
-A data engineer has a DataFrame with string column email_address. They are using a regular expression that returns a string with a matching pattern when it is in the following format: 
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", flatten("email_address", "(?<=@).+", 0))  
+&nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", array_distinct("email_address", "(?<=@).+", 0))  
 
-user.address@domain.com
 
-Which of the following lines of code creates a new column domain that contains the domain from the email_address column? Select one response. 
 
- 
-
-.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))
-.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))
-.withColumn("domain", flatten("email_address", "(?<=@).+", 0))
-.withColumn("domain", array_distinct("email_address", "(?<=@).+", 0))
-Score: 10.00
-Single Choice
-13)
-A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination. 
+**A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination.** 
 
  
 
@@ -557,23 +492,21 @@ avg_high_temp string
 
  
 
-They need to reformat the data with years as the primary record key and months as the columns. The existing average high temperature value for each year-month combination needs to be in the month columns. 
+**They need to reformat the data with years as the primary record key and months as the columns. The existing average high temperature value for each year-month combination needs
+to be in the month columns. How can the data engineer accomplish this? Select one response.**
 
  
 
-How can the data engineer accomplish this? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .pivot() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .transform()clause.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .transform() clause.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .pivot() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .groupBy()clause.  
 
- 
 
-The data engineer can rotate the data from wide to long format using the .pivot() function.
-The data engineer can rotate the data from long to wide format using the .transform()clause.
-The data engineer can rotate the data from wide to long format using the .transform() clause.
-The data engineer can rotate the data from long to wide format using the .pivot() function.
-The data engineer can rotate the data from long to wide format using the .groupBy()clause.
-Score: 10.00
-Single Choice
-14)
-A data engineer has a DataFrame events_df that has been registered against an external JSON file.  They need to access the field date within events_df. The events_df DataFrame has the following schema:
+
+**A data engineer has a DataFrame events_df that has been registered against an external JSON file.  
+They need to access the field date within events_df. The events_df DataFrame has the following schema:**
 
  
 
@@ -585,62 +518,61 @@ event_type string
 
  
 
-Which of the following approaches can the data engineer use to accomplish this? Select one response.    
+**Which of the following approaches can the data engineer use to accomplish this? Select one response.**     
 
  
 
-They can index the query by subfield using events[date] syntax.
-They can use date.* to pull out the subfields of events_df into their own columns.
-They can use . syntax to access date in events_df.
-They can use : syntax to access date in events_df.
-They can use from_json() to parse the column for date.
-Score: 10.00
-Single Choice
-15)
-Which of the following statements about querying tables defined against external sources is true? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;They can index the query by subfield using events[date] syntax.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use date.* to pull out the subfields of events_df into their own columns.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access date in events_df.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use : syntax to access date in events_df.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the column for date.  
+
+
+
+**Which of the following statements about querying tables defined against external sources is true? Select one response.**
 
  
 
-When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.
-When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.
-None of these statements about external table behavior are true.
-When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.
-When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.
-Score: 10.00
-Multiple Choice
-16)
-Which of the following statements about the difference between views and temporary views are correct? Select two responses.
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.  
+&nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.  
 
-Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.
-Temporary views have names that must be qualified. Views have names that must be unique.
-Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.
-Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.
-Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.
-Score: 10.00
-Single Choice
-17)
-A data engineer needs a reference to the results of a query that can be referenced across multiple queries within the scope of the environment session. The data engineer does not want the reference to exist outside of the scope of the environment session.
 
- 
 
-Which of the following approaches accomplishes this without explicitly dropping the data object? Select one response. 
+**Which of the following statements about the difference between views and temporary views are correct? Select two responses.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.  
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.  
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.  
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.  
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.  
+
+
+**A data engineer needs a reference to the results of a query that can be referenced across multiple queries within the scope of the environment session.
+The data engineer does not want the reference to exist outside of the scope of the environment session.
+Which of the following approaches accomplishes this without explicitly dropping the data object? Select one response.**  
 
  
 
-They can store the results of their query within a common table expression (CTE).
-They can store the results of their query within a table.
-They can store the results of their query within a reusable user-defined function (UDF).
-They can store the results of their query within a view.
-They can store the results of their query within a temporary view.
-Score: 10.00
-Single Choice
-18)
-A data engineer is using the following query to confirm that each unique string value in the phone_number column in the usersDF DataFrame is associated with at most one user_id. They want the query to return true if each phone_number is associated with at most 1 user_id. When they run the query, they notice that the query is not returning the expected result. 
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a common table expression (CTE).  
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a table.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a reusable user-defined function (UDF).  
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a view.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a temporary view.  
 
+
+
+**A data engineer is using the following query to confirm that each unique string value in the phone_number column in the usersDF DataFrame is associated 
+with at most one user_id. They want the query to return true if each phone_number is associated with at most 1 user_id. When they run the query, 
+they notice that the query is not returning the expected result. 
+Which of the following explains why the query is not returning the expected result? Select one response.**
  
 
-Code block:
 
+```
 from pyspark.sql.functions import countDistinct
 
  
@@ -651,52 +583,47 @@ usersDF
 
     .agg(countDistinct("user_id").alias("unique_user_ids")) 
 
- 
+```
 
-Which of the following explains why the query is not returning the expected result? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;A .dropDuplicates() statement needs to be added after the .agg() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;A .merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;A .select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.  
+&nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).  
+&nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to .countDistinct(phone_number).  
 
- 
 
-A .dropDuplicates() statement needs to be added after the .agg() function.
-A .merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.
-A .select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.
-.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).
-.groupBy("phone_number") needs to be changed to .countDistinct(phone_number).
-Score: 10.00
-Single Choice
-19)
-A data engineer is registering a table in Databricks using the table users from an external SQL database. One of their colleagues gives them the following code to register the table. However, when the data engineer runs the code, they notice an error.
+**A data engineer is registering a table in Databricks using the table users from an external SQL database.
+One of their colleagues gives them the following code to register the table. However, when the data engineer runs the code, they notice an error.**
 
  
 
-Code block:
+```
 
 CREATE TABLE users_jdbc
 USING JDBC
 OPTIONS (
   url = "jdbc:sqlite:${DA.paths.ecommerce_db}"
 )
+```
 
  
 
-Which of the following correctly identifies why running the code is resulting in an error? Select one response.
+**Which of the following correctly identifies why running the code is resulting in an error? Select one response.**  
 
-A username and password need to be added to OPTIONS.
-The line dbtable = "users" needs to be added to OPTIONS.
-USING JDBC needs to be changed to USING SQL.
-CREATE TABLE needs to be changed to CREATE JDBC TABLE.
-None of these responses correctly identify the cause of the error.
-Score: 10.00
-Single Choice
-20)
-A data engineer has created the following Spark DataFrame sales_df that joins the previously created table sales with the Spark DataFrame items_df when sales and items_df have matching values in the sales_id column in both data objects. 
+&nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.  
+&nbsp;&nbsp;&nbsp;&nbsp;The line dbtable = "users" needs to be added to OPTIONS.  
+&nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL.  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.  
+&nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
 
- 
 
-Code block:
+
+**A data engineer has created the following Spark DataFrame sales_df that joins the previously
+created table sales withthe Spark DataFrame items_df when sales and items_df have matching values in the sales_id column in both data objects.**  
 
  
 
+```
 sales_df = (spark
 
     .table("sales")
@@ -715,113 +642,18 @@ item_purchasesDF = (sales_df
 
    ______________________)
 
+```  
+
+**Which of the following lines of code correctly fills in the blank? Select one response.**
+
  
 
-Which of the following lines of code correctly fills in the blank? Select one response.
+&nbsp;&nbsp;&nbsp;&nbsp;.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)  
+&nbsp;&nbsp;&nbsp;&nbsp;.merge(items_df, sales_df, on = "item_id")  
+&nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales_df.sales_id == items_df.sales_id)  
+&nbsp;&nbsp;&nbsp;&nbsp;.outerJoin(items_df, sales.sales_id == items_df.sales_id)  
+&nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")  
 
- 
-
-.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)
-.merge(items_df, sales_df, on = "item_id")
-.join(items_df, sales_df.sales_id == items_df.sales_id)
-.outerJoin(items_df, sales.sales_id == items_df.sales_id)
-.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")
-Score: 10.00
-
-BACK TO RESULTS
-Data Engineering with Databricks V3
-ID: E-VR287169 / 69 lessons completed
-
-DOWNLOAD YOUR CERTIFICATE
-How would you rate this course? 4
-Welcome to the Course
-3 / 3
-Get Started with Databricks Data Science and Engineering Workspace
-9 / 9
-Transform Data with Spark
-10 / 10
-Data Objects in the Lakehouse
-Video
-Lecture
-Query Files Directly
-Video
-Demo
-Providing Options for External Sources
-Video
-Demo
-DE 2.3L - extract data lab
-Video
-Cleaning Data
-Video
-Demo
-Complex Transformations
-Video
-Demo
-DE 2.6L - reshape data lab
-Video
-SQL User-Defined Functions
-Video
-Demo
-Python User-Defined Functions
-Video
-Demo
-Transform Data with PySpark - Test your Knowledge
-Test
-Manage Data with Delta Lake
-6 / 6
-Build Data Pipelines with Delta Live Tables
-13 / 13
-Deploy Workloads with Databricks Workflows
-5 / 5
-Manage Data Access with Unity Catalog
-22 / 22
-Course Summary and Next Steps
-Lesson
-
-Course Description
-Welcome to Data Engineering with Databricks V3.
-
-
-This course prepares data professionals to leverage the Databricks Lakehouse Platform to productionalize ETL pipelines. Students will use Delta Live Tables to define and schedule pipelines that incrementally process new data from a variety of data sources into the Lakehouse. Students will also orchestrate tasks with Databricks Workflows and promote code with Databricks Repos.
-
-
-
-Learning objectives
-Use the Databricks Data Science and Engineering Workspace to perform common code development tasks in a data engineering workflow.
-Use Spark SQL or PySpark to extract data from a variety of sources, apply common cleaning transformations, and manipulate complex data with advanced functions.
-Define and schedule data pipelines that incrementally ingest and process data through multiple tables in the lakehouse using Delta Live Tables in Spark SQL or Python.
-Orchestrate data pipelines with Databricks Workflow Jobs and schedule dashboard updates to keep analytics up-to-date.
-Configure permissions in Unity Catalog to ensure that users have proper access to databases for analytics and dashboarding. 
-
-Prerequisites
-Prerequisites for both versions of this course (Spark SQL and PySpark):
-
-Beginner familiarity with cloud computing concepts (virtual machines, object storage, etc.)
-Production experience working with data warehouses and data lakes
-Familiarity with basic SQL concepts (select, filter, groupby, join, etc)
-
-
-Additional prerequisites for the Python version of this course (PySpark):
-
-Beginner programming experience with Python (syntax, conditions, loops, functions)
-Beginner programming experience with the Spark DataFrame API:
-Configure DataFrameReader and DataFrameWriter to read and write data
-Express query transformations using DataFrame methods and Column expressions
-Navigate the Spark documentation to identify built-in functions for various transformations and data types
-
-
-The PySpark programming skills required for the Python version of this course can be learned by taking the Get Started with PySpark Programming course by Databricks Academy.
-
-
-Last course update
-August 2023
- 
-
-Learning Plan
-
-Data Engineer Learning Plan
-20% progress66h 9m / 25h 2m
-2023 © Databricks, Inc. All Rights Reserved | Support | Privacy Notice (Updated) | Terms of Use | Your Privacy Choices | Your California Privacy Rights 
 
 ## Theorie
 
@@ -1639,7 +1471,7 @@ the engineer can piece together the data flow from start to finish.*
 
  
 ```
-Code block:
+```
 
 CREATE OR REFRESH STREAMING LIVE TABLE transactions
 
@@ -2002,7 +1834,7 @@ CONSTRAINT valid_operation EXCEPT (operation) ON VIOLATION DROP ROW
 
 ```
 
-Code block:
+```
 
 @dlt.table
 
