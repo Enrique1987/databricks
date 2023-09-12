@@ -1887,7 +1887,6 @@ we would need "ON VIOLATION FAIL UPDATE"
 CONSTRAINT valid_operation EXCEPT (operation) ON VIOLATION DROP ROW
 
 
-```
 
 ```
 
@@ -2061,7 +2060,8 @@ def subscribed_order_emails():
     )
 
 ```
-Which of the following statements correctly identifies the error? Select one response.
+
+**Which of the following statements correctly identifies the error? Select one response.**
 
  
 
