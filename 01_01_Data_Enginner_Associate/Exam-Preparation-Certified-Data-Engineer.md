@@ -1815,10 +1815,9 @@ The data engineer can view the event details for the pipeline from the resultant
 
 
 
-** A data engineer is running a Delta Live Tables (DLT) notebook. They notice that several commands display the following message:
-
+**A data engineer is running a Delta Live Tables (DLT) notebook. They notice that several commands display the following message:
 This Delta Live Tables query is syntactically valid, but you must create a pipeline in order to define and populate your table.
-Which of the following statements explains this message? Select one response.
+Which of the following statements explains this message? Select one response.**
 
  
 
@@ -1966,8 +1965,7 @@ def subscribed_order_emails_v():
             )
 
     )
-
-```
+---- Possible options --- 
 
 .join(
 dlt.read("customers_silver").alias("a"),
@@ -1988,11 +1986,11 @@ on="customer_id"
 dlt.readStream("customers_silver").alias("b"),
 on="customer_id"  
 
-
-**A data engineer has created the following code block to create a streaming live table from orders_bronze.
-
 ```
 
+**A data engineer has created the following code block to create a streaming live table from orders_bronze.**
+
+```
 @dlt.table
 
 def orders_bronze():
