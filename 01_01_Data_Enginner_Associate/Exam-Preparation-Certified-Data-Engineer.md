@@ -1524,10 +1524,9 @@ WHERE event_type = 'flow_definition' AND
 &nbsp;&nbsp;&nbsp;&nbsp;**They can go to the Pipeline Details page and click on the individual tables in the resultant Directed Acyclic Graph (DAG).**
 
 
-** A data engineer has created the following query to create a streaming live table from transactions.
+**A data engineer has created the following query to create a streaming live table from transactions. Which of the following lines of code correctly fills in the blank? Select two responses.**
 
  
-```
 ```
 
 CREATE OR REFRESH STREAMING LIVE TABLE transactions
@@ -1538,7 +1537,7 @@ ________________________
 
 ```
 
-Which of the following lines of code correctly fills in the blank? Select two responses.
+
 
  
 
