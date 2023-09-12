@@ -8,7 +8,7 @@ Which of the following explains why collaborating in Databricks Notebooks preven
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks supports alerts and audit logs for easy monitoring and troubleshooting, so the data engineers will be alerted when changes are made to their code.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks are integrated into CI/CD pipelines by default, so the data engineers can work in separate branches without overwriting the other’s work.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks automatically handles schema variations to prevent insertion of bad records during ingestion, so the data engineers will be prevented from overwriting data that does not match the table’s schema.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks enforces serializable isolation levels, so the data engineers will never see inconsistencies in their data.  
@@ -23,7 +23,7 @@ Which of the following cluster configurations can the team use to satisfy their 
 &nbsp;&nbsp;&nbsp;&nbsp;Single node all-purpose cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;High concurrency all-purpose cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;Single node job cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;**Multi node job cluster**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Multi node job cluster** 
 
 
 	Explination: First of all we have to analyce the scenarion 
@@ -45,7 +45,7 @@ Which of the following actions can the data engineer take to satisfy their requi
 &nbsp;&nbsp;&nbsp;&nbsp;Delete the cluster; clusters are retained for 30 days after they are deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;Edit the cluster; clusters can be saved as templates in the cluster configuration page before they are deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;Detach the cluster; clusters are retained for 70 days after they are detached from a notebook.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Terminate the cluster; clusters are retained for 30 days after they are terminated.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Terminate the cluster; clusters are retained for 30 days after they are terminated.** 
 
 
 
@@ -57,7 +57,7 @@ Which of the following is a correct argument for why it is advantageous for the 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos allows integrations with popular tools such as Tableau, Looker, Power BI, and RStudio.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos provides a centralized, immutable history that cannot be manipulated by users.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Repos REST API enables the integration of data projects into CI/CD pipelines.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Repos REST API enables the integration of data projects into CI/CD pipelines.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos provides access to available data sets and data sources, on-premises or in the cloud.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos uses one common security model to access each individual notebook, or a collection of notebooks, and experiments.  
 
@@ -66,9 +66,9 @@ Which of the following is a correct argument for why it is advantageous for the 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Access permissions  
 &nbsp;&nbsp;&nbsp;&nbsp;Restart policy  
-&nbsp;&nbsp;&nbsp;&nbsp;**Maximum number of worker nodes**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Cluster mode**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Runtime Version**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Maximum number of worker nodes** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster mode** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Runtime Version** 
 
 
 
@@ -82,7 +82,7 @@ Which of the following is considered best practice for collaborating in this way
 &nbsp;&nbsp;&nbsp;&nbsp;The engineers can each design, develop, and trigger their own Git automation pipeline.  
 &nbsp;&nbsp;&nbsp;&nbsp;The engineers can each create their own Databricks Repo for development and merge changes into a main repository for production.  
 &nbsp;&nbsp;&nbsp;&nbsp;The engineers can use a separate internet-hosting service to develop their code in a single repository before merging their changes into a Databricks Repo.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The engineers can each work in their own branch for development to avoid interfering with each other.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The engineers can each work in their own branch for development to avoid interfering with each other.** 
 
 
 
@@ -92,7 +92,7 @@ Which of the following is considered best practice for collaborating in this way
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available worker nodes by the executor.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Workloads are distributed across available worker nodes by the driver node.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workloads are distributed across available worker nodes by the driver node.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available memory by the executor.  
 &nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available driver nodes by the worker node.  
 &nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available compute resources by the executor.  
@@ -103,8 +103,8 @@ Which of the following is considered best practice for collaborating in this way
 
 &nbsp;&nbsp;&nbsp;&nbsp;Clusters  
 &nbsp;&nbsp;&nbsp;&nbsp;SQL Warehouses  
-&nbsp;&nbsp;&nbsp;&nbsp;**Tables**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Functions**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Tables** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Functions** 
 &nbsp;&nbsp;&nbsp;&nbsp;MLflow Models  
 
 
@@ -117,7 +117,7 @@ Which of the following services can they employ to accomplish this? Select one r
 &nbsp;&nbsp;&nbsp;&nbsp;Delta Live Tables (DLT)  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Machine Learning  
 &nbsp;&nbsp;&nbsp;&nbsp;Unity Catalog  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks SQL**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks SQL** 
 &nbsp;&nbsp;&nbsp;&nbsp;Delta Lake  
 
 
@@ -130,16 +130,16 @@ Which of the following describes the key benefits of why migrating from a data l
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support cost-effective scaling.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support machine learning workloads.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support programming languages like Python.  
 
 
 
 **Which of the following correctly lists the programming languages that Databricks Notebooks can have set as the default programming language? Select one response.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Python, R, Scala, SQL**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Python, R, Scala, SQL** 
 &nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, SQL  
 &nbsp;&nbsp;&nbsp;&nbsp;Java, Pandas, Python, SQL  
 &nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, Scala  
@@ -150,8 +150,8 @@ Which of the following describes the key benefits of why migrating from a data l
 
 **Which of the following resources reside in the control plane of a Databricks deployment? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Notebook commands**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Job scheduler**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Notebook commands** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Job scheduler** 
 &nbsp;&nbsp;&nbsp;&nbsp;JDBC and SQL data sources  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks File System (DBFS)  
 &nbsp;&nbsp;&nbsp;&nbsp;Job configurations  
@@ -168,15 +168,15 @@ Which of the following cluster operations can be used in this situation? Select 
 &nbsp;&nbsp;&nbsp;&nbsp;Delete  
 &nbsp;&nbsp;&nbsp;&nbsp;Start  
 &nbsp;&nbsp;&nbsp;&nbsp;Terminate  
-&nbsp;&nbsp;&nbsp;&nbsp;**Restart**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Restart**  
 &nbsp;&nbsp;&nbsp;&nbsp;Edit  
 
 
 **A data engineer needs to run some SQL code within a Python notebook. Which of the following will allow them to do this? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**They can wrap the SQL command in spark.sql().**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can wrap the SQL command in spark.sql().** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can run the import sql statement at the beginning of their notebook.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can use the %sql command at the top of the cell containing SQL code.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use the %sql command at the top of the cell containing SQL code.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can use the %md command at the top of the cell containing SQL code.  
 &nbsp;&nbsp;&nbsp;&nbsp;It is not possible to run SQL code from a Python notebook.  
 
@@ -186,8 +186,8 @@ Which of the following cluster operations can be used in this situation? Select 
 Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Administrator credentials for Git service provider account  
-&nbsp;&nbsp;&nbsp;&nbsp;**Username for Git service provider account**   
-&nbsp;&nbsp;&nbsp;&nbsp;**Personal Access Token**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Username for Git service provider account**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Personal Access Token**  
 &nbsp;&nbsp;&nbsp;&nbsp;Two-factor authentication code from Git service provider  
 &nbsp;&nbsp;&nbsp;&nbsp;Workspace Access Token
 
@@ -199,11 +199,11 @@ Which of the following steps can the data engineer take to ensure the query runs
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can choose “Run all above” from the dropdown menu within the cell.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can choose “Run all above” from the dropdown menu within the cell.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can choose “Run all below” from the dropdown menu within the cell.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can clear the execution state before re-executing the cell individually.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can clear all cell outputs before re-executing the cell individually.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can run the notebook cells in order starting from the first command.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can run the notebook cells in order starting from the first command.** 
 
 
 
@@ -216,16 +216,16 @@ Which of the following is considered best practice for the team members to commi
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each sync their changes with the main branch from the Git terminal, which will automatically commit their changes.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each call the Databricks Repos API to submit the code changes for review before they are merged into the main branch.
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each run a job based on their branch in the Production folder of the shared repository so the changes can be merged into the main branch.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineers can each create a pull request to be reviewed by other members of the team before merging the code changes into the main branch.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineers can each create a pull request to be reviewed by other members of the team before merging the code changes into the main branch.** 
 
 
 
 
 **Which of the following operations are supported by Databricks Repos? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Pull**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Pull** 
 &nbsp;&nbsp;&nbsp;&nbsp;Rebase  
-&nbsp;&nbsp;&nbsp;&nbsp;**Clone**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Clone** 
 &nbsp;&nbsp;&nbsp;&nbsp;Sync  
 &nbsp;&nbsp;&nbsp;&nbsp;Reset  
 
@@ -238,7 +238,7 @@ Which of the following approaches accomplishes this? Select one response.**
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Create a separate task for the utility commands and make the notebook dependent on the task from the original notebook’s Directed Acyclic Graph (DAG).  
-&nbsp;&nbsp;&nbsp;&nbsp;**Create a separate notebook for the utility commands and use the %run magic command in the original notebook to run the notebook with the utility commands.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Create a separate notebook for the utility commands and use the %run magic command in the original notebook to run the notebook with the utility commands.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Create a pipeline for the utility commands and run the pipeline from within the original notebook using the %md magic command.  
 &nbsp;&nbsp;&nbsp;&nbsp;Create a separate notebook for the utility commands and use an import statement at the beginning of the original notebook to reference the notebook with the utility commands.  
 &nbsp;&nbsp;&nbsp;&nbsp;Create a separate job for the utility commands and run the job from within the original notebook using the %cmd magic command.  
@@ -249,7 +249,7 @@ Which of the following approaches accomplishes this? Select one response.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Web application  
 &nbsp;&nbsp;&nbsp;&nbsp;Job scheduler  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks File System (DBFS)**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks File System (DBFS)** 
 &nbsp;&nbsp;&nbsp;&nbsp;Notebooks  
 &nbsp;&nbsp;&nbsp;&nbsp;Cluster manager  
 
@@ -258,9 +258,9 @@ Which of the following approaches accomplishes this? Select one response.**
 
 **Which of the following statements describes how to clear the execution state of a notebook? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Use the Clear State option from the Run dropdown menu.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**Use the Clear State option from the Run dropdown menu.**   
 &nbsp;&nbsp;&nbsp;&nbsp;Perform a Clean operation from the terminal.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Detach and reattach the notebook to a cluster.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**Detach and reattach the notebook to a cluster.**   
 &nbsp;&nbsp;&nbsp;&nbsp;Perform a Clean operation from the driver logs.  
 &nbsp;&nbsp;&nbsp;&nbsp;Perform a Clear State operation from the Spark UI.  
 
@@ -293,7 +293,7 @@ Which of the following lines of code correctly fills in the blank by adding the 
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_time("end_date"), user_last_touch_timestamp, "MMM d, yyyy")  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn(date_time("end_date"),user_last_touch_timestamp, "HH:mm:ss")  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("end_date", CAST(user_last_touch_timestamp) as date_format)  
-&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))**  
+&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))** 
 
 
 **A data engineer has a table records with a column email. They want to check if there are null values in the email column. 
@@ -301,7 +301,7 @@ Which of the following approaches accomplishes this? Select one response.**
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.**   
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null using SELECT DISTINCT records.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by pivoting the table on null values.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.  
@@ -311,7 +311,7 @@ Which of the following approaches accomplishes this? Select one response.**
 
 **A data engineer has created a DataFrame exploded_eventsDF created from the table exploded_events defined here:
 CREATE TABLE events (user_id string, event_name string, item_id string, events struct<coupon:string, event_id:string, event_revenue:double>);
-They are using the following code with multiple array transformations to return a new DataFrame that shows the unique collection of the columns event_name and items.**  
+They are using the following code with multiple array transformations to return a new DataFrame that shows the unique collection of the columns event_name and items.** 
 
 
 ```
@@ -330,13 +330,13 @@ exploded_eventsDF
  
 ```
 
-**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.**  
+**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.** 
 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")  
-&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")**    
+&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")**   
 &nbsp;&nbsp;&nbsp;&nbsp;array_distinct(extract(collect_set(events.event_id))).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(extract(events.event_id)).alias("event_history")  
 
@@ -352,7 +352,7 @@ Which of the following SQL commands accomplishes this task? Select one response.
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;  
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;    
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
-&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;**  
+&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;** 
 
 
 
@@ -363,17 +363,17 @@ Which of the following SQL commands accomplishes this task? Select one response.
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.groupBy(nulls)  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
-&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.distinct()**  
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.distinct()** 
 
 
 
 **Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
-&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.selectExpr("count_if(email IS NULL)")**   
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.selectExpr("count_if(email IS NULL)")**  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.distinct()  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
-&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.where(col("email").isNull()).count()**  
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.where(col("email").isNull()).count()** 
 
 
 
@@ -388,12 +388,12 @@ The data engineer now needs to flatten the struct fields back into individual co
 
  
 
-**Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.**   
+**Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.**  
 
 
 	Tipp: if the question says "have already been converted into structu types" answer wouls be acces via "." if not the access is via ":"
 
-&nbsp;&nbsp;&nbsp;&nbsp;**They can use . syntax to access id in event_type.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use . syntax to access id in event_type.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can use event_type.* to pull out id into its own column.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use : syntax to access id in event_type.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the columns for id.  
@@ -447,7 +447,7 @@ first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can eliminate the statement that registers the function.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can eliminate the statement that registers the function.**
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the parameters in the function declaration.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the import statement in the beginning of the code block.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate "sql_udf" from the statement that registers the function.  
@@ -464,24 +464,24 @@ Which of the following commands do they need to use? Select one response.**
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM path LOCATION `${path}`;  
 &nbsp;&nbsp;&nbsp;&nbsp;DISPLAY TABLE json.`${path}`;  
 &nbsp;&nbsp;&nbsp;&nbsp;RETURN json.`${path}`;  
-&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM json.`${path}`;** 
+&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM json.`${path}`;**
 
 
 
 **A data engineer has a DataFrame with string column email_address. They are using a regular expression that returns a string with a matching pattern
 when it is in the following format:  user.address@domain.com Which of the following lines of code creates a new column
-domain that contains the domain from the email_address column? Select one response.**  
+domain that contains the domain from the email_address column? Select one response.** 
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))**  
+&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))** 
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", flatten("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", array_distinct("email_address", "(?<=@).+", 0))  
 
 
 
-**A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination.** 
+**A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination.**
 
  
 
@@ -501,7 +501,7 @@ to be in the month columns. How can the data engineer accomplish this? Select on
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .pivot() function.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .transform()clause.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .transform() clause.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can rotate the data from long to wide format using the .pivot() function.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can rotate the data from long to wide format using the .pivot() function.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .groupBy()clause.  
 
 
@@ -517,14 +517,14 @@ They need to access the field date within events_df. The events_df DataFrame has
 
  
 
-**Which of the following approaches can the data engineer use to accomplish this? Select one response.**     
+**Which of the following approaches can the data engineer use to accomplish this? Select one response.**    
 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can index the query by subfield using events[date] syntax.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use date.* to pull out the subfields of events_df into their own columns.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access date in events_df.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can use : syntax to access date in events_df.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use : syntax to access date in events_df.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the column for date.  
 
 
@@ -534,7 +534,7 @@ They need to access the field date within events_df. The events_df DataFrame has
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.   
-&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.** 
 &nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.  
@@ -546,13 +546,13 @@ They need to access the field date within events_df. The events_df DataFrame has
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.  
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.  
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.** 
 
 
 **A data engineer needs a reference to the results of a query that can be referenced across multiple queries within the scope of the environment session.
 The data engineer does not want the reference to exist outside of the scope of the environment session.
-Which of the following approaches accomplishes this without explicitly dropping the data object? Select one response.**  
+Which of the following approaches accomplishes this without explicitly dropping the data object? Select one response.** 
 
  
 
@@ -560,7 +560,7 @@ Which of the following approaches accomplishes this without explicitly dropping 
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a table.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a reusable user-defined function (UDF).  
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a view.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can store the results of their query within a temporary view.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can store the results of their query within a temporary view.** 
 
 
 
@@ -586,7 +586,7 @@ usersDF
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.dropDuplicates() statement needs to be added after the .agg() function.  
 &nbsp;&nbsp;&nbsp;&nbsp;A.merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.  
-&nbsp;&nbsp;&nbsp;&nbsp;**A.select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**A.select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.** 
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).  
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to .countDistinct(phone_number).  
 
@@ -607,10 +607,10 @@ OPTIONS (
 
  
 
-**Which of the following correctly identifies why running the code is resulting in an error? Select one response.**  
+**Which of the following correctly identifies why running the code is resulting in an error? Select one response.** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.** 
 &nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL.  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.  
 &nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
@@ -618,7 +618,7 @@ OPTIONS (
 
 
 **A data engineer has created the following Spark DataFrame sales_df that joins the previously
-created table sales withthe Spark DataFrame items_df when sales and items_df have matching values in the sales_id column in both data objects.**  
+created table sales withthe Spark DataFrame items_df when sales and items_df have matching values in the sales_id column in both data objects.** 
 
  
 
@@ -649,7 +649,7 @@ item_purchasesDF = (sales_df
 
 &nbsp;&nbsp;&nbsp;&nbsp;.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)  
 &nbsp;&nbsp;&nbsp;&nbsp;.merge(items_df, sales_df, on = "item_id")  
-&nbsp;&nbsp;&nbsp;&nbsp;**.join(items_df, sales_df.sales_id == items_df.sales_id)**    
+&nbsp;&nbsp;&nbsp;&nbsp;**.join(items_df, sales_df.sales_id == items_df.sales_id)**   
 &nbsp;&nbsp;&nbsp;&nbsp;.outerJoin(items_df, sales.sales_id == items_df.sales_id)  
 &nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")  
 
@@ -678,7 +678,7 @@ SELECT * FROM csv.`${path}`;
 
 &nbsp;&nbsp;&nbsp;&nbsp;The query converts a directory of files into CSV format.  
 &nbsp;&nbsp;&nbsp;&nbsp;The query displays the underlying file contents of a directory of CSV files.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The query displays the metadata of a directory of CSV files.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The query displays the metadata of a directory of CSV files.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The query streams data from a directory of CSV files into a table.  
 &nbsp;&nbsp;&nbsp;&nbsp;The query loads the contents of a directory of CSV files from a source table to a target table.  
 
@@ -688,7 +688,7 @@ SELECT * FROM csv.`${path}`;
 **Which of the following commands returns a new DataFrame from the DataFrame usersDF without duplicates? Select one response.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()    
-&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.distinct()**   
+&nbsp;&nbsp;&nbsp;&nbsp;**usersDF.distinct()**  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.groupBy(nulls)  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.select(*)  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.count().dropna()  
@@ -712,7 +712,7 @@ spark.udf.register(createUser(username))
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.  
-&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.** 
 &nbsp;&nbsp;&nbsp;&nbsp;*Explination: External data sources can vary in their performance characteristics, and the optimizations present in solutions like Delta Lake may not apply when reading from these sources.  
 Delta Lake and Lakehouse provide certain optimizations and ACID (Atomicity, Consistency, Isolation, Durability) guarantees for data that is stored and managed within them.*  
 
@@ -766,9 +766,9 @@ delimiter = "|"
 **Which of the following statements about the difference between views and temporary views are correct? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.   
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.  
 
 **Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**
@@ -809,7 +809,7 @@ Which of the following approaches accomplishes this? Select one response.**
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by creating a data expectation to drop null values.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null using SELECT DISTINCT records.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by pivoting the table on null values.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.  
 
 
@@ -832,7 +832,7 @@ Which of the following correctly identifies why running the code is resulting in
 &nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL    
 &nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.** 
 &nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.  
  
 
@@ -860,7 +860,7 @@ Which of the following lines of code fills in the blank to create the column eve
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")**  
+&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")** 
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;array_distinct(extract(collect_set(events.event_id))).alias("event_history")  
@@ -896,7 +896,7 @@ Which of the following is considered a best practice to do this? Select one resp
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can declare the function with @udf("string") syntax to specify the input and return types of the function.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use type hints to clarify the input and return types of the function.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use type hints to clarify the input and return types of the function.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a comment to the table properties to clarify the input and return types of the function.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a return string line to the end of their UDF to specify the input and return types of the function.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add the input and output types to the table using @options()  
@@ -969,11 +969,11 @@ In conclusion, while @pandas_udf can offer significant performance advantages ov
 
 **Which of the following pieces of information about a table are located within the schema directory of the table? Select three responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Catalog name**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Catalog name**  
 &nbsp;&nbsp;&nbsp;&nbsp;Last modification date  
-&nbsp;&nbsp;&nbsp;&nbsp;**Owner**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Owner** 
 &nbsp;&nbsp;&nbsp;&nbsp;Creation date  
-&nbsp;&nbsp;&nbsp;&nbsp;**Location**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Location** 
 
 
 
@@ -982,7 +982,7 @@ In conclusion, while @pandas_udf can offer significant performance advantages ov
 
  
 &nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE TABLE products;  
-&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE DETAIL products;**    
+&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE DETAIL products;**   
 &nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE TABLE EXTENDED products;  
 &nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE HISTORY products;  
 &nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLES products;  
@@ -1005,7 +1005,7 @@ date DATE GENERATED ALWAYS AS (
 &nbsp;&nbsp;&nbsp;&nbsp;The DATE GENERATED ALWAYS AS command already casts transaction_timestamp to a date, so the AS DATE cast needs to be removed.  
 &nbsp;&nbsp;&nbsp;&nbsp;The ALWAYS keyword needs to be removed to account for improperly formatted data.  
 &nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to datetime format before it is cast as a date.  
-&nbsp;&nbsp;&nbsp;&nbsp;**transaction_timestamp needs to be cast as a timestamp before it is cast as a date.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**transaction_timestamp needs to be cast as a timestamp before it is cast as a date.** 
 &nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to an integer before it is cast as a date.  
 
 
@@ -1014,9 +1014,9 @@ date DATE GENERATED ALWAYS AS (
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**DROP DATABASE**    
+&nbsp;&nbsp;&nbsp;&nbsp;**DROP DATABASE**   
 &nbsp;&nbsp;&nbsp;&nbsp;DELETE SCHEMA  
-&nbsp;&nbsp;&nbsp;&nbsp;**DROP SCHEMA**   
+&nbsp;&nbsp;&nbsp;&nbsp;**DROP SCHEMA**  
 &nbsp;&nbsp;&nbsp;&nbsp;REMOVE DATABASE  
 &nbsp;&nbsp;&nbsp;&nbsp;DELETE DATABASE  
 
@@ -1029,15 +1029,15 @@ Which of the following techniques can the data engineer use to improve the perfo
 &nbsp;&nbsp;&nbsp;&nbsp;They can perform data skipping and file compaction in the query using the DATASKIPPING and OPTIMIZE commands   
 &nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and Z-order indexing in the query using the COMPACT and ZORDER commands.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and vacuuming in the query using the COMPACT and VACUUM commands.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can perform file compaction and Z-order indexing in the query using the OPTIMIZE and ZORDER commands.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**They can perform file compaction and Z-order indexing in the query using the OPTIMIZE and ZORDER commands.**   
 
 
 
 **Which of the following describes a feature of Delta Lake that is unavailable in a traditional data warehouse? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Centralized repository to share features  
-&nbsp;&nbsp;&nbsp;&nbsp;**Combined batch and streaming analytics**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Auto Loader for data ingestion of raw files**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Combined batch and streaming analytics** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Auto Loader for data ingestion of raw files** 
 &nbsp;&nbsp;&nbsp;&nbsp;Experiment tracking and model management  
 &nbsp;&nbsp;&nbsp;&nbsp;Built-in monitoring for scheduled queries  
 
@@ -1046,7 +1046,7 @@ Which of the following approaches allows the data engineer to do this? Select on
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**They need to disable the retention duration check and enable vacuum logging. Then they need to vacuum the table.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**They need to disable the retention duration check and enable vacuum logging. Then they need to vacuum the table.**   
 &nbsp;&nbsp;&nbsp;&nbsp;They need to enable the retention duration check and disable vacuum logging. Then they need to Z-order the table.  
 &nbsp;&nbsp;&nbsp;&nbsp;They need to enable the retention duration check and vacuum logging. Then they need to optimize the table.  
 &nbsp;&nbsp;&nbsp;&nbsp;They need to disable the retention duration check and enable the last commit version in session. Then they need to vacuum the table.  
@@ -1090,7 +1090,7 @@ CONSTRAINT
 
 ```
 
-**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.** 
+**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.**
 
  
 
@@ -1109,7 +1109,7 @@ SELECT *, current_timestamp() FROM parquet `${da.paths.datasets}/ecommerce/raw/s
 &nbsp;&nbsp;&nbsp;&nbsp;None of the provided answer choices explain why the query is running incorrectly.  
 &nbsp;&nbsp;&nbsp;&nbsp;APPEND needs to be used instead of INSERT INTO.  
 &nbsp;&nbsp;&nbsp;&nbsp;The source file path is formatted incorrectly. Double-quotes need to be used in place of back-ticks.  
-&nbsp;&nbsp;&nbsp;&nbsp;**INSERT OVERWRITE needs to be used instead of INSERT INTO.** --> key word "replace data"    
+&nbsp;&nbsp;&nbsp;&nbsp;**INSERT OVERWRITE needs to be used instead of INSERT INTO.**--> key word "replace data"    
 &nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO needs to be used instead of INSERT INTO.  
 
 
@@ -1120,7 +1120,7 @@ Which optimization technique does the data engineer need to use? Select one resp
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use ZORDER to colocate records on user_id.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use ZORDER to colocate records on user_id.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use DATASKIPPING to colocate records on user_id.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use COLOCATE to colocate records on user_id.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use VACUUM to colocate records on user_id.  
@@ -1133,7 +1133,7 @@ Which optimization technique does the data engineer need to use? Select one resp
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;On Delta tables, Databricks automatically triggers VACUUM operations as data is written.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Running VACUUM on a Delta table eliminates the ability to time travel back to a version older than the specified data retention period**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Running VACUUM on a Delta table eliminates the ability to time travel back to a version older than the specified data retention period** 
 &nbsp;&nbsp;&nbsp;&nbsp;VACUUM will not vacuum any directories that begin with an underscore except for _delta_log.  
 &nbsp;&nbsp;&nbsp;&nbsp;Delta table metadata files will not be vacuumed unless the auto retention check is turned off.  
 &nbsp;&nbsp;&nbsp;&nbsp;Delta table data files are vacuumed according to their modification timestamps on the storage system.  
@@ -1147,7 +1147,7 @@ used for testing while meeting the above requirements? Select one response.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;CLONE  
 &nbsp;&nbsp;&nbsp;&nbsp;COPY  
-&nbsp;&nbsp;&nbsp;&nbsp;**SHALLOW CLONE**  
+&nbsp;&nbsp;&nbsp;&nbsp;**SHALLOW CLONE** 
 &nbsp;&nbsp;&nbsp;&nbsp;DEEP CLONE  
 &nbsp;&nbsp;&nbsp;&nbsp;UPDATE  
 
@@ -1157,7 +1157,7 @@ Which of the following will create a new table named student *regardless* of whe
 
 	Tipp: `regardless` is the key word it means if its already create we will replace it,
 
-&nbsp;&nbsp;&nbsp;&nbsp;**CREATE OR REPLACE TABLE student (id INT, name STRING, age INT);**    
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE OR REPLACE TABLE student (id INT, name STRING, age INT);**   
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE student (id INT, name STRING, age INT);  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student AS SELECT * FROM student  
 &nbsp;&nbsp;&nbsp;&nbsp;OVERWRITE TABLE student (id INT, name STRING, age INT);  
@@ -1186,7 +1186,7 @@ RESTORE TABLE foods TO VERSION AS OF 2;
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**1,4**  
+&nbsp;&nbsp;&nbsp;&nbsp;**1,4** 
 &nbsp;&nbsp;&nbsp;&nbsp;4  
 &nbsp;&nbsp;&nbsp;&nbsp;1,2  
 &nbsp;&nbsp;&nbsp;&nbsp;3,2  
@@ -1202,8 +1202,8 @@ Which of the following built-in Spark SQL commands can the data engineer use in 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;input_file_block_start()  
-&nbsp;&nbsp;&nbsp;&nbsp;**input_file_name()**    
-&nbsp;&nbsp;&nbsp;&nbsp;**current_timestamp()**   
+&nbsp;&nbsp;&nbsp;&nbsp;**input_file_name()**   
+&nbsp;&nbsp;&nbsp;&nbsp;**current_timestamp()**  
 &nbsp;&nbsp;&nbsp;&nbsp;from_utc_timestamp()  
 &nbsp;&nbsp;&nbsp;&nbsp;from_unixtime()  
 
@@ -1219,7 +1219,7 @@ Which of the following commands does the data engineer need to use? Select one r
 &nbsp;&nbsp;&nbsp;&nbsp;display(dbutils.fs.ls(f"{path}"))  
 &nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE EXTENDED cities;  
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM cities VERSION AS OF 1;  
-&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE HISTORY cities;**  
+&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE HISTORY cities;** 
 
 
 **A data engineer needs to atomically append new rows to an existing Delta table. 
@@ -1229,7 +1229,7 @@ Which of the following approaches is considered best practice to efficiently mod
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use UPDATE to update the existing tables in one batch.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT ONLY to incrementally update the existing tables.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use INSERT INTO to incrementally update the existing tables.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use INSERT INTO to incrementally update the existing tables.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use APPEND to update the existing tables in one batch.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT OVERWRITE to incrementally update the existing tables.  
 
@@ -1242,29 +1242,29 @@ with respect to size on disk? Select one response.i**
 &nbsp;&nbsp;&nbsp;&nbsp;COMPACT  
 &nbsp;&nbsp;&nbsp;&nbsp;DATASKIPPING  
 &nbsp;&nbsp;&nbsp;&nbsp;VACUUM  
-&nbsp;&nbsp;&nbsp;&nbsp;**OPTIMIZE**  
+&nbsp;&nbsp;&nbsp;&nbsp;**OPTIMIZE** 
 
 
 
 **Which of the following problems are solved by the guarantee of ACID transactions? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;ACID transactions combine compute and storage scaling to reduce costs.  
-&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions guarantee that appends will not fail due to conflict, even when writing from multiple sources at the same time.**   
-&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions are guaranteed to either succeed or fail completely, so jobs will never fail mid way.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions guarantee that appends will not fail due to conflict, even when writing from multiple sources at the same time.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions are guaranteed to either succeed or fail completely, so jobs will never fail mid way.**   
 &nbsp;&nbsp;&nbsp;&nbsp;ACID transactions guarantee the use of proprietary storage formats.  
 &nbsp;&nbsp;&nbsp;&nbsp;ACID transactions support the creation of interactive visualization queries.  
 
 
 
-**Which of the following table modifications can be made with a MERGE INTO statement? Select three responses.** (CHECK if time)
+**Which of the following table modifications can be made with a MERGE INTO statement? Select three responses.**(CHECK if time)
 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Write raw data from a file location into a schema  
 &nbsp;&nbsp;&nbsp;&nbsp;Write data that generates multiple downstream tables  
-&nbsp;&nbsp;&nbsp;&nbsp;**Write data to a table with automatic deduplication**    
-&nbsp;&nbsp;&nbsp;&nbsp;**Write a stream of schema changes into a table**    
-&nbsp;&nbsp;&nbsp;&nbsp;**Write streaming aggregates in Update Mode**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Write data to a table with automatic deduplication**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Write a stream of schema changes into a table**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Write streaming aggregates in Update Mode** 
 
 
 
@@ -1298,7 +1298,7 @@ WHEN NOT MATCHED THEN DELETE
 &nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN a.email IS NULL  
 &nbsp;&nbsp;&nbsp;&nbsp;WHEN MATCHED AND a.email IS NULL THEN INSERT (email = b.email)  
 &nbsp;&nbsp;&nbsp;&nbsp;INSERT (email = b.email) WHEN MATCHED AND a.email IS NULL  
-&nbsp;&nbsp;&nbsp;&nbsp;**WHEN MATCHED AND a.email IS NULL THEN UPDATE SET email = b.email**  
+&nbsp;&nbsp;&nbsp;&nbsp;**WHEN MATCHED AND a.email IS NULL THEN UPDATE SET email = b.email** 
 
 
 
@@ -1309,9 +1309,9 @@ Which of the following commands does the data engineer need to run to complete t
 
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE IF NOT EXISTS clients '${path}';  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE SCHEMA IF NOT EXISTS clients json. '${path}';  
-&nbsp;&nbsp;&nbsp;&nbsp;**CREATE DATABASE clients LOCATION '${path}';**  
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE DATABASE clients LOCATION '${path}';** 
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE clients DELTA json. '${path}';  
-&nbsp;&nbsp;&nbsp;&nbsp;**CREATE SCHEMA clients LOCATION '${path}';**     
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE SCHEMA clients LOCATION '${path}';**    
 
 
 
@@ -1319,10 +1319,10 @@ Which of the following commands does the data engineer need to run to complete t
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**COPY INTO must target an existing Delta table.**   
-&nbsp;&nbsp;&nbsp;&nbsp;**The source file must specify the file’s format.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**COPY INTO must target an existing Delta table.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The source file must specify the file’s format.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The schema for the data must be defined.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data must be in JSON or CSV format.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data must be in JSON or CSV format.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The data cannot contain duplicate records.  
 
 
@@ -1330,8 +1330,8 @@ Which of the following commands does the data engineer need to run to complete t
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**When moving a managed table to a new database, the table’s data must be written to the new location.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**External tables will always specify a LOCATION during table creation.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**When moving a managed table to a new database, the table’s data must be written to the new location.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**External tables will always specify a LOCATION during table creation.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables are specified with the CREATE MANAGED TABLE command in SQL.  
 &nbsp;&nbsp;&nbsp;&nbsp;When dropping an external table, the underlying data and metadata are also deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;When dropping a managed table, only the underlying metadata stays intact.  
@@ -1341,7 +1341,7 @@ Which of the following commands does the data engineer need to run to complete t
 **Which of the following validates that the temporary view trees has exactly six records? Select one response.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;assert spark.load("trees").count() == 6  
-&nbsp;&nbsp;&nbsp;&nbsp;**assert spark.table("trees").count() == 6** 
+&nbsp;&nbsp;&nbsp;&nbsp;**assert spark.table("trees").count() == 6**
 &nbsp;&nbsp;&nbsp;&nbsp;assert spark.temp("trees").count() == 6  
 &nbsp;&nbsp;&nbsp;&nbsp;assert spark("trees").count() == 6  
 &nbsp;&nbsp;&nbsp;&nbsp;assert spark.view("trees").count() == 6  
@@ -1354,37 +1354,37 @@ Which of the following commands does the data engineer need to run to complete t
 
 ### Theorie
 
-**DLT vs Stream DLT**  
+**DLT vs Stream DLT** 
 `DLT` for (mini or often)batch processing and automates data managemen, while `Stream DLT` enables real-time.
 
-**DLT vs DT**  
+**DLT vs DT** 
 `DLT` are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
 `DT`: Less frequent batch updates.  
 
-**Stream Live Table (SLT):** For real-time streaming data ingestion and processing.  
-**Delta Live Table (DLT):** For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.  
-**Delta Table:** For less frequent batch updates (e.g., daily or weekly). Provides the foundational features for versioning, ACID transactions, and optimized querying.  
+**Stream Live Table (SLT):**For real-time streaming data ingestion and processing.  
+**Delta Live Table (DLT):**For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.  
+**Delta Table:**For less frequent batch updates (e.g., daily or weekly). Provides the foundational features for versioning, ACID transactions, and optimized querying.  
 
-**Auto Loader** When you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
+**Auto Loader**When you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.
 
 
-**What are DLT designed for** Delta Live Tables (DLT) is designed for defining reliable and maintainable pipelines. DLT is not intended for interactive execution in a notebook.  
+**What are DLT designed for**Delta Live Tables (DLT) is designed for defining reliable and maintainable pipelines. DLT is not intended for interactive execution in a notebook.  
 
-**What happend when you query a DLT that is not attached to a DLT pipeline inside of a notebook ?**  
+**What happend when you query a DLT that is not attached to a DLT pipeline inside of a notebook ?** 
 When you query a DLT in a notebook that is not attached to a DLT pipeline, you are querying the table as it is at that moment, no the live streaming version.
 When you are querying a DLT outside of the pipeline, you are essentially querying the current state of the Delta table. Whether the table was defined as batch or streaming doesnt´
 
-**How much time could preserve the data the DLT ?**  
+**How much time could preserve the data the DLT ?** 
 Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
 But... retention perios matter, if every change is retained idenfinitely you storage usage would grow rapidly, especially in active dataset with frequent modification. 
 Thats why Delta Lake allows you to set a retention prediod for how long to keep old versionof th data.
 
-**Metastore**  
+**Metastore** 
 Metastore keeps track of all the table metadata, like the schema and the location of the data. When you create a table in Delta Lake or DAtabricks, the details bout the table,
 including where its data is stored, are saved in the metastored.
 
-**Table directory** In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
+**Table directory**In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
 where the data is stored. Referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
 The table directory could be a path like `abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/` whithn this directory, you´d find 
 multiple Parquet Files and Transaction Logs. `_delta_log`  
@@ -1393,18 +1393,18 @@ multiple Parquet Files and Transaction Logs. `_delta_log`
 Event log is about logging events or changes. In context of Delta Lake, the Event Log keeps track of transactions but doesn´t serve as a direct way to
 view the contents of the table directory. Are desing to capure various acxtivities.
 
-**Checkpointing directory** Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
+**Checkpointing directory**Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
 
-**What DAG primarily does?**  
+**What DAG primarily does?** 
 DAG visualizes the sequence and dependencies of taks. There you can go to the Pipeline Details page and click on the individual tables.  
 
-**Task Details** Typically provide information about the task´s execution, status, duration.	
+**Task Details**Typically provide information about the task´s execution, status, duration.	
 
-** Workflow vs Pipeline**    
+**Workflow vs Pipeline**   
 Task orchestration = Workflow  
 Data transofrmation and movement (pipeline)
 
-**Flow Definition** In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL.
+**Flow Definition**In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL.
 In visual tools like Azure Data Factory, Apache NiFi, or Talend, the flow definition might be represented visually as a flowchart or diagram where you can see
 how different data sources, transformations, and destinations (sinks) are connected. By examining this visual representation, 
 you can understand how data is flowing and being transformed.
@@ -1412,17 +1412,17 @@ you can understand how data is flowing and being transformed.
 In a more code-based environment, or if you're using something like Databricks notebooks, the flow definition might be best understood by examining the sequence of SQL queries,
 Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data from Table A, transform it, and then insert it into Table B.
 
-** Workflow orchestration patterns.
+**Workflow orchestration patterns.
 
-**Fan-out Pattern:** A single task or job is followed by multiple tasks that can be executed in parallel  
+**Fan-out Pattern:**A single task or job is followed by multiple tasks that can be executed in parallel  
 
-**Funnel Pattern** Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
+**Funnel Pattern**Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
 
-**Hourglas Pattern** Combine Fan-out and Funnel
+**Hourglas Pattern**Combine Fan-out and Funnel
 
-**Sequence Pattern** Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+**Sequence Pattern**Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
 
-**Multi-sequence Pattern** Multi sequences of task that can run in parallel with each other.
+**Multi-sequence Pattern**Multi sequences of task that can run in parallel with each other.
 
 **Example of Silver and Gold**
 Silver tables enrich data by joining fields from bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.  
@@ -1430,10 +1430,10 @@ Silver tables enrich data by joining fields from bronze tables. Gold tables prov
 **Job Runs Page**: Provide a detailed overview of all the jobs executed, including those from DLT pipelines.
 Clicking on individual tables or task within a job run will providespecifics bout that task.
 
-**Databricks Tables** Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
+**Databricks Tables**Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
 parquet, Avro, CSV, JSON, etc...  
 
-**Storage Systems** Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
+**Storage Systems**Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
 
 
 ## Exam Questions
@@ -1444,16 +1444,16 @@ Which of the following describes how the data engineer can clarify this to other
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;WHEN QUALITY = SILVER THEN PASS  
-&nbsp;&nbsp;&nbsp;&nbsp;**TBLPROPERTIES ("quality" = "silver")**  
+&nbsp;&nbsp;&nbsp;&nbsp;**TBLPROPERTIES ("quality" = "silver")** 
 &nbsp;&nbsp;&nbsp;&nbsp;None of these answer choices are correct.  
 &nbsp;&nbsp;&nbsp;&nbsp;**COMMENT "This is a silver table"**
 &nbsp;&nbsp;&nbsp;&nbsp;EXPECT QUALITY = SILVER"  
 
 
 CHECK AGAIN!!
-** A data engineer needs to examine how data is flowing through tables within their pipeline.Which of the following correctly describes how they can accomplish this? Select one.
+**A data engineer needs to examine how data is flowing through tables within their pipeline.Which of the following correctly describes how they can accomplish this? Select one.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can query the flow definition for the direct predecessor of each table and then combine the results.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can query the flow definition for the direct predecessor of each table and then combine the results.** 
 *This implies tracing the data flow by identifying the table (or data source) that directly feeds data to the current table in question.
 By determining the immediate predecessor for each table in the pipeline and combining these results,
 the engineer can piece together the data flow from start to finish.*
@@ -1475,8 +1475,8 @@ WHERE event_type = 'flow_definition' AND
 ```
 
 
-** A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
-** Which of the following modes do they need to use and why? Select one.
+**A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
+**Which of the following modes do they need to use and why? Select one.
 
 	**my opinion**: It depends to of how for who and how going to be that data consume, for example if we had a source raw data that is beeing incremented every 5 minutes with new resuls
 	but the at the end after the transformations from raw data to Gold data, the people taht is examinating that data they are just doing that one a week o one a day, it doesnt make
@@ -1486,17 +1486,17 @@ WHERE event_type = 'flow_definition' AND
 &nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines ingest new data as it arrives.  
 &nbsp;&nbsp;&nbsp;&nbsp;Triggered; triggered pipelines update once and cannot be updated again for 24 hours.  
 &nbsp;&nbsp;&nbsp;&nbsp;Triggered; triggered pipelines update once and cannot be updated again until they are manually run.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Triggered; triggered pipelines run once and then shut down until the next manual or scheduled update.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Triggered; triggered pipelines run once and then shut down until the next manual or scheduled update.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines run at set intervals and then shut down until the next manual or scheduled update.
 
 
 
-** Which of the following correctly describes how to access contents of the table directory? Select one response.
+**Which of the following correctly describes how to access contents of the table directory? Select one response.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the checkpointing directory.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the Auto Loader directory.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The contents of the table directory can be viewed through the metastore.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The contents of the table directory can be viewed through the metastore.** 
 &nbsp;&nbsp;&nbsp;&nbsp;*The metastore is where the metadata of tables, including their locations schema and other properties are sotred.By querying the metastore you can find out wherethe data*    
 &nbsp;&nbsp;&nbsp;&nbsp;for a particular table is stored and access its directory path.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the flow definition’s output dataset.  
@@ -1505,8 +1505,8 @@ WHERE event_type = 'flow_definition' AND
 
 
 
-** A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task. 
-** Which of the following describes how to explore the output for each task in the pipeline? Select one response.
+**A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task. 
+**Which of the following describes how to explore the output for each task in the pipeline? Select one response.
 
 *note  that the question is "ouput of task" no the ouput of every table or the result, here the focus is just on task*
 
@@ -1543,24 +1543,24 @@ ________________________
 
 &nbsp;&nbsp;&nbsp;&nbsp;FROM STREAMING LIVE.transactions  
 &nbsp;&nbsp;&nbsp;&nbsp;FROM DELTA STREAM(LIVE.transactions)  
-&nbsp;&nbsp;&nbsp;&nbsp;**FROM STREAM(LIVE.transactions)**  
+&nbsp;&nbsp;&nbsp;&nbsp;**FROM STREAM(LIVE.transactions)** 
 &nbsp;&nbsp;&nbsp;&nbsp;FROM STREAMING LIVE (transactions)  
-&nbsp;&nbsp;&nbsp;&nbsp;**FROM LIVE.transactions**  
+&nbsp;&nbsp;&nbsp;&nbsp;**FROM LIVE.transactions** 
 
 
-** Which of the following data quality metrics are captured through `row_epectations´ in a pipeline’s event log? Select three responses.
+**Which of the following data quality metrics are captured through `row_epectations´ in a pipeline’s event log? Select three responses.
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Failed records**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Name**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Failed records** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Name** 
 &nbsp;&nbsp;&nbsp;&nbsp;Flow progress  
-&nbsp;&nbsp;&nbsp;&nbsp;**Dataset**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Dataset** 
 &nbsp;&nbsp;&nbsp;&nbsp;Update ID  
 
 
-** A data engineer is using the code below to create a new table transactions_silver from the table transaction_bronze. 
-** However, when running the code, an error is thrown.
+**A data engineer is using the code below to create a new table transactions_silver from the table transaction_bronze. 
+**However, when running the code, an error is thrown.
 
  
 ```
@@ -1572,16 +1572,16 @@ FROM LIVE.transactions_bronze
 
 ```
 
-** Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
+**Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
 
 &nbsp;&nbsp;&nbsp;&nbsp;LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Initializing stage.  
-&nbsp;&nbsp;&nbsp;&nbsp;**A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Initializing stage.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Initializing stage.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The EXPECT statement needs to be changed to EXPECT (order_timestamp is NOT NULL). The error will be detected during the Setting Up Tables stage.  
 &nbsp;&nbsp;&nbsp;&nbsp;A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Setting Up Tables stage.  
 &nbsp;&nbsp;&nbsp;&nbsp;LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Setting Up Tables stage.  
 
 
-** Which of the following statements accurately describes the difference in behavior between 	Live Views and live tables? Select one response.  
+**Which of the following statements accurately describes the difference in behavior between 	Live Views and live tables? Select one response.  
 
 *remembering*
 **Live Tables**: Tables that are define within a DLT pipeline. The data within these tables is written to disk,
@@ -1591,29 +1591,29 @@ but do not store results to a disk as a persistent table does.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Live tables can be used to enforce data quality, while views do not have the same guarantees in schema enforcement.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The results of live tables are stored to disk, while the results of views can only be referenced from within the DLT pipeline in which they are defined.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The results of live tables are stored to disk, while the results of views can only be referenced from within the DLT pipeline in which they are defined.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Live tables can be used with a stream as its source, while live views are incompatible with structured streaming.  
 &nbsp;&nbsp;&nbsp;&nbsp;Metrics for live tables can be collected and reported, while data quality metrics for views are abstracted to the user.  
 &nbsp;&nbsp;&nbsp;&nbsp;The results of live tables can be viewed through a Directed Acyclic Graph (DAG), while the results for live views cannot.  
 
 
 **A data engineer needs to add a file path to their DLT pipeline. They want to use the file path throughout the pipeline as a parameter for various statements and functions.
-Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.**  
+Which of the following options can be specified during the configuration of a DLT pipeline in order to allow this? Select one response.** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can add a widget to the notebook and then perform a string substitution of the file path.  
 &nbsp;&nbsp;&nbsp;&nbsp;*Widgets in Databricks notebooks allow for paremeteized inputs* However requires human interaction to set its.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can specify the file path in the job scheduler when deploying the pipeline.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can set the variable in a notebook command and then perform a variable substitution of the file path.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can add a key-value pair in the Configurations field and then perform a string substitution of the file path.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can add a key-value pair in the Configurations field and then perform a string substitution of the file path.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can add a parameter when scheduling the pipeline job and then perform a variable substitution of the file path.
 
 
 
 
-** Which of the following correctly describes how code from one library notebook can be referenced by code from another library notebook? Select one response.
+**Which of the following correctly describes how code from one library notebook can be referenced by code from another library notebook? Select one response.
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Within a DLT Pipeline, code in any notebook library can reference tables and views created in any other notebook library.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Within a DLT Pipeline, code in any notebook library can reference tables and views created in any other notebook library.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Within a DLT Pipeline, code in a notebook library can reference tables and views created in another notebook library as long as the referenced notebook library is installed on the other notebook library’s cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;Within a DLT Pipeline, code in a notebook library can reference tables and views created in another notebook library that is running on the same cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;Within a DLT Pipeline, code in a notebook library can reference tables and views created in another notebook library as long as one notebook library references the other notebook library.  
@@ -1639,7 +1639,7 @@ Which of the following approaches can the data engineer take to accomplish this?
 
 
 
-** A data engineer needs to ensure the table updated_history, which is derived from the table history, contains all records from history.
+**A data engineer needs to ensure the table updated_history, which is derived from the table history, contains all records from history.
 Each record in both tables contains a value for the column user_id.
 Which of the following approaches can the data engineer use to create a new data object from updated_history and history containing the records with
 matching user_id values in both tables? Select one response.**
@@ -1659,7 +1659,7 @@ The data engineer can create a new common table expression from the history tabl
 Single Choice
 
 
-** A data engineer wants to query metrics on the latest update made to their pipeline. The pipeline has multiple data sources.
+**A data engineer wants to query metrics on the latest update made to their pipeline. The pipeline has multiple data sources.
 Despite the input data sources having low data retention, the data engineer needs to retain the results of the query indefinitely.
 Which of the following statements identifies the type of table that needs to be used and why? Select one response.
 
@@ -1682,7 +1682,7 @@ Live table; live tables only support reading from "append-only" streaming source
 
 
 
-** A data engineer has configured and deployed a DLT pipeline that contains an error. The error is thrown at the third stage of the pipeline,
+**A data engineer has configured and deployed a DLT pipeline that contains an error. The error is thrown at the third stage of the pipeline,
 but since DLT resolves the order of tables in the pipeline at different steps, they are not sure if the first stage succeeded.
 Which of the following is considered a good practice to determine this? Select one response.
 
@@ -1701,7 +1701,7 @@ The data engineer can fix the tables from the Directed Acyclic Graph (DAG), star
 
 
 
-** Which of the following are guaranteed when processing a change data capture (CDC) feed with APPLY CHANGES INTO? Select three responses.
+**Which of the following are guaranteed when processing a change data capture (CDC) feed with APPLY CHANGES INTO? Select three responses.
 
  
 
@@ -1714,7 +1714,7 @@ APPLY CHANGES INTO supports insert-only and append-only data.
 
 
 
-** A data engineer has a Delta Live Tables (DLT) pipeline that uses a change data capture (CDC) data source. 
+**A data engineer has a Delta Live Tables (DLT) pipeline that uses a change data capture (CDC) data source. 
 They need to write a quality enforcement rule that ensures that records containing the values INSERT or UPDATE
 in the operation column cannot contain a null value in the name column. The operation column can contain one of three values: INSERT, UPDATE, and DELETE.
 If the constraint is violated, then the entire transaction needs to fail.  
@@ -1743,7 +1743,7 @@ CONSTRAINT valid_id_not_null EXPECT (valid_id IS NOT NULL or operation = "INSERT
 *not even comparing the name column*
 
 
-** Which of the following correctly describes how Auto Loader ingests data? Select one response.
+**Which of the following correctly describes how Auto Loader ingests data? Select one response.
 
 
 **Auto Loader incrementally ingests new data files in batches.**
@@ -1758,7 +1758,7 @@ Auto Loader automatically detects new data files during manual or scheduled upda
 
 
 
-** A data engineer wants to query metrics on the latest update made to their pipeline. They need to be able to see the event type and timestamp for each update.
+**A data engineer wants to query metrics on the latest update made to their pipeline. They need to be able to see the event type and timestamp for each update.
 Which of the following approaches allows the data engineer to complete this task? Select one response. CHECK AGAIN
 
 
@@ -1794,7 +1794,7 @@ Queries outside of DLT will return snapshot results from DLT tables only if they
 
 
 
-** A data engineer needs to identify the cloud provider and region of origin for each event within their DLT pipeline.
+**A data engineer needs to identify the cloud provider and region of origin for each event within their DLT pipeline.
 Which of the following approaches allows the data engineer to view this information? Select one response. 
 
 
@@ -1835,7 +1835,7 @@ DLT does not support the execution of Python commands.
 
 
 
-** Which of the following are advantages of using a Delta Live Tables (DLT) pipeline over a traditional ETL pipeline in Databricks? Select two responses.
+**Which of the following are advantages of using a Delta Live Tables (DLT) pipeline over a traditional ETL pipeline in Databricks? Select two responses.
 
 DLT automates data management through physical data optimizations and schema evolution.  
 DLT decouples compute and storage costs regardless of scale.  
@@ -1844,7 +1844,7 @@ DLT decouples compute and storage costs regardless of scale.
 DLT leverages additional metadata over other open source formats such as JSON, CSV, and Parquet.  
 
 
-** A data engineer has built and deployed a DLT pipeline. They want to perform an update that writes a batch of data to the output directory. 
+**A data engineer has built and deployed a DLT pipeline. They want to perform an update that writes a batch of data to the output directory. 
 Which of the following statements about performing this update is true? Select one response. (Check)
 
  
@@ -1863,7 +1863,7 @@ All newly arriving data will be continuously processed through their pipeline. M
 
 
 
-** A data engineer has a Delta Live Tables (DLT) pipeline that uses a change data capture (CDC) data source. 
+**A data engineer has a Delta Live Tables (DLT) pipeline that uses a change data capture (CDC) data source. 
 They need to write a quality enforcement rule that ensures that values in the column operation do not contain null values.
 If the constraint is violated, the associated records cannot be included in the dataset. 
 
@@ -1927,7 +1927,7 @@ Which of the following lines of code correctly fills in the blank? Assume the va
 
 .loadStream(f"{path}")   
 
-**.load(f"{path}")**  
+**.load(f"{path}")** 
 
 .writeStream(f"{path}")  
 
@@ -1937,7 +1937,7 @@ Which of the following lines of code correctly fills in the blank? Assume the va
 
 
 
-** A data engineer has created the following code block to create the view subscribed_order_emails from orders_silver and customers_silver.
+**A data engineer has created the following code block to create the view subscribed_order_emails from orders_silver and customers_silver.
 
  
 
@@ -1970,7 +1970,7 @@ def subscribed_order_emails_v():
 dlt.read("customers_silver").alias("a"),
 on="customer_id"   
 
-**.join(dlt.read("customers_silver").alias("b"),on="customer_id"** 
+**.join(dlt.read("customers_silver").alias("b"),on="customer_id"**
 
 .join(
 dlt.readStream("customers_silver").alias("a"),
@@ -2024,7 +2024,7 @@ Which of the following lines of code correctly fills in the blank? Assume the va
 .loadStream(f"{path}")  
 .load(f"{path}")  
 .writeStream(f"{path}")  
-**.read(f"{path}")** 
+**.read(f"{path}")**
 .write(f"{path}")  
 
 A data engineer is using the following code block to create a live table. After running the code block, they notice an error. 
@@ -2077,18 +2077,18 @@ None of these statements correctly identifies the error.
 ## Deploy Workloads with Databricks Workflows
 
 
-**Databricks Workflows: ** refers to the orchestration and automation capabilities in Databricks that allow users to create, schedule and monitoring complex data pipelines.
+**Databricks Workflows: **refers to the orchestration and automation capabilities in Databricks that allow users to create, schedule and monitoring complex data pipelines.
 Its purpose is to streamline and simplify the creation and management of end-to-end data processing task, ensuring efficient execution and timely delivery of datga insights
 
-**Platform administrator** is a user role with the highest level of privileges, A platform administrator can manage all aspects of the Databricks workspace including user acces, cluster, jobs and worspace settings
+**Platform administrator**is a user role with the highest level of privileges, A platform administrator can manage all aspects of the Databricks workspace including user acces, cluster, jobs and worspace settings
 Their primary responsibility is to oversee the entire Dtabricks platformm, ensuring user have the approviate permissions and resources are used efficiently.
 
-**Workspace administrator** has comprehensive permissions within a specific Databricks workspace, can manage users, groups and access permissions within that workspace.
+**Workspace administrator**has comprehensive permissions within a specific Databricks workspace, can manage users, groups and access permissions within that workspace.
 
 
 
-** A data engineering team needs to be granted access to metrics on a job run. Each team member has user access without any additional privileges.
-** Which of the following tasks can be performed by an administrator so that each member of the team has access to the metrics? Select one response.
+**A data engineering team needs to be granted access to metrics on a job run. Each team member has user access without any additional privileges.
+**Which of the following tasks can be performed by an administrator so that each member of the team has access to the metrics? Select one response.
 
  
 
@@ -2104,10 +2104,10 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;The workspace administrator can set the maximum number of users who can access the table at the user level.
 
 
-** A data engineer has a notebook that ingests data from a single data source and stores it in an object store. 
-** The engineer has three other notebooks that read from the data in the object store and perform various data transformations.
-** The engineer would like to run these three notebooks in parallel after the ingestion notebook finishes running.
-** Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
+**A data engineer has a notebook that ingests data from a single data source and stores it in an object store. 
+**The engineer has three other notebooks that read from the data in the object store and perform various data transformations.
+**The engineer would like to run these three notebooks in parallel after the ingestion notebook finishes running.
+**Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
 
  
 
@@ -2122,12 +2122,12 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 &nbsp;&nbsp;&nbsp;&nbsp;Sequence pattern
 
-** A data engineer is running a workflow orchestration on a shared job cluster.
-** They notice that the job they are running is failing and want to use the repair tool to fix the pipeline. 
-** Which of the following statements describes how Databricks assigns a cluster to the repaired job run? Select one response.
+**A data engineer is running a workflow orchestration on a shared job cluster.
+**They notice that the job they are running is failing and want to use the repair tool to fix the pipeline. 
+**Which of the following statements describes how Databricks assigns a cluster to the repaired job run? Select one response.
 
  
-&nbsp;&nbsp;&nbsp;&nbsp;**A new job cluster will be automatically created with the same configuration as the shared job cluster to run the repair tool on the job run.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**A new job cluster will be automatically created with the same configuration as the shared job cluster to run the repair tool on the job run.** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The same job cluster will temporarily pause until the job has been repaired. A new job cluster will be created to run the repair tool on the job run.
 
@@ -2138,8 +2138,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;The same shared job cluster will be used to run the repair tool on the job run.
 
 
-** A data engineer needs to view whether each task within a job run succeeded.
-** Which of the following steps can the data engineer complete to view this information? Select one response. CHECK!!
+**A data engineer needs to view whether each task within a job run succeeded.
+**Which of the following steps can the data engineer complete to view this information? Select one response. CHECK!!
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**They can review the job run history from the Job run details page.**
@@ -2153,11 +2153,11 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;They can review the task history by clicking on each task in the workflow.
 
 
-** A data engineering team has been using a Databricks SQL query to monitor the performance of an ELT job. 
-** The ELT job is triggered when a specific number of input records are ready to be processed. 
-** The Databricks SQL query returns the number of records added since the job’s most recent runtime.
-** The team has manually reviewed some of the records and knows that at least one of them will be successfully processed without violating any constraints.
-** Which of the following approaches can the data engineering team use to be notified if the ELT job did not complete successfully? Select one response.
+**A data engineering team has been using a Databricks SQL query to monitor the performance of an ELT job. 
+**The ELT job is triggered when a specific number of input records are ready to be processed. 
+**The Databricks SQL query returns the number of records added since the job’s most recent runtime.
+**The team has manually reviewed some of the records and knows that at least one of them will be successfully processed without violating any constraints.
+**Which of the following approaches can the data engineering team use to be notified if the ELT job did not complete successfully? Select one response.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can set up an alert for the job to notify them when a record has been added to the target dataset.
@@ -2172,17 +2172,17 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** Which of the following tools can be used to create a Databricks Job? Select three responses.
+**Which of the following tools can be used to create a Databricks Job? Select three responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Job Scheduler UI**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Job Scheduler UI** 
 &nbsp;&nbsp;&nbsp;&nbsp;External Git repository  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks CLI**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Jobs REST API**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks CLI** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Jobs REST API** 
 &nbsp;&nbsp;&nbsp;&nbsp;Data Explorer  
 &nbsp;&nbsp;&nbsp;&nbsp;Single Choice  
 
-** A data engineer is using Workflows to run a multi-hop (medallion) ETL workload. They notice that the workflow will not complete because one of the tasks is failing.
-** Which of the following describes the order of execution when running the repair tool? Select one response.
+**A data engineer is using Workflows to run a multi-hop (medallion) ETL workload. They notice that the workflow will not complete because one of the tasks is failing.
+**Which of the following describes the order of execution when running the repair tool? Select one response.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use the repair feature to re-run only the failed task and sub-tasks.**
@@ -2197,7 +2197,7 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** Which of the following workloads can be configured using Databricks Workflows? Select three responses.
+**Which of the following workloads can be configured using Databricks Workflows? Select three responses.
 
 &nbsp;&nbsp;&nbsp;&nbsp;**A job running on a triggered schedule with dependent tasks**
 &nbsp;&nbsp;&nbsp;&nbsp;**An ETL job with batch and streaming data**
@@ -2207,8 +2207,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** A data engineer needs their pipeline to run every 12 minutes. 
-** Which of the following approaches automates this process? Select one response.
+**A data engineer needs their pipeline to run every 12 minutes. 
+**Which of the following approaches automates this process? Select one response.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can set the job’s schedule with custom cron syntax.**
@@ -2223,8 +2223,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** A data engineer needs to configure the order of tasks to run in their ETL workload. The workload has two tasks, Task A and Task B, where Task B can only be run if Task A succeeds.
-** Which of the following statements describes the dependencies that the data engineer needs to configure and the order they need to be run in? Select one response.
+**A data engineer needs to configure the order of tasks to run in their ETL workload. The workload has two tasks, Task A and Task B, where Task B can only be run if Task A succeeds.
+**Which of the following statements describes the dependencies that the data engineer needs to configure and the order they need to be run in? Select one response.
 
  
 
@@ -2240,9 +2240,9 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** A data engineer has a job that creates and displays a result set of baby names by year, where each row has a unique year. 
-** They want to display the results for baby names from the past three years only.
-** Which of the following approaches allows them to filter rows from the table by year? Select one response.
+**A data engineer has a job that creates and displays a result set of baby names by year, where each row has a unique year. 
+**They want to display the results for baby names from the past three years only.
+**Which of the following approaches allows them to filter rows from the table by year? Select one response.
 
  
 
@@ -2258,8 +2258,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;They can edit the table to remove certain rows in the Job Details page.
 
 
-** A data engineer has a workload that includes transformations of batch and streaming data, with built-in constraints to ensure each record meets certain conditions.
-** Which of the following task types is considered best practice for the data engineer to use to configure this workload? Select one response.
+**A data engineer has a workload that includes transformations of batch and streaming data, with built-in constraints to ensure each record meets certain conditions.
+**Which of the following task types is considered best practice for the data engineer to use to configure this workload? Select one response.
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Delta Live Tables pipeline**
@@ -2273,8 +2273,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;dbt
 
 
-** A data engineer has a Python workload they want to run as a job. The code for the workload is located in an external cloud storage location.
-** Which of the following task types and sources can the data engineer use to configure this job? Select one response.
+**A data engineer has a Python workload they want to run as a job. The code for the workload is located in an external cloud storage location.
+**Which of the following task types and sources can the data engineer use to configure this job? Select one response.
 
  
 
@@ -2291,9 +2291,9 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** A data engineer has multiple data sources that they need to combine into one. The combined data sources then need to go through a multi-task 
-** ETL process to refine the data using multi-hop (medallion) architecture. It is a requirement that the source data jobs need to be run in parallel.
-** Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
+**A data engineer has multiple data sources that they need to combine into one. The combined data sources then need to go through a multi-task 
+**ETL process to refine the data using multi-hop (medallion) architecture. It is a requirement that the source data jobs need to be run in parallel.
+**Which of the following workflow orchestration patterns do they need to use to meet the above requirements? Select one response. 
 
  
 &nbsp;&nbsp;&nbsp;&nbsp;Funnel to fan-out pattern
@@ -2308,8 +2308,8 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** A data engineer has a notebook in a remote Git repository. The data from the notebook needs to be ingested into a second notebook that is hosted in Databricks Repos.
-** Which of the following approaches can the data engineer use to meet the above requirements? Select one response.
+**A data engineer has a notebook in a remote Git repository. The data from the notebook needs to be ingested into a second notebook that is hosted in Databricks Repos.
+**Which of the following approaches can the data engineer use to meet the above requirements? Select one response.
 
  
 
@@ -2325,9 +2325,9 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can configure the notebook in a new local repository as a job and make the second notebook dependent on it.
 
 
-** A data engineer is running multiple notebooks that are triggered on different job schedules. Each notebook is part of a different task orchestration workflow.
-** They want to use a cluster with the same configuration for each notebook.
-** Which of the following describes how the data engineer can use a feature of Workflows to meet the above requirements? Select one response.
+**A data engineer is running multiple notebooks that are triggered on different job schedules. Each notebook is part of a different task orchestration workflow.
+**They want to use a cluster with the same configuration for each notebook.
+**Which of the following describes how the data engineer can use a feature of Workflows to meet the above requirements? Select one response.
 
  
 
@@ -2351,14 +2351,14 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 &nbsp;&nbsp;&nbsp;&nbsp;They can view how many records were added to the target dataset from the accompanying SQL dashboard.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can view information on the percentage of records that succeeded each data expectation from the audit log.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can view the duration of each task from the Pipeline details page.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can view how many records were dropped from the Pipeline details page.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can view the percentage of records that failed each data expectation from the Pipeline details page.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can view how many records were dropped from the Pipeline details page.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can view the percentage of records that failed each data expectation from the Pipeline details page.** 
 
 
 
 
-** A data engineer needs to view the metadata concerning the order that events in a DLT pipeline were executed.
-** Which of the following steps can the data engineer complete to view this information? Select one response.
+**A data engineer needs to view the metadata concerning the order that events in a DLT pipeline were executed.
+**Which of the following steps can the data engineer complete to view this information? Select one response.
 
 
 
@@ -2374,18 +2374,18 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** Which of the following statements about the advantages of using Workflows for task orchestration are correct? Select three responses.
+**Which of the following statements about the advantages of using Workflows for task orchestration are correct? Select three responses.
 
 &nbsp;&nbsp;&nbsp;&nbsp;Workflows provides a centralized repository for data visualization tools.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Workflows supports built-in data quality constraints for logging purposes.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Workflows can be used to make external API calls.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Workflows is fully managed, which means users do not need to worry about infrastructure.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workflows supports built-in data quality constraints for logging purposes.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Workflows can be used to make external API calls.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Workflows is fully managed, which means users do not need to worry about infrastructure.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Workflows can be configured to use external access control permissions.  
 
 
 
-** A lead data engineer needs the rest of their team to know when an update has been made to the status of a job run within a Databricks Job.
-** How can the data engineer notify their team of the status of the job? Select one response.
+**A lead data engineer needs the rest of their team to know when an update has been made to the status of a job run within a Databricks Job.
+**How can the data engineer notify their team of the status of the job? Select one response.
 
 
 
@@ -2402,52 +2402,52 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 
-** Which of the following configurations are required to specify when scheduling a job? Select two responses.   
+**Which of the following configurations are required to specify when scheduling a job? Select two responses.   
 
 &nbsp;&nbsp;&nbsp;&nbsp;Time zone  
-&nbsp;&nbsp;&nbsp;&nbsp;**Trigger type**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Trigger type** 
 &nbsp;&nbsp;&nbsp;&nbsp;Start time  
-&nbsp;&nbsp;&nbsp;&nbsp;**Trigger frequency**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Trigger frequency** 
 &nbsp;&nbsp;&nbsp;&nbsp;Maximum number of runs  
 
 
-** Which of the following are managed by Databricks Workflows?  Select three responses.
+**Which of the following are managed by Databricks Workflows?  Select three responses.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Cluster management**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Error reporting**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster management** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Error reporting** 
 &nbsp;&nbsp;&nbsp;&nbsp;Git version control  
 &nbsp;&nbsp;&nbsp;&nbsp;Table access control lists (ACLs)  
 &nbsp;&nbsp;&nbsp;&nbsp;**Task orchestration**
 
 
-** A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.
-** Which of the following allows the data engineer to stop the job during this interval and then
-** start it again without losing the job’s configuration? Select two responses.
+**A data engineer is running a job every 15 minutes. They want to stop the job schedule for an hour before starting it again.
+**Which of the following allows the data engineer to stop the job during this interval and then
+**start it again without losing the job’s configuration? Select two responses.
 
  
 &nbsp;&nbsp;&nbsp;&nbsp;They can stop the job schedule and then refresh the query within the job after an hour.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can stop the job schedule and then refresh the notebook that is attached to the task after an hour.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can set the Schedule Type to Manual in the Job details panel and change it back to Scheduled after an hour.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can click Pause in the Job details panel.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**They can set the Schedule Type to Manual in the Job details panel and change it back to Scheduled after an hour.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can click Pause in the Job details panel.** 
 &nbsp;&nbsp;&nbsp;&nbsp;They can detach the job from its accompanying dashboard and then reattach and refresh the dashboard after an hour  
 
 
 
-** Which of the following task types can be combined into a single workflow? Select three responses.
+**Which of the following task types can be combined into a single workflow? Select three responses.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**SQL notebooks**  
+&nbsp;&nbsp;&nbsp;&nbsp;**SQL notebooks** 
 &nbsp;&nbsp;&nbsp;&nbsp;SQL warehouses  
-&nbsp;&nbsp;&nbsp;&nbsp;**JAR files**  
+&nbsp;&nbsp;&nbsp;&nbsp;**JAR files** 
 &nbsp;&nbsp;&nbsp;&nbsp;**Python notebooks**
 &nbsp;&nbsp;&nbsp;&nbsp;Alert destinations
 
-** Which of the following components are necessary to create a Databricks Workflow? Select three responses.
+**Which of the following components are necessary to create a Databricks Workflow? Select three responses.
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Tasks**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Schedule**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Tasks** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Schedule** 
 &nbsp;&nbsp;&nbsp;&nbsp;Alert  
 &nbsp;&nbsp;&nbsp;&nbsp;Experiment  
-&nbsp;&nbsp;&nbsp;&nbsp;**Cluster**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster** 
 
 
 ## Data Access Control and Unity Catalog
@@ -2459,24 +2459,24 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 **Data Access Control**: Control who has access to which data.  
 **Data Access Audit**: Capture and record all access to data.  
 **Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.   
-&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources** refers to the origins of datga ow where data comes from.    
-&nbsp;&nbsp;&nbsp;&nbsp;**Downstream** refers where the data go ather being processed or transformed.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources**refers to the origins of datga ow where data comes from.    
+&nbsp;&nbsp;&nbsp;&nbsp;**Downstream**refers where the data go ather being processed or transformed.  
 
 
-**Challenges in the Data Lake**  
+**Challenges in the Data Lake** 
 &nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls   
 &nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer  
 &nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model  
 &nbsp;&nbsp;&nbsp;&nbsp;Hard to audit  
 &nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.  
 
-**Unity Catalog**  
+**Unity Catalog** 
 &nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.    
 &nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.   
 &nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.  
 
 
-**Key Concepts**  
+**Key Concepts** 
 &nbsp;&nbsp;&nbsp;&nbsp;**Metastore elements**![](img/Metastore_Elements.PNG)  
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;**Three-level Namespace**![](img/Three_Level_Namespace.PNG)  
@@ -2488,35 +2488,35 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 **Unity Catalog Roles**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Cloud Administrator** Administer underlying cloud resources   
+&nbsp;&nbsp;&nbsp;&nbsp;**Cloud Administrator**Administer underlying cloud resources   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Storage accounts/buckets   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- role/service Principals/Managed Identities.     
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Identity Administrator** Administer underlying identity   
+&nbsp;&nbsp;&nbsp;&nbsp;**Identity Administrator**Administer underlying identity   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Identity provider provision users and groups into the account  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Avoids need to manually create and manage identities  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Account Administrator** Administer the account  
+&nbsp;&nbsp;&nbsp;&nbsp;**Account Administrator**Administer the account  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates, deletes and assigns metastores to workspaces  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates, deletes and assigns users and groups to workspaces  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Integrates account with an identity provider  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Full access to all data objects  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Metastore Administrator** Administer the metastore    
+&nbsp;&nbsp;&nbsp;&nbsp;**Metastore Administrator**Administer the metastore    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates and drops catalogs and other data objects  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Grant privileges on data objects  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Changes ownership of data objects  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Designated by an account administrator  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Data Owner** Owns data objects they created  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data Owner**Owns data objects they created  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates nested objects  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Grant privileges to others on owned objects  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Changes ownership of owned objects  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Workspace Administrator** Administer a workspace  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workspace Administrator**Administer a workspace  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Manage permissions on workspace assets  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Restricts access to cluster creation  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Add or remove users  
@@ -2527,22 +2527,22 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 **Identities**
 
-&nbsp;&nbsp;&nbsp;**User**  
-&nbsp;&nbsp;&nbsp;**Account administrator**  
-&nbsp;&nbsp;&nbsp;**Service Principal + Service Principal with administrative privileges**  
-&nbsp;&nbsp;&nbsp;**Groups**   analyst, developers  
+&nbsp;&nbsp;&nbsp;**User** 
+&nbsp;&nbsp;&nbsp;**Account administrator** 
+&nbsp;&nbsp;&nbsp;**Service Principal + Service Principal with administrative privileges** 
+&nbsp;&nbsp;&nbsp;**Groups**  analyst, developers  
 
-**Security Model**   
+**Security Model**  
 ![](img/Security_Model.PNG)  
 
 
-**Cluter Security Model**   
+**Cluter Security Model**  
 ![](img/Cluster_Security_Model.PNG)  
 
-**Matrix Security Model**   
+**Matrix Security Model**  
 ![](img/Matrix_Security_Model.PNG)  
 
-**Security Model Principals Privileges Securables**   
+**Security Model Principals Privileges Securables**  
 ![](img/Principals_Privileges_Securables_Security_Model.PNG)
 
 **Dynamic Views**
@@ -2553,9 +2553,9 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 ![](img/Credentials_External_Locations.PNG)
 
-**Identity Federation** Typically means integrating an exernal identitiy provider to allow for a single source of truth for user identities and a more streamline authentication process.
+**Identity Federation**Typically means integrating an exernal identitiy provider to allow for a single source of truth for user identities and a more streamline authentication process.
 
-**Delta Sharing** Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
+**Delta Sharing**Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
 
 
 
@@ -2570,14 +2570,14 @@ Which of the following commands does the data engineer need to run to complete t
 
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT READ FILES ON STORAGE CREDENTIAL `${path}` TO `students`;  
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT WRITE FILES ON STORAGE CREDENTIAL `${path}` TO `students`;  
-&nbsp;&nbsp;&nbsp;&nbsp;**GRANT READ FILES ON EXTERNAL LOCATION `${path}` TO `students`;**  
+&nbsp;&nbsp;&nbsp;&nbsp;**GRANT READ FILES ON EXTERNAL LOCATION `${path}` TO `students`;** 
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT CREATE TABLE ON EXTERNAL LOCATION `${path}` TO `students`;  
 &nbsp;&nbsp;&nbsp;&nbsp;GRANT WRITE FILES ON EXTERNAL LOCATION `${path}` TO `students`;  
 
 
 **Which of the following describes the query lifecycle within the context of Unity Catalog? Select one response.(dacoclo)**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**The transfer of data between the data principal, compute resources, and cloud storage.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The transfer of data between the data principal, compute resources, and cloud storage.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the service principal, groups, and cloud storage.  
 &nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the namespace, metadata layer, and service principal.  
 &nbsp;&nbsp;&nbsp;&nbsp;The transfer of data between the service principal, compute resources, and audit log.  
@@ -2591,9 +2591,9 @@ Which of the following steps need to be completed in order for the data engineer
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to be granted USAGE permissions on the table.     
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to be granted SELECT permissions to modify the table data.    
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use the INSERT and/or DELETE commands to modify the table data.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to be granted MODIFY permissions on the table.**    
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use the ALTER command to modify the table metadata.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use the INSERT and/or DELETE commands to modify the table data.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to be granted MODIFY permissions on the table.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use the ALTER command to modify the table metadata.**   
 
 
 
@@ -2601,7 +2601,7 @@ Which of the following steps need to be completed in order for the data engineer
 
 	Here the key-word is `organizations` if we wante to segregate in the same organization but for project the anwer would be segregate by schemas
 
-&nbsp;&nbsp;&nbsp;&nbsp;**It is recommended to segregate data using catalogs.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**It is recommended to segregate data using catalogs.** 
 &nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using schemas.  
 &nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using clusters.  
 &nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using tables.  
@@ -2615,17 +2615,17 @@ data format.Which of the following tables does the data engineering team need to
 
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables; Unity Catalog does not drop the underlying data for managed tables.  
 &nbsp;&nbsp;&nbsp;&nbsp;External tables; only external tables support Delta format.  
-&nbsp;&nbsp;&nbsp;&nbsp;**External tables; external tables support Delta and other formats.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**External tables; external tables support Delta and other formats.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables; only managed tables support Delta format.  
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables; Unity Catalog retains the underlying data for up to 30 days.  
 
 **Which of the following data objects can a schema contain in a Unity Catalog namespace? Select three responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Views**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Views** 
 &nbsp;&nbsp;&nbsp;&nbsp;Storage credentials   
-&nbsp;&nbsp;&nbsp;&nbsp;**Functions**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Functions**  
 &nbsp;&nbsp;&nbsp;&nbsp;Eternal locations  
-&nbsp;&nbsp;&nbsp;&nbsp;**Tables**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Tables** 
 
 
 
@@ -2663,9 +2663,9 @@ Which of the following steps needs to be completed for the data engineer to enab
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must use a supported cluster mode.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must use a supported cluster mode.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have a storage credential to access the cluster.    
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have permission to create clusters.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have permission to create clusters.**  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer must be the data owner of the cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer must be explicitly granted access to the cluster.  
 
@@ -2675,22 +2675,22 @@ Which of the following steps needs to be completed for the data engineer to enab
 &nbsp;&nbsp;&nbsp;&nbsp;Data optimization, data access audit, data analysis, data discovery  
 &nbsp;&nbsp;&nbsp;&nbsp;Data integrity, data optimization, data lineage, data science  
 &nbsp;&nbsp;&nbsp;&nbsp;Data science, data integrity, data lineage, data versioning  
-&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery** 
 
 **Which of the following statements correctly identifies the benefits of using a managed table over an external table? Select two responses.(CHECK)**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Additional storage credentials are not needed to manage access to the underlying cloud storage for a managed table.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Additional storage credentials are not needed to manage access to the underlying cloud storage for a managed table.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Unity Catalog supports managed tables, but does not support external tables.  
 &nbsp;&nbsp;&nbsp;&nbsp;External tables support multiple formats, while managed tables only support Delta format.  
-&nbsp;&nbsp;&nbsp;&nbsp;**When managed tables are dropped, the underlying data and metadata are dropped as well.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**When managed tables are dropped, the underlying data and metadata are dropped as well.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables support multiple formats, while external tables only support external formats.  
 
-**In which of the following locations are the metadata related to metastore-managed data objects (like a table’s columns and data types) stored? Select one response.** (CHECK)
+**In which of the following locations are the metadata related to metastore-managed data objects (like a table’s columns and data types) stored? Select one response.**(CHECK)
 
 &nbsp;&nbsp;&nbsp;&nbsp;A separate cloud storage container specific to the Databricks workspace  
 &nbsp;&nbsp;&nbsp;&nbsp;A separate cloud storage container in the data plane  
 &nbsp;&nbsp;&nbsp;&nbsp;A separate external database outside of Databricks  
-&nbsp;&nbsp;&nbsp;&nbsp;**A separate cloud storage container in the control plane **   
+&nbsp;&nbsp;&nbsp;&nbsp;**A separate cloud storage container in the control plane **  
 &nbsp;&nbsp;&nbsp;&nbsp;A separate external database managed by Databricks  
 
 
@@ -2699,8 +2699,8 @@ Which of the following steps needs to be completed for the data engineer to enab
 &nbsp;&nbsp;&nbsp;&nbsp;Passthrough only mode  
 &nbsp;&nbsp;&nbsp;&nbsp;Table ACL only mode  
 &nbsp;&nbsp;&nbsp;&nbsp;None (no security)  
-&nbsp;&nbsp;&nbsp;&nbsp;**User isolation mode**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode**  
+&nbsp;&nbsp;&nbsp;&nbsp;**User isolation mode** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode** 
 
 
 **A metastore administrator has enabled identity federation for a Unity Catalog namespace.(acawokex2)
@@ -2712,9 +2712,9 @@ Which of the following correctly describes the privileges that users who have ac
 
 &nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by an account administrator through the account console.  
 &nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by the workspace administrator through their workspace administration console.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the workspace administrator through their workspace administration console.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the workspace administrator through their workspace administration console.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by a workspace user through the identity provider.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the account administrators through the account console.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the account administrators through the account console.** 
 
 
 **A data engineering team has members at several different geographic locations. Each member of the team needs to be able to access the securables 
@@ -2726,7 +2726,7 @@ region has access to the securables within the catalog? Select one response.**
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator needs to create one metastore to be used in all regions.  
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator needs to create a catalog for each region.  
 &nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to create a metadata layer for each region.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The metastore administrator needs to create a metastore for each region.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The metastore administrator needs to create a metastore for each region.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to create a metadata layer to be used in all regions.  
 
 
@@ -2735,7 +2735,7 @@ Which of the following recommendations is considered a best practice in this sit
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Keep the table managed and use Delta Sharing for external consumption.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Keep the table managed and use Delta Sharing for external consumption.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Make a copy of the table in an external location and use Delta Sharing for external consumption.  
 &nbsp;&nbsp;&nbsp;&nbsp;Move the table to an external location and use Delta Sharing to capture upstream sources only.  
 &nbsp;&nbsp;&nbsp;&nbsp;Keep the table managed and use Delta Sharing to capture upstream sources only.  
@@ -2752,7 +2752,7 @@ Which of the following recommendations is considered a best practice in this sit
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not provide scaling for storage costs.  
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not allow access control for groups.  
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not support unstructured and semistructured data.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Cloud storage services only provide access control at the file level through cloud-specific interfaces.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cloud storage services only provide access control at the file level through cloud-specific interfaces.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services are usually based on their own proprietary data format, increasing vendor lock-in.  
 
 
@@ -2764,7 +2764,7 @@ Which of the following correctly describes the Databricks-recommended best pract
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by individually assigning access to each user who needs access to the file.    
 &nbsp;&nbsp;&nbsp;&nbsp;None of the provided answer choices are correct.  
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by creating a storage credential and sharing it individually with anyone who needs access to the file.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The metastore administrator can assign access to the file by creating a group of all of the users who need access to the file and assigning access to the group.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The metastore administrator can assign access to the file by creating a group of all of the users who need access to the file and assigning access to the group.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by creating a storage credential and sharing it with a group that includes everyone who needs access to the file.  
 
 
@@ -2774,17 +2774,17 @@ Which of the following are required to upgrade the table to be managed by Unity 
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer must create their own Hive metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have workspace administrator level privileges.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.** 
 
 
 
 **Which of the following privileges do storage credentials AND external locations support? Select three responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**READ FILES**  
-&nbsp;&nbsp;&nbsp;&nbsp;**WRITE FILES**  
+&nbsp;&nbsp;&nbsp;&nbsp;**READ FILES** 
+&nbsp;&nbsp;&nbsp;&nbsp;**WRITE FILES** 
 &nbsp;&nbsp;&nbsp;&nbsp;EXECUTE  
 &nbsp;&nbsp;&nbsp;&nbsp;DELETE  
 &nbsp;&nbsp;&nbsp;&nbsp;**CREATE EXTERNAL TABLE**
@@ -2793,7 +2793,7 @@ Which of the following are required to upgrade the table to be managed by Unity 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Users, identities, and access control on securables are centrally managed across workspaces.  
 &nbsp;&nbsp;&nbsp;&nbsp;Groups, metastores, and audit control on securables are centrally managed across accounts.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Groups, metastores, and access control on securables are centrally managed across workspaces.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Groups, metastores, and access control on securables are centrally managed across workspaces.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Identities, groups, and access control on securables are centrally managed across accounts.  
 &nbsp;&nbsp;&nbsp;&nbsp;Accounts, workspaces, and audit control on securables are centrally managed across catalogs.  
 
@@ -2805,7 +2805,7 @@ Which of the following describes what needs to be done to complete this task? Se
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new job cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new Databricks SQL dashboard.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to attach their query to a new SQL warehouse.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to attach their query to a new SQL warehouse.** 
 &nbsp;&nbsp;&nbsp;&nbsp;*In some scenarions, organizations might want to move their processed data to a SQL warehouse like Snowflake or Redshift*  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to an existing all-purpose cluster.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new pipeline.  
@@ -2819,7 +2819,7 @@ Which of the following tasks needs to be performed so that the data engineer is 
 &nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use  
 &nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.  
 &nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an account administrator level**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an account administrator level** 
 
 **Which of the following describes an additional benefit of the three-level namespace provided by Unity Catalog? Select one response.**
 
@@ -2827,7 +2827,7 @@ Which of the following tasks needs to be performed so that the data engineer is 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace provides access to advanced options to optimize data through versioning techniques.  
 &nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces a list of privilege grants for each securable data object in the Hive metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The three-level namespace provides more data segregation options while still making legacy Hive metastore data easily accessible.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**The three-level namespace provides more data segregation options while still making legacy Hive metastore data easily accessible.** 
 &nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces data governance through cluster modes over data objects in the Hive metastore.  
 &nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace allows implicit access grants so permissions can easily be inherited by securable data objects.  
 
@@ -2842,7 +2842,7 @@ Which of the following clusters does the data engineer need to attach to their n
 &nbsp;&nbsp;&nbsp;&nbsp;High concurrency cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;Single-user cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;Multi-user cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;**User isolation cluster**  
+&nbsp;&nbsp;&nbsp;&nbsp;**User isolation cluster** 
 &nbsp;&nbsp;&nbsp;&nbsp;This type of workload is not supported by any cluster mode  
 
 
@@ -2885,6 +2885,8 @@ sessions on the same cluster only. In order to save on storage costs, the date e
 &nbsp;&nbsp;&nbsp;&nbsp;Global Temporary view
 
 
+
+
 ```
 CREATE TABLE employees
     USING ________________  --> here come org.apache.spark.sql.jdbc
@@ -2902,14 +2904,14 @@ AS QUERY
 ```
 
 **A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
-of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?**  
+of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO
 
 
 **A data engineer is designing a Delta Live Tables pipeline. The source system generates files containing changes captured in the source data.
 Each change event has metadata indicating whether the specified record was inserted, updated, or deleted. In addition to a timestamp column indicating
-the order in which the changes happened. The data engineer needs to update a target table based on these change events.**  
+the order in which the changes happened. The data engineer needs to update a target table based on these change events.** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO
 
@@ -2937,7 +2939,7 @@ RETURN { expression | query}
 **Given the following command**
 `CREATE DATABASE IF NOT EXISTS hr_db;`
 
-In which of the following locations will the **hr_db** database be located ?
+In which of the following locations will the **hr_db**database be located ?
 
 `dbfs:/user/hive/warehouse`  --> that is the default location.
 
@@ -2998,7 +3000,7 @@ FROM faculties
 **The data engineer team has a DLT pipeline that updates all the tables once and then stops. The compute resources of the pipeline continue running to allow for quick testing.
 Which of the following best describes the execution modes of this DLT pipeline ?**
 
-    *Typp** The word "quick-testing" indicates that is developmen.
+    *Typp**The word "quick-testing" indicates that is developmen.
 	The DLT pipeline executes tin Triggered Pipeline mode under Development mode.
 
 
@@ -3075,15 +3077,90 @@ Which of the following best describes the execution modes of this DLT pipeline ?
 			Retries execution in case of specific errors (e.g., a failure to start a cluster)
 
 
-**Which part of the Databricks Platform can a data engineer use to grant permission on tables to user?**
+
+**Which part of the Databricks Platform can a data engineer use to grant permission on tables to user?** 
 	Data Explorere
 	
 **Which of the following commands can a data engineer use to grant full permissions to the HR team on the table employees ?**
 	`GRANT ALL PRIVILEGES ON TABLE employees TO hr_team`
 	
-**A data engineer uses teh following SQL query **  
+**A data engineer uses teh following SQL query ** 
 `GRANT MODIFY ON TABLE employees TO hr_team`
 
 Which ability is given by the `MODIFY` privilege ?
 
 	ability to add data from the table, delte data from the table, modify data in the table.
+
+
+## Practique Exam Databricks
+
+**Which of the following locations hosts the driver and worker nodes of a
+Databricks-managed cluster?**
+A. Data plane
+B. Control plane
+C. Databricks Filesystem
+D. JDBC data source
+E. Databricks web application
+
+
+In the context of Databricks, the terms "data plane" and "control plane" refer to distinct components of its architecture:
+
+Data plane: This is where the actual processing of data takes place. It is responsible for executing tasks, handling storage, and running computations.
+Control plane: This manages and orchestrates the data plane. It doesn't do the actual data processing but instead sets up clusters, schedules jobs, and manages security, among other tasks.
+Given this distinction:
+
+The driver and worker nodes of a Databricks-managed cluster, which are responsible for data processing, run in the data plane.
+So, the correct answer is:
+
+A. Data plane
+
+
+
+Which of the following describes how Databricks Repos can help facilitate CI/CD workflows
+on the Databricks Lakehouse Platform?
+A. **Databricks Repos can facilitate the pull request, review, and approval process before merging branches**
+B. Databricks Repos can merge changes from a secondary Git branch into a main Git branch
+C. Databricks Repos can be used to design, develop, and trigger Git automation pipelines
+D. Databricks Repos can store the single-source-of-truth Git repository
+E. Databricks Repos can commit or push code changes to trigger a CI/CD proces
+
+
+
+A data engineer needs to create a database called customer360 at the location
+/customer/customer360. The data engineer is unsure if one of their colleagues has
+already created the database.
+Which of the following commands should the data engineer run to complete this task?
+
+
+A. CREATE DATABASE customer360 LOCATION '/customer/customer360';
+B. CREATE DATABASE IF NOT EXISTS customer360;
+C. CREATE DATABASE IF NOT EXISTS customer360 LOCATION '/customer/customer360'; -- > correct one as "Delta" keyword isnt a standar SQL
+D. CREATE DATABASE IF NOT EXISTS customer360 DELTA LOCATION '/customer/customer360';
+E. CREATE DATABASE customer360 DELTA LOCATION'/customer/customer360';
+
+
+
+A junior data engineer needs to create a Spark SQL table my_table for which Spark
+manages both the data and the metadata. The metadata and data should also be stored in
+the Databricks Filesystem (DBFS).
+Which of the following commands should a senior data engineer share with the junior data
+engineer to complete this task?  
+
+A. CREATE TABLE my_table (id STRING, value STRING) USINGorg.apache.spark.sql.parquet OPTIONS (PATH "storage-path");
+B. CREATE MANAGED TABLE my_table (id STRING, value STRING) USING org.apache.spark.sql.parquet OPTIONS (PATH "storage-path");
+**C. CREATE MANAGED TABLE my_table (id STRING, value STRING);**
+D. CREATE TABLE my_table (id STRING, value STRING) USING DBFS;
+E. CREATE TABLE my_table (id STRING, value STRING);
+
+
+A data engineering team has created a series of tables using Parquet data stored in an
+external system. The team is noticing that after appending new rows to the data in the
+external system, their queries within Databricks are not returning the new rows. They identify
+the caching of the previous data as the cause of this issue.
+Which of the following approaches will ensure that the data returned by queries is always
+up-to-date?
+A. The tables should be converted to the Delta format
+B. The tables should be stored in a cloud-based external system
+**C. The tables should be refreshed in the writing cluster before the next query is run**
+D. The tables should be altered to include metadata to not cache
+E. The tables should be updated before the next query is run
