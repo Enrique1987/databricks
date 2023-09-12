@@ -2892,7 +2892,7 @@ CREATE TABLE employees
 	    url "jdbc:postgresql:dbserver"
 		dbtable "employees"
 	)
-	
+```
 **Comments in Table creation**
 
 ```
@@ -2902,13 +2902,15 @@ AS QUERY
 ```
 
 **A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
-of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?**
+of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?**  
+
 &nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO
 
 
 **A data engineer is designing a Delta Live Tables pipeline. The source system generates files containing changes captured in the source data.
 Each change event has metadata indicating whether the specified record was inserted, updated, or deleted. In addition to a timestamp column indicating
-the order in which the changes happened. The data engineer needs to update a target table based on these change events.**
+the order in which the changes happened. The data engineer needs to update a target table based on these change events.**  
+
 &nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO
 
 	The events described in the question represent Change Data Capture (CDC) feed. CDC is logged at the source as events that contain both the data of the records
