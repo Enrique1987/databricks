@@ -57,7 +57,7 @@ Which of the following is a correct argument for why it is advantageous for the 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos allows integrations with popular tools such as Tableau, Looker, Power BI, and RStudio.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos provides a centralized, immutable history that cannot be manipulated by users.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Repos REST API enables the integration of data projects into CI/CD pipelines.**
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Repos REST API enables the integration of data projects into CI/CD pipelines.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos provides access to available data sets and data sources, on-premises or in the cloud.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos uses one common security model to access each individual notebook, or a collection of notebooks, and experiments.  
 
@@ -348,16 +348,16 @@ Which of the following SQL commands accomplishes this task? Select one response.
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;   
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;  
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;     
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;    
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
 &nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;**  
 
 
 
 
-**Which of the following commands returns a new DataFrame from the DataFrame usersDF without duplicates? Select one response.**
+**Which of the following commands returns a new DataFrame from the DataFrame usersDF without duplicates? Select one response**
 
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.select(*)  
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.groupBy(nulls)  
@@ -388,7 +388,7 @@ The data engineer now needs to flatten the struct fields back into individual co
 
  
 
-**Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response. **   
+**Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.**   
 
 
 	Tipp: if the question says "have already been converted into structu types" answer wouls be acces via "." if not the access is via ":"
@@ -533,7 +533,7 @@ They need to access the field date within events_df. The events_df DataFrame has
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.   
 &nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**  
 &nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
@@ -708,13 +708,13 @@ spark.udf.register(createUser(username))
 **Which of the following statements about querying tables defined against external sources is true? Select one response.**
 
  
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.
-&nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.
-&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**
-&nbsp;&nbsp;&nbsp;&nbsp;*Explination: External data sources can vary in their performance characteristics, and the optimizations present in solutions like Delta Lake may not apply when reading from these sources.
-Delta Lake and Lakehouse provide certain optimizations and ACID (Atomicity, Consistency, Isolation, Durability) guarantees for data that is stored and managed within them.*
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
+&nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.  
+&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**  
+&nbsp;&nbsp;&nbsp;&nbsp;*Explination: External data sources can vary in their performance characteristics, and the optimizations present in solutions like Delta Lake may not apply when reading from these sources.  
+Delta Lake and Lakehouse provide certain optimizations and ACID (Atomicity, Consistency, Isolation, Durability) guarantees for data that is stored and managed within them.*  
 
 
 **A data engineer is using the following code block to create a table using an external CSV file as its source.
@@ -1463,6 +1463,16 @@ the engineer can piece together the data flow from start to finish.*
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can query the flow definition for each table and then combine the results.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can query the flow definition for the direct successor of the table and then combine the results.  
 
+
+*Code explination*While the query below only indicates the direct predecessors for each table, this information can easily be combined to trace data in any table back to the point it entered the lakehouse
+
+
+```
+SELECT details:flow_definition.output_dataset, details:flow_definition.input_datasets 
+FROM event_log_raw 
+WHERE event_type = 'flow_definition' AND 
+      origin.update_id = '${latest_update.id}'
+```
 
 
 ** A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
