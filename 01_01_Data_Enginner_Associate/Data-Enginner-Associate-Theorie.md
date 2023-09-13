@@ -633,11 +633,11 @@ select * from students;  -- the only conditin that match is the last one and ins
 ```
 
 
-Describe Extended vs detail vs history
+#### Describe Extended vs detail vs history
 
-- Extendes for Data types  
-- Detail for metadata associate to the Table  
-- Histry for the opertions where made in the Table
+- DESCRIBE EXTENDED for Data types  
+- DESCRIBE DETAIL for metadata associate to the Table  
+- DESCRIBE HISTORY for the opertions where made in the Table
 
 
 ```
@@ -1007,5 +1007,626 @@ SHOW GRANTS ON CATALOG
 
 `REVOKE EXECUTION ON FUNCTION mask FROM analysts`
 
+## Data Engineer Associate Udemy
+
+**Code**
+
+```
+CREATE SCHEMA IF NOT EXISTS Juanito;
+
+USE Juanito;
+
+CREATE TABLE IF NOT EXISTS Juanito.employees
+  (id INT, name STRING, salary DOUBLE);
+
+INSERT INTO Juanito.employees
+VALUES 
+  (1, "Adam", 3500.0),
+  (2, "Sarah", 4020.5),
+  (3, "John", 2999.3),
+  (4, "Thomas", 4000.3),
+  (5, "Anna", 2500.0),
+  (6, "Kim", 6200.3)
+;
+SELECT * FROM Juanito.employees;
+
+
+DESCRIBE DATABASE EXTENDED Juanito;
+
+DESCRIBE EXTENDED Juanito.employees;
+
+DESCRIBE DETAIL Juanito.employees;
+
+DESCRIBE HISTORY Juanito.employees;
+
+SELECT * FROM Juanito.employees@v1;
+
+
+OPTIMIZE employees
+ZORDER BY id
+
+VACUUM employees
+
+VACUUM employees RETAIN 0 HOURS
+SET spark.databricks.delta.retentionDurationCheck.enabled = false;
+
+
+
+DROP TABLE external_default;
+
+```
+
+External Tables will need to use `LOCATION`
+
+```
+
+USE new_default;
+
+CREATE TABLE managed_new_default
+  (width INT, length INT, height INT);
+  
+INSERT INTO managed_new_default
+VALUES (3 INT, 2 INT, 1 INT);
+
+-----------------------------------
+
+CREATE TABLE external_new_default
+  (width INT, length INT, height INT)
+LOCATION 'dbfs:/mnt/demo/external_new_default';
+  
+INSERT INTO external_new_default
+VALUES (3 INT, 2 INT, 1 INT);
+
+```
+
+
+
+View will be st as Table but Temp View not.
+
+
+````
+CREATE VIEW view_apple_phones
+AS  SELECT * 
+    FROM smartphones 
+    WHERE brand = 'Apple';
+	
+SHOW TABLES;
+
+CREATE TEMP VIEW temp_view_phones_brands
+AS  SELECT DISTINCT brand
+    FROM smartphones;
+
+SELECT * FROM temp_view_phones_brands;
+
+
+CREATE GLOBAL TEMP VIEW global_temp_view_latest_phones
+AS SELECT * FROM smartphones
+    WHERE year > 2020
+    ORDER BY year DESC;
+	
+SHOW TABLES IN global_temp;
+
+DROP TABLE smartphones;
+DROP VIEW view_apple_phones;
+DROP VIEW global_temp.global_temp_view_latest_phones;
+
+```
+
+## ETL With Spark and Python
+
+```
+dataset_bookstore = 'dbfs:/mnt/demo-datasets/bookstore'
+spark.conf.set(f"dataset.bookstore", dataset_bookstore)
+
+files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
+```
+
+3 different ways to query from a Directory
+
+```
+SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json` 
+
+UNION ALL
+
+SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json` 
+
+UNION ALL
+
+SELECT * FROM json.`${dataset.bookstore}/customers-json/` 
+```
+
+```
+
+%sql
+-- input_file_name and time_s
+ SELECT email,
+    input_file_name() source_file,
+    cast(current_timestamp() as DATE) day_of_insertion
+  FROM json.`${dataset.bookstore}/customers-json` limit 3;
+  
+
+```
+
+
+Reading from Binaty, CSV, text
+
+```
+SELECT * FROM text.`${dataset.bookstore}/customers-json` limit 3
+
+SELECT * FROM binaryFile.`${dataset.bookstore}/customers-json`
+
+SELECT * FROM csv.`${dataset.bookstore}/books-csv`
+
+CREATE OR REPLACE TABLE orders AS
+SELECT * FROM parquet.`${dataset.bookstore}/orders`
+```
+
+
+```
+%sql
+
+DROP TABLE IF EXISTS books_csv;
+
+CREATE TABLE  if not exists books_csv
+  (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
+USING CSV
+OPTIONS (
+  header = "true",
+  delimiter = ";"
+)
+LOCATION "${dataset.bookstore}/books-csv";
+
+SELECT count(*) FROM books_csv;
+
+
+%python
+(spark.read
+        .table("books_csv")
+        .write
+        .mode("append")
+        .format("csv")
+        .option('header', 'true')
+        .option('delimiter', ';')
+        .save(f"{dataset_bookstore}/books-csv")
+		
+SELECT count(*) FROM books_csv; -- the same as previous
+
+%sql
+REFRESH TABLE books_csv;
+SELECT COUNT(*) FROM books_csv;  --> retrun the actual status, External data will need to be refreshed, that does not happend with Delta Tables.
+		
+		
+```
+
+
+#### Writing to Tables
+
+```
+CREATE OR REPLACE TABLE orders AS
+SELECT * FROM parquet.`${dataset.bookstore}/orders`;
+
+INSERT OVERWRITE orders
+SELECT * FROM parquet.`${dataset.bookstore}/orders`;
+
+INSERT INTO orders
+SELECT * FROM parquet.`${dataset.bookstore}/orders-new`;
+
+DESCRIBE HISTORY orders;
+
+
+
+%sql
+CREATE OR REPLACE TEMP VIEW customers_updates AS 
+SELECT * FROM json.`${dataset.bookstore}/customers-json-new`;
+
+MERGE INTO customers c
+USING customers_updates u
+ON c.customer_id = u.customer_id
+WHEN MATCHED AND c.email IS NULL AND u.email IS NOT NULL THEN
+  UPDATE SET email = u.email, updated = u.updated
+WHEN NOT MATCHED THEN INSERT *
+
+
+
+%sql
+
+-- we can use ":" as the Json formant of profile its not parsed, when is parsed then we have to use "."
+SELECT customer_id, profile:first_name, profile:address:country 
+FROM customers
+
+
+```
+
+**schema_of_json** We cann add a example of how your json-data look likes and it would parsche the schema.
+
+```
+CREATE OR REPLACE TEMP VIEW parsed_customers AS
+  SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
+  FROM customers;
+  
+SELECT * FROM parsed_customers limit 3;
+
+SELECT order_id, customer_id, explode(books) as book
+FROM orders  WHERE order_id = '000000000004243';
+
+-- books look like {"book_id": "B07", "quantity": 1, "subtotal": 33}, {"book_id": "B06", "quantity": 1, "subtotal": 22}]
+-- now  {"book_id": "B07", "quantity": 1, "subtotal": 33}
+--      {"book_id": "B06", "quantity": 1, "subtotal": 22}
+
+%sql
+SELECT customer_id,
+  collect_set(order_id) AS orders_id_set
+FROM orders
+WHERE customer_id = "C00002"
+GROUP BY customer_id
+
+%sql
+
+SELECT customer_id,
+  collect_set(books.book_id) As before_flatten,
+  flatten(collect_set(books.book_id)) AS after_flatten,
+  array_distinct(flatten(collect_set(books.book_id))) AS after_flatten_distinct
+FROM orders
+WHERE customer_id = "C00002"
+GROUP BY customer_id ;
+
+%sql
+CREATE OR REPLACE VIEW orders_enriched AS
+SELECT *
+FROM (
+  SELECT *, explode(books) AS book 
+  FROM orders) o
+INNER JOIN books b  -- default join is "inner join"
+ON o.book.book_id = b.book_id;
+
+
+CREATE OR REPLACE TABLE transactions AS
+
+SELECT * FROM (
+  SELECT
+    customer_id,
+    book.book_id AS book_id,
+    book.quantity AS quantity
+  FROM orders_enriched
+) PIVOT (
+  sum(quantity) FOR book_id in (
+    'B01', 'B02', 'B03', 'B04', 'B05', 'B06',
+    'B07', 'B08', 'B09', 'B10', 'B11', 'B12'
+  )
+);
+
+SELECT * FROM transactions;
+
+
+%sql
+
+SELECT
+  order_id,
+  books,
+  books.subtotal[0] as subtotal_number,
+ CAST(books.subtotal[0]* 0.8  AS INT) AS subtotal_after_discount,
+ ARRAY(CAST(books.subtotal[0] * 0.8 AS INT)) AS subtotal_after_discount_array,
+ TRANSFORM ( books, b -> CAST(b.subtotal * 0.8 AS INT)) AS subtotal_after_discount -- TRANSFORM is a kind of MAP funktion in python.
+
+FROM orders;
+
+
+%sql
+
+CREATE OR REPLACE FUNCTION get_url(email STRING)
+RETURNS STRING
+
+RETURN concat("https://www.", split(email, "@")[1]);
+
+-- In that case we cann apply the function directly without use TRANSFORM cause we have just one record in our  cell
+SELECT email, get_url(email) domain
+FROM customers
+
+```
+
+## Incremental Data Processing
+
+
+**Introduction**  
+
+In previous chapters we have about ELT operations, ETL is more for DWH
+ELT for Data Lake, but both have a sense of Batch processing.
+
+To process streaming data (close to real time) we need some new structures  
+
+
+`Process streaming data`: DataStreamReader + DataStreamWriter  
+
+**Data Stream:** Any data source that grows over time, new files landing in cloud, updates to a databae capture in a CDC feed, Events queued in a pub/sub messaging feed.
+
+**Approaches** Reprocess the entire source dataset etach tieme vs only process those new data added since last update.
+
+
+
+
+#### COPY INTO vs Auto Loader
+
+**copy into**: Thousand of files, less efficient at scale  
+**Auto Loader**: Millions of Files, efficient at scale.  --> its always active and lisening so obviously would cost much more money
+
+#### Multi-hop Architecture 
+
+Bronce --> Silver --> Gold
+
+```
+%sql
+
+(spark.readStream
+      .table("books")
+      .createOrReplaceTempView("books_streaming_tmp_vw")
+)
+
+-- that temp view is a streaming temp view as its generate from a streaming view
+CREATE OR REPLACE TEMP VIEW author_counts_tmp_vw AS (
+  SELECT author, count(book_id) AS total_books
+  FROM books_streaming_tmp_vw
+  GROUP BY author
+)
+-- we can write from a streaming temp view to a dataframe (author_counts), what will be running forevern every 4 secons
+(spark.table("author_counts_tmp_vw")                               
+      .writeStream  
+      .trigger(processingTime='4 seconds')
+      .outputMode("complete")
+      .option("checkpointLocation", "dbfs:/mnt/demo/author_counts_checkpoint")
+      .table("author_counts")
+)
+
+-- If we insert data in our original table Books its will be move to author_counts
+-- books --> have a Stream_table, the stream table check the origin every 4 seconds and write in destination.
+
+```
+
+**Auto Loader**
+
+Ading in format "cloudFiles" it already asume that we need a Auto Loader
+
+```
+
+%sql
+(spark.readStream
+        .format("cloudFiles")
+        .option("cloudFiles.format", "parquet")
+        .option("cloudFiles.schemaLocation", "dbfs:/mnt/demo/orders_checkpoint")
+        .load(f"{dataset_bookstore}/orders-raw")
+      .writeStream
+        .option("checkpointLocation", "dbfs:/mnt/demo/orders_checkpoint")
+        .table("orders_updates")
+)
+```
+
+#### Medallon Architecture
+
+```
+%sql
+CREATE OR REPLACE TEMPORARY VIEW orders_enriched_tmp AS (
+  SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
+         cast(from_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, books
+  FROM orders_bronze_tmp o
+  INNER JOIN customers_lookup c
+  ON o.customer_id = c.customer_id
+  WHERE quantity > 0)
+  
+(spark.table("orders_enriched_tmp")
+      .writeStream
+      .format("delta")
+      .option("checkpointLocation", "dbfs:/mnt/demo/checkpoints/orders_silver")
+      .outputMode("append")
+      .table("orders_silver"))
+	  
+(spark.table("daily_customer_books_tmp")
+      .writeStream
+      .format("delta")
+      .outputMode("complete")
+      .option("checkpointLocation", "dbfs:/mnt/demo/checkpoints/daily_customer_books")
+      .trigger(availableNow=True)
+      .table("daily_customer_books"))
+	  
+```
+
+#### Kind of Triggers
+
+**Fixed Interval Micro-batches (using trigger(Trigger.ProcessingTime(interval)))**
+
+This option allows you to process the data at fixed time intervals, regardless of when the data arrived.
+interval could be a string like "1 minute" or a duration in milliseconds.
+Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.
+
+```
+from pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.ProcessingTime("1 minute"))
+.table("output_table"))
+
+```
+
+**Once Trigger (using trigger(Trigger.Once()))**
+
+Processes the available data in the stream just once and then stops the query.  
+Use Case: When you have a backlog of data and you want to process it once to bring your output table up to date.  
+
+```
+from pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.Once())
+.table("output_table"))
+```
+
+
+**Continuous Processing (using trigger(Trigger.Continuous(interval)))**
+
+This option will continuously process the data with a low-latency.
+interval specifies the checkpoint interval.
+Note: Continuous processing is an experimental feature and has some limitations.
+Use Case: When low-latency is more important than throughput and you need near real-time processing.
+
+```
+from pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.Continuous("1 second"))  # e.g., checkpoint every second
+.table("output_table"))
+
+```
+
+
+
+**Available Now (using trigger(availableNow=True))**
+
+This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.
+Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.
+
+```
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(availableNow=True)
+.table("output_table"))
+
+```
+
+## Production Pipelines
+
+
+##### CDC
+
+Change Data Capture
+
+**Row-Level changes**: Inserring new records, Updating existing records, Deleting existing records
+
+**Batch**  
+`Table`: For Batch processing
+
+**Streaming**  
+`Live Table`: Allways updated, as alive and consuming resources, properly for streaming data, a live table may be entirely computed when possible to optimized.  
+`Streamling live tables` : Processes data  that has been added only since the last pipeline update.
+
+```
+CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
+COMMENT "The raw books orders, ingested from orders-raw"
+AS SELECT * FROM cloud_files("${datasets_path}/orders-json-raw", "json",
+                             map("cloudFiles.inferColumnTypes", "true"))
+							 
+-- Silver
+
+CREATE OR REFRESH STREAMING LIVE TABLE orders_cleaned (
+  CONSTRAINT valid_order_number EXPECT (order_id IS NOT NULL) ON VIOLATION DROP ROW
+)
+COMMENT "The cleaned books orders with valid order_id"
+AS
+  SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
+         cast(from_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, o.books,
+         c.profile:address:country as country
+  FROM STREAM(LIVE.orders_raw) o
+  LEFT JOIN LIVE.customers c
+    ON o.customer_id = c.customer_id
+	
+
+
+-- Gold
+
+CREATE OR REFRESH LIVE TABLE cn_daily_customer_books
+COMMENT "Daily number of books per customer in China"
+AS
+  SELECT customer_id, f_name, l_name, date_trunc("DD", order_timestamp) order_date, sum(quantity) books_counts
+  FROM LIVE.orders_cleaned
+  WHERE country = "China"
+  GROUP BY customer_id, f_name, l_name, date_trunc("DD", order_timestamp)
+  
+-- What I dont uderstand is 1) why the gold table is live and not Streaming live, 
+-- 2 why when readin from silver table 
+  
+```
+
+User
+ok I will formulate my question again.
+
+I have a the following SparkSQL code
+
+CREATE OR REFRESH STREAMING LIVE TABLE bronze_table
+AS SELECT * FROM cloud_files(some_path)
+							 
+-- Silver
+
+CREATE OR REFRESH STREAMING LIVE TABLE silver_table (
+AS
+  SELECT some_columns 
+        
+  FROM STREAM(LIVE.bronze_table) 
+
+-- gold
+CREATE OR REFRESH LIVE TABLE Gold_table
+
+AS
+  SELECT some_columns
+  FROM LIVE.silver_table
+
+Apparently that pseudo code is correct but I do not understand 2 things
+
++ 1) why bronze and silver tables are stream live and gold is just live
++ 2) why gold table read from "LIVE.silver_table" and not from "STREAM(LIVE.silver_table)
+
+Answer
+
+
+**Why are bronze and silver tables "streaming live" and gold is just "live"?**
+
+The distinction typically aligns with the modern data architecture patterns, particularly the Delta Lake architecture. The pattern involves refining raw data in stages:
+
+`Bronze:` This is often the raw, unrefined layer. Data lands in the bronze layer as it arrives. It's the most granular form of the data and is often not suitable for direct
+querying due to inconsistencies, missing values, or its verbose nature. The "streaming live" designation means data is continuously streamed into this layer in real-time.
+
+`Silver:` This is the cleaned and enriched version of the bronze layer. It may undergo operations like filtering, formatting, joining with other datasets,
+or even some aggregations. Again, the "streaming live" designation means data from the bronze layer is being continuously processed and streamed into the silver layer in real-time.
+
+`Gold:` This layer is optimized for consumption, often by business users. It might contain aggregated data, pre-joined datasets, 
+or data reshaped into a specific format ideal for BI tools or final consumption. The data in this layer may not need to be updated in real-time, which is why it's a
+"live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches from the Silver layer, rather than as a continuous stream.
+It provides a snapshot that is updated less frequently, which might be preferable for some reporting or analysis tasks.
+
+**Why does the gold table read from "LIVE.silver_table" and not from "STREAM(LIVE.silver_table)"?**
+This aligns with the above explanation. The "Gold" layer doesn't necessarily operate on a real-time stream from the "Silver" layer.
+Instead, it might operate on periodic batches or snapshots from the "Silver" layer. By reading from "LIVE.silver_table", 
+it's essentially working with the current state of the "Silver" table. On the other hand, using "STREAM(LIVE.silver_table)"
+would imply real-time, continuous processing of the data from the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
+
+In summary, the distinction between "streaming live" and "live" and the choice of reading methods represents different stages of data refinement
+and the associated processing cadence.
+
+
+
+Question
+
+**Can a table that have been create as `CREATE OR REFRESH STREAMING LIVE TABLE silver_table` be later reference as LIVE.silver_table ?**
+
+
+Yes, once a STREAMING LIVE TABLE is created in Databricks, it acts like a Delta table with a continuously updating view of the data.
+The underlying data is stored in Delta format, and you can query it like any other table in Databricks using the LIVE keyword.
+
+The STREAM(LIVE.<table_name>)  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
+So:
+
+- When you declare a table using CREATE OR REFRESH STREAMING LIVE TABLE, it sets up a continuous ingestion process to keep updating that table with new data.
+
+- When you query this table using SELECT ... FROM LIVE.<table_name>, you're querying its current state, getting a snapshot of the table as it is at the time of the query.
+
+When you use the table in another streaming context with STREAM(LIVE.<table_name>), you're setting up another streaming operation on top of the continuously updating table.
+Therefore, even if a table is created as a STREAMING LIVE TABLE, you can indeed query it just like a LIVE table.
 
 
