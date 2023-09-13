@@ -156,7 +156,7 @@ dedupedDF = (usersDF
 
 dedupedDF.count()
 
-
+```
 #### Validate Datasets
 
 ```
