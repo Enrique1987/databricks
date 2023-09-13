@@ -204,6 +204,8 @@ display(dedupedDF
 	.select("first_touch", "first_touch_date", "first_touch_time", "email_domain")
 )
 
+```
+
 #### Complex Transformations
 
 ```
