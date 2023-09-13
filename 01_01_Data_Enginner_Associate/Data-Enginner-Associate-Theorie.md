@@ -235,7 +235,7 @@ for col, dtype in df.dtypes:
 
 CREATE OR REPLACE TEMP VIEW events_strings AS 
 SELECT string(key), string(value) FROM events_raw;
-
+```
 
 #### Work with Nested Data
 
@@ -256,7 +256,7 @@ display(events_stringsDF
     .limit(1)
 )
 
-
+```
 
 Let's use the JSON string example above to derive the schema, then parse the entire JSON column into struct types.
 
@@ -264,7 +264,7 @@ Let's use the JSON string example above to derive the schema, then parse the ent
 **from_json()** parses a column containing a JSON string into a struct type using the specified schema.
 
 
-
+```
 CREATE OR REPLACE TEMP VIEW parsed_events AS SELECT json.* FROM (
 SELECT from_json(value, schema_of_json('{"device":"Linux","ecommerce":{"purchase_revenue_in_usd":1075.5,
                                          "total_item_quantity":1,"unique_items":1},"event_name":"finalize",
@@ -292,7 +292,7 @@ parsed_eventsDF = (events_stringsDF
 
 display(parsed_eventsDF)
 
-
+```
 
 #### Manipulate Arrays
 
