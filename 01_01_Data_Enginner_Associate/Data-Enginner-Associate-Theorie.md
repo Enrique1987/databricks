@@ -63,6 +63,16 @@ LOCATION "{sales_csv_path}"
 
 ```
 
+- But a external location could be converted in a DELTA table with the following code. /my_path/
+
+```
+-- SQL
+CREATE TABLE my_delta_table
+USING DELTA
+LOCATION '/my_path/'
+```
+
+
 **Running `DESCRIBE EXTENDED` on a table will show all of the metadata associate withthe table definition**
 
 `DESCRIBE EXTENDED sales_csv`
@@ -131,7 +141,6 @@ usersDF.where(col("email").isNull()).count()
 	  
 userDF.distinct().count()	  
 
-%sql
 
 from pyspark.sql.functions import col
 
@@ -142,7 +151,6 @@ usersDF.selectExpr("count_if(email IS NULL)")
 usersDF.where(col("email").isNull()).count()
 
 
-%python
 from pyspark.sql.functions import max
 
 # remember  usersDF = spark.read.table("users_dirty")
@@ -179,6 +187,8 @@ display(dedupedDF
 
 #### Date Format and Regex
 
+**SQL**
+
 ```
 
 SELECT 
@@ -193,7 +203,10 @@ FROM (
 )
   
 
-%python
+```
+**Python**
+
+```
 from pyspark.sql.functions import date_format, regexp_extract
 
 display(dedupedDF
@@ -210,9 +223,10 @@ display(dedupedDF
 
 ```
 
-#@DBAcademyHelper.monkey_patch
+# function to make shallow clone table.
+
 def clone_source_table(table_name, source_path, source_name=None):
-    #start = self.clock_start()
+    
 
     source_name = table_name if source_name is None else source_name
     print(f"Cloning the \"{table_name}\" table from \"{source_path}/{source_name}\".", end="...")
@@ -227,6 +241,8 @@ clone_source_table("sales", f"{data_path_2_5}/ecommerce/delta", "sales_hist")
 
 
 
+
+
 df = spark.table("events_raw")
 for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
@@ -235,6 +251,7 @@ for col, dtype in df.dtypes:
 
 CREATE OR REPLACE TEMP VIEW events_strings AS 
 SELECT string(key), string(value) FROM events_raw;
+
 ```
 
 #### Work with Nested Data
@@ -264,6 +281,7 @@ Let's use the JSON string example above to derive the schema, then parse the ent
 **from_json()** parses a column containing a JSON string into a struct type using the specified schema.
 
 
+**SQL**
 ```
 CREATE OR REPLACE TEMP VIEW parsed_events AS SELECT json.* FROM (
 SELECT from_json(value, schema_of_json('{"device":"Linux","ecommerce":{"purchase_revenue_in_usd":1075.5,
@@ -274,9 +292,10 @@ SELECT from_json(value, schema_of_json('{"device":"Linux","ecommerce":{"purchase
 										 "traffic_source":"email","user_first_touch_timestamp":1593454417513109,"user_id":"UA000000106116176"}')) AS json 
 FROM events_strings);
 
+```
 
-
-%python
+**Python**
+```
 from pyspark.sql.functions import from_json, schema_of_json
 
 json_string = """
@@ -300,8 +319,8 @@ display(parsed_eventsDF)
 **size()** provides a count for the number of elements in an array for each row.
 
 
+**SQL**
 ```
-
 CREATE OR REPLACE TEMP VIEW exploded_events AS
 SELECT *, explode(items) AS item
 FROM parsed_events;
@@ -309,20 +328,10 @@ FROM parsed_events;
 SELECT * FROM exploded_events WHERE size(items) > 2
 
 
-%python
-from pyspark.sql.functions import explode, size
 
-exploded_eventsDF = (parsed_eventsDF
-    .withColumn("item", explode("items"))
-)
+CREATE OR REPLACE TEMP VIEW events_explode AS ( SELECT device, explode(items) AS items FROM events_enrique_table limit 2);
 
-display(exploded_eventsDF.where(size("items") > 2))
-
-
-%sql
-CREATE OR REPLACE TEMP VIEW events_explode AS ( SELECT device, explode(items) as items from events_enrique_table limit 2);
-
-select * from events_explode;
+SELECT * FROM events_explode;
 
 
 CREATE OR REPLACE TEMP VIEW events_external_items AS 
@@ -336,38 +345,55 @@ FROM (
 
 ```
 
-**collect_set()** collects unique values for a field, including fields within arrays.  
-**flatten()** combines multiple arrays into a single array.  
-**array_distinct()** removes duplicate elements from an array.  
+
+**Python**
+```
+from pyspark.sql.functions import explode, size
+
+exploded_eventsDF = (parsed_eventsDF
+    .withColumn("item", explode("items"))
+)
+
+display(exploded_eventsDF.where(size("items") > 2))
+```
+
+
 
 
 ```
 
+**collect_set()** collects unique values for a field, including fields within arrays.  
+**flatten()** combines multiple arrays into a single array.  
+**array_distinct()** removes duplicate elements from an array.  
+
+**SQL**  
+```
 SELECT user_id,
   collect_set(event_name) AS event_history,
   array_distinct(flatten(collect_set(items.item_id))) AS cart_history
 FROM exploded_events
 GROUP BY user_id
+```
 
 
 
-%python
+**python**
 
+```
 from pyspark.sql.functions import array_distinct, collect_set, flatten
 
 display(exploded_eventsDF
     .groupby("user_id")
     .agg(collect_set("event_name").alias("event_history"),
-            array_distinct(flatten(collect_set("items.item_id"))).alias("cart_history"))
-			
-			
+            array_distinct(flatten(collect_set("items.item_id"))).alias("cart_history"))		
 ```
 
 
 #### Join Tables
 
-```
+**SQL**
 
+```
 CREATE OR REPLACE TEMP VIEW item_purchases AS
 
 SELECT * 
@@ -376,9 +402,11 @@ INNER JOIN item_lookup b
 ON a.item.item_id = b.item_id;
 
 SELECT * FROM item_purchases
+```
 
 
-%python
+**Python**
+```
 exploded_salesDF = (spark
     .table("sales")
     .withColumn("item", explode("items"))
@@ -391,7 +419,13 @@ item_purchasesDF = (exploded_salesDF
 )
 
 display(item_purchasesDF)
+```
 
+#### Pivot
+
+**SQL**
+
+```
 SELECT *
 FROM (select item_id, name, count(item_id) as count_item from table_name_item group by item_id, name order by item_id desc) purchases_curated
 PIVOT (sum(count_item) for item_id in ("P_FOAM_S", "M_STAN_T"));
@@ -414,6 +448,7 @@ PIVOT (
     'P_DOWN_S',
     'P_DOWN_K')
 )
+```
 
 
 %python
