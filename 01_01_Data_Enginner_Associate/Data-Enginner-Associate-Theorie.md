@@ -12,24 +12,20 @@ it could not be the case with external tables.
 
 ### External Tables: Querying Files Directly
 
+**Python**
+
 ```
 events_kafka = "dbfs:/mnt/path/"
 files = dbutils.fs.ls(events_kafka)
 display(files)
 
 
-SELECT * FROM json.`dbfs:/mnt/my_path/`
-
-
 
 data_path = "dbfs:/mnt/my_path//001.json"
-
 data_json = spark.sql(f"SELECT * FROM json.`{data_path}`")
-
 display(data_json)
 
 sales_csv_path = "dbfs:/mnt/my_path/"
-
 display(spark.sql(f"select * from csv.`{sales_csv_path}`"))
 
 ```
