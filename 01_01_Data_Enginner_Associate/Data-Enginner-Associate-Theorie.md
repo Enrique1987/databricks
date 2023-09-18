@@ -18,12 +18,15 @@ data_json = spark.sql(f"SELECT * FROM json.`{data_path}`")
 
 display(data_json)
 
+```
 
-%sql
+### Querying different types of data.  
+`json`
+
+```
+
 CREATE OR REPLACE VIEW event_view
 AS SELECT * FROM json.`dbfs:/mnt/my_path/`
-
-
 
 CREATE OR REPLACE TEMP VIEW events_temp_view
 AS SELECT * FROM json.`dbfs:/mnt/my_path/`
@@ -451,7 +454,9 @@ PIVOT (
 ```
 
 
-%python
+**python**
+
+```
 transactionsDF = (item_purchasesDF
     .groupBy("order_id", 
         "email",
@@ -470,7 +475,7 @@ display(transactionsDF)
 
 ```
 
-### SQL and Control Flow 
+### SQL Functions and Control Flow 
 
 SQL user-defined functions:
  - Persist between execution environments  
@@ -508,7 +513,7 @@ SELECT *, item_preference(name, price) FROM item_lookup
 
 ```
 
-#normal function
+#Python function
 
 def first_letter_function(email):
     return email[0]
@@ -519,6 +524,9 @@ first_letter_function("annagray@kaufman.com")
 create apply UDF, register the function as a UDF. This serializes the function and sends it to executors to be able to transofrm DataFrame records.
 
 `first_letter_udf = udf(first_letter_function)`
+
+So once you create a UDF functions you would pass from a Python function to a Pyspark function
+
 
 ```
 
@@ -623,9 +631,10 @@ Inside the **THEN**
 
 **THEN INSERT** * 
 
+**SQL**
+
 ```
 
-%sql
 drop TABLE IF exists students;
 
 CREATE TABLE IF NOT EXISTS students
@@ -689,9 +698,9 @@ DESCRIBE HISTORY students
 #### Versions
 
 %sql
-select * from students c where c.id not in (SELECT a.id 
+SELECT * FROM students c WHERE c.id not in (SELECT a.id 
 FROM (select * from students  VERSION AS OF 3) a
-inner join (select * from students VERSION as OF 7) b
+INNER JOIN (select * from students VERSION as OF 7) b
 on a.id = b.id)
 
 
@@ -699,15 +708,13 @@ on a.id = b.id)
 #### Roll Back
 
 ```
-%sql
 DELETE FROM students
-
-%sql
 RESTORE TABLE students TO VERSION AS OF 8
+```
 
+The Idea here is that when we have a error in a SQL command there is not a way to just continue as we can do in Python, so my Idea is 
+take the advantages of "try", "except" of Python and combine it with the SQL code that I wanted to insert.
 
-
-%python
 # that would fail --> cause drop doesnt admit Rollback
 queries_fail1 = [
     "DROP TABLE students;",
@@ -725,7 +732,7 @@ for query in queries_fail1:
         continue
 ```
 
-Code Merge
+**Using Merge**
 
 ```
 
@@ -809,7 +816,7 @@ CREATE OR REPLACE TABLE purchase_dates (
     cast(cast(transactions_timestamp/1e6 AS TIMESTAMP) AS DATE))
     COMMENT "generated based on `transactions_timestamp` column");
 
-select * from purchase_dates;
+SELECT * FROM purchase_dates;
 
 
 
@@ -865,7 +872,6 @@ SELECT * FROM users_pii limit 2;
 %sql
 CREATE OR REPLACE TABLE purchases_clone
 DEEP CLONE purchases
-
 ```
 
 
@@ -981,7 +987,7 @@ GRANT SELECT ON VIEW agg_heartrate to analysts
 
 #### Dynamic Views
 
-+ Provide the abilito to do fine-grained access control
++ Provide the ability to do fine-grained access control
 
 
 Governing Data techniques
@@ -1154,21 +1160,16 @@ DROP VIEW global_temp.global_temp_view_latest_phones;
 ```
 dataset_bookstore = 'dbfs:/mnt/demo-datasets/bookstore'
 spark.conf.set(f"dataset.bookstore", dataset_bookstore)
-
 files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
 ```
 
-3 different ways to query from a Directory
+### 3 different ways to query from a Directory
 
 ```
 SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json` 
-
 UNION ALL
-
 SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json` 
-
 UNION ALL
-
 SELECT * FROM json.`${dataset.bookstore}/customers-json/` 
 ```
 
@@ -1553,7 +1554,6 @@ Change Data Capture
 **Streaming**  
 `Live Table`: Allways updated, as alive and consuming resources, properly for streaming data, a live table may be entirely computed when possible to optimized.  
 `Streamling live tables` : Processes data  that has been added only since the last pipeline update.
-
 ```
 CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
 COMMENT "The raw books orders, ingested from orders-raw"
