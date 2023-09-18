@@ -20,17 +20,17 @@ files = dbutils.fs.ls(events_kafka)
 display(files)
 
 
-
 data_path = "dbfs:/mnt/my_path//001.json"
 data_json = spark.sql(f"SELECT * FROM json.`{data_path}`")
 display(data_json)
+
 
 sales_csv_path = "dbfs:/mnt/my_path/"
 display(spark.sql(f"select * from csv.`{sales_csv_path}`"))
 
 ```
 
-### External Tables: Querying different types of data + Create View and Temp View
+### External Tables: Querying different types of data
 
 `json` `text` `binaryFile` `csv`
 
@@ -54,7 +54,7 @@ SELECT * FROM csv.`dbfs:/mnt/my_path/`
 
 ### External Tables - Providing Options for External Sources
 
-
+**SQL**
 ```
 DROP TABLE IF EXISTS books_csv;
 
@@ -69,7 +69,7 @@ LOCATION "${dataset.bookstore}/books-csv"
 
 ```
 
-
+**Python**
 ```
 spark.sql(f"""
 CREATE TABLE IF NOT EXISTS sales_csv
@@ -85,10 +85,9 @@ LOCATION "{sales_csv_path}"
 
 ```
 
-- But a external location could be converted in a DELTA table with the following code. /my_path/
+- Convert a external location in a DELTA table with the following code. /my_path/
 
 ```
--- SQL
 CREATE TABLE my_delta_table
 USING DELTA
 LOCATION '/my_path/'
@@ -99,7 +98,9 @@ LOCATION '/my_path/'
 
 `DESCRIBE EXTENDED sales_csv`
 
-#### Extracting Data from SQL Databases
+
+
+### Extracting Data from SQL Databases
 
 ```
 CREATE TABLE
@@ -112,12 +113,8 @@ OPTIONS (
 )
 
 
-```
 
-### Extract Data Lab
-
-
-#### assert - testing
+### Testing
 
 ```
 assert spark.table("events_json"), "Table named `events_json` does not exist"
