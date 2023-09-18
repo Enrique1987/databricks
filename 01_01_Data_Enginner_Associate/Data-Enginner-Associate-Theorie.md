@@ -111,7 +111,7 @@ OPTIONS (
     user = "{jdbcUsername}",
     password = "{jdbcPassword}"
 )
-
+```
 
 
 ### Testing
