@@ -85,7 +85,7 @@ LOCATION "{sales_csv_path}"
 
 ```
 
-- Convert a external location in a DELTA table with the following code. /my_path/
+- Convert a external location in a DELTA table.
 
 ```
 CREATE TABLE my_delta_table
@@ -132,7 +132,6 @@ assert total == 2252, f"Expected 2252 records, found {total}"
 
 
 ```
-
 from pyspark.sql import functions as F
 
 
@@ -146,30 +145,19 @@ df = spark.createDataFrame(data=[(None, None, None, None), (None, None, None, No
       .write
       .mode("overwrite")
       .saveAsTable("users_dirty"))
-	  
-	  
+```
 
-
+```
 from pyspark.sql.functions import col
 
 
 usersDF = spark.read.table("users_dirty")
-
 usersDF.selectExpr("count_if(email IS NULL)")
-usersDF.where(col("email").isNull()).count()
-	  
+usersDF.where(col("email").isNull()).count()  
 userDF.distinct().count()	  
+```
 
-
-from pyspark.sql.functions import col
-
-
-usersDF = spark.read.table("users_dirty")
-
-usersDF.selectExpr("count_if(email IS NULL)")
-usersDF.where(col("email").isNull()).count()
-
-
+```
 from pyspark.sql.functions import max
 
 # remember  usersDF = spark.read.table("users_dirty")
@@ -180,28 +168,30 @@ dedupedDF = (usersDF
     .agg(max("email").alias("email"), 
          max("updated").alias("updated"))
     )
-
 dedupedDF.count()
-
 ```
+
+
 #### Validate Datasets
 
+The result should be True or False
+
+**SQL**
 ```
 SELECT max(row_count) <= 1 no_duplicate_ids FROM (
   SELECT user_id, count(*) AS row_count
   FROM deduped_users
   GROUP BY user_id)
  
--- the results is True or False
 
-%python
+**Python**
+```
 from pyspark.sql.functions import count
 
 display(dedupedDF
     .groupby("user_id")
     .agg(count("*").alias("row_count"))
     .select((max("row_count") <= 1).alias("no_duplicate_ids"))) # true or false 
-
 ```
 
 #### Date Format and Regex
@@ -209,7 +199,6 @@ display(dedupedDF
 **SQL**
 
 ```
-
 SELECT 
   --*, 
   date_format(first_touch, "MMM d, yyyy") AS first_touch_date,
@@ -220,8 +209,6 @@ FROM (
     CAST(user_first_touch_timestamp / 1e6 AS timestamp) AS first_touch 
   FROM deduped_users
 )
-  
-
 ```
 **Python**
 
