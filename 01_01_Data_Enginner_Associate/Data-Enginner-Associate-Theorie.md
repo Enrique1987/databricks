@@ -92,11 +92,11 @@ CREATE TABLE my_delta_table
 USING DELTA
 LOCATION '/my_path/'
 ```
+#### Describe Extended vs detail vs history
 
-
-**Running `DESCRIBE EXTENDED` on a table will show all of the metadata associate withthe table definition**
-
-`DESCRIBE EXTENDED sales_csv`
+- `DESCRIBE EXTENDED` for Data types  
+- `DESCRIBE DETAIL` for metadata associate to the Table  
+- `DESCRIBE HISTORY` for the opertions where made in the Table
 
 
 
@@ -126,6 +126,23 @@ total = spark.table("events_json").count()
 assert total == 2252, f"Expected 2252 records, found {total}"
 
 ```
+
+### Writing to Tables
+
+`INSERT OVERWRITE`: Overwrite the actual data for the given one.
+
+```
+INSERT OVERWRITE orders
+SELECT * FROM parquet.`${dataset.bookstore}/orders`
+```
+
+`INSERT INTO`: Append the give data to the Table. May incur duplication of data.
+
+`MERGE INTO`: 
+
+
+
+
 
 ### Cleaning Data
 
@@ -182,7 +199,7 @@ SELECT max(row_count) <= 1 no_duplicate_ids FROM (
   SELECT user_id, count(*) AS row_count
   FROM deduped_users
   GROUP BY user_id)
- 
+``` 
 
 **Python**
 ```
@@ -682,11 +699,6 @@ select * from students;  -- the only conditin that match is the last one and ins
 ```
 
 
-#### Describe Extended vs detail vs history
-
-- DESCRIBE EXTENDED for Data types  
-- DESCRIBE DETAIL for metadata associate to the Table  
-- DESCRIBE HISTORY for the opertions where made in the Table
 
 
 ```
