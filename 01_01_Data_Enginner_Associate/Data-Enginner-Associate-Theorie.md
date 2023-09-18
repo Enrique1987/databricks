@@ -1,6 +1,16 @@
-## ETL with Spark
 
-### Querying Files Directly
+
+
+## ETL with Spark SQL and Python
+
+### External Table
+
+- Location need to be added
+- We cannot expect the performance guarantees associated with Delta Lake, example with DT you always guery the most recent version of your source data but it
+it could not be the case with external tables.
+
+
+### External Tables: Querying Files Directly
 
 ```
 events_kafka = "dbfs:/mnt/path/"
@@ -18,10 +28,17 @@ data_json = spark.sql(f"SELECT * FROM json.`{data_path}`")
 
 display(data_json)
 
+sales_csv_path = "dbfs:/mnt/my_path/"
+
+display(spark.sql(f"select * from csv.`{sales_csv_path}`"))
+
 ```
 
-### Querying different types of data.  
-`json`
+### External Tables: Querying different types of data + Create View and Temp View
+
+`json` `text` `binaryFile` `csv`
+
+
 
 ```
 
@@ -35,21 +52,27 @@ SELECT * FROM text.`dbfs:/mnt/my_path/`
 
 SELECT * FROM binaryFile.`dbfs:/mnt/my_path/`
 
-```
-
-### Providing Options for External Sources
+SELECT * FROM csv.`dbfs:/mnt/my_path/`
 
 ```
-sales_csv_path = "dbfs:/mnt/my_path/"
 
-display(spark.sql(f"select * from csv.`{sales_csv_path}`"))
+### External Tables - Providing Options for External Sources
+
 
 ```
-#### External Table
+DROP TABLE IF EXISTS books_csv;
 
-- Location need to be added
-- we cannot expect the performance guarantees associated with Delta Lake, example with DT you always guery the most recent version of your source data but it
-it could not be the case with external tables.
+CREATE TABLE  if not exists books_csv
+  (book_id STRING, title STRING, author STRING, category STRING, price DOUBLE)
+USING CSV
+OPTIONS (
+  header = "true",
+  delimiter = ";"
+)
+LOCATION "${dataset.bookstore}/books-csv"
+
+```
+
 
 ```
 spark.sql(f"""
