@@ -138,15 +138,17 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 `INSERT INTO`: Append the give data to the Table. May incur duplication of data.
 
-`MERGE INTO`: 
+`MERGE INTO`: It is used when we want to insert data and at the same time we do not want to have repeated data.
 
-
-
-
+```
+MERGE INTO books b
+USING books_updates u
+ON b.book_id = u.book_id AND b.title = u.title
+WHEN NOT MATCHED AND u.category = 'Computer Science' THEN 
+  INSERT *
+```
 
 ### Cleaning Data
-
-
 
 ```
 from pyspark.sql import functions as F
@@ -242,7 +244,7 @@ display(dedupedDF
 
 ```
 
-#### Complex Transformations
+### Advanced Transformations
 
 ```
 
@@ -263,12 +265,22 @@ data_path_2_5 = "dbfs:/mnt/my_path/"
 clone_source_table("sales", f"{data_path_2_5}/ecommerce/delta", "sales_hist")
 
 
-
-
-
 df = spark.table("events_raw")
 for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
+
+```
+
+`from_json`:Indicate that the data is in json format.
+`schema_of_json`:infer a json schema, we can use a example to do it
+
+```
+CREATE OR REPLACE TEMP VIEW parsed_customers AS
+  SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
+  FROM customers;
+  
+SELECT * FROM parsed_customers
+```
 	
 
 
