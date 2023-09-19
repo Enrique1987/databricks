@@ -575,14 +575,13 @@ def first_letter_udf_decorator(email: str) -> str:
     return email[0]
 ```
 **Pandas UDF**  
-Are special types of UDFs that use the power of the ``pandas`` library withing a Spark DataFrame operation, Here are the advantages of using `pandas UDFs` over normal UDFs:
+Are special types of UDFs that use the power of the `pandas` library withing a Spark DataFrame operation, Here are the advantages of using `pandas UDFs` over normal UDFs:
 
-+ 1) **Performance** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
++  **Performance:** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
 
-* 2)
++  **Memory management:** Allow for more efficient memory usage because they use `Arrow` for data serialization
 
-
-**Apache Arrow**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serializationcosts
++ Uses **Apache Arrow:**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serializationcosts
 
 ```
 import pandas as pd
@@ -599,62 +598,55 @@ We can alsro register Pandas UDF to the SQL namespaces
 `spark.udf.register("sql_vectorized_udf", vectorized_udf)`
 
 
-### Higher Oder Functions in Sapark SQL
+### Higher Oder Functions in Spark SQL -- SparkSQL Built-in Functions
 
-- **`FILTER()`**filters an array using the given lambda function.
-- **`EXIST()`**tests whether a statement is true for one or more elements in an array. 
-- **`TRANSFORM()`**uses the given lambda function to transform all elements in an array.
-- **`REDUCE()`**takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.
+They use indeed use the "optimizer Catalyst" unlike UDF functions.
+
+- **`FILTER()`**filters an array using the given lambda function.  
+- **`EXIST()`**tests whether a statement is true for one or more elements in an array.  
+- **`TRANSFORM()`**uses the given lambda function to transform all elements in an array.  
+- **`REDUCE()`**takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.  
+
 
 ```
-
 SELECT
     items,
     FILTER (items, i -> i.item_id LIKE "%K") AS king_items
 FROM sales
+````
 
-
+```
 SELECT items,
   TRANSFORM (
     items, i -> CAST(i.item_revenue_in_usd * 100 AS INT)
   ) AS item_revenues
 FROM sales limit 3
+```
 
-
+```
 SELECT 
     items,
     EXISTS(SELECT 1 WHERE regexp_replace(CAST(items.item_name as STRING), '\\[|\\]', '') LIKE '%Mattress') AS mattress,
     EXISTS(SELECT 1 WHERE regexp_replace(CAST(items.item_name as STRING), '\\[|\\]', '') LIKE '%Pillow') AS pillow
 FROM sales 
 LIMIT 3;
-
-
-## ETL
-
-## MERGE
-
-**target_table**: The table into which you want to merge data.
-
-**source_table**: The table from which you want to insert or update data.
-
-**merge_condition**: The condition to determine a match between the two tables.
-
-**WHEN MATCHED THEN**: Describes how rows from the target table should be updated or deleted if they match rows from the source table.
-
-**WHEN NOT MATCHED THEN**: Describes how rows from the source table should be inserted into the target table if they don't match any rows in the target table.
-
-Inside the **THEN**
-
-**THEN UPDATE SET**
-
-**THEN DELETE**
-
-**THEN INSERT*** 
-
-**SQL**
-
 ```
 
+**Summarize Functions**:  
+
+- **SparkSQL Built-in Functions:** They are natively integrated into Spark´s Catalyst optimizer, that will optimize the execution plan for these operations,
+ensuring efficient processing. This is one reason why using built-in functions is often faster thatn using custom UDF´s.
+
+- **User Defined Functions(UDFs):** When you create a UDF, Spark´s Catalyst optimizer doesnt´t have visibility into the logic of the function, meaning it can´t optimize it as
+ effectively as built-in functions.
+ 
+- **pandas UDFs:** As an intermediary step, pandas UDFs(or vectorized UDFs) allow for more efficient processing than tradicitonal UDFs since they operate on batches of data using
+pandas which is inherently more optimized thatn row-by-row operations.
+
+So whenever possible, it´s recommended to utilize SparkSQL´s built-in functions to benefit from the full optimization capabilities of the Catalyst engine.
+
+
+```
 drop TABLE IF exists students;
 
 CREATE TABLE IF NOT EXISTS students
