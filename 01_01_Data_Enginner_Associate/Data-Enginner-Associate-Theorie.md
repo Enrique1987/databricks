@@ -3,7 +3,30 @@
 
 The theory consists of both theoretical concepts and the corresponding code.
 
-## Datalake Hause
+## Data Lakehouse
+
+A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. If offers the vast storage capabilities and flexibility of a data lakehause
+to handle large volumes of raw, detailed data, alongside the strutured querying and performance optimizationof a data warehouse.
+This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
+
+
+** Challenges in the Data Lakehouse:**  
+
+Large scale ETL is complex and brittle
+
+**complex pipeline development:**  
+	 - Hard to build and maintain table depencencies´
+	 - Difficult to switch between `batch` and `stream`   
+	 
+**Data quality and governance**  
+    - Difficult to monitor and enfornce `data quality`
+	- Impossible to trace data lineage
+
+
+**Difficult pipeline operations**  
+	- Poor ´observability´ at granual data levels
+	- Error handling and `recovery is laborious`
+	
 
 
 ## ETL with Spark SQL and Python
@@ -326,6 +349,8 @@ SELECT * FROM events_strings WHERE value:event_name = "finalize" ORDER BY key LI
 ```
 
 **Use of `:` Python**
+
+```
 display(events_stringsDF
     .where("value:event_name = 'finalize'")
     .orderBy("key")
@@ -867,6 +892,118 @@ DEEP CLONE purchases
 
 
 **COPY INTO** Provides SQL engineers and idempotent option to incrementally ingest data form external systems.
+
+
+## Incremental Data Processing.
+
+### Theorie
+
+**DLT vs Stream DLT vs DT** 
+
+`DLT`: are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
+`DT`: Less frequent batch updates.  
+`Stream DLT`: enables real-time.
+
+**DLT and Notebook** When you query a DLT in y notebook that is not attached toa DLT pipeline you are querying the table as its is at that moment, no the live 
+streaming version. DLT is not intended for interactive execution ina notebook.
+
+**How much time could preserve the data the DLT ?** 
+Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
+But... retention perios matter, if every change is retained idenfinitely you storage usage would grow rapidly, especially in active dataset with frequent modification. 
+Thats why Delta Lake allows you to set a retention prediod for how long to keep old versionof th data.
+
+
+
+**Auto Loader** 
+- When you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
+Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.  
+-Auto Loader incrementally ingests new data files in batches. 
+- Intern use Spark Structrued Streaming.  
+- The inclusion of format("cloudFiles") enables the use of Auto Loader.
+
+```
+(streaming_df = spark.readStream.format("cloudFiles")
+.option("cloudFiles.format", "json")
+.option("cloudFiles.schemaLocation", schemaLocation)
+.load(sourcePath))
+```
+
+´´´
+spark.readStream
+        .format("cloudFiles")
+        .option("cloudFiles.format", "parquet")
+        .option("cloudFiles.schemaLocation", "dbfs:/mnt/demo/orders_checkpoint")
+        .load(f"{dataset_bookstore}/orders-raw")
+      .writeStream
+        .option("checkpointLocation", "dbfs:/mnt/demo/orders_checkpoint")
+        .table("orders_updates")
+)
+´´´
+
+
+**Metastore**  
+Metastore keeps track of all the table metadata, like the schema and the location of the data. When you create a table in Delta Lake or DAtabricks, the details bout the table,
+including where its data is stored, are saved in the metastored.
+
+**Table directory**  
+In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
+where the data is stored. Referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
+The table directory could be a path like `abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/` whithn this directory, you´d find 
+multiple Parquet Files and Transaction Logs. `_delta_log`  
+
+**Event Log**
+Event log is about logging events or changes. In context of Delta Lake, the Event Log keeps track of transactions but doesn´t serve as a direct way to
+view the contents of the table directory. Are desing to capure various acxtivities.
+
+**Checkpointing directory**Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
+
+**What DAG primarily does?** 
+DAG visualizes the sequence and dependencies of taks. There you can go to the Pipeline Details page and click on the individual tables.  
+
+**Task Details**Typically provide information about the task´s execution, status, duration.	
+
+**Workflow vs Pipeline**   
+Task orchestration = Workflow  
+Data transofrmation and movement (pipeline)
+
+**Flow Definition**  
+In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL.
+In visual tools like Azure Data Factory, Apache NiFi, or Talend, the flow definition might be represented visually as a flowchart or diagram where you can see
+how different data sources, transformations, and destinations (sinks) are connected. By examining this visual representation, 
+you can understand how data is flowing and being transformed.
+
+In a more code-based environment, or if you're using something like Databricks notebooks, the flow definition might be best understood by examining the sequence of SQL queries,
+Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data from Table A, transform it, and then insert it into Table B.
+
+**Workflow orchestration patterns.**
+
+- **Fan-out Pattern:** A single task or job is followed by multiple tasks that can be executed in parallel  
+- **Funnel Pattern** Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
+- **Hourglas Pattern** Combine Fan-out and Funnel
+- **Sequence Pattern** Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+- **Multi-sequence Pattern** Multi sequences of task that can run in parallel with each other.
+
+**Medallon Architecture**    `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
+
+- **Bronze**
+- **Silver**
+- **Gold**
+Silver tables enrich data by joining fields from bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.  
+
+**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those from DLT pipelines.
+Clicking on individual tables or task within a job run will providespecifics bout that task.
+
+**Databricks Tables**Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
+parquet, Avro, CSV, JSON, etc...  
+
+**Storage Systems**Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
+
+#### Delta Live Tables come to action
+
+**Agility**: Build batch and streaming data pipelines.
+**Trust your data** Quality controls with expectations and actions to take
+**Scale with reliability** Easy scale.
+
 
 ### Delta Live Tables
 
@@ -1757,32 +1894,6 @@ the system only focuses on the new data. This is both resource-efficient and ens
 
 
 
-#### Large scale ETL is complex and brittle
-
-**complex pipeline development:**
-
-	 - Hard to build and maintain table depencencies
-
-	 - Difficult to switch between `batch` and `stream`   
-	 
-**Data quality and governance**  
-
-    - Difficult to monitor and enfornce `data quality`
-	- Impossible to trace data lineage
-
-
-**Difficult pipeline operations**
-
-	- Poor ´observability´ at granual data levels
-	- Error handling and `recovery is laborious`
-	
-	
-#### Delta Live Tables come to action
-
-**Agility**: Build batch and streaming data pipelines.
-**Trust your data** Quality controls with expectations and actions to take
-**Scale with reliability** Easy scale.
-
 
 #### What is a Live Table and what provides for
 
@@ -1907,7 +2018,7 @@ In order to ensure only good data makes it into our silver table, we'll write a 
 
 We'll break down each of these constraints below:
 
-##### **`valid_id`**
+ **`valid_id`**
 This constraint will cause our transaction to fail if a record contains a null value in the **`customer_id`** field.
 
 ##### **`valid_operation`**
@@ -1969,9 +2080,18 @@ APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each un
 
 
 
+
+
+
+
+catalog --> Schema(database) -->(Table, View, Function)
+
+
+## Unity Catalog
+
+
+
 ### Data Governance models
-
-
 
 Programmatically grant, deny and revoke access to ata objects
 
@@ -1991,11 +2111,6 @@ Granting Privileges by Role
 **Table owner**: Only the table.
 
 
-
-catalog --> Schema(database) -->(Table, View, Function)
-
-
-## Unity Catalog
 
 ## Data Access Control and Unity Catalog
 ------------------------------------------------------

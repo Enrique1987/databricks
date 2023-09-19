@@ -1255,10 +1255,7 @@ with respect to size on disk? Select one response.i**
 &nbsp;&nbsp;&nbsp;&nbsp;ACID transactions support the creation of interactive visualization queries.  
 
 
-
 **Which of the following table modifications can be made with a MERGE INTO statement? Select three responses.**(CHECK if time)
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Write raw data from a file location into a schema  
 &nbsp;&nbsp;&nbsp;&nbsp;Write data that generates multiple downstream tables  
@@ -1267,32 +1264,23 @@ with respect to size on disk? Select one response.i**
 &nbsp;&nbsp;&nbsp;&nbsp;**Write streaming aggregates in Update Mode** 
 
 
-
 **A data engineer needs to update the table people. The engineer only wants records to be updated if the existing row has a NULL
 value in the column email and the new row does not.**
 
  
+They have the following incomplete
 
-They have the following incomplete 
 ```
-
- 
-
 MERGE INTO people a
-
 USING people_update b
-
 ON a.people_id = b.people_id
-
 _____
 
 WHEN NOT MATCHED THEN DELETE
-
 ```
 
 **Which of the following statements correctly fills in the blank? Select one response.**
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN MATCHED AND a.email IS NULL  
 &nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN a.email IS NULL  
@@ -1301,12 +1289,11 @@ WHEN NOT MATCHED THEN DELETE
 &nbsp;&nbsp;&nbsp;&nbsp;**WHEN MATCHED AND a.email IS NULL THEN UPDATE SET email = b.email** 
 
 
-
 **A data engineer needs to create the new database clients at a location represented by the variable path. The database will only contain JSON files.
 Which of the following commands does the data engineer need to run to complete this task? Select two responses.**
 
- 
-
+	Tip:"at a location represented by the variable path" --> would need the word `LOCATION`
+	
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE IF NOT EXISTS clients '${path}';  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE SCHEMA IF NOT EXISTS clients json. '${path}';  
 &nbsp;&nbsp;&nbsp;&nbsp;**CREATE DATABASE clients LOCATION '${path}';** 
@@ -1314,10 +1301,7 @@ Which of the following commands does the data engineer need to run to complete t
 &nbsp;&nbsp;&nbsp;&nbsp;**CREATE SCHEMA clients LOCATION '${path}';**    
 
 
-
 **Which of the following conditions must be met for data to be loaded incrementally with the COPY INTO command? Select three responses.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**COPY INTO must target an existing Delta table.**  
 &nbsp;&nbsp;&nbsp;&nbsp;**The source file must specify the file’s format.** 
@@ -1328,14 +1312,11 @@ Which of the following commands does the data engineer need to run to complete t
 
 **Which of the following statements about managed and external tables are true? Select two responses.**
 
- 
-
 &nbsp;&nbsp;&nbsp;&nbsp;**When moving a managed table to a new database, the table’s data must be written to the new location.** 
 &nbsp;&nbsp;&nbsp;&nbsp;**External tables will always specify a LOCATION during table creation.** 
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables are specified with the CREATE MANAGED TABLE command in SQL.  
 &nbsp;&nbsp;&nbsp;&nbsp;When dropping an external table, the underlying data and metadata are also deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;When dropping a managed table, only the underlying metadata stays intact.  
-
 
 
 **Which of the following validates that the temporary view trees has exactly six records? Select one response.**
@@ -1348,95 +1329,6 @@ Which of the following commands does the data engineer need to run to complete t
 
 
 
-
-## Data Pipelines with Delta Live Tables, Spark SQL & PySpark
-
-
-### Theorie
-
-**DLT vs Stream DLT** 
-`DLT` for (mini or often)batch processing and automates data managemen, while `Stream DLT` enables real-time.
-
-**DLT vs DT** 
-`DLT` are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
-`DT`: Less frequent batch updates.  
-
-**Stream Live Table (SLT):**For real-time streaming data ingestion and processing.  
-**Delta Live Table (DLT):**For frequent batch processing (like every few minutes). Offers automated pipeline management and quality checks.  
-**Delta Table:**For less frequent batch updates (e.g., daily or weekly). Provides the foundational features for versioning, ACID transactions, and optimized querying.  
-
-**Auto Loader**When you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
-Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.
-
-
-**What are DLT designed for**Delta Live Tables (DLT) is designed for defining reliable and maintainable pipelines. DLT is not intended for interactive execution in a notebook.  
-
-**What happend when you query a DLT that is not attached to a DLT pipeline inside of a notebook ?** 
-When you query a DLT in a notebook that is not attached to a DLT pipeline, you are querying the table as it is at that moment, no the live streaming version.
-When you are querying a DLT outside of the pipeline, you are essentially querying the current state of the Delta table. Whether the table was defined as batch or streaming doesnt´
-
-**How much time could preserve the data the DLT ?** 
-Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
-But... retention perios matter, if every change is retained idenfinitely you storage usage would grow rapidly, especially in active dataset with frequent modification. 
-Thats why Delta Lake allows you to set a retention prediod for how long to keep old versionof th data.
-
-**Metastore** 
-Metastore keeps track of all the table metadata, like the schema and the location of the data. When you create a table in Delta Lake or DAtabricks, the details bout the table,
-including where its data is stored, are saved in the metastored.
-
-**Table directory**In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
-where the data is stored. Referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
-The table directory could be a path like `abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/` whithn this directory, you´d find 
-multiple Parquet Files and Transaction Logs. `_delta_log`  
-
-**Event Log**
-Event log is about logging events or changes. In context of Delta Lake, the Event Log keeps track of transactions but doesn´t serve as a direct way to
-view the contents of the table directory. Are desing to capure various acxtivities.
-
-**Checkpointing directory**Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
-
-**What DAG primarily does?** 
-DAG visualizes the sequence and dependencies of taks. There you can go to the Pipeline Details page and click on the individual tables.  
-
-**Task Details**Typically provide information about the task´s execution, status, duration.	
-
-**Workflow vs Pipeline**   
-Task orchestration = Workflow  
-Data transofrmation and movement (pipeline)
-
-**Flow Definition**In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL.
-In visual tools like Azure Data Factory, Apache NiFi, or Talend, the flow definition might be represented visually as a flowchart or diagram where you can see
-how different data sources, transformations, and destinations (sinks) are connected. By examining this visual representation, 
-you can understand how data is flowing and being transformed.
-
-In a more code-based environment, or if you're using something like Databricks notebooks, the flow definition might be best understood by examining the sequence of SQL queries,
-Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data from Table A, transform it, and then insert it into Table B.
-
-**Workflow orchestration patterns.
-
-**Fan-out Pattern:**A single task or job is followed by multiple tasks that can be executed in parallel  
-
-**Funnel Pattern**Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
-
-**Hourglas Pattern**Combine Fan-out and Funnel
-
-**Sequence Pattern**Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
-
-**Multi-sequence Pattern**Multi sequences of task that can run in parallel with each other.
-
-**Example of Silver and Gold**
-Silver tables enrich data by joining fields from bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.  
-
-**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those from DLT pipelines.
-Clicking on individual tables or task within a job run will providespecifics bout that task.
-
-**Databricks Tables**Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
-parquet, Avro, CSV, JSON, etc...  
-
-**Storage Systems**Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
-
-
-## Exam Questions
 
 **A data engineer is creating a live streaming table to be used by other members of their team. They want to indicate that the table contains silver quality data.
 Which of the following describes how the data engineer can clarify this to other members of their team? Select two responses.**
@@ -1746,15 +1638,11 @@ CONSTRAINT valid_id_not_null EXPECT (valid_id IS NOT NULL or operation = "INSERT
 **Which of the following correctly describes how Auto Loader ingests data? Select one response.
 
 
-**Auto Loader incrementally ingests new data files in batches.**
-
-Auto Loader automatically writes new data files continuously as they land.
-
-Auto Loader writes new data files in incremental batches.
-
-Auto Loader only detects new data files during scheduled update intervals.
-
-Auto Loader automatically detects new data files during manual or scheduled updates.
+**Auto Loader incrementally ingests new data files in batches.**  
+Auto Loader automatically writes new data files continuously as they land.  
+Auto Loader writes new data files in incremental batches.  
+Auto Loader only detects new data files during scheduled update intervals.  
+Auto Loader automatically detects new data files during manual or scheduled updates.  
 
 
 
