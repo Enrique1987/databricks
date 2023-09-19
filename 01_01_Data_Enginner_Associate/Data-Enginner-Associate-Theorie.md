@@ -364,8 +364,8 @@ display(events_stringsDF
 
 #### Manipulate Arrays
 
-`explode()` separates the elements of an array into multiple rows; this creates a new row  for each elemnt.
-`size()` provides a count for the number of elements in an array for each row.
+`explode()` separates the elements of an array into multiple rows; this creates a new row  for each elemnt.  
+`size()` provides a count for the number of elements in an array for each row.  
 
 
 **SQL**
@@ -501,15 +501,15 @@ display(transactionsDF)
 
 ### SQL Functions and Control Flow 
 
-SQL user-defined functions:
+**SQL user-defined functions:**    
  - Persist between execution environments  
  - Exist as objects in the metastore and are governed by the same Table ACLs as databases, tables or views.  
  - Require **USAGE**and **SELECT**permision to use the SQL UDF  
- - These functions are registered natively in SQL and maintain all of the optimizations of Spark when applying custom logic to large datasets. 
- - We can use **DESCRIBE FUNCTION**to see where a function was registerd and basic information about expected inputs and what is returned  
+ - These functions are registered natively in SQL and maintain all of the optimizations of Spark when applying custom logic to large datasets.  
+ - We can use **DESCRIBE FUNCTION**to see where a function was registerd and basic information about expected inputs and what is returned   
 
-`DESCRIBE FUNCTIONS EXTENDED sale_announcement`
 
+**SQL - CASE WHEN**
 ```
 CREATE OR REPLACE FUNCTION item_preference(name STRING, price INT)
 RETURNS STRING
@@ -526,26 +526,25 @@ SELECT *, item_preference(name, price) FROM item_lookup
 
 ### Python User-Defined Fuinctions
 
-#### UDF
+**UDF**  
+User Defined Functions allow users to define their own transformations on Spark DataFrames
+- Can´t be optimized by Catalyst Optimizer  
+- Function is serialized ans sent to executors  
+- Row data is deserializd from Spark´s native binary format to pass to the UDF, and the results are serialized back into Spark´s native format.  
+- For Python UDF´s additional interprocess communication overhead between the executor and a Python interpreter running on each worked node.  
 
-- Can´t be optimized by Catalyst Optimizer
-- Function is serialized ans sent to executors
-- Row data is deserializd from Spark´s native binary format to pass to the UDF, and the results are serialized back into Spark´s native format.
-- For Python UDF´s additional interprocess communication overhead between the executor and a Python interpreter running on each worked node.
 
-
+**Python-functions**
 
 ```
-
-#Python function
-
 def first_letter_function(email):
     return email[0]
 
 first_letter_function("annagray@kaufman.com")
-
 ```
-create apply UDF, register the function as a UDF. This serializes the function and sends it to executors to be able to transofrm DataFrame records.
+
+Create apply UDF, register the function as a UDF. This serializes the function and sends it to executors to be able to transofrm DataFrame records.
+
 
 `first_letter_udf = udf(first_letter_function)`
 
@@ -553,11 +552,8 @@ So once you create a UDF functions you would pass from a Python function to a Py
 
 
 ```
-
 from pyspark.sql.functions import col
-
 display(sales_df.select(first_letter_udf(col("email"))))
-
 ```
 
 **How to make a Register UDF function availabe in SQL ?**
@@ -567,23 +563,22 @@ Using `spark.udf.register`
 
 ```
 sales_df.createOrReplaceTempView("sales")
-
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
-
 display(sales_df.select(first_letter_udf(col("email"))))
-
 ```
 
-#### UDF with decoratos
+**UDF with decoratos**
 
 ```
-
 @udf("string")
 def first_letter_udf_decorator(email: str) -> str:
     return email[0]
-	
-	
 ```
+**Pandas UDF**  
+Are special types of UDFs that use the power of the ``pandas`` library withing a Spark DataFrame operation, Here are the advantages of using `pandas UDFs` over normal UDFs:
+
+*1) **Performance** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
+*2)
 
 
 **Apache Arrow**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serializationcosts
