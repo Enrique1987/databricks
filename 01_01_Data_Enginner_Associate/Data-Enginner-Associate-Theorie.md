@@ -577,7 +577,7 @@ def first_letter_udf_decorator(email: str) -> str:
 **Pandas UDF**  
 Are special types of UDFs that use the power of the ``pandas`` library withing a Spark DataFrame operation, Here are the advantages of using `pandas UDFs` over normal UDFs:
 
-+1) **Performance** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
++ 1) **Performance** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
 
 * 2)
 
