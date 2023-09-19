@@ -277,7 +277,6 @@ display(dedupedDF
 ### Advanced Transformations
 
 ```
-
 # function to make shallow clone table.
 
 def clone_source_table(table_name, source_path, source_name=None):
@@ -290,25 +289,27 @@ def clone_source_table(table_name, source_path, source_name=None):
         CREATE OR REPLACE TABLE {table_name}
         SHALLOW CLONE delta.`{source_path}/{source_name}`
         """)
-		
+```
+
+```		
 data_path_2_5 = "dbfs:/mnt/my_path/"	
 clone_source_table("sales", f"{data_path_2_5}/ecommerce/delta", "sales_hist")
+```
 
-
+```
 df = spark.table("events_raw")
 for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
-
 ```
 
 #### Work with Nested Data
 
 **Note**: Spark SQL has a built-in functionality to directly interact with nested data stored as JSON string or struct types
 
-Use `:` syntax in queries to access subfiels in JSON strings
-Use `.` syntax in queries to access subfiesl in struct types
-`schema_of_json()` returns the schema derived from an example JSON string.
-`from_json()` parses a column containing a JSON string into a struct type using the specified schema.
+Use `:` syntax in queries to access subfiels in JSON strings  
+Use `.` syntax in queries to access subfiesl in struct types  
+`schema_of_json()` returns the schema derived from an example JSON string.  
+`from_json()` parses a column containing a JSON string into a struct type using the specified schema.  
 
 Let's use the JSON string example above to derive the schema, then parse the entire JSON column into struct types.
 
@@ -345,12 +346,12 @@ display(parsed_eventsDF)
 
 **Use of `:` SQL**
 
-**SQL** 
+**SQL**   
 ```
 SELECT * FROM events_strings WHERE value:event_name = "finalize" ORDER BY key LIMIT 1
 ```
 
-**Use of `:` Python**
+**Use of `:` Python**  
 
 ```
 display(events_stringsDF
