@@ -1,7 +1,7 @@
 
 # Databricks Theorie for Data Engineer Associate.
 
-The theory consists of both theoretical concepts and the corresponding code.
+The theory consists of both theoretical concepts and the corresponding code. Both will be ask in the Exam.
 
 ## Data Lakehouse
 
@@ -12,20 +12,19 @@ This hybrid approach aims to support a wide range of use cases, from big data pr
 
 **Challenges in the Data Lakehouse:** 
 
-Large scale ETL is complex and brittle
+	- Large scale ETL is complex and brittle
 
-**complex pipeline development:** 
-	 - Hard to build and maintain table depencencies´
-	 - Difficult to switch between `batch` and `stream`   
+**complex pipeline development:**  
+	 - Hard to build and maintain table depencencies´  
+	 - Difficult to switch between `batch` and `stream`    
 	 
-**Data quality and governance** 
-    - Difficult to monitor and enfornce `data quality`
-	- Impossible to trace data lineage
+**Data quality and governance**   
+    - Difficult to monitor and enfornce `data quality`  
+	- Impossible to trace data lineage  
 
-
-**Difficult pipeline operations** 
-	- Poor ´observability´ at granual data levels
-	- Error handling and `recovery is laborious`
+**Difficult pipeline operations**   
+	- Poor ´observability´ at granual data levels  
+	- Error handling and `recovery is laborious`  
 	
 
 
