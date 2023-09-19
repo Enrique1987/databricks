@@ -10,20 +10,20 @@ to handle large volumes of raw, detailed data, alongside the strutured querying 
 This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
 
 
-** Challenges in the Data Lakehouse:**  
+**Challenges in the Data Lakehouse:** 
 
 Large scale ETL is complex and brittle
 
-**complex pipeline development:**  
+**complex pipeline development:** 
 	 - Hard to build and maintain table depencencies´
 	 - Difficult to switch between `batch` and `stream`   
 	 
-**Data quality and governance**  
+**Data quality and governance** 
     - Difficult to monitor and enfornce `data quality`
 	- Impossible to trace data lineage
 
 
-**Difficult pipeline operations**  
+**Difficult pipeline operations** 
 	- Poor ´observability´ at granual data levels
 	- Error handling and `recovery is laborious`
 	
@@ -343,7 +343,7 @@ display(parsed_eventsDF)
 
 **Use of `:` SQL**
 
-**SQL**  
+**SQL** 
 ```
 SELECT * FROM events_strings WHERE value:event_name = "finalize" ORDER BY key LIMIT 1
 ```
@@ -390,7 +390,7 @@ display(exploded_eventsDF.where(size("items") > 2))
 `flatten()` combines multiple arrays into a single array.  
 `array_distinct()` removes duplicate elements from an array.  
 
-**SQL**  
+**SQL** 
 ```
 SELECT user_id,
   collect_set(event_name) AS event_history,
@@ -501,9 +501,9 @@ display(transactionsDF)
 SQL user-defined functions:
  - Persist between execution environments  
  - Exist as objects in the metastore and are governed by the same Table ACLs as databases, tables or views.  
- - Require **USAGE** and **SELECT** permision to use the SQL UDF  
+ - Require **USAGE**and **SELECT**permision to use the SQL UDF  
  - These functions are registered natively in SQL and maintain all of the optimizations of Spark when applying custom logic to large datasets. 
- - We can use **DESCRIBE FUNCTION** to see where a function was registerd and basic information about expected inputs and what is returned  
+ - We can use **DESCRIBE FUNCTION**to see where a function was registerd and basic information about expected inputs and what is returned  
 
 `DESCRIBE FUNCTIONS EXTENDED sale_announcement`
 
@@ -602,10 +602,10 @@ We can alsro register Pandas UDF to the SQL namespaces
 
 ### Higher Oder Functions in Sapark SQL
 
-- **`FILTER()`** filters an array using the given lambda function.
-- **`EXIST()`** tests whether a statement is true for one or more elements in an array. 
-- **`TRANSFORM()`** uses the given lambda function to transform all elements in an array.
-- **`REDUCE()`** takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.
+- **`FILTER()`**filters an array using the given lambda function.
+- **`EXIST()`**tests whether a statement is true for one or more elements in an array. 
+- **`TRANSFORM()`**uses the given lambda function to transform all elements in an array.
+- **`REDUCE()`**takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.
 
 ```
 
@@ -650,7 +650,7 @@ Inside the **THEN**
 
 **THEN DELETE**
 
-**THEN INSERT** * 
+**THEN INSERT*** 
 
 **SQL**
 
@@ -798,7 +798,7 @@ WHEN NOT MATCHED AND b.delicious = true THEN
 #### VACUUM 
 Perfoms garbage cleanup on the table directoy. By default, a retention threshold of 7 days will be enforced
 
-**DRY RUN** allows you to see which files would be deleted by the VACUUM operation without actually deleting them. Its essentially a way to preview the effects of the VACUUM operation
+**DRY RUN**allows you to see which files would be deleted by the VACUUM operation without actually deleting them. Its essentially a way to preview the effects of the VACUUM operation
 
 
 ```
@@ -811,7 +811,7 @@ VACUUM beans RETAIN 0 HOURS DRY RUN
 ```
 
 
-**`CREATE TABLE AS SELECT(CTAS)`** statements create and populate Delta tables using data retrieved from an input query.
+**`CREATE TABLE AS SELECT(CTAS)`**statements create and populate Delta tables using data retrieved from an input query.
 
 ```
 CREATE OR REPLACE TABLE purchases AS
@@ -881,8 +881,8 @@ SELECT * FROM users_pii limit 2;
 
 #### Deep Clone vs Shallow Clone
 
-**Deep Clone** Full metadata and data copie from source table.
-**Shallow clone** create a copy of table quickly to test out applying changes without the risk of modifying the current table.
+**Deep Clone**Full metadata and data copie from source table.
+**Shallow clone**create a copy of table quickly to test out applying changes without the risk of modifying the current table.
 
 ```
 %sql
@@ -891,30 +891,30 @@ DEEP CLONE purchases
 ```
 
 
-**COPY INTO** Provides SQL engineers and idempotent option to incrementally ingest data form external systems.
+**COPY INTO**Provides SQL engineers and idempotent option to incrementally ingest data form external systems.
 
 
 ## Incremental Data Processing.
 
 ### Theorie
 
-**DLT vs Stream DLT vs DT** 
+**DLT vs Stream DLT vs DT**
 
 `DLT`: are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
 `DT`: Less frequent batch updates.  
 `Stream DLT`: enables real-time.
 
-**DLT and Notebook** When you query a DLT in y notebook that is not attached toa DLT pipeline you are querying the table as its is at that moment, no the live 
+**DLT and Notebook**When you query a DLT in y notebook that is not attached toa DLT pipeline you are querying the table as its is at that moment, no the live 
 streaming version. DLT is not intended for interactive execution ina notebook.
 
-**How much time could preserve the data the DLT ?** 
+**How much time could preserve the data the DLT ?**
 Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
 But... retention perios matter, if every change is retained idenfinitely you storage usage would grow rapidly, especially in active dataset with frequent modification. 
 Thats why Delta Lake allows you to set a retention prediod for how long to keep old versionof th data.
 
 
 
-**Auto Loader** 
+**Auto Loader**
 - When you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.  
 -Auto Loader incrementally ingests new data files in batches. 
@@ -941,11 +941,11 @@ spark.readStream
 ´´´
 
 
-**Metastore**  
+**Metastore** 
 Metastore keeps track of all the table metadata, like the schema and the location of the data. When you create a table in Delta Lake or DAtabricks, the details bout the table,
 including where its data is stored, are saved in the metastored.
 
-**Table directory**  
+**Table directory** 
 In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
 where the data is stored. Referring to: Location, Physical Files, Metadata and Logs. For example consider a Delta Lake table saved in a Azure Data Lake Storage(ADLS).
 The table directory could be a path like `abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/` whithn this directory, you´d find 
@@ -957,16 +957,16 @@ view the contents of the table directory. Are desing to capure various acxtiviti
 
 **Checkpointing directory**Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
 
-**What DAG primarily does?** 
+**What DAG primarily does?**
 DAG visualizes the sequence and dependencies of taks. There you can go to the Pipeline Details page and click on the individual tables.  
 
 **Task Details**Typically provide information about the task´s execution, status, duration.	
 
-**Workflow vs Pipeline**   
+**Workflow vs Pipeline**  
 Task orchestration = Workflow  
 Data transofrmation and movement (pipeline)
 
-**Flow Definition**  
+**Flow Definition** 
 In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL.
 In visual tools like Azure Data Factory, Apache NiFi, or Talend, the flow definition might be represented visually as a flowchart or diagram where you can see
 how different data sources, transformations, and destinations (sinks) are connected. By examining this visual representation, 
@@ -977,13 +977,13 @@ Python transformations, or other code snippets. For example, seeing a sequence o
 
 **Workflow orchestration patterns.**
 
-- **Fan-out Pattern:** A single task or job is followed by multiple tasks that can be executed in parallel  
-- **Funnel Pattern** Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
-- **Hourglas Pattern** Combine Fan-out and Funnel
-- **Sequence Pattern** Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
-- **Multi-sequence Pattern** Multi sequences of task that can run in parallel with each other.
+- **Fan-out Pattern:**A single task or job is followed by multiple tasks that can be executed in parallel  
+- **Funnel Pattern**Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
+- **Hourglas Pattern**Combine Fan-out and Funnel
+- **Sequence Pattern**Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+- **Multi-sequence Pattern**Multi sequences of task that can run in parallel with each other.
 
-**Medallon Architecture**    `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
+**Medallon Architecture**   `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
 
 - **Bronze**
 - **Silver**
@@ -1001,15 +1001,15 @@ parquet, Avro, CSV, JSON, etc...
 #### Delta Live Tables come to action
 
 **Agility**: Build batch and streaming data pipelines.
-**Trust your data** Quality controls with expectations and actions to take
-**Scale with reliability** Easy scale.
+**Trust your data**Quality controls with expectations and actions to take
+**Scale with reliability**Easy scale.
 
 
 ### Delta Live Tables
 
 #### DAG
 - execution flow is graphed
-- The results are reported in the **Data Quality** section
+- The results are reported in the **Data Quality**section
 - With each triggered update, all newly arriving data will be processed through your pipeline. Metrics will always be reported for current run.
 
 ```
@@ -1082,7 +1082,7 @@ GROUP BY row_expectations.dataset, row_expectations.name
 
 ### Creating and Governing Data with UC
 
-**Unity Catalog´s** three-level namespace
+**Unity Catalog´s**three-level namespace
 `SELECT * FROM mycatalog.myschema.mytable;`
 
 This can be handy in many use cases.
@@ -1403,7 +1403,7 @@ FROM customers
 
 ```
 
-**schema_of_json** We cann add a example of how your json-data look likes and it would parsche the schema.
+**schema_of_json**We cann add a example of how your json-data look likes and it would parsche the schema.
 
 ```
 CREATE OR REPLACE TEMP VIEW parsed_customers AS
@@ -1493,7 +1493,7 @@ FROM customers
 ## Incremental Data Processing
 
 
-**Introduction**  
+**Introduction** 
 
 In previous chapters we have about ELT operations, ETL is more for DWH
 ELT for Data Lake, but both have a sense of Batch processing.
@@ -1503,9 +1503,9 @@ To process streaming data (close to real time) we need some new structures
 
 `Process streaming data`: DataStreamReader + DataStreamWriter  
 
-**Data Stream:** Any data source that grows over time, new files landing in cloud, updates to a databae capture in a CDC feed, Events queued in a pub/sub messaging feed.
+**Data Stream:**Any data source that grows over time, new files landing in cloud, updates to a databae capture in a CDC feed, Events queued in a pub/sub messaging feed.
 
-**Approaches** Reprocess the entire source dataset etach tieme vs only process those new data added since last update.
+**Approaches**Reprocess the entire source dataset etach tieme vs only process those new data added since last update.
 
 
 
@@ -1676,10 +1676,10 @@ Change Data Capture
 
 **Row-Level changes**: Inserring new records, Updating existing records, Deleting existing records
 
-**Batch**  
+**Batch** 
 `Table`: For Batch processing
 
-**Streaming**  
+**Streaming** 
 `Live Table`: Allways updated, as alive and consuming resources, properly for streaming data, a live table may be entirely computed when possible to optimized.  
 `Streamling live tables` : Processes data  that has been added only since the last pipeline update.
 ```
@@ -1868,12 +1868,12 @@ An e-commerce platform wants to maintain an up-to-date inventory of products. Th
 
 **Why a Live Table?:**
 
-**Frequent Updates:** Stock levels can be influenced by a multitude of factors such as sales, returns, and new shipments.
-**Query Definition Updates:** Sometimes the e-commerce platform might want to change the logic of how it calculates available inventory.
+**Frequent Updates:**Stock levels can be influenced by a multitude of factors such as sales, returns, and new shipments.
+**Query Definition Updates:**Sometimes the e-commerce platform might want to change the logic of how it calculates available inventory.
 For instance, they might decide to keep a buffer stock and not show it to customers. 
 With a live table, any change in the logic will be reflected in the table without the need for manual adjustments.
 
-**Instant Reflection:** If there's an error or update in the source data (maybe a returned item was mistakenly marked as 'damaged' when it wasn't), correcting this in the source will instantly reflect in the live table.
+**Instant Reflection:**If there's an error or update in the source data (maybe a returned item was mistakenly marked as 'damaged' when it wasn't), correcting this in the source will instantly reflect in the live table.
 
 
 **Streaming Live Table Example: Social Media Trend Analysis**
@@ -1885,11 +1885,11 @@ A social media platform wants to detect trending hashtags in real-time to showca
 
 Continuous Data Ingestion: New posts, comments, and hashtags are continuously being created. The platform doesn't need to know about every hashtag ever used, just the ones
 trending right now.  
-**Stateful Processing:** If the definition of "trending" changes (e.g., from "most hashtags in the last hour" to "most hashtags in the last 30 minutes with at least
+**Stateful Processing:**If the definition of "trending" changes (e.g., from "most hashtags in the last hour" to "most hashtags in the last 30 minutes with at least
 1,000 unique users using it"), the streaming live table will process new data based on this new logic. 
 The historical data doesn't need recomputation because the platform is only interested in what's trending now.
 
-**Efficiency:** Instead of recalculating trends from all historical data every time, 
+**Efficiency:**Instead of recalculating trends from all historical data every time, 
 the system only focuses on the new data. This is both resource-efficient and ensures real-time results.
 
 
@@ -1914,7 +1914,7 @@ Provides: - manage dependencies
 #### What are the differences between development and producdtion in DLT, what are teh best practices ?
 
 Development Mode: 
-			- re-use **long-running cluster** running for **fast iteration**
+			- re-use **long-running cluster**running for **fast iteration**
             - No retries on errorrs enabling faster debugging
 Production mode:
 			Cuts costs by turning off clusters as soon as they are done
@@ -1955,9 +1955,9 @@ The records that violate expectations you can "Track", "Drop", "Abort"
 
 Event Log automatically records all pipelines operations.
 
-**Operational Statistics:** Time and current status, for all operations, Pipeline and cluster configurations, Row counts  
-**Provenance:** Table and schema definitions and declared properties, Table-level lineage, Query plans 
-**Data Quality:** Expectation pass/failure /drop statistics 
+**Operational Statistics:**Time and current status, for all operations, Pipeline and cluster configurations, Row counts  
+**Provenance:**Table and schema definitions and declared properties, Table-level lineage, Query plans 
+**Data Quality:**Expectation pass/failure /drop statistics 
 
 #### What does STREAM ?
 
@@ -1972,9 +1972,9 @@ Instead of treating it as a static batch of data, Databricks will continuously m
 
 refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
 
-**Best Practices** DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`
-**Physical Data** DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize 
-**Schema Evolution** Schema evolution is handle for owner
+**Best Practices**DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`
+**Physical Data**DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize 
+**Schema Evolution**Schema evolution is handle for owner
 
 #### CDC Change data capture  in DLT
 
@@ -2019,17 +2019,17 @@ In order to ensure only good data makes it into our silver table, we'll write a 
 We'll break down each of these constraints below:
 
  **`valid_id`**
-This constraint will cause our transaction to fail if a record contains a null value in the **`customer_id`** field.
+This constraint will cause our transaction to fail if a record contains a null value in the **`customer_id`**field.
 
 ##### **`valid_operation`**
-This contraint will drop any records that contain a null value in the **`operation`** field.
+This contraint will drop any records that contain a null value in the **`operation`**field.
 
 ##### **`valid_address`**
-This constraint checks if the **`operation`** field is **`DELETE`**; if not, it checks for null values in any of the 4 fields comprising an address. Because there is no additional instruction for what to do with invalid records, violating rows will be recorded in metrics but not dropped.
+This constraint checks if the **`operation`**field is **`DELETE`**; if not, it checks for null values in any of the 4 fields comprising an address. Because there is no additional instruction for what to do with invalid records, violating rows will be recorded in metrics but not dropped.
 
 ##### **`valid_email`**
-This constraint uses regex pattern matching to check that the value in the **`email`** field is a valid email address. It contains logic to not apply this to records if 
-the **`operation`** field is **`DELETE`** (because these will have a null value for the **`email`** field). Violating records are dropped.
+This constraint uses regex pattern matching to check that the value in the **`email`**field is a valid email address. It contains logic to not apply this to records if 
+the **`operation`**field is **`DELETE`**(because these will have a null value for the **`email`**field). Violating records are dropped.
 
 
 ```
@@ -2105,8 +2105,8 @@ example: `GRANT SELECT ON TABLE my_table TO user@mycopany.com`
 
 Granting Privileges by Role
 
-**Databricks administgrator** All objects in the catalog and the underlying filesystem.  
-**Catalog owner** : All objects in the catalog.
+**Databricks administgrator**All objects in the catalog and the underlying filesystem.  
+**Catalog owner**: All objects in the catalog.
 **Database owner**: All objects in the database.
 **Table owner**: Only the table.
 
@@ -2125,20 +2125,20 @@ Granting Privileges by Role
 &nbsp;&nbsp;&nbsp;&nbsp;**Downstream**refers where the data go ather being processed or transformed.  
 
 
-**Challenges in the Data Lake** 
+**Challenges in the Data Lake**
 &nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls   
 &nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer  
 &nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model  
 &nbsp;&nbsp;&nbsp;&nbsp;Hard to audit  
 &nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.  
 
-**Unity Catalog** 
+**Unity Catalog**
 &nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.    
 &nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.   
 &nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.  
 
 
-**Key Concepts** 
+**Key Concepts**
 &nbsp;&nbsp;&nbsp;&nbsp;**Metastore elements**![](img/Metastore_Elements.PNG)  
 &nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;**Three-level Namespace**![](img/Three_Level_Namespace.PNG)  
@@ -2178,7 +2178,7 @@ Granting Privileges by Role
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Changes ownership of owned objects  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Workspace Administrator** Administer a workspace  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workspace Administrator**Administer a workspace  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Manage permissions on workspace assets  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Restricts access to cluster creation  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Add or remove users  
@@ -2189,22 +2189,22 @@ Granting Privileges by Role
 
 **Identities**
 
-&nbsp;&nbsp;&nbsp;**User** 
-&nbsp;&nbsp;&nbsp;**Account administrator** 
-&nbsp;&nbsp;&nbsp;**Service Principal + Service Principal with administrative privileges** 
-&nbsp;&nbsp;&nbsp;**Groups**  analyst, developers  
+&nbsp;&nbsp;&nbsp;**User**
+&nbsp;&nbsp;&nbsp;**Account administrator**
+&nbsp;&nbsp;&nbsp;**Service Principal + Service Principal with administrative privileges**
+&nbsp;&nbsp;&nbsp;**Groups** analyst, developers  
 
-**Security Model**  
+**Security Model** 
 ![](img/Security_Model.PNG)  
 
 
-**Cluter Security Model**  
+**Cluter Security Model** 
 ![](img/Cluster_Security_Model.PNG)  
 
-**Matrix Security Model**  
+**Matrix Security Model** 
 ![](img/Matrix_Security_Model.PNG)  
 
-**Security Model Principals Privileges Securables**  
+**Security Model Principals Privileges Securables** 
 ![](img/Principals_Privileges_Securables_Security_Model.PNG)
 
 **Dynamic Views**
