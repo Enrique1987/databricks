@@ -1,6 +1,8 @@
 
 # Databricks Theorie for Data Engineer Associate.
 
+The theory consists of both theoretical concepts and the corresponding code.
+
 ## Datalake Hause
 
 
@@ -1993,30 +1995,114 @@ Granting Privileges by Role
 catalog --> Schema(database) -->(Table, View, Function)
 
 
-#### Unity Catalog
+## Unity Catalog
 
-Centralized governance solution across all your workspace on any cloud.
+## Data Access Control and Unity Catalog
+------------------------------------------------------
 
-Unify governance for all data and AI assets
+### Theorie
 
-- files, tables, machine learning models and dashboards
-
-
-**UC hiearchy**
-
-UC Metastore --> catalog --> Schema(database) -->(Table, View, Function)
-
-
-**Identities for UC:**
-
-Users: Identified by emal-address, can have a admin roll  
-
-Service PRinciples: Identified by Application IDs, for tools and applications
-
-Groups: grouping Users and Service Principles
+**Unity Catalog**: Centralized and managed metastore that provides a unified way to manage, discover and govern data across multiple workspaces.  
+**Data Access Control**: Control who has access to which data.  
+**Data Access Audit**: Capture and record all access to data.  
+**Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.   
+&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources**refers to the origins of datga ow where data comes from.    
+&nbsp;&nbsp;&nbsp;&nbsp;**Downstream**refers where the data go ather being processed or transformed.  
 
 
-**Identity federation** 
+**Challenges in the Data Lake** 
+&nbsp;&nbsp;&nbsp;&nbsp;No fine-grained access controls   
+&nbsp;&nbsp;&nbsp;&nbsp;No common metadata layer  
+&nbsp;&nbsp;&nbsp;&nbsp;Non-standar cloud-specific governance model  
+&nbsp;&nbsp;&nbsp;&nbsp;Hard to audit  
+&nbsp;&nbsp;&nbsp;&nbsp;No common governance model for different data asset types.  
+
+**Unity Catalog** 
+&nbsp;&nbsp;&nbsp;&nbsp;Unify governance across clouds --> Fine-grained governance for data lakes across clouds - based on open standard ANSI SQL.    
+&nbsp;&nbsp;&nbsp;&nbsp;Unify data and AI assets --> Centrally share, audit, secure and manage all data types with one simple interface.   
+&nbsp;&nbsp;&nbsp;&nbsp;Unify existing catalogs --> Works in concert with existing data, storage and catalogs - no hard migration required.  
+
+
+**Key Concepts** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Metastore elements**![](img/Metastore_Elements.PNG)  
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;**Three-level Namespace**![](img/Three_Level_Namespace.PNG)  
+&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;**Before and after unity Catalog**![](img/Before_After_Unity_Catalog.PNG)  
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+
+
+**Unity Catalog Roles**
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Cloud Administrator**Administer underlying cloud resources   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Storage accounts/buckets   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- role/service Principals/Managed Identities.     
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Identity Administrator**Administer underlying identity   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Identity provider provision users and groups into the account  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Avoids need to manually create and manage identities  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Account Administrator**Administer the account  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates, deletes and assigns metastores to workspaces  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates, deletes and assigns users and groups to workspaces  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Integrates account with an identity provider  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Full access to all data objects  
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Metastore Administrator**Administer the metastore    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates and drops catalogs and other data objects  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Grant privileges on data objects  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Changes ownership of data objects  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Designated by an account administrator  
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Data Owner**Owns data objects they created  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Creates nested objects  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Grant privileges to others on owned objects  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Changes ownership of owned objects  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;**Workspace Administrator** Administer a workspace  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Manage permissions on workspace assets  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Restricts access to cluster creation  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Add or remove users  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Elevate users permissions  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Grant privileges to others  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Change job ownership  
+
+
+**Identities**
+
+&nbsp;&nbsp;&nbsp;**User** 
+&nbsp;&nbsp;&nbsp;**Account administrator** 
+&nbsp;&nbsp;&nbsp;**Service Principal + Service Principal with administrative privileges** 
+&nbsp;&nbsp;&nbsp;**Groups**  analyst, developers  
+
+**Security Model**  
+![](img/Security_Model.PNG)  
+
+
+**Cluter Security Model**  
+![](img/Cluster_Security_Model.PNG)  
+
+**Matrix Security Model**  
+![](img/Matrix_Security_Model.PNG)  
+
+**Security Model Principals Privileges Securables**  
+![](img/Principals_Privileges_Securables_Security_Model.PNG)
+
+**Dynamic Views**
+![](img/Dynamic_Views.PNG)
+
+
+**Storage Credentials and External Locations**
+
+![](img/Credentials_External_Locations.PNG)
+
+**Identity Federation**Typically means integrating an exernal identitiy provider to allow for a single source of truth for user identities and a more streamline authentication process.
+
+**Delta Sharing**Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
 
 
 
