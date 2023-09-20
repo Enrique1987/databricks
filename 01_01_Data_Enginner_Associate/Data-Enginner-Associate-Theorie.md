@@ -673,6 +673,7 @@ RESTORE TABLE students TO VERSION AS OF 8
 The Idea here is that when we have a error in a SQL command there is not a way to just continue as we can do in Python, so my Idea is 
 take the advantages of "try", "except" of Python and combine it with the SQL code that I wanted to insert.
 
+```
 # that would fail --> cause drop doesnt admit Rollback
 queries_fail1 = [
     "DROP TABLE students;",
@@ -740,9 +741,9 @@ ALTER TABLE purchase_dates ADD CONSTRAINT valid_date CHECK (date > '2020-01-01')
 DESCRIBE EXTENDED purchase_dates; -- show in TBLPROPERTIES
 ```
 
-**Enrich Tables wit Additiona Info**  
-- Using **current_timestamp()**  
-- **Input_file_name()**  
+**Enrich Tables wit Additiona Info**    
+- Using **current_timestamp()**    
+- **Input_file_name()**    
 
 
 ```
@@ -759,7 +760,6 @@ AS
   
 SELECT * FROM users_pii limit 2;
 ```
-
 **Deep Clone vs Shallow Clone**
 
 **Deep Clone** Full metadata and data copie FROM source table.  
