@@ -3665,4 +3665,7 @@ The DLT pipeline executes in Triggered Pipeline mode under Production mode.
 
 ```
 
+**What kind of SCD is taking of Apply Changes into**
+
+APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
 

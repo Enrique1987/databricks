@@ -67,7 +67,6 @@ display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 
 
 ```
-
 CREATE OR REPLACE VIEW event_view
 AS SELECT * FROM json.`dbfs:/mnt/my_path/`
 
@@ -80,6 +79,15 @@ SELECT * FROM binaryFile.`dbfs:/mnt/my_path/`
 
 SELECT * FROM csv.`dbfs:/mnt/my_path/`
 
+```
+**3 different ways to query FROM a Directory**
+
+```
+SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json` 
+UNION ALL
+SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json` 
+UNION ALL
+SELECT * FROM json.`${dataset.bookstore}/customers-json/` 
 ```
 
 ### External Tables - Providing Options for External Sources
@@ -742,6 +750,8 @@ ALTER TABLE purchase_dates ADD CONSTRAINT valid_date CHECK (date > '2020-01-01')
 DESCRIBE EXTENDED purchase_dates; -- show in TBLPROPERTIES
 ```
 
+
+
 **Enrich Tables wit Additiona Info**    
 - Using **current_timestamp()**    
 - **Input_file_name()**    
@@ -772,12 +782,18 @@ DEEP CLONE purchases
 ```
 
 
-**COPY INTO**Provides SQL engineers and idempotent option to incrementally ingest data form external systems.
+
 
 
 ## Incremental Data Processing.
 
-### Theorie
+**Introduction** 
+
+In previous chapters we have about ELT operations, ETL is more for DWH
+ELT for Data Lake, but both have a sense of Batch processing.
+To process streaming data (close to real time) we need some new structures  
+
+### 
 
 **DLT vs Stream DLT vs DT**
 
@@ -785,7 +801,7 @@ DEEP CLONE purchases
 `DT`: Less frequent batch updates.  
 `Stream DLT`: enables real-time.
 
-**DLT and Notebook**When you query a DLT in y notebook that is not attached toa DLT pipeline you are querying the table as its is at that moment, no the live 
+**DLT and Notebook** When you query a DLT in y notebook that is not attached toa DLT pipeline you are querying the table as its is at that moment, no the live 
 streaming version. DLT is not intended for interactive execution ina notebook.
 
 **How much time could preserve the data the DLT ?**
@@ -808,7 +824,6 @@ Auto Loader will automatically pick up an process just the new data as it arrive
 .option("cloudFiles.schemaLocation", schemaLocation)
 .load(sourcePath))
 ```
-
 ´´´
 spark.readStream
         .format("cloudFiles")
@@ -820,6 +835,219 @@ spark.readStream
         .table("orders_updates")
 )
 ´´´
+
+**COPY INTO** Provides SQL engineers and idempotent option to incrementally ingest data form external systems.  
+
+**COPY INTO vs Auto Loader**  
+
+**copy into**: Thousand of files, less efficient at scale  
+**Auto Loader**: Millions of Files, efficient at scale.  --> its always active and lisening so obviously would cost much more money
+
+### Tiggers
+
+**Fixed Interval Micro-batches**
+
+`(.trigger(Trigger.ProcessingTime(interval)))`
+
+- This option allows you to process the data at fixed time intervals, regardless of when the data arrived.  
+- Interval could be a string like "1 minute" or a duration in milliseconds.  
+- Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.  
+
+```
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.ProcessingTime("1 minute"))
+.table("output_table"))
+```
+
+**Once Trigger**
+
+`(.trigger(Trigger.Once()))`
+
+- Processes the available data in the stream just once and then stops the query.  
+- Use Case: When you have a backlog of data and you want to process it once to bring your output table up to date.  
+
+```
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.Once())
+.table("output_table"))
+```
+
+
+**Continuous Processing**
+
+`.trigger(Trigger.Continuous(interval)))`
+
+- This option will continuously process the data with a low-latency.
+- Interval specifies the checkpoint interval.  
+- Note: Continuous processing is an experimental feature and has some limitations.
+- Use Case: When low-latency is more important than throughput and you need near real-time processing.
+
+```
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.Continuous("1 second"))  # e.g., checkpoint every second
+.table("output_table"))
+```
+
+**Available Now (using trigger(availableNow=True))**
+
+This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.
+Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.
+
+```
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(availableNow=True)
+.table("output_table"))
+```
+### Medallon Architecture
+
+**Medallon Architecture**   `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
+
+`Bronze:` This is often the raw, unrefined layer. Data lands in the bronze layer as it arrives. It's the most granular form of the data and is often not suitable for direct
+querying due to inconsistencies, missing values, or its verbose nature. The "streaming live" designation means data is continuously streamed into this layer in real-time.
+
+`Silver:` This is the cleaned and enriched version of the bronze layer. It may undergo operations like filtering, formatting, joining with other datasets,
+or even some aggregations. Again, the "streaming live" designation means data FROM the bronze layer is being continuously processed and streamed into the silver layer in real-time.
+
+`Gold:` This layer is optimized for consumption, often by business users. It might contain aggregated data, pre-joined datasets, 
+or data reshaped into a specific format ideal for BI tools or final consumption. The data in this layer may not need to be updated in real-time, which is why it's a
+"live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches FROM the Silver layer, rather than as a continuous stream.
+It provides a snapshot that is updated less frequently, which might be preferable for some reporting or analysis tasks.
+
+```
+CREATE OR REFRESH STREAMING LIVE TABLE bronze_table
+AS SELECT * FROM cloud_files(some_path)
+							 
+-- Silver
+
+CREATE OR REFRESH STREAMING LIVE TABLE silver_table (
+AS
+  SELECT some_columns 
+  -- some new columns/transformations
+  FROM STREAM(LIVE.bronze_table) 
+
+-- gold
+CREATE OR REFRESH LIVE TABLE Gold_table
+
+AS
+  SELECT some_columns
+  -- some aggregations and 
+  FROM LIVE.silver_table
+```
+
+**Why does the gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)"?**  
+
+This aligns with the above explanation. The "Gold" layer doesn't necessarily operate on a real-time stream FROM the "Silver" layer.
+Instead, it might operate on periodic batches or snapshots FROM the "Silver" layer. By reading FROM "LIVE.silver_table", 
+it's essentially working with the current state of the "Silver" table. On the other hand, using "STREAM(LIVE.silver_table)"
+would imply real-time, continuous processing of the data FROM the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
+
+In summary, the distinction between "streaming live" and "live" and the choice of reading methods represents different stages of data refinement
+and the associated processing cadence.
+
+
+**Can a table that have been create as `CREATE OR REFRESH STREAMING LIVE TABLE silver_table` be later reference as LIVE.silver_table ?**
+
+Yes, once a STREAMING LIVE TABLE is created in Databricks, it acts like a Delta table with a continuously updating view of the data.
+The underlying data is stored in Delta format, and you can query it like any other table in Databricks using the LIVE keyword.
+
+The STREAM(LIVE.<table_name>)  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
+So:
+
+- When you declare a table using CREATE OR REFRESH STREAMING LIVE TABLE, it sets up a continuous ingestion process to keep updating that table with new data.
+- When you query this table using SELECT ... FROM LIVE.<table_name>, you're querying its current state, getting a snapshot of the table as it is at the time of the query.
+
+When you use the table in another streaming context with STREAM(LIVE.<table_name>), you're setting up another streaming operation on top of the continuously updating table.
+Therefore, even if a table is created as a STREAMING LIVE TABLE, you can indeed query it just like a LIVE table.
+
+
+
+**Scenario of Live Table and Stream Live Table**
+
+
+
+**STREAM Real-time Fraud Detection:**
+
+**Scenario:**  
+
+Imagine a bank that offers online banking services to its customers. With millions of transactions occurring every day,
+it's critical for the bank to quickly identify potentially fraudulent transactions to protect its customers.
+
+**Stream Table Use:**  
+- The bank sets up a streaming system where every transaction is instantly sent to a stream table. 
+- As each transaction comes in, it's analyzed in real-time against a set of rules or machine learning models to identify if it looks suspicious.  
+- If a transaction is deemed suspicious, an alert is generated, and the bank can take immediate action, such as blocking the transaction, notifying the customer,flagging it for further investigation.  
+
+**Why Not Batch Processing?**  
+If the bank used batch processing, they'd collect transactions over a set period (e.g., an hour or a day) and then analyze them all at once. 
+The problem with this approach in the fraud detection scenario is the delay.
+
+A fraudulent transaction might not be detected until the batch is processed, which could be hours after the transaction occurred. By that time:
+
+The fraudster may have already caused significant financial damage.  
+The actual customer may face inconvenience if, for example, their card is used elsewhere or they check their account and find unauthorized transactions.  
+The bank might face reputational damage and potential financial liabilities.
+  
+*Conclusion:*  
+For scenarios like fraud detection, where instant response is crucial, stream tables and real-time processing are essential. Batch processing, due to its inherent delay, would not be suitable for such time-sensitive applications.
+
+
+
+**Live Table Example: E-Commerce Inventory Management**  
+
+An e-commerce platform wants to maintain an up-to-date inventory of products. This inventory is affected by new stock arrivals, product returns, and products being sold.
+
+**Why a Live Table?:**
+
+- **Frequent Updates:** Stock levels can be influenced by a multitude of factors such as sales, returns, and new shipments.
+
+- **Query Definition Updates:**   Sometimes the e-commerce platform might want to change the logic of how it calculates available inventory.
+For instance, they might decide to keep a buffer stock and not show it to customers. 
+With a live table, any change in the logic will be reflected in the table without the need for manual adjustments.
+
+- **Instant Reflection:**  If there's an error or update in the source data (maybe a returned item was mistakenly marked as 'damaged' when it wasn't), correcting this in the source will instantly reflect in the live table.
+
+**How to use DLT** 
+
+- Declare in notebooks
+- Workflows in Delta Live Tables + start
+
+**What are the differences between development and producdtion in DLT, what are teh best practices ?**
+
+Development Mode: 
+- re-use  
+- long-running cluster  
+- running forfast iteration  
+- No retries on errorrs enabling faster debugging  
+
+Production mode:  
+- Cuts costs by turning off clusters as soon as they are done  
+- Escalating retries, including cluster restarts `ensure reliability`  
+
+**What is Automated Data Management ?
+
+refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
+
+**Best Practices**DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`  
+**Physical Data**DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize   
+**Schema Evolution**Schema evolution is handle for owner  
 
 
 **Metastore** 
@@ -864,12 +1092,7 @@ Python transformations, or other code snippets. For example, seeing a sequence o
 - **Sequence Pattern**Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
 - **Multi-sequence Pattern**Multi sequences of task that can run in parallel with each other.
 
-**Medallon Architecture**   `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
-
-- **Bronze**
-- **Silver**
-- **Gold**
-Silver tables enrich data by joining fields FROM bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.  
+  
 
 **Job Runs Page**: Provide a detailed overview of all the jobs executed, including those FROM DLT pipelines.
 Clicking on individual tables or task within a job run will providespecifics bout that task.
@@ -1172,15 +1395,7 @@ spark.conf.set(f"dataset.bookstore", dataset_bookstore)
 files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
 ```
 
-### 3 different ways to query FROM a Directory
 
-```
-SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json` 
-UNION ALL
-SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json` 
-UNION ALL
-SELECT * FROM json.`${dataset.bookstore}/customers-json/` 
-```
 
 ```
 
@@ -1210,8 +1425,6 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 
 ```
-%sql
-
 DROP TABLE IF EXISTS books_csv;
 
 CREATE TABLE  if not exists books_csv
@@ -1238,131 +1451,14 @@ SELECT count(*) FROM books_csv;
 		
 SELECT count(*) FROM books_csv; -- the same as previous
 
-%sql
+
 REFRESH TABLE books_csv;
 SELECT COUNT(*) FROM books_csv;  --> retrun the actual status, External data will need to be refreshed, that does not happend with Delta Tables.
-		
-		
-```
-
-
-**Writing to Tables
+``
 
 ```
-CREATE OR REPLACE TABLE orders AS
-SELECT * FROM parquet.`${dataset.bookstore}/orders`;
-
-INSERT OVERWRITE orders
-SELECT * FROM parquet.`${dataset.bookstore}/orders`;
-
-INSERT INTO orders
-SELECT * FROM parquet.`${dataset.bookstore}/orders-new`;
-
-DESCRIBE HISTORY orders;
-
-
-
-%sql
-CREATE OR REPLACE TEMP VIEW customers_updates AS 
-SELECT * FROM json.`${dataset.bookstore}/customers-json-new`;
-
-MERGE INTO customers c
-USING customers_updates u
-ON c.customer_id = u.customer_id
-WHEN MATCHED AND c.email IS NULL AND u.email IS NOT NULL THEN
-  UPDATE SET email = u.email, updated = u.updated
-WHEN NOT MATCHED THEN INSERT *
-
-
-
-%sql
-
--- we can use ":" as the Json formant of profile its not parsed, when is parsed then we have to use "."
-SELECT customer_id, profile:first_name, profile:address:country 
-FROM customers
-
-
-```
-
-**schema_of_json**We cann add a example of how your json-data look likes and it would parsche the schema.
-
-```
-CREATE OR REPLACE TEMP VIEW parsed_customers AS
-  SELECT customer_id, FROM_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
-  FROM customers;
-  
-SELECT * FROM parsed_customers limit 3;
-
-SELECT order_id, customer_id, explode(books) as book
-FROM orders  WHERE order_id = '000000000004243';
-
--- books look like {"book_id": "B07", "quantity": 1, "subtotal": 33}, {"book_id": "B06", "quantity": 1, "subtotal": 22}]
--- now  {"book_id": "B07", "quantity": 1, "subtotal": 33}
---      {"book_id": "B06", "quantity": 1, "subtotal": 22}
-
-%sql
-SELECT customer_id,
-  collect_set(order_id) AS orders_id_set
-FROM orders
-WHERE customer_id = "C00002"
-GROUP BY customer_id
-
-%sql
-
-SELECT customer_id,
-  collect_set(books.book_id) As before_flatten,
-  flatten(collect_set(books.book_id)) AS after_flatten,
-  array_distinct(flatten(collect_set(books.book_id))) AS after_flatten_distinct
-FROM orders
-WHERE customer_id = "C00002"
-GROUP BY customer_id ;
-
-%sql
-CREATE OR REPLACE VIEW orders_enriched AS
-SELECT *
-FROM (
-  SELECT *, explode(books) AS book 
-  FROM orders) o
-INNER JOIN books b  -- default join is "inner join"
-ON o.book.book_id = b.book_id;
-
-
-CREATE OR REPLACE TABLE transactions AS
-
-SELECT * FROM (
-  SELECT
-    customer_id,
-    book.book_id AS book_id,
-    book.quantity AS quantity
-  FROM orders_enriched
-) PIVOT (
-  sum(quantity) FOR book_id in (
-    'B01', 'B02', 'B03', 'B04', 'B05', 'B06',
-    'B07', 'B08', 'B09', 'B10', 'B11', 'B12'
-  )
-);
-
-SELECT * FROM transactions;
-
-
-%sql
-
-SELECT
-  order_id,
-  books,
-  books.subtotal[0] as subtotal_number,
- CAST(books.subtotal[0]* 0.8  AS INT) AS subtotal_after_discount,
- ARRAY(CAST(books.subtotal[0] * 0.8 AS INT)) AS subtotal_after_discount_array,
- TRANSFORM ( books, b -> CAST(b.subtotal * 0.8 AS INT)) AS subtotal_after_discount -- TRANSFORM is a kind of MAP funktion in python.
-
-FROM orders;
-
-
-%sql
-
 CREATE OR REPLACE FUNCTION get_url(email STRING)
 RETURNS STRING
-
 RETURN concat("https://www.", split(email, "@")[1]);
 
 -- In that case we cann apply the function directly without use TRANSFORM cause we have just one record in our  cell
@@ -1371,601 +1467,21 @@ FROM customers
 
 ```
 
-## Incremental Data Processing
 
 
-**Introduction** 
 
-In previous chapters we have about ELT operations, ETL is more for DWH
-ELT for Data Lake, but both have a sense of Batch processing.
 
-To process streaming data (close to real time) we need some new structures  
 
 
-`Process streaming data`: DataStreamReader + DataStreamWriter  
 
-**Data Stream:**Any data source that grows over time, new files landing in cloud, updates to a databae capture in a CDC feed, Events queued in a pub/sub messaging feed.
 
-**Approaches**Reprocess the entire source dataset etach tieme vs only process those new data added since last update.
 
 
 
 
-**COPY INTO vs Auto Loader
 
-**copy into**: Thousand of files, less efficient at scale  
-**Auto Loader**: Millions of Files, efficient at scale.  --> its always active and lisening so obviously would cost much more money
 
-**Multi-hop Architecture 
 
-Bronce --> Silver --> Gold
-
-```
-%sql
-
-(spark.readStream
-      .table("books")
-      .createOrReplaceTempView("books_streaming_tmp_vw")
-)
-
--- that temp view is a streaming temp view as its generate FROM a streaming view
-CREATE OR REPLACE TEMP VIEW author_counts_tmp_vw AS (
-  SELECT author, count(book_id) AS total_books
-  FROM books_streaming_tmp_vw
-  GROUP BY author
-)
--- we can write FROM a streaming temp view to a dataframe (author_counts), what will be running forevern every 4 secons
-(spark.table("author_counts_tmp_vw")                               
-      .writeStream  
-      .trigger(processingTime='4 seconds')
-      .outputMode("complete")
-      .option("checkpointLocation", "dbfs:/mnt/demo/author_counts_checkpoint")
-      .table("author_counts")
-)
-
--- If we insert data in our original table Books its will be move to author_counts
--- books --> have a Stream_table, the stream table check the origin every 4 seconds and write in destination.
-
-```
-
-**Auto Loader**
-
-Ading in format "cloudFiles" it already asume that we need a Auto Loader
-
-```
-
-%sql
-(spark.readStream
-        .format("cloudFiles")
-        .option("cloudFiles.format", "parquet")
-        .option("cloudFiles.schemaLocation", "dbfs:/mnt/demo/orders_checkpoint")
-        .load(f"{dataset_bookstore}/orders-raw")
-      .writeStream
-        .option("checkpointLocation", "dbfs:/mnt/demo/orders_checkpoint")
-        .table("orders_updates")
-)
-```
-
-**Medallon Architecture
-
-```
-%sql
-CREATE OR REPLACE TEMPORARY VIEW orders_enriched_tmp AS (
-  SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
-         cast(FROM_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, books
-  FROM orders_bronze_tmp o
-  INNER JOIN customers_lookup c
-  ON o.customer_id = c.customer_id
-  WHERE quantity > 0)
-  
-(spark.table("orders_enriched_tmp")
-      .writeStream
-      .format("delta")
-      .option("checkpointLocation", "dbfs:/mnt/demo/checkpoints/orders_silver")
-      .outputMode("append")
-      .table("orders_silver"))
-	  
-(spark.table("daily_customer_books_tmp")
-      .writeStream
-      .format("delta")
-      .outputMode("complete")
-      .option("checkpointLocation", "dbfs:/mnt/demo/checkpoints/daily_customer_books")
-      .trigger(availableNow=True)
-      .table("daily_customer_books"))
-	  
-```
-
-**Kind of Triggers
-
-**Fixed Interval Micro-batches (using trigger(Trigger.ProcessingTime(interval)))**
-
-This option allows you to process the data at fixed time intervals, regardless of when the data arrived.
-interval could be a string like "1 minute" or a duration in milliseconds.
-Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.
-
-```
-FROM pyspark.sql.streaming import Trigger
-
-(spark.table("your_table")
-.writeStream
-.format("delta")
-... # other configurations
-.trigger(Trigger.ProcessingTime("1 minute"))
-.table("output_table"))
-
-```
-
-**Once Trigger (using trigger(Trigger.Once()))**
-
-Processes the available data in the stream just once and then stops the query.  
-Use Case: When you have a backlog of data and you want to process it once to bring your output table up to date.  
-
-```
-FROM pyspark.sql.streaming import Trigger
-
-(spark.table("your_table")
-.writeStream
-.format("delta")
-... # other configurations
-.trigger(Trigger.Once())
-.table("output_table"))
-```
-
-
-**Continuous Processing (using trigger(Trigger.Continuous(interval)))**
-
-This option will continuously process the data with a low-latency.
-interval specifies the checkpoint interval.
-Note: Continuous processing is an experimental feature and has some limitations.
-Use Case: When low-latency is more important than throughput and you need near real-time processing.
-
-```
-FROM pyspark.sql.streaming import Trigger
-
-(spark.table("your_table")
-.writeStream
-.format("delta")
-... # other configurations
-.trigger(Trigger.Continuous("1 second"))  # e.g., checkpoint every second
-.table("output_table"))
-
-```
-
-
-
-**Available Now (using trigger(availableNow=True))**
-
-This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.
-Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.
-
-```
-(spark.table("your_table")
-.writeStream
-.format("delta")
-... # other configurations
-.trigger(availableNow=True)
-.table("output_table"))
-
-```
-
-## Production Pipelines
-
-
-#**CDC
-
-Change Data Capture
-
-**Row-Level changes**: Inserring new records, Updating existing records, Deleting existing records
-
-**Batch** 
-`Table`: For Batch processing
-
-**Streaming** 
-`Live Table`: Allways updated, as alive and consuming resources, properly for streaming data, a live table may be entirely computed when possible to optimized.  
-`Streamling live tables` : Processes data  that has been added only since the last pipeline update.
-```
-CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
-COMMENT "The raw books orders, ingested FROM orders-raw"
-AS SELECT * FROM cloud_files("${datasets_path}/orders-json-raw", "json",
-                             map("cloudFiles.inferColumnTypes", "true"))
-							 
--- Silver
-
-CREATE OR REFRESH STREAMING LIVE TABLE orders_cleaned (
-  CONSTRAINT valid_order_number EXPECT (order_id IS NOT NULL) ON VIOLATION DROP ROW
-)
-COMMENT "The cleaned books orders with valid order_id"
-AS
-  SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
-         cast(FROM_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, o.books,
-         c.profile:address:country as country
-  FROM STREAM(LIVE.orders_raw) o
-  LEFT JOIN LIVE.customers c
-    ON o.customer_id = c.customer_id
-	
-
-
--- Gold
-
-CREATE OR REFRESH LIVE TABLE cn_daily_customer_books
-COMMENT "Daily number of books per customer in China"
-AS
-  SELECT customer_id, f_name, l_name, date_trunc("DD", order_timestamp) order_date, sum(quantity) books_counts
-  FROM LIVE.orders_cleaned
-  WHERE country = "China"
-  GROUP BY customer_id, f_name, l_name, date_trunc("DD", order_timestamp)
-  
--- What I dont uderstand is 1) why the gold table is live and not Streaming live, 
--- 2 why when readin FROM silver table 
-  
-```
-
-User
-ok I will formulate my question again.
-
-I have a the following SparkSQL code
-
-CREATE OR REFRESH STREAMING LIVE TABLE bronze_table
-AS SELECT * FROM cloud_files(some_path)
-							 
--- Silver
-
-CREATE OR REFRESH STREAMING LIVE TABLE silver_table (
-AS
-  SELECT some_columns 
-        
-  FROM STREAM(LIVE.bronze_table) 
-
--- gold
-CREATE OR REFRESH LIVE TABLE Gold_table
-
-AS
-  SELECT some_columns
-  FROM LIVE.silver_table
-
-Apparently that pseudo code is correct but I do not understand 2 things
-
-+ 1) why bronze and silver tables are stream live and gold is just live
-+ 2) why gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)
-
-Answer
-
-
-**Why are bronze and silver tables "streaming live" and gold is just "live"?**
-
-The distinction typically aligns with the modern data architecture patterns, particularly the Delta Lake architecture. The pattern involves refining raw data in stages:
-
-`Bronze:` This is often the raw, unrefined layer. Data lands in the bronze layer as it arrives. It's the most granular form of the data and is often not suitable for direct
-querying due to inconsistencies, missing values, or its verbose nature. The "streaming live" designation means data is continuously streamed into this layer in real-time.
-
-`Silver:` This is the cleaned and enriched version of the bronze layer. It may undergo operations like filtering, formatting, joining with other datasets,
-or even some aggregations. Again, the "streaming live" designation means data FROM the bronze layer is being continuously processed and streamed into the silver layer in real-time.
-
-`Gold:` This layer is optimized for consumption, often by business users. It might contain aggregated data, pre-joined datasets, 
-or data reshaped into a specific format ideal for BI tools or final consumption. The data in this layer may not need to be updated in real-time, which is why it's a
-"live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches FROM the Silver layer, rather than as a continuous stream.
-It provides a snapshot that is updated less frequently, which might be preferable for some reporting or analysis tasks.
-
-**Why does the gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)"?**
-This aligns with the above explanation. The "Gold" layer doesn't necessarily operate on a real-time stream FROM the "Silver" layer.
-Instead, it might operate on periodic batches or snapshots FROM the "Silver" layer. By reading FROM "LIVE.silver_table", 
-it's essentially working with the current state of the "Silver" table. On the other hand, using "STREAM(LIVE.silver_table)"
-would imply real-time, continuous processing of the data FROM the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
-
-In summary, the distinction between "streaming live" and "live" and the choice of reading methods represents different stages of data refinement
-and the associated processing cadence.
-
-
-
-Question
-
-**Can a table that have been create as `CREATE OR REFRESH STREAMING LIVE TABLE silver_table` be later reference as LIVE.silver_table ?**
-
-
-Yes, once a STREAMING LIVE TABLE is created in Databricks, it acts like a Delta table with a continuously updating view of the data.
-The underlying data is stored in Delta format, and you can query it like any other table in Databricks using the LIVE keyword.
-
-The STREAM(LIVE.<table_name>)  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
-So:
-
-- When you declare a table using CREATE OR REFRESH STREAMING LIVE TABLE, it sets up a continuous ingestion process to keep updating that table with new data.
-
-- When you query this table using SELECT ... FROM LIVE.<table_name>, you're querying its current state, getting a snapshot of the table as it is at the time of the query.
-
-When you use the table in another streaming context with STREAM(LIVE.<table_name>), you're setting up another streaming operation on top of the continuously updating table.
-Therefore, even if a table is created as a STREAMING LIVE TABLE, you can indeed query it just like a LIVE table.
-
-
-
-
-### DLT Delta Live Tables
-
-**Events Logs
-
-DLT uses event logs to stroe much of the important information used to manage, report and understand what´s happening during pipeline execution.
-
-`event log`: is managed as a Delta Lake table with some of the more imoprtan fiesld stored as nested Json data.
-
-**Tables, Live Tables and Stream Live Tables, what are the difference ?
-
-`Tables`: Made for data processing in batch mode
-
-`Stream Table`: continuously ingest and update data FROM streaming sources, presenting a real-time view of data as it's being received. 
-
-
-`Live Tables`: Reflects the results of the query that defines it, including when the query defining the table or view is updated,
- or an input data source is updated. Like a traditional materialized view, a live table or view may be entirely computed when possible to optimize computation resources and time.
- 
-* Always "correct", meaning their contents will match their definition after any update.
-* Return same results as if table had just been defined for first time on all data.
-* Should not be modified by operations external to the DLT Pipeline (you'll either get undefined answers or your change will just be undone).
-
- 
- in a very very simple way to think about that could be a table that is automatically refresh, 
- 
-`streaming live table`: Processes data that has been added only since the last pipeline update.
-
-* Only supports reading FROM "append-only" streaming sources.
-* Only reads each input batch once, no matter what (even if joined dimensions change, or if the query definition changes, etc).
-* Can perform operations on the table outside the managed DLT Pipeline (append data, perform GDPR, etc).
-
-
-
-**Scenario of Stream table.
-
-**Real-time Fraud Detection:**
-
-**Scenario:**
-Imagine a bank that offers online banking services to its customers. With millions of transactions occurring every day,
-it's critical for the bank to quickly identify potentially fraudulent transactions to protect its customers.
-
-**Stream Table Use:**
-The bank sets up a streaming system where every transaction is instantly sent to a stream table. 
-As each transaction comes in, it's analyzed in real-time against a set of rules or machine learning models to identify if it looks suspicious.
-If a transaction is deemed suspicious, an alert is generated, and the bank can take immediate action, such as blocking the transaction, notifying the customer,
-or flagging it for further investigation.
-
-**Why Not Batch Processing?**
-If the bank used batch processing, they'd collect transactions over a set period (e.g., an hour or a day) and then analyze them all at once. 
-The problem with this approach in the fraud detection scenario is the delay.
-
-A fraudulent transaction might not be detected until the batch is processed, which could be hours after the transaction occurred. By that time:
-
-The fraudster may have already caused significant financial damage.
-The actual customer may face inconvenience if, for example, their card is used elsewhere or they check their account and find unauthorized transactions.
-The bank might face reputational damage and potential financial liabilities.
-Conclusion:
-For scenarios like fraud detection, where instant response is crucial, stream tables and real-time processing are essential. Batch processing, due to its inherent delay, would not be suitable for such time-sensitive applications.
-
-
-
-
-**Scenario of Live Table and Stream Live Table
-
-**Live Table Example: E-Commerce Inventory Management**
-
-*Scenario:*  
-An e-commerce platform wants to maintain an up-to-date inventory of products. This inventory is affected by new stock arrivals, product returns, and products being sold.
-
-**Why a Live Table?:**
-
-**Frequent Updates:**Stock levels can be influenced by a multitude of factors such as sales, returns, and new shipments.
-**Query Definition Updates:**Sometimes the e-commerce platform might want to change the logic of how it calculates available inventory.
-For instance, they might decide to keep a buffer stock and not show it to customers. 
-With a live table, any change in the logic will be reflected in the table without the need for manual adjustments.
-
-**Instant Reflection:**If there's an error or update in the source data (maybe a returned item was mistakenly marked as 'damaged' when it wasn't), correcting this in the source will instantly reflect in the live table.
-
-
-**Streaming Live Table Example: Social Media Trend Analysis**
-
-**Scenario:**vv
-A social media platform wants to detect trending hashtags in real-time to showcase them to its users.
-
-**Why a Streaming Live Table?:**
-
-Continuous Data Ingestion: New posts, comments, and hashtags are continuously being created. The platform doesn't need to know about every hashtag ever used, just the ones
-trending right now.  
-**Stateful Processing:**If the definition of "trending" changes (e.g., FROM "most hashtags in the last hour" to "most hashtags in the last 30 minutes with at least
-1,000 unique users using it"), the streaming live table will process new data based on this new logic. 
-The historical data doesn't need recomputation because the platform is only interested in what's trending now.
-
-**Efficiency:**Instead of recalculating trends FROM all historical data every time, 
-the system only focuses on the new data. This is both resource-efficient and ensures real-time results.
-
-
-
-
-**What is a Live Table and what provides for
-
-DLT: materialized views for th lakehause. 
-Provides: - manage dependencies
-          - Control quality
-          - Automate opeations
-          - Simplify collaboration
-          - Save costs
-          - Reduce latency
-
-
-#**How to use DLT 
-
-1) declare in notebooks
-2) workflows in Delta Live Tables + start
-
-**What are the differences between development and producdtion in DLT, what are teh best practices ?
-
-Development Mode: 
-			- re-use **long-running cluster**running for **fast iteration**
-            - No retries on errorrs enabling faster debugging
-Production mode:
-			Cuts costs by turning off clusters as soon as they are done
-			Escalating retries, including cluster restarts `ensure reliability`
-			
-#**What can you do if you have many DLT 
-
-Declaring dependencies FROM Lives TAbles
-
-```
-CREATE LIVE TABLE table_1
-AS SELECT ... FROM schema.my_table
-
-
-CREATE LIVE TABLE table_2
-AS SELECT ... FROM LIVE.table_1
-
-
-```
-
-DLT detects LIVE dependencies and executes all operations in correct order.
-DLT handles parallelism and captures the `lineage` of data.
-
-#**How can you ensure Data Quality in DLT
-
-You can ensure correctness with Expectations
-
-```
-CONSTRAINT valid_timestamp
-EXPECT(timestamp > '2012-01-01')
-ON VIOLATION DROP	
-```
-
-The records that violate expectations you can "Track", "Drop", "Abort"
-
-
-**What is Event Logs and what offers
-
-Event Log automatically records all pipelines operations.
-
-**Operational Statistics:**Time and current status, for all operations, Pipeline and cluster configurations, Row counts  
-**Provenance:**Table and schema definitions and declared properties, Table-level lineage, Query plans 
-**Data Quality:**Expectation pass/failure /drop statistics 
-
-**What does STREAM ?
-
-CREATE STREAMING LIVE TABLE mystream
-AS SELECT * 
-FROM STREAM(my_table)
-
-`STREAM` Function: When you see STREAM(my_table), it means that my_table is being treated as a streaming source. 
-Instead of treating it as a static batch of data, Databricks will continuously monitor it for new data and process that data in real-time.
-
-**What is Automated Data Management ?
-
-refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
-
-**Best Practices**DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`
-**Physical Data**DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize 
-**Schema Evolution**Schema evolution is handle for owner
-
-**CDC Change data capture  in DLT
-
-CDC Maintain and up-to-date replica of a talbe stored elsewhere
-
-```
-APPLY CHANGES INTO LIVE.table_1
-FROM STREAM(LIVE.table_1_updates)
-KEYS (id)
-SQUENCE BY ts
-```
-
-**Data Live Tables with SQL
-
-#**Declaring Delta Live Tables
-
-Bronze --> Silver --> Gold
-```
-CREATE OR REFRESH STREAMING LIVE TABLE orders_bronze
-AS SELECT current_timestamp() processing_time, input_file_name() source_file, *
-FROM cloud_files("${source}/orders", "json", map("cloudFiles.inferColumnTypes", "true"))
-```
-we go now for the Silver  Table
-
-```
-CREATE OR REFRESH STREAMING LIVE TABLE orders_silver
-(CONSTRAINT valid_date EXPECT (order_timestamp > "2021-01-01") ON VIOLATION FAIL UPDATE)
-COMMENT "Append only orders with valid timestamps"
-TBLPROPERTIES ("quality" = "silver")
-AS SELECT timestamp(order_timestamp) AS order_timestamp, * EXCEPT (order_timestamp, source_file, _rescued_data)
-FROM STREAM(LIVE.orders_bronze)
-```
-
-
-**Quality Enforcement continued. Create a Stream Live talble and make the following constrains
-
-* Create a bronce Streaming live table
-* Quality constrains in the silver table
-
-In order to ensure only good data makes it into our silver table, we'll write a series of quality enforcement rules that ignore the expected null values in delete operations.
-
-We'll break down each of these constraints below:
-
- **`valid_id`**
-This constraint will cause our transaction to fail if a record contains a null value in the **`customer_id`**field.
-
-#****`valid_operation`**
-This contraint will drop any records that contain a null value in the **`operation`**field.
-
-#****`valid_address`**
-This constraint checks if the **`operation`**field is **`DELETE`**; if not, it checks for null values in any of the 4 fields comprising an address. Because there is no additional instruction for what to do with invalid records, violating rows will be recorded in metrics but not dropped.
-
-#****`valid_email`**
-This constraint uses regex pattern matching to check that the value in the **`email`**field is a valid email address. It contains logic to not apply this to records if 
-the **`operation`**field is **`DELETE`**(because these will have a null value for the **`email`**field). Violating records are dropped.
-
-
-```
-CREATE OR REFRESH STREAMING LIVE TABLE customers_bronze
-COMMENT "Raw data FROM customers CDC feed"
-AS SELECT current_timestamp() processing_time, input_file_name() source_file, *
-FROM cloud_files("${source}/customers", "json")
-```
-Apply Constrains in the in the bronce Table
-
-```
-CREATE STREAMING LIVE TABLE customers_bronze_clean
-(CONSTRAINT valid_id EXPECT (customer_id IS NOT NULL) ON VIOLATION FAIL UPDATE,
-CONSTRAINT valid_operation EXPECT (operation IS NOT NULL) ON VIOLATION DROP ROW,
-CONSTRAINT valid_name EXPECT (name IS NOT NULL or operation = "DELETE"),
-CONSTRAINT valid_address EXPECT (
-  (address IS NOT NULL and 
-  city IS NOT NULL and 
-  state IS NOT NULL and 
-  zip_code IS NOT NULL) or
-  operation = "DELETE"),
-CONSTRAINT valid_email EXPECT (
-  rlike(email, '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$') or 
-  operation = "DELETE") ON VIOLATION DROP ROW)
-AS SELECT *
-  FROM STREAM(LIVE.customers_bronze)
-  
-```
-
-**In the previos table proceed with CDC with APPLY Changes INTO for the silver
-
-CREATE OR REFRESH STREAMING LIVE TABLE customers_silver;
-
-APPLY CHANGES INTO LIVE.customers_silver
-  FROM STREAM(LIVE.customers_bronze_clean)
-  KEYS (customer_id)
-  APPLY AS DELETE WHEN operation = "DELETE"
-  SEQUENCE BY timestamp
-  COLUMNS * EXCEPT (operation, source_file, _rescued_data)
-
-
-**What kind of SCD is taking of Apply Changes into
-
-APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
-
-
-**Troubleshooting DLT SQL Syntax
-
-
-
-
-
-
-
-catalog --> Schema(database) -->(Table, View, Function)
 
 
 ## Unity Catalog
