@@ -7,7 +7,7 @@ The theory consists of both theoretical concepts and the corresponding code. Bot
 
 A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. If offers the vast storage capabilities and flexibility of a data lakehause
 to handle large volumes of raw, detailed data, alongside the strutured querying and performance optimizationof a data warehouse.
-This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
+This hybrid approach aims to support a wide range of use cases, FROM big data processing and machine learning to business intelligence and analytics, all within a single platform.
 
 
 **Challenges in the Data Lakehouse:** 
@@ -56,7 +56,7 @@ display(data_json)
 
 
 sales_csv_path = "dbfs:/mnt/my_path/"
-display(spark.sql(f"select * from csv.`{sales_csv_path}`"))
+display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 
 ```
 
@@ -122,7 +122,7 @@ CREATE TABLE my_delta_table
 USING DELTA
 LOCATION '/my_path/'
 ```
-#### Describe Extended vs detail vs history
+**Describe Extended vs detail vs history
 
 - `DESCRIBE EXTENDED` for Data types  
 - `DESCRIBE DETAIL` for metadata associate to the Table  
@@ -130,7 +130,7 @@ LOCATION '/my_path/'
 
 
 
-### Extracting Data from SQL Databases
+### Extracting Data FROM SQL Databases
 
 ```
 CREATE TABLE
@@ -181,7 +181,7 @@ WHEN NOT MATCHED AND u.category = 'Computer Science' THEN
 ### Cleaning Data
 
 ```
-from pyspark.sql import functions as F
+FROM pyspark.sql import functions as F
 
 
 data_path_24 = "dbfs:/mnt/my_path/"
@@ -197,17 +197,17 @@ df = spark.createDataFrame(data=[(None, None, None, None), (None, None, None, No
 ```
 
 ```
-from pyspark.sql.functions import col
+FROM pyspark.sql.functions import col
 
 
 usersDF = spark.read.table("users_dirty")
-usersDF.selectExpr("count_if(email IS NULL)")
+usersDF.SELECTExpr("count_if(email IS NULL)")
 usersDF.where(col("email").isNull()).count()  
 userDF.distinct().count()	  
 ```
 
 ```
-from pyspark.sql.functions import max
+FROM pyspark.sql.functions import max
 
 # remember  usersDF = spark.read.table("users_dirty")
 
@@ -221,7 +221,7 @@ dedupedDF.count()
 ```
 
 
-#### Validate Datasets
+**Validate Datasets
 
 The result should be True or False
 
@@ -235,15 +235,15 @@ SELECT max(row_count) <= 1 no_duplicate_ids FROM (
 
 **Python**
 ```
-from pyspark.sql.functions import count
+FROM pyspark.sql.functions import count
 
 display(dedupedDF
     .groupby("user_id")
     .agg(count("*").alias("row_count"))
-    .select((max("row_count") <= 1).alias("no_duplicate_ids"))) # true or false 
+    .SELECT((max("row_count") <= 1).alias("no_duplicate_ids"))) # true or false 
 ```
 
-#### Date Format and Regex
+**Date Format and Regex
 
 **SQL**
 
@@ -262,14 +262,14 @@ FROM (
 **Python**
 
 ```
-from pyspark.sql.functions import date_format, regexp_extract
+FROM pyspark.sql.functions import date_format, regexp_extract
 
 display(dedupedDF
     .withColumn("first_touch", (col("user_first_touch_timestamp") / 1e6).cast("timestamp"))
     .withColumn("first_touch_date", date_format("first_touch", "MMM d, yyyy"))
     .withColumn("first_touch_time", date_format("first_touch", "HH:mm:ss"))
     .withColumn("email_domain", regexp_extract("email", "(?<=@).+", 0))
-	.select("first_touch", "first_touch_date", "first_touch_time", "email_domain")
+	.SELECT("first_touch", "first_touch_date", "first_touch_time", "email_domain")
 )
 
 ```
@@ -283,7 +283,7 @@ def clone_source_table(table_name, source_path, source_name=None):
     
 
     source_name = table_name if source_name is None else source_name
-    print(f"Cloning the \"{table_name}\" table from \"{source_path}/{source_name}\".", end="...")
+    print(f"Cloning the \"{table_name}\" table FROM \"{source_path}/{source_name}\".", end="...")
     
     spark.sql(f"""
         CREATE OR REPLACE TABLE {table_name}
@@ -302,14 +302,14 @@ for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
 ```
 
-#### Work with Nested Data
+**Work with Nested Data
 
 **Note**: Spark SQL has a built-in functionality to directly interact with nested data stored as JSON string or struct types
 
 Use `:` syntax in queries to access subfiels in JSON strings  
 Use `.` syntax in queries to access subfiesl in struct types  
-`schema_of_json()` returns the schema derived from an example JSON string.  
-`from_json()` parses a column containing a JSON string into a struct type using the specified schema.  
+`schema_of_json()` returns the schema derived FROM an example JSON string.  
+`FROM_json()` parses a column containing a JSON string into a struct type using the specified schema.  
 
 Let's use the JSON string example above to derive the schema, then parse the entire JSON column into struct types.
 
@@ -318,7 +318,7 @@ Let's use the JSON string example above to derive the schema, then parse the ent
 **SQL**
 ```
 CREATE OR REPLACE TEMP VIEW parsed_customers AS
-  SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris",
+  SELECT customer_id, FROM_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris",
                                                           "country":"France"}}')) AS profile_struct
   FROM customers;
   
@@ -327,7 +327,7 @@ SELECT * FROM parsed_customers
 	
 **Python**
 ```
-from pyspark.sql.functions import from_json, schema_of_json
+FROM pyspark.sql.functions import FROM_json, schema_of_json
 
 json_string = """
 {"device":"Linux","ecommerce":{"purchase_revenue_in_usd":1047.6,"total_item_quantity":2,"unique_items":2},"event_name":"finalize","event_previous_timestamp":1593879787820475,
@@ -336,8 +336,8 @@ json_string = """
 "price_in_usd":119.0,"quantity":1}],"traffic_source":"email","user_first_touch_timestamp":1593583891412316,"user_id":"UA000000106459577"}
 """
 parsed_eventsDF = (events_stringsDF
-    .select(from_json("value", schema_of_json(json_string)).alias("json"))
-    .select("json.*")
+    .SELECT(FROM_json("value", schema_of_json(json_string)).alias("json"))
+    .SELECT("json.*")
 )
 
 display(parsed_eventsDF)
@@ -362,7 +362,7 @@ display(events_stringsDF
 
 ```
 
-#### Manipulate Arrays
+**Manipulate Arrays
 
 `explode()` separates the elements of an array into multiple rows; this creates a new row  for each elemnt.  
 `size()` provides a count for the number of elements in an array for each row.  
@@ -380,7 +380,7 @@ SELECT * FROM exploded_events WHERE size(items) > 2
 
 **Python**
 ```
-from pyspark.sql.functions import explode, size
+FROM pyspark.sql.functions import explode, size
 
 exploded_eventsDF = (parsed_eventsDF
     .withColumn("item", explode("items"))
@@ -391,7 +391,7 @@ display(exploded_eventsDF.where(size("items") > 2))
 
 `collect_set()` collects unique values for a field, including fields within arrays.  
 `flatten()` combines multiple arrays into a single array.  
-`array_distinct()` removes duplicate elements from an array.  
+`array_distinct()` removes duplicate elements FROM an array.  
 
 **SQL** 
 ```
@@ -407,7 +407,7 @@ GROUP BY user_id
 **python**
 
 ```
-from pyspark.sql.functions import array_distinct, collect_set, flatten
+FROM pyspark.sql.functions import array_distinct, collect_set, flatten
 
 display(exploded_eventsDF
     .groupby("user_id")
@@ -416,7 +416,7 @@ display(exploded_eventsDF
 ```
 
 
-#### Join Tables
+**Join Tables
 
 **SQL**
 
@@ -448,13 +448,13 @@ item_purchasesDF = (exploded_salesDF
 display(item_purchasesDF)
 ```
 
-#### Pivot
+**Pivot
 
 **SQL**
 
 ```
 SELECT *
-FROM (select item_id, name, count(item_id) as count_item from table_name_item group by item_id, name order by item_id desc) purchases_curated
+FROM (SELECT item_id, name, count(item_id) as count_item FROM table_name_item group by item_id, name order by item_id desc) purchases_curated
 PIVOT (sum(count_item) for item_id in ("P_FOAM_S", "M_STAN_T"));
 
 
@@ -530,7 +530,7 @@ SELECT *, item_preference(name, price) FROM item_lookup
 User Defined Functions allow users to define their own transformations on Spark DataFrames
 - Can´t be optimized by Catalyst Optimizer  
 - Function is serialized ans sent to executors  
-- Row data is deserializd from Spark´s native binary format to pass to the UDF, and the results are serialized back into Spark´s native format.  
+- Row data is deserializd FROM Spark´s native binary format to pass to the UDF, and the results are serialized back into Spark´s native format.  
 - For Python UDF´s additional interprocess communication overhead between the executor and a Python interpreter running on each worked node.  
 
 
@@ -548,12 +548,12 @@ Create apply UDF, register the function as a UDF. This serializes the function a
 
 `first_letter_udf = udf(first_letter_function)`
 
-So once you create a UDF functions you would pass from a Python function to a Pyspark function
+So once you create a UDF functions you would pass FROM a Python function to a Pyspark function
 
 
 ```
-from pyspark.sql.functions import col
-display(sales_df.select(first_letter_udf(col("email"))))
+FROM pyspark.sql.functions import col
+display(sales_df.SELECT(first_letter_udf(col("email"))))
 ```
 
 **How to make a Register UDF function availabe in SQL ?**
@@ -564,7 +564,7 @@ Using `spark.udf.register`
 ```
 sales_df.createOrReplaceTempView("sales")
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
-display(sales_df.select(first_letter_udf(col("email"))))
+display(sales_df.SELECT(first_letter_udf(col("email"))))
 ```
 
 **UDF with decoratos**
@@ -585,7 +585,7 @@ Are special types of UDFs that use the power of the `pandas` library withing a S
 
 ```
 import pandas as pd
-from pyspark.sql.functions import pandas_udf
+FROM pyspark.sql.functions import pandas_udf
 
 # We have a string input/output
 @pandas_udf("string")
@@ -643,78 +643,29 @@ ensuring efficient processing. This is one reason why using built-in functions i
 - **pandas UDFs:** As an intermediary step, pandas UDFs(or vectorized UDFs) allow for more efficient processing than tradicitonal UDFs since they operate on batches of data using
 pandas which is inherently more optimized thatn row-by-row operations.
 
-So whenever possible, it´s recommended to utilize SparkSQL´s built-in functions to benefit from the full optimization capabilities of the Catalyst engine.
+So whenever possible, it´s recommended to utilize SparkSQL´s built-in functions to benefit FROM the full optimization capabilities of the Catalyst engine.
 
 
-```
-drop TABLE IF exists students;
 
-CREATE TABLE IF NOT EXISTS students
-  (id INT, name STRING, value DOUBLE);
-  
-INSERT INTO students VALUES (1, "Yve", 1.0);
-INSERT INTO students VALUES (2, "Omar", 2.5);
-INSERT INTO students VALUES (3, "Elia", 3.3);
-
-INSERT INTO students
-VALUES 
-  (4, "Ted", 4.7),
-  (5, "Tiffany", 5.5),
-  (6, "Vini", 6.3);
-
--- That isnstruction doesnt make anything 
-UPDATE students 
-SET value = value + 1
-WHERE name LIKE "T%";
-
--- That instruction doesnt make anything
-DELETE FROM students 
-WHERE value > 6;
-
-CREATE OR REPLACE TEMP VIEW updates(id, name, value, type) AS VALUES
-  (2, "Omar", 15.2, "update"),
-  (3, "", null, "delete"),
-  (7, "Blue", 7.7, "insert"),
-  (11, "Diya", 8.8, "update");
-  
-MERGE INTO students b
-USING updates u
-ON b.id=u.id
-WHEN MATCHED AND u.type = "update"
-  THEN UPDATE SET *
-WHEN MATCHED AND u.type = "delete"
-  THEN DELETE
-WHEN NOT MATCHED AND u.type = "insert"
-  THEN INSERT *;
-
-select * from students;  -- the only conditin that match is the last one and insert the value "blue"
-```
 
 
 
 
 ```
-
-%sql
 OPTIMIZE students
 ZORDER BY id
 
 DESCRIBE HISTORY students
+```
 
-
-#### Versions
-
-%sql
-SELECT * FROM students c WHERE c.id not in (SELECT a.id 
-FROM (select * from students  VERSION AS OF 3) a
-INNER JOIN (select * from students VERSION as OF 7) b
-on a.id = b.id)
-
-
-
-#### Roll Back
+**Roll Back and Versions**
 
 ```
+SELECT * FROM students c WHERE c.id not in (SELECT a.id 
+FROM (SELECT * FROM students  VERSION AS OF 3) a
+INNER JOIN (SELECT * FROM students VERSION as OF 7) b
+on a.id = b.id)
+
 DELETE FROM students
 RESTORE TABLE students TO VERSION AS OF 8
 ```
@@ -725,9 +676,9 @@ take the advantages of "try", "except" of Python and combine it with the SQL cod
 # that would fail --> cause drop doesnt admit Rollback
 queries_fail1 = [
     "DROP TABLE students;",
-    "select * from students;",
+    "SELECT * FROM students;",
     "RESTORE TABLE students TO VERSION AS OF 8;",
-    "select * from students;"
+    "SELECT * FROM students;"
 ]
 
 for query in queries_fail1:
@@ -739,57 +690,11 @@ for query in queries_fail1:
         continue
 ```
 
-**Using Merge**
 
-```
+**VACUUM**  Perfoms garbage cleanup on the table directoy. By default, a retention threshold of 7 days will be enforced
 
-%sql
-drop table if exists beans;
-drop View if exists new_beans;
-CREATE TABLE beans 
-(name STRING, color STRING, grams FLOAT, delicious BOOLEAN);
-
-INSERT INTO beans VALUES
-("black", "black", 500, true),
-("lentils", "brown", 1000, true),
-("jelly", "rainbow", 42.5, false);
-
-INSERT INTO beans VALUES
-('pinto', 'brown', 1.5, true),
-('green', 'green', 178.3, true),
-('beanbag chair', 'white', 40000, false);
-
-UPDATE beans
-SET delicious = true
-WHERE name = "jelly";
-
-UPDATE beans
-SET grams = 1500
-WHERE name = 'pinto';
-
-DELETE FROM beans
-WHERE delicious = false;
-
-CREATE OR REPLACE TEMP VIEW new_beans(name, color, grams, delicious) AS VALUES
-('black', 'black', 60.5, true),
-('lentils', 'green', 500, true),
-('kidney', 'red', 387.2, true),
-('castor', 'brown', 25, false);
-
-MERGE INTO beans a
-USING new_beans b
-ON a.name=b.name AND a.color = b.color
-WHEN MATCHED THEN
-  UPDATE SET grams = a.grams + b.grams
-WHEN NOT MATCHED AND b.delicious = true THEN
-  INSERT *;
-  
-```
-
-#### VACUUM 
-Perfoms garbage cleanup on the table directoy. By default, a retention threshold of 7 days will be enforced
-
-**DRY RUN**allows you to see which files would be deleted by the VACUUM operation without actually deleting them. Its essentially a way to preview the effects of the VACUUM operation
+**DRY RUN** Allows you to see which files would be deleted by the VACUUM operation without actually deleting them. 
+Its essentially a way to preview the effects of the VACUUM operation
 
 
 ```
@@ -798,11 +703,12 @@ SET spark.databricks.delta.vacuum.logging.enabled = true;
 
 
 VACUUM beans RETAIN 0 HOURS DRY RUN
-
 ```
 
 
-**`CREATE TABLE AS SELECT(CTAS)`**statements create and populate Delta tables using data retrieved from an input query.
+**CREATE TABLE AS SELECT(CTAS)**  
+
+statements create and populate Delta tables using data retrieved FROM an input query.
 
 ```
 CREATE OR REPLACE TABLE purchases AS
@@ -811,10 +717,11 @@ SELECT order_id AS id, transactions_timestamp, purchase_revenue_in_usd AS price
 FROM sales_delta;
 
 SELECT * FROM purchases limit 2;
+```
+
+**DATE GENERATED ALWAYS** Indicates the Column will be a "generated column" (we cannot specify a computation within a table definition without indicating it´s a generated column)
 
 ```
-**Generate always**
-
 CREATE OR REPLACE TABLE purchase_dates (
   id STRING, 
   transactions_timestamp STRING, 
@@ -824,38 +731,23 @@ CREATE OR REPLACE TABLE purchase_dates (
     COMMENT "generated based on `transactions_timestamp` column");
 
 SELECT * FROM purchase_dates;
-
-
-
-SET spark.databricks.delta.schema.autoMerge.enabled=true; 
-
-MERGE INTO purchase_dates a
-USING purchases b
-ON a.id = b.id
-WHEN NOT MATCHED THEN
-  INSERT *
-  
 ```
 
-**CONSTRAINTS**
+**CONSTRAINTS**: A rule applied to a column or sets of columns in a table that restrics the type of data taht can be inserted, ensuring the accuracy and reliability of the data.
 
 ```
-%sql
 ALTER TABLE purchase_dates ADD CONSTRAINT valid_date CHECK (date > '2020-01-01');
 DESCRIBE EXTENDED purchase_dates; -- show in TBLPROPERTIES
 ```
 
-#### Enrich Tables wit Additiona Info
-- Using **current_timestamp()**
-- **Input_file_name()**
+**Enrich Tables wit Additiona Info**  
+- Using **current_timestamp()**  
+- **Input_file_name()**  
 
 
 ```
-
-%sql
 CREATE OR REPLACE TABLE users_pii
 COMMENT "Contains PII"
---LOCATION "${da.paths.working_dir}/tmp/users_pii"
 LOCATION "dbfs:/mnt/dbacademy-datasets/temp/users_pii"
 PARTITIONED BY (first_touch_date)
 AS
@@ -866,17 +758,14 @@ AS
   FROM parquet.`dbfs:/mnt/dbacademy-datasets/data-engineering-with-databricks/v02/ecommerce/raw/users-historical/`;
   
 SELECT * FROM users_pii limit 2;
-
-
 ```
 
-#### Deep Clone vs Shallow Clone
+**Deep Clone vs Shallow Clone**
 
-**Deep Clone**Full metadata and data copie from source table.
-**Shallow clone**create a copy of table quickly to test out applying changes without the risk of modifying the current table.
+**Deep Clone** Full metadata and data copie FROM source table.  
+**Shallow clone** Create a copy of table quickly to test out applying changes without the risk of modifying the current table.  
 
 ```
-%sql
 CREATE OR REPLACE TABLE purchases_clone
 DEEP CLONE purchases
 ```
@@ -964,7 +853,7 @@ how different data sources, transformations, and destinations (sinks) are connec
 you can understand how data is flowing and being transformed.
 
 In a more code-based environment, or if you're using something like Databricks notebooks, the flow definition might be best understood by examining the sequence of SQL queries,
-Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data from Table A, transform it, and then insert it into Table B.
+Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data FROM Table A, transform it, and then insert it into Table B.
 
 **Workflow orchestration patterns.**
 
@@ -979,9 +868,9 @@ Python transformations, or other code snippets. For example, seeing a sequence o
 - **Bronze**
 - **Silver**
 - **Gold**
-Silver tables enrich data by joining fields from bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.  
+Silver tables enrich data by joining fields FROM bronze tables. Gold tables provide business level aggregates often used for reporting and dashboarding.  
 
-**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those from DLT pipelines.
+**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those FROM DLT pipelines.
 Clicking on individual tables or task within a job run will providespecifics bout that task.
 
 **Databricks Tables**Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
@@ -989,7 +878,7 @@ parquet, Avro, CSV, JSON, etc...
 
 **Storage Systems**Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
 
-#### Delta Live Tables come to action
+**Delta Live Tables come to action
 
 **Agility**: Build batch and streaming data pipelines.
 **Trust your data**Quality controls with expectations and actions to take
@@ -998,7 +887,7 @@ parquet, Avro, CSV, JSON, etc...
 
 ### Delta Live Tables
 
-#### DAG
+**DAG
 - execution flow is graphed
 - The results are reported in the **Data Quality**section
 - With each triggered update, all newly arriving data will be processed through your pipeline. Metrics will always be reported for current run.
@@ -1010,11 +899,11 @@ COMMENT "SQL comment" TBLPROPERTIES ("quality" = "silver")
 ```
 
 
-####  Exploring the Results of a DLT Pipeline
+** Exploring the Results of a DLT Pipeline
 
 
 DLT uses Delta Lake to store all tables, each witme a query is executed, we will always return the most recent version of the table. But queries outside of DLT.  
-But queries outside of DLT will return snapshot results from DLT tables, regardless of how they were defined.
+But queries outside of DLT will return snapshot results FROM DLT tables, regardless of how they were defined.
 
 
 ### Pipeline Event Logs
@@ -1035,7 +924,7 @@ spark.conf.set('latest_update.id', latest_update_id)
 
 ```
 
-#### Examine Lineage
+**Examine Lineage
 
 - DLT provides built-in lineage information for how data flows through your table.
 
@@ -1049,7 +938,7 @@ WHERE event_type = 'flow_definition' AND
 ```
 
 
-#### Examine Data Quality Metrics
+**Examine Data Quality Metrics
 
 ```
 %sql
@@ -1059,7 +948,7 @@ SELECT row_expectations.dataset as dataset,
        SUM(row_expectations.failed_records) as failing_records
 FROM
   (SELECT explode(
-            from_json(details :flow_progress :data_quality :expectations,
+            FROM_json(details :flow_progress :data_quality :expectations,
                       "array<struct<name: string, dataset: string, passed_records: int, failed_records: int>>")
           ) row_expectations
    FROM event_log_raw
@@ -1083,7 +972,7 @@ This can be handy in many use cases.
 * Establishing sandboxes containing temporary datasets for internal use
 
 
-#### Create and use Catalog
+**Create and use Catalog
 
 ```
 CREATE CATALOG IF NOT EXISTS ${DA.my_new_catalog}
@@ -1096,7 +985,7 @@ USE SCHEMA example
 
 ```
 
-#### Grant access to datga objects
+**Grant access to datga objects
 
 ```
 GRANT USAGE ON CATALOG ${DA.my_new_catalog} TO analysts;
@@ -1104,7 +993,7 @@ GRANT USAGE ON SCHEMA example TO analysts;
 GRANT SELECT ON VIEW agg_heartrate to analysts
 ```
 
-#### Dynamic Views
+**Dynamic Views
 
 + Provide the ability to do fine-grained access control
 
@@ -1139,7 +1028,7 @@ GRANT SELECT ON VIEW agg_heartrate to analysts
 
 ```
 
-#### Explore objects
+**Explore objects
 
 ```
 SHOW TABLES
@@ -1149,7 +1038,7 @@ SHOW CATALOGS
 ```
 
 
-#### Explore permisions
+**Explore permisions
 
 
 ```
@@ -1165,7 +1054,7 @@ SHOW GRANTS ON CATALOG
 ```
 
 
-#### Revoke Access
+**Revoke Access
 
 `REVOKE EXECUTION ON FUNCTION mask FROM analysts`
 
@@ -1282,7 +1171,7 @@ spark.conf.set(f"dataset.bookstore", dataset_bookstore)
 files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
 ```
 
-### 3 different ways to query from a Directory
+### 3 different ways to query FROM a Directory
 
 ```
 SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json` 
@@ -1305,7 +1194,7 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/`
 ```
 
 
-Reading from Binaty, CSV, text
+Reading FROM Binaty, CSV, text
 
 ```
 SELECT * FROM text.`${dataset.bookstore}/customers-json` limit 3
@@ -1356,7 +1245,7 @@ SELECT COUNT(*) FROM books_csv;  --> retrun the actual status, External data wil
 ```
 
 
-#### Writing to Tables
+**Writing to Tables
 
 ```
 CREATE OR REPLACE TABLE orders AS
@@ -1398,7 +1287,7 @@ FROM customers
 
 ```
 CREATE OR REPLACE TEMP VIEW parsed_customers AS
-  SELECT customer_id, from_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
+  SELECT customer_id, FROM_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris","country":"France"}}')) AS profile_struct
   FROM customers;
   
 SELECT * FROM parsed_customers limit 3;
@@ -1501,12 +1390,12 @@ To process streaming data (close to real time) we need some new structures
 
 
 
-#### COPY INTO vs Auto Loader
+**COPY INTO vs Auto Loader
 
 **copy into**: Thousand of files, less efficient at scale  
 **Auto Loader**: Millions of Files, efficient at scale.  --> its always active and lisening so obviously would cost much more money
 
-#### Multi-hop Architecture 
+**Multi-hop Architecture 
 
 Bronce --> Silver --> Gold
 
@@ -1518,13 +1407,13 @@ Bronce --> Silver --> Gold
       .createOrReplaceTempView("books_streaming_tmp_vw")
 )
 
--- that temp view is a streaming temp view as its generate from a streaming view
+-- that temp view is a streaming temp view as its generate FROM a streaming view
 CREATE OR REPLACE TEMP VIEW author_counts_tmp_vw AS (
   SELECT author, count(book_id) AS total_books
   FROM books_streaming_tmp_vw
   GROUP BY author
 )
--- we can write from a streaming temp view to a dataframe (author_counts), what will be running forevern every 4 secons
+-- we can write FROM a streaming temp view to a dataframe (author_counts), what will be running forevern every 4 secons
 (spark.table("author_counts_tmp_vw")                               
       .writeStream  
       .trigger(processingTime='4 seconds')
@@ -1556,13 +1445,13 @@ Ading in format "cloudFiles" it already asume that we need a Auto Loader
 )
 ```
 
-#### Medallon Architecture
+**Medallon Architecture
 
 ```
 %sql
 CREATE OR REPLACE TEMPORARY VIEW orders_enriched_tmp AS (
   SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
-         cast(from_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, books
+         cast(FROM_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, books
   FROM orders_bronze_tmp o
   INNER JOIN customers_lookup c
   ON o.customer_id = c.customer_id
@@ -1585,7 +1474,7 @@ CREATE OR REPLACE TEMPORARY VIEW orders_enriched_tmp AS (
 	  
 ```
 
-#### Kind of Triggers
+**Kind of Triggers
 
 **Fixed Interval Micro-batches (using trigger(Trigger.ProcessingTime(interval)))**
 
@@ -1594,7 +1483,7 @@ interval could be a string like "1 minute" or a duration in milliseconds.
 Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.
 
 ```
-from pyspark.sql.streaming import Trigger
+FROM pyspark.sql.streaming import Trigger
 
 (spark.table("your_table")
 .writeStream
@@ -1611,7 +1500,7 @@ Processes the available data in the stream just once and then stops the query.
 Use Case: When you have a backlog of data and you want to process it once to bring your output table up to date.  
 
 ```
-from pyspark.sql.streaming import Trigger
+FROM pyspark.sql.streaming import Trigger
 
 (spark.table("your_table")
 .writeStream
@@ -1630,7 +1519,7 @@ Note: Continuous processing is an experimental feature and has some limitations.
 Use Case: When low-latency is more important than throughput and you need near real-time processing.
 
 ```
-from pyspark.sql.streaming import Trigger
+FROM pyspark.sql.streaming import Trigger
 
 (spark.table("your_table")
 .writeStream
@@ -1661,7 +1550,7 @@ Use Case: When you want to clear the existing backlog of data without waiting fo
 ## Production Pipelines
 
 
-##### CDC
+#**CDC
 
 Change Data Capture
 
@@ -1675,7 +1564,7 @@ Change Data Capture
 `Streamling live tables` : Processes data  that has been added only since the last pipeline update.
 ```
 CREATE OR REFRESH STREAMING LIVE TABLE orders_raw
-COMMENT "The raw books orders, ingested from orders-raw"
+COMMENT "The raw books orders, ingested FROM orders-raw"
 AS SELECT * FROM cloud_files("${datasets_path}/orders-json-raw", "json",
                              map("cloudFiles.inferColumnTypes", "true"))
 							 
@@ -1687,7 +1576,7 @@ CREATE OR REFRESH STREAMING LIVE TABLE orders_cleaned (
 COMMENT "The cleaned books orders with valid order_id"
 AS
   SELECT order_id, quantity, o.customer_id, c.profile:first_name as f_name, c.profile:last_name as l_name,
-         cast(from_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, o.books,
+         cast(FROM_unixtime(order_timestamp, 'yyyy-MM-dd HH:mm:ss') AS timestamp) order_timestamp, o.books,
          c.profile:address:country as country
   FROM STREAM(LIVE.orders_raw) o
   LEFT JOIN LIVE.customers c
@@ -1706,7 +1595,7 @@ AS
   GROUP BY customer_id, f_name, l_name, date_trunc("DD", order_timestamp)
   
 -- What I dont uderstand is 1) why the gold table is live and not Streaming live, 
--- 2 why when readin from silver table 
+-- 2 why when readin FROM silver table 
   
 ```
 
@@ -1736,7 +1625,7 @@ AS
 Apparently that pseudo code is correct but I do not understand 2 things
 
 + 1) why bronze and silver tables are stream live and gold is just live
-+ 2) why gold table read from "LIVE.silver_table" and not from "STREAM(LIVE.silver_table)
++ 2) why gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)
 
 Answer
 
@@ -1749,18 +1638,18 @@ The distinction typically aligns with the modern data architecture patterns, par
 querying due to inconsistencies, missing values, or its verbose nature. The "streaming live" designation means data is continuously streamed into this layer in real-time.
 
 `Silver:` This is the cleaned and enriched version of the bronze layer. It may undergo operations like filtering, formatting, joining with other datasets,
-or even some aggregations. Again, the "streaming live" designation means data from the bronze layer is being continuously processed and streamed into the silver layer in real-time.
+or even some aggregations. Again, the "streaming live" designation means data FROM the bronze layer is being continuously processed and streamed into the silver layer in real-time.
 
 `Gold:` This layer is optimized for consumption, often by business users. It might contain aggregated data, pre-joined datasets, 
 or data reshaped into a specific format ideal for BI tools or final consumption. The data in this layer may not need to be updated in real-time, which is why it's a
-"live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches from the Silver layer, rather than as a continuous stream.
+"live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches FROM the Silver layer, rather than as a continuous stream.
 It provides a snapshot that is updated less frequently, which might be preferable for some reporting or analysis tasks.
 
-**Why does the gold table read from "LIVE.silver_table" and not from "STREAM(LIVE.silver_table)"?**
-This aligns with the above explanation. The "Gold" layer doesn't necessarily operate on a real-time stream from the "Silver" layer.
-Instead, it might operate on periodic batches or snapshots from the "Silver" layer. By reading from "LIVE.silver_table", 
+**Why does the gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)"?**
+This aligns with the above explanation. The "Gold" layer doesn't necessarily operate on a real-time stream FROM the "Silver" layer.
+Instead, it might operate on periodic batches or snapshots FROM the "Silver" layer. By reading FROM "LIVE.silver_table", 
 it's essentially working with the current state of the "Silver" table. On the other hand, using "STREAM(LIVE.silver_table)"
-would imply real-time, continuous processing of the data from the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
+would imply real-time, continuous processing of the data FROM the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
 
 In summary, the distinction between "streaming live" and "live" and the choice of reading methods represents different stages of data refinement
 and the associated processing cadence.
@@ -1790,17 +1679,17 @@ Therefore, even if a table is created as a STREAMING LIVE TABLE, you can indeed 
 
 ### DLT Delta Live Tables
 
-#### Events Logs
+**Events Logs
 
 DLT uses event logs to stroe much of the important information used to manage, report and understand what´s happening during pipeline execution.
 
 `event log`: is managed as a Delta Lake table with some of the more imoprtan fiesld stored as nested Json data.
 
-#### Tables, Live Tables and Stream Live Tables, what are the difference ?
+**Tables, Live Tables and Stream Live Tables, what are the difference ?
 
 `Tables`: Made for data processing in batch mode
 
-`Stream Table`: continuously ingest and update data from streaming sources, presenting a real-time view of data as it's being received. 
+`Stream Table`: continuously ingest and update data FROM streaming sources, presenting a real-time view of data as it's being received. 
 
 
 `Live Tables`: Reflects the results of the query that defines it, including when the query defining the table or view is updated,
@@ -1815,13 +1704,13 @@ DLT uses event logs to stroe much of the important information used to manage, r
  
 `streaming live table`: Processes data that has been added only since the last pipeline update.
 
-* Only supports reading from "append-only" streaming sources.
+* Only supports reading FROM "append-only" streaming sources.
 * Only reads each input batch once, no matter what (even if joined dimensions change, or if the query definition changes, etc).
 * Can perform operations on the table outside the managed DLT Pipeline (append data, perform GDPR, etc).
 
 
 
-#### Scenario of Stream table.
+**Scenario of Stream table.
 
 **Real-time Fraud Detection:**
 
@@ -1850,7 +1739,7 @@ For scenarios like fraud detection, where instant response is crucial, stream ta
 
 
 
-#### Scenario of Live Table and Stream Live Table
+**Scenario of Live Table and Stream Live Table
 
 **Live Table Example: E-Commerce Inventory Management**
 
@@ -1876,17 +1765,17 @@ A social media platform wants to detect trending hashtags in real-time to showca
 
 Continuous Data Ingestion: New posts, comments, and hashtags are continuously being created. The platform doesn't need to know about every hashtag ever used, just the ones
 trending right now.  
-**Stateful Processing:**If the definition of "trending" changes (e.g., from "most hashtags in the last hour" to "most hashtags in the last 30 minutes with at least
+**Stateful Processing:**If the definition of "trending" changes (e.g., FROM "most hashtags in the last hour" to "most hashtags in the last 30 minutes with at least
 1,000 unique users using it"), the streaming live table will process new data based on this new logic. 
 The historical data doesn't need recomputation because the platform is only interested in what's trending now.
 
-**Efficiency:**Instead of recalculating trends from all historical data every time, 
+**Efficiency:**Instead of recalculating trends FROM all historical data every time, 
 the system only focuses on the new data. This is both resource-efficient and ensures real-time results.
 
 
 
 
-#### What is a Live Table and what provides for
+**What is a Live Table and what provides for
 
 DLT: materialized views for th lakehause. 
 Provides: - manage dependencies
@@ -1897,12 +1786,12 @@ Provides: - manage dependencies
           - Reduce latency
 
 
-##### How to use DLT 
+#**How to use DLT 
 
 1) declare in notebooks
 2) workflows in Delta Live Tables + start
 
-#### What are the differences between development and producdtion in DLT, what are teh best practices ?
+**What are the differences between development and producdtion in DLT, what are teh best practices ?
 
 Development Mode: 
 			- re-use **long-running cluster**running for **fast iteration**
@@ -1911,9 +1800,9 @@ Production mode:
 			Cuts costs by turning off clusters as soon as they are done
 			Escalating retries, including cluster restarts `ensure reliability`
 			
-##### What can you do if you have many DLT 
+#**What can you do if you have many DLT 
 
-Declaring dependencies from Lives TAbles
+Declaring dependencies FROM Lives TAbles
 
 ```
 CREATE LIVE TABLE table_1
@@ -1929,7 +1818,7 @@ AS SELECT ... FROM LIVE.table_1
 DLT detects LIVE dependencies and executes all operations in correct order.
 DLT handles parallelism and captures the `lineage` of data.
 
-##### How can you ensure Data Quality in DLT
+#**How can you ensure Data Quality in DLT
 
 You can ensure correctness with Expectations
 
@@ -1942,7 +1831,7 @@ ON VIOLATION DROP
 The records that violate expectations you can "Track", "Drop", "Abort"
 
 
-#### What is Event Logs and what offers
+**What is Event Logs and what offers
 
 Event Log automatically records all pipelines operations.
 
@@ -1950,7 +1839,7 @@ Event Log automatically records all pipelines operations.
 **Provenance:**Table and schema definitions and declared properties, Table-level lineage, Query plans 
 **Data Quality:**Expectation pass/failure /drop statistics 
 
-#### What does STREAM ?
+**What does STREAM ?
 
 CREATE STREAMING LIVE TABLE mystream
 AS SELECT * 
@@ -1959,7 +1848,7 @@ FROM STREAM(my_table)
 `STREAM` Function: When you see STREAM(my_table), it means that my_table is being treated as a streaming source. 
 Instead of treating it as a static batch of data, Databricks will continuously monitor it for new data and process that data in real-time.
 
-#### What is Automated Data Management ?
+**What is Automated Data Management ?
 
 refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
 
@@ -1967,7 +1856,7 @@ refers to the ability of DLTs to automatically optimizes data for performance & 
 **Physical Data**DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize 
 **Schema Evolution**Schema evolution is handle for owner
 
-#### CDC Change data capture  in DLT
+**CDC Change data capture  in DLT
 
 CDC Maintain and up-to-date replica of a talbe stored elsewhere
 
@@ -1978,9 +1867,9 @@ KEYS (id)
 SQUENCE BY ts
 ```
 
-#### Data Live Tables with SQL
+**Data Live Tables with SQL
 
-##### Declaring Delta Live Tables
+#**Declaring Delta Live Tables
 
 Bronze --> Silver --> Gold
 ```
@@ -2000,7 +1889,7 @@ FROM STREAM(LIVE.orders_bronze)
 ```
 
 
-#### Quality Enforcement continued. Create a Stream Live talble and make the following constrains
+**Quality Enforcement continued. Create a Stream Live talble and make the following constrains
 
 * Create a bronce Streaming live table
 * Quality constrains in the silver table
@@ -2012,20 +1901,20 @@ We'll break down each of these constraints below:
  **`valid_id`**
 This constraint will cause our transaction to fail if a record contains a null value in the **`customer_id`**field.
 
-##### **`valid_operation`**
+#****`valid_operation`**
 This contraint will drop any records that contain a null value in the **`operation`**field.
 
-##### **`valid_address`**
+#****`valid_address`**
 This constraint checks if the **`operation`**field is **`DELETE`**; if not, it checks for null values in any of the 4 fields comprising an address. Because there is no additional instruction for what to do with invalid records, violating rows will be recorded in metrics but not dropped.
 
-##### **`valid_email`**
+#****`valid_email`**
 This constraint uses regex pattern matching to check that the value in the **`email`**field is a valid email address. It contains logic to not apply this to records if 
 the **`operation`**field is **`DELETE`**(because these will have a null value for the **`email`**field). Violating records are dropped.
 
 
 ```
 CREATE OR REFRESH STREAMING LIVE TABLE customers_bronze
-COMMENT "Raw data from customers CDC feed"
+COMMENT "Raw data FROM customers CDC feed"
 AS SELECT current_timestamp() processing_time, input_file_name() source_file, *
 FROM cloud_files("${source}/customers", "json")
 ```
@@ -2050,7 +1939,7 @@ AS SELECT *
   
 ```
 
-#### In the previos table proceed with CDC with APPLY Changes INTO for the silver
+**In the previos table proceed with CDC with APPLY Changes INTO for the silver
 
 CREATE OR REFRESH STREAMING LIVE TABLE customers_silver;
 
@@ -2062,12 +1951,12 @@ APPLY CHANGES INTO LIVE.customers_silver
   COLUMNS * EXCEPT (operation, source_file, _rescued_data)
 
 
-#### What kind of SCD is taking of Apply Changes into
+**What kind of SCD is taking of Apply Changes into
 
 APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
 
 
-#### Troubleshooting DLT SQL Syntax
+**Troubleshooting DLT SQL Syntax
 
 
 
@@ -2112,7 +2001,7 @@ Granting Privileges by Role
 **Data Access Control**: Control who has access to which data.  
 **Data Access Audit**: Capture and record all access to data.  
 **Data Lineage**: Capture upstream sources and downstream --> refers to the process of tracking and understanding data flow and dependencies within a data pipeline or system.   
-&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources**refers to the origins of datga ow where data comes from.    
+&nbsp;&nbsp;&nbsp;&nbsp;**Upstream sources**refers to the origins of datga ow where data comes FROM.    
 &nbsp;&nbsp;&nbsp;&nbsp;**Downstream**refers where the data go ather being processed or transformed.  
 
 
