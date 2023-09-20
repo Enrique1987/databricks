@@ -12,22 +12,22 @@ This hybrid approach aims to support a wide range of use cases, FROM big data pr
 
 **Challenges in the Data Lakehouse:** 
 
-	- Large scale ETL is complex and brittle
+- Large scale ETL is complex and brittle
 
 **complex pipeline development:** 
  
-	- Hard to build and maintain table depencencies´  
-	- Difficult to switch between `batch` and `stream`    
+- Hard to build and maintain table depencencies´  
+- Difficult to switch between `batch` and `stream`    
 	 
 **Data quality and governance**   
 
-    - Difficult to monitor and enfornce `data quality`  
-	- Impossible to trace data lineage  
+- Difficult to monitor and enfornce `data quality`  
+- Impossible to trace data lineage  
 
 **Difficult pipeline operations** 
   
-	- Poor ´observability´ at granual data levels  
-	- Error handling and `recovery is laborious`  
+- Poor ´observability´ at granual data levels  
+- Error handling and `recovery is laborious`  
 	
 
 
@@ -122,7 +122,7 @@ CREATE TABLE my_delta_table
 USING DELTA
 LOCATION '/my_path/'
 ```
-**Describe Extended vs detail vs history
+**Describe Extended vs detail vs history**
 
 - `DESCRIBE EXTENDED` for Data types  
 - `DESCRIBE DETAIL` for metadata associate to the Table  
@@ -221,7 +221,7 @@ dedupedDF.count()
 ```
 
 
-**Validate Datasets
+**Validate Datasets**
 
 The result should be True or False
 
@@ -243,7 +243,7 @@ display(dedupedDF
     .SELECT((max("row_count") <= 1).alias("no_duplicate_ids"))) # true or false 
 ```
 
-**Date Format and Regex
+**Date Format and Regex**
 
 **SQL**
 
@@ -302,7 +302,7 @@ for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
 ```
 
-**Work with Nested Data
+**Work with Nested Data**   
 
 **Note**: Spark SQL has a built-in functionality to directly interact with nested data stored as JSON string or struct types
 
@@ -416,7 +416,7 @@ display(exploded_eventsDF
 ```
 
 
-**Join Tables
+**Join Tables**
 
 **SQL**
 
@@ -448,7 +448,7 @@ item_purchasesDF = (exploded_salesDF
 display(item_purchasesDF)
 ```
 
-**Pivot
+**Pivot**
 
 **SQL**
 
@@ -602,10 +602,10 @@ We can alsro register Pandas UDF to the SQL namespaces
 
 They use indeed use the "optimizer Catalyst" unlike UDF functions.
 
-- **`FILTER()`**filters an array using the given lambda function.  
-- **`EXIST()`**tests whether a statement is true for one or more elements in an array.  
-- **`TRANSFORM()`**uses the given lambda function to transform all elements in an array.  
-- **`REDUCE()`**takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.  
+- `FILTER()` filters an array using the given lambda function.  
+- `EXIST()` tests whether a statement is true for one or more elements in an array.  
+- `TRANSFORM()` uses the given lambda function to transform all elements in an array.  
+- `REDUCE()` takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.  
 
 
 ```
@@ -720,7 +720,8 @@ FROM sales_delta;
 SELECT * FROM purchases limit 2;
 ```
 
-**DATE GENERATED ALWAYS** Indicates the Column will be a "generated column" (we cannot specify a computation within a table definition without indicating it´s a generated column)
+**DATE GENERATED ALWAYS**   
+Indicates the Column will be a "generated column" (we cannot specify a computation within a table definition without indicating it´s a generated column)
 
 ```
 CREATE OR REPLACE TABLE purchase_dates (
