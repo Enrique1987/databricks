@@ -759,7 +759,6 @@ AS
   
 SELECT * FROM users_pii limit 2;
 ```
-
 **Deep Clone vs Shallow Clone**
 
 **Deep Clone** Full metadata and data copie FROM source table.  
