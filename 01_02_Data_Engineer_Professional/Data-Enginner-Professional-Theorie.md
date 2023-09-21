@@ -13,7 +13,7 @@ are good for Machine Learning and Big Data but are lacking in BI and face challe
 
 on the oder side.
 
-`Data Wharehouse` s a centralized repository for storing large volumens of data from multiple sources. It is designed for query and analysis, often used for business Intelligence activities.
+`Data Wharehouse` Is a centralized repository for storing large volumens of data from multiple sources. It is designed for query and analysis, often used for business Intelligence activities.
 
 
 	
@@ -36,9 +36,21 @@ on the oder side.
 	- Other metadata  
 - Should be append only(batch or streaming)  
 - Plan ahead if data must be deleted for regulatory purposes  
-
+	- Retain all records when possible  
+	- Soft-deletes if necessary  
+	- Hard-deletes may be required by regulatory processes.  
 
 ### Promoting to Silver
+
+**Silver Layer**  
+- Easier to query than the non-curated Bronzed   
+	- Data is clean  
+	- Transactions have ACID guarantees  
+- Represent the "Enterprise Data Model"  
+- Captures the full history of business action modeled  
+	- Each record processes is preserved  
+	- All records can be efficiently queried  
+
 
 ### Gold Query Layer
 
