@@ -6,17 +6,37 @@ Here we have the two learning path I followed for the Professional the Udemy and
 
 ### Architeching for the Lakehouse
 
-**Data Lakehous**  
+**Data Lakehouse**  
 
-`Data Lakes:`  is a centralized repository designed to store, process, and secure large amounts of structured, semistructured, and unstructured data. They 
+`Data Lakes:`  Is a centralized repository designed to store, process, and secure large amounts of structured, semistructured, and unstructured data. They 
 are good for Machine Learning and Big Data but are lacking in BI and face challenges in the Data Governance.  
 
 on the oder side.
 
-`Data Wharehouse`
+`Data Wharehouse` s a centralized repository for storing large volumens of data from multiple sources. It is designed for query and analysis, often used for business Intelligence activities.
+
+
 	
 
 ### Bronze Ingestions Patterns
+
+**Bronze Layer**   
+- Replaces the raditional data lake.  
+- Represents the full, unprocessed hisotry of the data.  
+- Captures the provenance(what,when and from where) of data loaded intoe the lakehouse.  
+- Data is stored efficiently using Delta Lakehouse.  
+- If downstream layers discover later they need to ingest more, they can come back to the Bronze source to obtain it.  
+
+**Bronze Layer Principles**  
+- The goal is data capture and provenance: Capture exactly what is ingested, without parsing or change.
+- Typically a Delta Lake table with these fields in each row:
+	- Date received/ingested  
+	- Data source (filename,external system etc)  
+	- Text field with raw unparsed JSON, CSV or other data  
+	- Other metadata  
+- Should be append only(batch or streaming)  
+- Plan ahead if data must be deleted for regulatory purposes  
+
 
 ### Promoting to Silver
 
