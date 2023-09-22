@@ -1,11 +1,8 @@
 ## Get Started with the databricks
 -----------------------------------
 
-
 **Two data engineers are collaborating on one notebook in the same repository. Each is worried that if they work on the notebook at different times, they might overwrite changes that the other has made to the code within the notebook.
 Which of the following explains why collaborating in Databricks Notebooks prevents these problems from occurring? Select one response.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks supports alerts and audit logs for easy monitoring and troubleshooting, so the data engineers will be alerted when changes are made to their code.  
 &nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.** 
@@ -14,69 +11,57 @@ Which of the following explains why collaborating in Databricks Notebooks preven
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks enforces serializable isolation levels, so the data engineers will never see inconsistencies in their data.  
 
 
-
 **Due to the platform administrator’s policies, a data engineer needs to use a single cluster on one very large batch of files for an ETL workload.
 The workload is automated, and the cluster will only be used by one workload at a time. They are part of an organization that wants them to minimize costs when possible.
 Which of the following cluster configurations can the team use to satisfy their requirements? Select one response.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Multi node all-purpose cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;Single node all-purpose cluster  
+&nbsp;&nbsp;&nbsp;&nbsp;Single node all-purpose cluster   
 &nbsp;&nbsp;&nbsp;&nbsp;High concurrency all-purpose cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;Single node job cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;**Multi node job cluster** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Multi node job cluster**  
 
 
-	Explination: First of all we have to analyce the scenarion 
-	1)"single cluster requirement" --> workload have to be processed in a single cluster. 
-	2)"very Large Batch of Files" --> there is a need to process a considerable amount of data.
-	3)Wingle Workload at a Time: Only one ETL job will run on this cluster at any given moment
-	4)need to minimice costing
+	Explination: First of all we have to analyce the scenarion  
+	1)"single cluster requirement" --> workload have to be processed in a single cluster.  
+	2)"very Large Batch of Files" --> there is a need to process a considerable amount of data.  
+	3)Single Workload at a Time: Only one ETL job will run on this cluster at any given moment  
+	4)Need to minimice costing  
 
 	given that "Multi node job cluster" is the best fit.
-
 
 
 **A data engineer wants to stop running a cluster without losing the cluster’s configuration. The data engineer is not an administrator.
 Which of the following actions can the data engineer take to satisfy their requirements and why? Select one response.**
 
- 
-
 &nbsp;&nbsp;&nbsp;&nbsp;Delete the cluster; clusters are retained for 60 days after they are deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;Delete the cluster; clusters are retained for 30 days after they are deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;Edit the cluster; clusters can be saved as templates in the cluster configuration page before they are deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;Detach the cluster; clusters are retained for 70 days after they are detached from a notebook.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Terminate the cluster; clusters are retained for 30 days after they are terminated.** 
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;**Terminate the cluster; clusters are retained for 30 days after they are terminated.**  
 
 
 **A data engineer is trying to merge their development branch into the main branch for a data project's repository.
 Which of the following is a correct argument for why it is advantageous for the data engineering team to use Databricks Repos to manage their notebooks? Select one response.**
 
- 
-
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos allows integrations with popular tools such as Tableau, Looker, Power BI, and RStudio.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos provides a centralized, immutable history that cannot be manipulated by users.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Repos REST API enables the integration of data projects into CI/CD pipelines.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Repos REST API enables the integration of data projects into CI/CD pipelines.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos provides access to available data sets and data sources, on-premises or in the cloud.  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Repos uses one common security model to access each individual notebook, or a collection of notebooks, and experiments.  
 
 
 **Which of the following cluster configuration options can be customized at the time of cluster creation? Select all that apply.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Access permissions  
+&nbsp;&nbsp;&nbsp;&nbsp;Access permissions   
 &nbsp;&nbsp;&nbsp;&nbsp;Restart policy  
-&nbsp;&nbsp;&nbsp;&nbsp;**Maximum number of worker nodes** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Cluster mode** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Runtime Version** 
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;**Maximum number of worker nodes**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Cluster mode**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Runtime Version**  
 
 
 **Three data engineers are collaborating on a project using a Databricks Repo. They are working on the notebook at separate times of the day. 
 Which of the following is considered best practice for collaborating in this way? Select one response.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The engineers can set up an alert schedule to notify them when changes have been made to their code.  
 &nbsp;&nbsp;&nbsp;&nbsp;The engineers can each design, develop, and trigger their own Git automation pipeline.  
@@ -85,73 +70,60 @@ Which of the following is considered best practice for collaborating in this way
 &nbsp;&nbsp;&nbsp;&nbsp;**The engineers can each work in their own branch for development to avoid interfering with each other.** 
 
 
-
-
 **A data engineer is creating a multi-node cluster.Which of the following statements describes how workloads will be distributed across this cluster? Select one response.**
-
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available worker nodes by the executor.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Workloads are distributed across available worker nodes by the driver node.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available memory by the executor.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Workloads are distributed across available worker nodes by the driver node.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available memory by the executor.   
 &nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available driver nodes by the worker node.  
-&nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available compute resources by the executor.  
-
+&nbsp;&nbsp;&nbsp;&nbsp;Workloads are distributed across available compute resources by the executor.   
 
 
 **Which of the following are data objects that can be created in the Databricks Data Science and Engineering workspace? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Clusters  
+&nbsp;&nbsp;&nbsp;&nbsp;Clusters   
 &nbsp;&nbsp;&nbsp;&nbsp;SQL Warehouses  
-&nbsp;&nbsp;&nbsp;&nbsp;**Tables** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Functions** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Tables**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Functions**  
 &nbsp;&nbsp;&nbsp;&nbsp;MLflow Models  
-
 
 
 **A data engineer needs to develop an interactive dashboard that displays the results of a query.
 Which of the following services can they employ to accomplish this? Select one response.**
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;Delta Live Tables (DLT)  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks Machine Learning  
 &nbsp;&nbsp;&nbsp;&nbsp;Unity Catalog  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks SQL** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks SQL**  
 &nbsp;&nbsp;&nbsp;&nbsp;Delta Lake  
-
-
 
 
 **A data architect is proposing that their organization migrate from a data lake to a data lakehouse. 
 The architect claims that this will improve and simplify the work of the data engineering team.
 Which of the following describes the key benefits of why migrating from a data lake to a data lakehouse will be beneficial for the data engineering team? Select two responses.**
 
- 
-
 &nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support cost-effective scaling.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support machine learning workloads.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to support data quality solutions like ACID-compliant transactions.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support machine learning workloads.   
+&nbsp;&nbsp;&nbsp;&nbsp;**Data lakehouses are able to improve query performance by managing metadata and utilizing advanced data partitioning techniques.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Data lakehouses are able to support programming languages like Python.  
-
 
 
 **Which of the following correctly lists the programming languages that Databricks Notebooks can have set as the default programming language? Select one response.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Python, R, Scala, SQL** 
-&nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, SQL  
+&nbsp;&nbsp;&nbsp;&nbsp;**Python, R, Scala, SQL**  
+&nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, SQL   
 &nbsp;&nbsp;&nbsp;&nbsp;Java, Pandas, Python, SQL  
 &nbsp;&nbsp;&nbsp;&nbsp;HTML, Python, R, Scala  
 &nbsp;&nbsp;&nbsp;&nbsp;Bash script, Python, Scala, SQL  
 
 
-
-
 **Which of the following resources reside in the control plane of a Databricks deployment? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Notebook commands** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Job scheduler** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Notebook commands**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Job scheduler**  
 &nbsp;&nbsp;&nbsp;&nbsp;JDBC and SQL data sources  
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks File System (DBFS)  
 &nbsp;&nbsp;&nbsp;&nbsp;Job configurations  
@@ -163,8 +135,6 @@ they need to ensure that the image for the compute resources is up-to-date with 
 Which of the following cluster operations can be used in this situation? Select one response.**
 
 
- 
-
 &nbsp;&nbsp;&nbsp;&nbsp;Delete  
 &nbsp;&nbsp;&nbsp;&nbsp;Start  
 &nbsp;&nbsp;&nbsp;&nbsp;Terminate  
@@ -174,30 +144,26 @@ Which of the following cluster operations can be used in this situation? Select 
 
 **A data engineer needs to run some SQL code within a Python notebook. Which of the following will allow them to do this? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**They can wrap the SQL command in spark.sql().** 
-&nbsp;&nbsp;&nbsp;&nbsp;They can run the import sql statement at the beginning of their notebook.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can use the %sql command at the top of the cell containing SQL code.** 
-&nbsp;&nbsp;&nbsp;&nbsp;They can use the %md command at the top of the cell containing SQL code.  
-&nbsp;&nbsp;&nbsp;&nbsp;It is not possible to run SQL code from a Python notebook.  
-
+&nbsp;&nbsp;&nbsp;&nbsp;**They can wrap the SQL command in spark.sql().**   
+&nbsp;&nbsp;&nbsp;&nbsp;They can run the import sql statement at the beginning of their notebook.   
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use the %sql command at the top of the cell containing SQL code.**   
+&nbsp;&nbsp;&nbsp;&nbsp;They can use the %md command at the top of the cell containing SQL code.   
+&nbsp;&nbsp;&nbsp;&nbsp;It is not possible to run SQL code from a Python notebook.   
 
 
 **Which of the following pieces of information must be configured in the user settings of a workspace to integrate a Git service provider with a Databricks Repo? 
 Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Administrator credentials for Git service provider account  
-&nbsp;&nbsp;&nbsp;&nbsp;**Username for Git service provider account**  
-&nbsp;&nbsp;&nbsp;&nbsp;**Personal Access Token**  
-&nbsp;&nbsp;&nbsp;&nbsp;Two-factor authentication code from Git service provider  
-&nbsp;&nbsp;&nbsp;&nbsp;Workspace Access Token
-
+&nbsp;&nbsp;&nbsp;&nbsp;Administrator credentials for Git service provider account   
+&nbsp;&nbsp;&nbsp;&nbsp;**Username for Git service provider account**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Personal Access Token**   
+&nbsp;&nbsp;&nbsp;&nbsp;Two-factor authentication code from Git service provider   
+&nbsp;&nbsp;&nbsp;&nbsp;Workspace Access Token  
 
 
 **A data engineer needs the results of a query contained in the third cell of their notebook.
 It has been verified by another engineer that the query runs correctly. However, when they run the cell individually, they notice an error. 
 Which of the following steps can the data engineer take to ensure the query runs without error? Select two responses.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can choose “Run all above” from the dropdown menu within the cell.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can choose “Run all below” from the dropdown menu within the cell.  
@@ -206,11 +172,9 @@ Which of the following steps can the data engineer take to ensure the query runs
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can run the notebook cells in order starting from the first command.** 
 
 
-
 **A data engineering team is working on a shared repository. Each member of the team has cloned the target repository and is working in a separate branch.
 Which of the following is considered best practice for the team members to commit their changes to the centralized repository? Select one response.**
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each commit their changes to the main branch using an automated pipeline after a thorough code review by other members of the team.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineers can each sync their changes with the main branch from the Git terminal, which will automatically commit their changes.  
@@ -219,41 +183,34 @@ Which of the following is considered best practice for the team members to commi
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineers can each create a pull request to be reviewed by other members of the team before merging the code changes into the main branch.** 
 
 
-
-
 **Which of the following operations are supported by Databricks Repos? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**Pull** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Pull**  
 &nbsp;&nbsp;&nbsp;&nbsp;Rebase  
-&nbsp;&nbsp;&nbsp;&nbsp;**Clone** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Clone**  
 &nbsp;&nbsp;&nbsp;&nbsp;Sync  
 &nbsp;&nbsp;&nbsp;&nbsp;Reset  
-
-
 
 
 **A data engineer is working on an ETL pipeline. There are several utility methods needed to run the notebook, and they want to break them down into simpler, reusable components.
 Which of the following approaches accomplishes this? Select one response.**
 
  
-
-&nbsp;&nbsp;&nbsp;&nbsp;Create a separate task for the utility commands and make the notebook dependent on the task from the original notebook’s Directed Acyclic Graph (DAG).  
-&nbsp;&nbsp;&nbsp;&nbsp;**Create a separate notebook for the utility commands and use the %run magic command in the original notebook to run the notebook with the utility commands.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Create a pipeline for the utility commands and run the pipeline from within the original notebook using the %md magic command.  
-&nbsp;&nbsp;&nbsp;&nbsp;Create a separate notebook for the utility commands and use an import statement at the beginning of the original notebook to reference the notebook with the utility commands.  
-&nbsp;&nbsp;&nbsp;&nbsp;Create a separate job for the utility commands and run the job from within the original notebook using the %cmd magic command.  
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate task for the utility commands and make the notebook dependent on the task from the original notebook’s Directed Acyclic Graph (DAG).   
+&nbsp;&nbsp;&nbsp;&nbsp;**Create a separate notebook for the utility commands and use the %run magic command in the original notebook to run the notebook with the utility commands.**   
+&nbsp;&nbsp;&nbsp;&nbsp;Create a pipeline for the utility commands and run the pipeline from within the original notebook using the %md magic command.   
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate notebook for the utility commands and use an import statement at the beginning of the original notebook to reference the notebook with the utility commands.    
+&nbsp;&nbsp;&nbsp;&nbsp;Create a separate job for the utility commands and run the job from within the original notebook using the %cmd magic command.   
 
 
 
 **Which of the following resources reside in the data plane of a Databricks deployment? Select one response.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Web application  
-&nbsp;&nbsp;&nbsp;&nbsp;Job scheduler  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks File System (DBFS)** 
-&nbsp;&nbsp;&nbsp;&nbsp;Notebooks  
-&nbsp;&nbsp;&nbsp;&nbsp;Cluster manager  
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;Web application   
+&nbsp;&nbsp;&nbsp;&nbsp;Job scheduler   
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks File System (DBFS)**   
+&nbsp;&nbsp;&nbsp;&nbsp;Notebooks   
+&nbsp;&nbsp;&nbsp;&nbsp;Cluster manager    
 
 
 **Which of the following statements describes how to clear the execution state of a notebook? Select two responses.**
