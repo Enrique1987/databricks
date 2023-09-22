@@ -4,19 +4,19 @@
 **Two data engineers are collaborating on one notebook in the same repository. Each is worried that if they work on the notebook at different times, they might overwrite changes that the other has made to the code within the notebook.
 Which of the following explains why collaborating in Databricks Notebooks prevents these problems from occurring? Select one response.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks supports alerts and audit logs for easy monitoring and troubleshooting, so the data engineers will be alerted when changes are made to their code.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks are integrated into CI/CD pipelines by default, so the data engineers can work in separate branches without overwriting the other’s work.  
-&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks automatically handles schema variations to prevent insertion of bad records during ingestion, so the data engineers will be prevented from overwriting data that does not match the table’s schema.  
-&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks enforces serializable isolation levels, so the data engineers will never see inconsistencies in their data.  
+&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks supports alerts and audit logs for easy monitoring and troubleshooting, so the data engineers will be alerted when changes are made to their code.    
+&nbsp;&nbsp;&nbsp;&nbsp;**Databricks Notebooks supports real-time co-authoring, so the data engineers can work on the same notebook in real-time while tracking changes with detailed revision history.**   
+&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks are integrated into CI/CD pipelines by default, so the data engineers can work in separate branches without overwriting the other’s work.    
+&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks automatically handles schema variations to prevent insertion of bad records during ingestion, so the data engineers will be prevented from overwriting data that does not match the table’s schema.    
+&nbsp;&nbsp;&nbsp;&nbsp;Databricks Notebooks enforces serializable isolation levels, so the data engineers will never see inconsistencies in their data.    
 
 
 **Due to the platform administrator’s policies, a data engineer needs to use a single cluster on one very large batch of files for an ETL workload.
 The workload is automated, and the cluster will only be used by one workload at a time. They are part of an organization that wants them to minimize costs when possible.
 Which of the following cluster configurations can the team use to satisfy their requirements? Select one response.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Multi node all-purpose cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;Single node all-purpose cluster   
+&nbsp;&nbsp;&nbsp;&nbsp;Multi node all-purpose cluster    
+&nbsp;&nbsp;&nbsp;&nbsp;Single node all-purpose cluster    
 &nbsp;&nbsp;&nbsp;&nbsp;High concurrency all-purpose cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;Single node job cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;**Multi node job cluster**  
