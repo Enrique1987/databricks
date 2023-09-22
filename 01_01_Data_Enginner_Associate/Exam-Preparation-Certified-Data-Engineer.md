@@ -274,20 +274,15 @@ They are using the following code with multiple array transformations to return 
 ```
 from pyspark.sql.functions import array_distinct, collect_set, flatten
 
- 
-
 exploded_eventsDF
-
     .groupby("user_id")
-
     .agg(collect_set("event_name"),
+	_____
 
-     _____
+```
 
- 
-```**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.** 
+**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.** 
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")  
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")  
@@ -296,20 +291,15 @@ exploded_eventsDF
 &nbsp;&nbsp;&nbsp;&nbsp;flatten(extract(events.event_id)).alias("event_history")  
 
 
-
-
 **A data engineer wants to extract lines as raw strings from a text file. 
 Which of the following SQL commands accomplishes this task? Select one response.**
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;   
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;  
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM `${dbfs:/mnt/datasets}/001.txt`;    
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM `${dbfs:/mnt/datasets}/001.txt`;  
 &nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;** 
-
-
 
 
 **Which of the following commands returns a new DataFrame from the DataFrame usersDF without duplicates? Select one response**
@@ -321,7 +311,6 @@ Which of the following SQL commands accomplishes this task? Select one response.
 &nbsp;&nbsp;&nbsp;&nbsp;**usersDF.distinct()** 
 
 
-
 **Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;usersDF.drop()  
@@ -331,16 +320,15 @@ Which of the following SQL commands accomplishes this task? Select one response.
 &nbsp;&nbsp;&nbsp;&nbsp;**usersDF.where(col("email").isNull()).count()** 
 
 
-
 **A data engineer has a DataFrame events_df that has been registered against an external JSON file. The nested JSON fields have already been converted into struct types.
 The data engineer now needs to flatten the struct fields back into individual columns for the field event_type. The events_df DataFrame has the following schema:**
 
  
-
+```
 	date string
 	month string
 	event_type StructType<id string, size int>
-
+```
  
 
 **Which of the following approaches allows the data engineer to retrieve id within event_type? Select one response.**  
@@ -348,7 +336,7 @@ The data engineer now needs to flatten the struct fields back into individual co
 
 	Tipp: if the question says "have already been converted into structu types" answer wouls be acces via "." if not the access is via ":"
 
-&nbsp;&nbsp;&nbsp;&nbsp;**They can use . syntax to access id in event_type.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use . syntax to access id in event_type.**   
 &nbsp;&nbsp;&nbsp;&nbsp;They can use event_type.* to pull out id into its own column.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use : syntax to access id in event_type.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the columns for id.  
@@ -359,8 +347,6 @@ The data engineer now needs to flatten the struct fields back into individual co
 **A data engineer has a query that directly updates the files underlying the external table emails. 
 Which of the following correctly describes how to retrieve the number of rows in the updated table? Select one response.**
 
-
- 
 ```
 REFRESH TABLE emails;
 SELECT COUNT(*) FROM emails AS OF VERSION 1;
@@ -377,6 +363,8 @@ SELECT COUNT(*) FROM emails;**
 REFRESH TABLE emails;
 SELECT DISTINCT_COUNT(*) FROM emails;
 ```
+
+
 **A data engineer is using the following code block to create and register a function that returns the first letter of the string email.
 Another data engineer points out that there is a more efficient way to do this.
 Which of the following identifies how the data engineer can eliminate redundancies in the code? Select one response.**
@@ -391,7 +379,9 @@ def first_letter_function(email: str) -> str:
     return email[0]
 
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
-```&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
 &nbsp;&nbsp;&nbsp;&nbsp;**They can eliminate the statement that registers the function.**
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the parameters in the function declaration.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the import statement in the beginning of the code block.  
@@ -402,8 +392,6 @@ first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 
 **A data engineer needs to query a JSON file whose location is represented by the variable path.
 Which of the following commands do they need to use? Select one response.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLE json.`${path}`;  
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM path LOCATION `${path}`;  
@@ -418,7 +406,6 @@ when it is in the following format:  user.address@domain.com Which of the follow
 domain that contains the domain from the email_address column? Select one response.** 
 
  
-
 &nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))** 
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", flatten("email_address", "(?<=@).+", 0))  
@@ -754,13 +741,12 @@ from pyspark.sql.functions import array_distinct, collect_set, flatten
 exploded_eventsDF
 
     .groupby("user_id")
-
     .agg(collect_set("event_name"),
-
      _____
 
-```
-Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.
+```  
+
+**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.**
 
  
 
