@@ -406,7 +406,7 @@ when it is in the following format:  user.address@domain.com Which of the follow
 domain that contains the domain from the email_address column? Select one response.** 
 
  
-&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))** 
+&nbsp;&nbsp;&nbsp;&nbsp;**.withColumn("domain", regexp_extract("email_address", "(?<=@).+", 0))**   
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", collect_set("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", flatten("email_address", "(?<=@).+", 0))  
 &nbsp;&nbsp;&nbsp;&nbsp;.withColumn("domain", array_distinct("email_address", "(?<=@).+", 0))  
@@ -426,9 +426,9 @@ avg_high_temp string
 to be in the month columns. How can the data engineer accomplish this? Select one response.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .pivot() function.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .transform()clause.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .transform() clause.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can rotate the data from long to wide format using the .pivot() function.** 
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .transform()clause.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .transform() clause.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can rotate the data from long to wide format using the .pivot() function.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .groupBy()clause.  
 
 
@@ -447,9 +447,9 @@ They need to access the field date within events_df. The events_df DataFrame has
  
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can index the query by subfield using events[date] syntax.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can use date.* to pull out the subfields of events_df into their own columns.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access date in events_df.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can use : syntax to access date in events_df.** 
+&nbsp;&nbsp;&nbsp;&nbsp;They can use date.* to pull out the subfields of events_df into their own columns.   
+&nbsp;&nbsp;&nbsp;&nbsp;They can use . syntax to access date in events_df.   
+&nbsp;&nbsp;&nbsp;&nbsp;**They can use : syntax to access date in events_df.**   
 &nbsp;&nbsp;&nbsp;&nbsp;They can use from_json() to parse the column for date.  
 
 
@@ -458,34 +458,33 @@ They need to access the field date within events_df. The events_df DataFrame has
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.   
-&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.** 
-&nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
-&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.  
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.     
+&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**   
+&nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.    
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.    
+&nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically added to the event log.    
 
 
 
 **Which of the following statements about the difference between views and temporary views are correct? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.  
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.** 
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.   
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.   
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.   
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.**   
 
 
 **A data engineer needs a reference to the results of a query that can be referenced across multiple queries within the scope of the environment session.
 The data engineer does not want the reference to exist outside of the scope of the environment session.
 Which of the following approaches accomplishes this without explicitly dropping the data object? Select one response.** 
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a common table expression (CTE).  
-&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a table.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a reusable user-defined function (UDF).  
-&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a view.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can store the results of their query within a temporary view.** 
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a table.   
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a reusable user-defined function (UDF).   
+&nbsp;&nbsp;&nbsp;&nbsp;They can store the results of their query within a view.   
+&nbsp;&nbsp;&nbsp;&nbsp;**They can store the results of their query within a temporary view.**  
 
 
 
@@ -502,9 +501,11 @@ from pyspark.sql.functions import countDistinct
 usersDF
     .groupBy("phone_number")
     .agg(countDistinct("user_id").alias("unique_user_ids")) 
-```&nbsp;&nbsp;&nbsp;&nbsp;A.dropDuplicates() statement needs to be added after the .agg() function.  
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.dropDuplicates() statement needs to be added after the .agg() function.   
 &nbsp;&nbsp;&nbsp;&nbsp;A.merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.  
-&nbsp;&nbsp;&nbsp;&nbsp;**A.select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**A.select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.**  
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).  
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to .countDistinct(phone_number).  
 
@@ -523,11 +524,11 @@ OPTIONS (
 
 **Which of the following correctly identifies why running the code is resulting in an error? Select one response.** 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.** 
-&nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL.  
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.  
-&nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
+&nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.**   
+&nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL.   
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.   
+&nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.   
 
 
 
@@ -543,9 +544,6 @@ sales_df = (spark
     .withColumn("item", explode("items"))
 
 )
-
- 
-
 items_df = spark.table("item_lookup")
 item_purchasesDF = (sales_df
 
@@ -555,15 +553,12 @@ item_purchasesDF = (sales_df
 
 **Which of the following lines of code correctly fills in the blank? Select one response.**
 
- 
 
-&nbsp;&nbsp;&nbsp;&nbsp;.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)  
+&nbsp;&nbsp;&nbsp;&nbsp;.innerJoin(items_df, sales_df.sales_id == items_df.sales_id)   
 &nbsp;&nbsp;&nbsp;&nbsp;.merge(items_df, sales_df, on = "item_id")  
 &nbsp;&nbsp;&nbsp;&nbsp;**.join(items_df, sales_df.sales_id == items_df.sales_id)**   
-&nbsp;&nbsp;&nbsp;&nbsp;.outerJoin(items_df, sales.sales_id == items_df.sales_id)  
-&nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")  
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;.outerJoin(items_df, sales.sales_id == items_df.sales_id)   
+&nbsp;&nbsp;&nbsp;&nbsp;.join(items_df, sales.sales_id == items_df.sales_id, how = "cross")   
 
 
 **A data engineer wants to extract lines as raw strings from a text file. Which of the following SQL commands accomplishes this task? Select one response.**
@@ -575,7 +570,8 @@ SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;
 SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;
 SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;  --> the correct one
 
-```**A data engineer has the following query, where path is a variable that represents the location of a directory.**
+```
+**A data engineer has the following query, where path is a variable that represents the location of a directory.**
 
 
 Query:
@@ -619,30 +615,29 @@ spark.udf.register(createUser(username))
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, older cached versions of the table are automatically deleted.  
 &nbsp;&nbsp;&nbsp;&nbsp;None of these statements about external table behavior are true.  
 &nbsp;&nbsp;&nbsp;&nbsp;When defining tables or queries against external data sources, the storage path, external location, and storage credential are displayed for users who have been granted USAGE access to the table.  
-&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**When defining tables or queries against external data sources, the performance guarantees associated with Delta Lake and Lakehouse cannot be guaranteed.**  
 &nbsp;&nbsp;&nbsp;&nbsp;*Explination: External data sources can vary in their performance characteristics, and the optimizations present in solutions like Delta Lake may not apply when reading from these sources.  
-Delta Lake and Lakehouse provide certain optimizations and ACID (Atomicity, Consistency, Isolation, Durability) guarantees for data that is stored and managed within them.*  
+Delta Lake and Lakehouse provide certain optimizations and ACID (Atomicity, Consistency, Isolation, Durability) guarantees for data that is stored and managed within them.*   
 
 
 **A data engineer is using the following code block to create a table using an external CSV file as its source.
-They need to specify that the fields are separated by | and that there is a header.**
-
- 
+They need to specify that the fields are separated by | and that there is a header.**  
 
 ```
 CREATE TABLE IF NOT EXISTS sales_csv
 
   (order_id LONG, email STRING, transactions_timestamp LONG, total_item_quantity INTEGER, purchase_revenue_in_usd DOUBLE, unique_items INTEGER, items STRING)
-
 USING CSV
-
 _____
 
 LOCATION "${dbfs:/mnt/datasets}"
 
- ```Which of the following correctly fills in the blank for the table options? Select one response.
+ ``` 
+ 
+**Which of the following correctly fills in the blank for the table options? Select one response.**  
 
-```OPTIONS (
+```
+OPTIONS (
   header = "true",
   delimiter = "|"
 ) --> the correct one
@@ -664,15 +659,15 @@ header = "true",
 delimiter = "|"
 )
 ```
-**Which of the following statements about the difference between views and temporary views are correct? Select two responses.**
+**Which of the following statements about the difference between views and temporary views are correct? Select two responses.**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.   
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views skip persisting the definition in the underlying metastore. Views have metadata that can be accessed in the view’s directory.**   
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views reside in the third layer of Unity Catalog’s three-level namespace Views lie in the metastore.   
+&nbsp;&nbsp;&nbsp;&nbsp;**Temporary views are session-scoped and dropped when the Spark session ends. Views can be accessed after the session ends.**   
+&nbsp;&nbsp;&nbsp;&nbsp;Temporary views have names that must be qualified. Views have names that must be unique.   
 
-**Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**
+**Which of the following lines of code counts null values in the column email from the DataFrame usersDF? Select two responses.**  
 
 ```
 usersDF.distinct()
@@ -686,8 +681,10 @@ usersDF.selectExpr("count_if(email IS NULL)")
 ```
 usersDF.where(col("email").isNull()).count()
 usersDF.selectExpr("count_if(email IS NULL)")
-```´**A data engineer needs to extract the calendar date and time in human readable format from a DataFrame containing the timestamp column user_last_touch_timestamp.
-Which of the following lines of code correctly fills in the blank by adding the column end_date of type date in human readable format? Select one response.**
+```
+
+**A data engineer needs to extract the calendar date and time in human readable format from a DataFrame containing the timestamp column user_last_touch_timestamp.
+Which of the following lines of code correctly fills in the blank by adding the column end_date of type date in human readable format? Select one response.**  
 
 *1 clue: The type have to be date so it means HH:mm:ss can not be as ist not data but hour*
 
@@ -698,46 +695,47 @@ Which of the following lines of code correctly fills in the blank by adding the 
 .withColumn(date_time("end_date"), user_last_touch_timestamp, "MMM d, yyyy")
 .withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))  --> Correct one
 ```
+
 **A data engineer has a table records with a column email. They want to check if there are null values in the email column.
-Which of the following approaches accomplishes this? Select one response.**
+Which of the following approaches accomplishes this? Select one response.**  
 
- 
 
-&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by creating a data expectation to drop null values.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null using SELECT DISTINCT records.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by pivoting the table on null values.  
-&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.** 
-&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by creating a data expectation to drop null values.   
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null using SELECT DISTINCT records.   
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by pivoting the table on null values.   
+&nbsp;&nbsp;&nbsp;&nbsp;**They can check if there is at least one record where email is null by adding a filter for when email IS NULL to a SELECT statement.**  
+&nbsp;&nbsp;&nbsp;&nbsp;They can check if there is at least one record where email is null by running a regular expression function on email to filter out null values.   
 
 
 **A data engineer is registering a table in Databricks using the table users from an external SQL database. 
-One of their colleagues gives them the following code to register the table. However, when the data engineer runs the code, they notice an error.**
+One of their colleagues gives them the following code to register the table. However, when the data engineer runs the code, they notice an error.**  
 
- 
 
-```CREATE TABLE users_jdbc
+```
+CREATE TABLE users_jdbc
 USING JDBC
 OPTIONS (
   url = "jdbc:sqlite:${DA.paths.ecommerce_db}"
 )
-```Which of the following correctly identifies why running the code is resulting in an error? Select one response.
+```
+
+**Which of the following correctly identifies why running the code is resulting in an error? Select one response.**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL    
 &nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
 &nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE needs to be changed to CREATE JDBC TABLE.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**The line dbtable = "users" needs to be added to OPTIONS.**  
 &nbsp;&nbsp;&nbsp;&nbsp;A username and password need to be added to OPTIONS.  
  
 
 **A data engineer has created a DataFrame exploded_eventsDF created from the table exploded_events defined here: 
-They are using the following code with multiple array transformations to return a new DataFrame that shows the unique collection of the columns event_name and items.**
+They are using the following code with multiple array transformations to return a new DataFrame that shows the unique collection of the columns event_name and items.**  
 
  
 ```
 CREATE TABLE events (user_id string, event_name string, item_id string, events struct<coupon:string, event_id:string, event_revenue:double>);
  
 from pyspark.sql.functions import array_distinct, collect_set, flatten
-
 exploded_eventsDF
 
     .groupby("user_id")
@@ -746,15 +744,14 @@ exploded_eventsDF
 
 ```  
 
-**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.**
+**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.**  
 
- 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")** 
-&nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")  
-&nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")  
-&nbsp;&nbsp;&nbsp;&nbsp;array_distinct(extract(collect_set(events.event_id))).alias("event_history")  
-&nbsp;&nbsp;&nbsp;&nbsp;flatten(extract(events.event_id)).alias("event_history")  
+&nbsp;&nbsp;&nbsp;&nbsp;**array_distinct(flatten(collect_set("events.event_id"))).alias("event_history")**   
+&nbsp;&nbsp;&nbsp;&nbsp;flatten(array_distinct(events[event_id])).alias("event_history")   
+&nbsp;&nbsp;&nbsp;&nbsp;flatten(collect_set(explode(events:event_id))).alias("event_history")   
+&nbsp;&nbsp;&nbsp;&nbsp;array_distinct(extract(collect_set(events.event_id))).alias("event_history")   
+&nbsp;&nbsp;&nbsp;&nbsp;flatten(extract(events.event_id)).alias("event_history")   
 
 
 	Explanation:The collect_set function is used to collect unique values of a column into a set.
@@ -764,32 +761,28 @@ exploded_eventsDF
 
 
 
-**A data engineer needs to query a JSON file whose location is represented by the variable path.  Which of the following commands do they need to use? Select one response.**
+**A data engineer needs to query a JSON file whose location is represented by the variable path.  Which of the following commands do they need to use? Select one response.**  
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;RETURN json.`${path}`;  
-&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM json.`${path}`;**
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM path LOCATION `${path}`;   
+&nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM json.`${path}`;**  
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM path LOCATION `${path}`;     
 &nbsp;&nbsp;&nbsp;&nbsp;DISPLAY TABLE json.`${path}`;  
-&nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLE json.`${path}`  ;
-
+&nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLE json.`${path}`  ;  
 
 
 ### Theorie
-A senior data engineer has registered the Python function create_users to be used by the rest of their team.
+
+**A senior data engineer has registered the Python function create_users to be used by the rest of their team.
 They have written the function in Python 3.6. Another data engineer wants to know what the expected inputs are. 
-
-Which of the following is considered a best practice to do this? Select one response.
-
- 
+Which of the following is considered a best practice to do this? Select one response.**  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can declare the function with @udf("string") syntax to specify the input and return types of the function.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use type hints to clarify the input and return types of the function.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a comment to the table properties to clarify the input and return types of the function.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a return string line to the end of their UDF to specify the input and return types of the function.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add the input and output types to the table using @options()  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can declare the function with @udf("string") syntax to specify the input and return types of the function.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use type hints to clarify the input and return types of the function.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a comment to the table properties to clarify the input and return types of the function.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add a return string line to the end of their UDF to specify the input and return types of the function.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can add the input and output types to the table using @options()   
 
 
 
@@ -799,42 +792,35 @@ Which of the following is considered a best practice to do this? Select one resp
 
 **Performance and Internal Workings:**
 
-`@udf`: This is the basic UDF in Spark, which works row-at-a-time. For each row, the UDF function is invoked, which can lead to a significant performance overhead, especially when using Python, because of serialization and deserialization between the JVM and the Python interpreter for every row.
-
-`@pandas_udf`: Introduced in Spark 2.3, this UDF leverages the power of the Pandas library to perform operations on data in a vectorized manner (i.e., column-wise operations rather than row-wise). This means that instead of working on individual rows, it operates on a column or a batch of rows as Pandas Series. This reduces the serialization/deserialization overhead, leading to a huge performance boost.
+`@udf`: This is the basic UDF in Spark, which works row-at-a-time. For each row, the UDF function is invoked, which can lead to a significant performance overhead, especially when using Python, because of serialization and deserialization between the JVM and the Python interpreter for every row.  
+`@pandas_udf`: Introduced in Spark 2.3, this UDF leverages the power of the Pandas library to perform operations on data in a vectorized manner (i.e., column-wise operations rather than row-wise). This means that instead of working on individual rows, it operates on a column or a batch of rows as Pandas Series. This reduces the serialization/deserialization overhead, leading to a huge performance boost.  
 
 
 **Function Argument and Return Types:**
 
-`@udf`: The function decorated with @udf takes individual rows (typically as tuples) and returns individual values.
-
-`@pandas_udf`: The function decorated with @pandas_udf takes one or more Pandas Series (for each input column) and returns a Pandas Series.
+`@udf`: The function decorated with @udf takes individual rows (typically as tuples) and returns individual values.  
+`@pandas_udf`: The function decorated with @pandas_udf takes one or more Pandas Series (for each input column) and returns a Pandas Series.  
 
 **Use Cases:**
 
-`@udf`: General-purpose UDF, applicable for a wide range of scenarios where you want to apply a custom transformation at the row level.
-
-`@pandas_udf`: Ideal for more complex operations that can benefit from Pandas functionalities, like operations on time series data, operations requiring window functions, etc.
+`@udf`: General-purpose UDF, applicable for a wide range of scenarios where you want to apply a custom transformation at the row level.  
+`@pandas_udf`: Ideal for more complex operations that can benefit from Pandas functionalities, like operations on time series data, operations requiring window functions, etc.  
 
 **Syntax:**
 
-`@udf:` You can specify the return type, e.g., @udf(StringType()).
-
-`@pandas_udf:` You need to specify the type for the entire column being returned, e.g., @pandas_udf("string").
+`@udf:` You can specify the return type, e.g., @udf(StringType()).  
+`@pandas_udf:` You need to specify the type for the entire column being returned, e.g., @pandas_udf("string").  
 
 **Optimization:**
 
-`@udf:` Cannot leverage the Catalyst optimizer fully since operations inside the UDF are a black box to Spark.
-
-`@pandas_udf:` While still not as optimizable as native Spark functions, the vectorized nature of Pandas UDFs offers more optimization opportunities.
+`@udf:` Cannot leverage the Catalyst optimizer fully since operations inside the UDF are a black box to Spark.  
+`@pandas_udf:` While still not as optimizable as native Spark functions, the vectorized nature of Pandas UDFs offers more optimization opportunities.  
 
 **Important to note**
 
 `Native Spark Operations vs. UDFs:`
-
-Native Spark operations (those that are built into Spark itself) are always preferred when dealing with large-scale data processing tasks in Spark. This is because these operations can be fully optimized by Spark's Catalyst optimizer.
-
-UDFs (whether @udf or @pandas_udf) are essentially black boxes to the Catalyst optimizer, so they don't get the same level of optimization. Using UDFs can lead to suboptimal execution plans.
+Native Spark operations (those that are built into Spark itself) are always preferred when dealing with large-scale data processing tasks in Spark. This is because these operations can be fully optimized by Spark's Catalyst optimizer.  
+UDFs (whether @udf or @pandas_udf) are essentially black boxes to the Catalyst optimizer, so they don't get the same level of optimization. Using UDFs can lead to suboptimal execution plans.  
 
 `@udf vs. @pandas_udf:`
 
@@ -861,14 +847,14 @@ In conclusion, while @pandas_udf can offer significant performance advantages ov
 
 &nbsp;&nbsp;&nbsp;&nbsp;**Catalog name**  
 &nbsp;&nbsp;&nbsp;&nbsp;Last modification date  
-&nbsp;&nbsp;&nbsp;&nbsp;**Owner** 
-&nbsp;&nbsp;&nbsp;&nbsp;Creation date  
-&nbsp;&nbsp;&nbsp;&nbsp;**Location** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Owner**  
+&nbsp;&nbsp;&nbsp;&nbsp;Creation date   
+&nbsp;&nbsp;&nbsp;&nbsp;**Location**  
 
 
 
 **A data engineer is working with the table products. They want to identify the location of products and read its metadata,
- including the table’s format and the date that the table was created at. Which of the following commands do they need to use? Select one response.**
+ including the table’s format and the date that the table was created at. Which of the following commands do they need to use? Select one response.**  
 
  
 &nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE TABLE products;  
@@ -878,29 +864,27 @@ In conclusion, while @pandas_udf can offer significant performance advantages ov
 &nbsp;&nbsp;&nbsp;&nbsp;SHOW TABLES products;  
 
 
-,
 **A data engineer is trying to create the generated column date in their table. However, when they run their query to create the table,
-they notice an error in the following line of code.Which of the following commands do they need to use? Select one response. **
+they notice an error in the following line of code.Which of the following commands do they need to use? Select one response. **  
 
  
-
-```date DATE GENERATED ALWAYS AS (
+```
+date DATE GENERATED ALWAYS AS (
 
     cast(cast(transaction_timestamp/1e6) AS DATE)))
 ```
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;The DATE GENERATED ALWAYS AS command already casts transaction_timestamp to a date, so the AS DATE cast needs to be removed.  
+&nbsp;&nbsp;&nbsp;&nbsp;The DATE GENERATED ALWAYS AS command already casts transaction_timestamp to a date, so the AS DATE cast needs to be removed.   
 &nbsp;&nbsp;&nbsp;&nbsp;The ALWAYS keyword needs to be removed to account for improperly formatted data.  
-&nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to datetime format before it is cast as a date.  
-&nbsp;&nbsp;&nbsp;&nbsp;**transaction_timestamp needs to be cast as a timestamp before it is cast as a date.** 
-&nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to an integer before it is cast as a date.  
+&nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to datetime format before it is cast as a date.   
+&nbsp;&nbsp;&nbsp;&nbsp;**transaction_timestamp needs to be cast as a timestamp before it is cast as a date.**  
+&nbsp;&nbsp;&nbsp;&nbsp;transaction_timestamp needs to be converted to an integer before it is cast as a date.   
 
 
 
-**Which of the following SQL commands can be used to remove a schema (database) at a specified location? Select two responses.**
+**Which of the following SQL commands can be used to remove a schema (database) at a specified location? Select two responses.**  
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;**DROP DATABASE**   
 &nbsp;&nbsp;&nbsp;&nbsp;DELETE SCHEMA  
@@ -911,46 +895,45 @@ they notice an error in the following line of code.Which of the following comman
 
 **A data engineer needs to query a Delta table to extract rows that all meet the same condition. However, they notice that the query is running slowly,
 and that the data files used in the query are extremely small.
-Which of the following techniques can the data engineer use to improve the performance of the query? Select one response.**
+Which of the following techniques can the data engineer use to improve the performance of the query? Select one response.**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;They can perform vacuuming and data skipping in the query using the VACUUM and DATASKIPPING commands.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can perform data skipping and file compaction in the query using the DATASKIPPING and OPTIMIZE commands   
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform vacuuming and data skipping in the query using the VACUUM and DATASKIPPING commands.    
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform data skipping and file compaction in the query using the DATASKIPPING and OPTIMIZE commands    
 &nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and Z-order indexing in the query using the COMPACT and ZORDER commands.  
-&nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and vacuuming in the query using the COMPACT and VACUUM commands.  
+&nbsp;&nbsp;&nbsp;&nbsp;They can perform file compaction and vacuuming in the query using the COMPACT and VACUUM commands.   
 &nbsp;&nbsp;&nbsp;&nbsp;**They can perform file compaction and Z-order indexing in the query using the OPTIMIZE and ZORDER commands.**   
 
 
 
-**Which of the following describes a feature of Delta Lake that is unavailable in a traditional data warehouse? Select two responses.**
+**Which of the following describes a feature of Delta Lake that is unavailable in a traditional data warehouse? Select two responses.**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;Centralized repository to share features  
-&nbsp;&nbsp;&nbsp;&nbsp;**Combined batch and streaming analytics** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Auto Loader for data ingestion of raw files** 
-&nbsp;&nbsp;&nbsp;&nbsp;Experiment tracking and model management  
-&nbsp;&nbsp;&nbsp;&nbsp;Built-in monitoring for scheduled queries  
+&nbsp;&nbsp;&nbsp;&nbsp;Centralized repository to share features   
+&nbsp;&nbsp;&nbsp;&nbsp;**Combined batch and streaming analytics**  
+&nbsp;&nbsp;&nbsp;&nbsp;**Auto Loader for data ingestion of raw files**  
+&nbsp;&nbsp;&nbsp;&nbsp;Experiment tracking and model management   
+&nbsp;&nbsp;&nbsp;&nbsp;Built-in monitoring for scheduled queries   
 
 **A data engineer has a collection of tables. They need to manually remove old data files from the tables and remove access to previous versions of the tables. 
-Which of the following approaches allows the data engineer to do this? Select one response.**
+Which of the following approaches allows the data engineer to do this? Select one response.**  
 
  
-
 &nbsp;&nbsp;&nbsp;&nbsp;**They need to disable the retention duration check and enable vacuum logging. Then they need to vacuum the table.**   
 &nbsp;&nbsp;&nbsp;&nbsp;They need to enable the retention duration check and disable vacuum logging. Then they need to Z-order the table.  
 &nbsp;&nbsp;&nbsp;&nbsp;They need to enable the retention duration check and vacuum logging. Then they need to optimize the table.  
 &nbsp;&nbsp;&nbsp;&nbsp;They need to disable the retention duration check and enable the last commit version in session. Then they need to vacuum the table.  
-&nbsp;&nbsp;&nbsp;&nbsp;They need to disable the last commit version in session and enable vacuum duration check. Then they need to Z-order the table.  
-
+&nbsp;&nbsp;&nbsp;&nbsp;They need to disable the last commit version in session and enable vacuum duration check. Then they need to Z-order the table.   
 
 
 **The code block shown below should add a constraint to the table transaction_dates where only records from after '2022-10-01' can be added to the table.
-The column date represents the date the records were created.**
+The column date represents the date the records were created.**  
 
- 
 
-```__1__ transaction_dates __2__ valid_date __3__;
+```
+__1__ transaction_dates __2__ valid_date __3__;
 
-```**Which of the following correctly fills in the numbered blanks within the code block to complete this task? Select one response.**
+```
 
+**Which of the following correctly fills in the numbered blanks within the code block to complete this task? Select one response.**  
 ```
 ALTER TABLE
 ADD CONSTRAINT
@@ -971,20 +954,17 @@ CHECK (date > '2022-10-01')  --> correct one
 ALTER TABLE
 CONSTRAINT
 (date > '2022-10-01')
+```
 
-```**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.**
+**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.**  
 
- 
 
 ```
 INSERT INTO sales
-
 SELECT *, current_timestamp() FROM parquet `${da.paths.datasets}/ecommerce/raw/sales-historical`
 ```
 
-**Which of the following statements correctly explains why the query is not running as expected? Select one response.**
-
- 
+**Which of the following statements correctly explains why the query is not running as expected? Select one response.**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;None of the provided answer choices explain why the query is running incorrectly.  
 &nbsp;&nbsp;&nbsp;&nbsp;APPEND needs to be used instead of INSERT INTO.  
@@ -993,160 +973,138 @@ SELECT *, current_timestamp() FROM parquet `${da.paths.datasets}/ecommerce/raw/s
 &nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO needs to be used instead of INSERT INTO.  
 
 
-
 **A data engineer is trying to improve the performance of their query by colocating records on a common filter column to reduce the number of files that need to be read.
 The data engineer notices that the column user_id, which contains only unique values, is used in all of their query predicates. 
-Which optimization technique does the data engineer need to use? Select one response.**
-
- 
+Which optimization technique does the data engineer need to use? Select one response.**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to use ZORDER to colocate records on user_id.**   
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use DATASKIPPING to colocate records on user_id.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use COLOCATE to colocate records on user_id.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use VACUUM to colocate records on user_id.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use OPTIMIZE to colocate records on user_id.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use DATASKIPPING to colocate records on user_id.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use COLOCATE to colocate records on user_id.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use VACUUM to colocate records on user_id.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to use OPTIMIZE to colocate records on user_id.   
 
 
+**Which of the following statements about vacuuming with Delta Lake is true? Select one response.**  
 
-**Which of the following statements about vacuuming with Delta Lake is true? Select one response.**
 
- 
-
-&nbsp;&nbsp;&nbsp;&nbsp;On Delta tables, Databricks automatically triggers VACUUM operations as data is written.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Running VACUUM on a Delta table eliminates the ability to time travel back to a version older than the specified data retention period** 
-&nbsp;&nbsp;&nbsp;&nbsp;VACUUM will not vacuum any directories that begin with an underscore except for _delta_log.  
-&nbsp;&nbsp;&nbsp;&nbsp;Delta table metadata files will not be vacuumed unless the auto retention check is turned off.  
-&nbsp;&nbsp;&nbsp;&nbsp;Delta table data files are vacuumed according to their modification timestamps on the storage system.  
+&nbsp;&nbsp;&nbsp;&nbsp;On Delta tables, Databricks automatically triggers VACUUM operations as data is written.   
+&nbsp;&nbsp;&nbsp;&nbsp;**Running VACUUM on a Delta table eliminates the ability to time travel back to a version older than the specified data retention period**   
+&nbsp;&nbsp;&nbsp;&nbsp;VACUUM will not vacuum any directories that begin with an underscore except for _delta_log.   
+&nbsp;&nbsp;&nbsp;&nbsp;Delta table metadata files will not be vacuumed unless the auto retention check is turned off.    
+&nbsp;&nbsp;&nbsp;&nbsp;Delta table data files are vacuumed according to their modification timestamps on the storage system.   
 
 
 **Data engineer wants to make changes to a very large table. They want to test their changes on a similar data object before modifying or 
 copying the original table’s associated data.Which of the following keywords can be used to create a similar data object that can be
 used for testing while meeting the above requirements? Select one response.**
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;CLONE  
 &nbsp;&nbsp;&nbsp;&nbsp;COPY  
-&nbsp;&nbsp;&nbsp;&nbsp;**SHALLOW CLONE** 
-&nbsp;&nbsp;&nbsp;&nbsp;DEEP CLONE  
-&nbsp;&nbsp;&nbsp;&nbsp;UPDATE  
-
+&nbsp;&nbsp;&nbsp;&nbsp;**SHALLOW CLONE**  
+&nbsp;&nbsp;&nbsp;&nbsp;DEEP CLONE   
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE   
 
 **A data engineer wants to create an empty Delta table called student if it hasn’t already been created.
-Which of the following will create a new table named student *regardless* of whether another table with the same name has already been created? Select one response.**
+Which of the following will create a new table named student *regardless* of whether another table with the same name has already been created? Select one response.**  
 
 	Tipp: `regardless` is the key word it means if its already create we will replace it,
 
 &nbsp;&nbsp;&nbsp;&nbsp;**CREATE OR REPLACE TABLE student (id INT, name STRING, age INT);**   
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE student (id INT, name STRING, age INT);  
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student AS SELECT * FROM student  
-&nbsp;&nbsp;&nbsp;&nbsp;OVERWRITE TABLE student (id INT, name STRING, age INT);  
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student (id INT, name STRING, age INT);  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE student (id INT, name STRING, age INT);   
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student AS SELECT * FROM student   
+&nbsp;&nbsp;&nbsp;&nbsp;OVERWRITE TABLE student (id INT, name STRING, age INT);   
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE TABLE IF NOT EXISTS student (id INT, name STRING, age INT);   
 
 
 **A data engineer needs to undo changes made to the table foods. They need to ensure that the second version of the table does not include the
-changes before restoring the table back to that state.**
+changes before restoring the table back to that state.**  
 
-
-
-
-```SELECT * FROM foods VERSION AS OF 2;
-
+```
+SELECT * FROM foods VERSION AS OF 2;
 REFRESH TABLE foods;
 
 SELECT * FROM foods WHERE version_number() == 2;
-
 RESTORE TABLE foods TO VERSION AS OF 2;
 ```
  
+**In what order do the lines of code above need to be run in a SQL environment in order to meet the requirements? Select one response.**  
 
-**In what order do the lines of code above need to be run in a SQL environment in order to meet the requirements? Select one response.**
-
- 
-
-&nbsp;&nbsp;&nbsp;&nbsp;**1,4** 
-&nbsp;&nbsp;&nbsp;&nbsp;4  
-&nbsp;&nbsp;&nbsp;&nbsp;1,2  
-&nbsp;&nbsp;&nbsp;&nbsp;3,2  
-&nbsp;&nbsp;&nbsp;&nbsp;2  
-
-
+&nbsp;&nbsp;&nbsp;&nbsp;**1,4**  
+&nbsp;&nbsp;&nbsp;&nbsp;4   
+&nbsp;&nbsp;&nbsp;&nbsp;1,2   
+&nbsp;&nbsp;&nbsp;&nbsp;3,2   
+&nbsp;&nbsp;&nbsp;&nbsp;2   
 
 
 **A data engineer needs to create a table with additional metadata columns. 
 The columns need to specify the timestamp at which the table creation query was executed and the source data file for each record in the table. 
-Which of the following built-in Spark SQL commands can the data engineer use in their query to add these columns? Select two responses.**
+Which of the following built-in Spark SQL commands can the data engineer use in their query to add these columns? Select two responses.**  
 
- 
 
-&nbsp;&nbsp;&nbsp;&nbsp;input_file_block_start()  
+&nbsp;&nbsp;&nbsp;&nbsp;input_file_block_start()   
 &nbsp;&nbsp;&nbsp;&nbsp;**input_file_name()**   
 &nbsp;&nbsp;&nbsp;&nbsp;**current_timestamp()**  
 &nbsp;&nbsp;&nbsp;&nbsp;from_utc_timestamp()  
 &nbsp;&nbsp;&nbsp;&nbsp;from_unixtime()  
 
-
-
 **A data engineer wants to review the changes that other team members have made to the table cities, including the operations that were performed on the 
 table and the time at which they were performed. The variable path represents the file path to the table.
-Which of the following commands does the data engineer need to use? Select one response.**
+Which of the following commands does the data engineer need to use? Select one response.**  
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE DETAIL cities;  
-&nbsp;&nbsp;&nbsp;&nbsp;display(dbutils.fs.ls(f"{path}"))  
-&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE EXTENDED cities;  
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM cities VERSION AS OF 1;  
-&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE HISTORY cities;** 
+&nbsp;&nbsp;&nbsp;&nbsp;display(dbutils.fs.ls(f"{path}"))   
+&nbsp;&nbsp;&nbsp;&nbsp;DESCRIBE EXTENDED cities;   
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM cities VERSION AS OF 1;   
+&nbsp;&nbsp;&nbsp;&nbsp;**DESCRIBE HISTORY cities;**  
 
 
 **A data engineer needs to atomically append new rows to an existing Delta table. 
-Which of the following approaches is considered best practice to efficiently modify the table? Select one response.**
+Which of the following approaches is considered best practice to efficiently modify the table? Select one response.**  
 
  
-
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use UPDATE to update the existing tables in one batch.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT ONLY to incrementally update the existing tables.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use INSERT INTO to incrementally update the existing tables.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use APPEND to update the existing tables in one batch.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT OVERWRITE to incrementally update the existing tables.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use UPDATE to update the existing tables in one batch.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT ONLY to incrementally update the existing tables.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can use INSERT INTO to incrementally update the existing tables.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use APPEND to update the existing tables in one batch.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer can use INSERT OVERWRITE to incrementally update the existing tables.   
 
 
 **A data engineer is trying to optimize the result set returned in their query by compacting their data files to avoid small files. 
 Which keyword do they need to use in their query to improve the query’s performance while keeping the data files as even as possible 
-with respect to size on disk? Select one response.i**
+with respect to size on disk? Select one response.i** 
 
-&nbsp;&nbsp;&nbsp;&nbsp;ZORDER  
-&nbsp;&nbsp;&nbsp;&nbsp;COMPACT  
-&nbsp;&nbsp;&nbsp;&nbsp;DATASKIPPING  
-&nbsp;&nbsp;&nbsp;&nbsp;VACUUM  
-&nbsp;&nbsp;&nbsp;&nbsp;**OPTIMIZE** 
-
+&nbsp;&nbsp;&nbsp;&nbsp;ZORDER   
+&nbsp;&nbsp;&nbsp;&nbsp;COMPACT   
+&nbsp;&nbsp;&nbsp;&nbsp;DATASKIPPING   
+&nbsp;&nbsp;&nbsp;&nbsp;VACUUM   
+&nbsp;&nbsp;&nbsp;&nbsp;**OPTIMIZE**  
 
 
 **Which of the following problems are solved by the guarantee of ACID transactions? Select two responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions combine compute and storage scaling to reduce costs.  
-&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions guarantee that appends will not fail due to conflict, even when writing from multiple sources at the same time.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions are guaranteed to either succeed or fail completely, so jobs will never fail mid way.**   
-&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions guarantee the use of proprietary storage formats.  
-&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions support the creation of interactive visualization queries.  
+&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions combine compute and storage scaling to reduce costs.   
+&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions guarantee that appends will not fail due to conflict, even when writing from multiple sources at the same time.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**ACID transactions are guaranteed to either succeed or fail completely, so jobs will never fail mid way.**    
+&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions guarantee the use of proprietary storage formats.   
+&nbsp;&nbsp;&nbsp;&nbsp;ACID transactions support the creation of interactive visualization queries.   
 
 
 **Which of the following table modifications can be made with a MERGE INTO statement? Select three responses.**(CHECK if time)
 
-&nbsp;&nbsp;&nbsp;&nbsp;Write raw data from a file location into a schema  
-&nbsp;&nbsp;&nbsp;&nbsp;Write data that generates multiple downstream tables  
-&nbsp;&nbsp;&nbsp;&nbsp;**Write data to a table with automatic deduplication**   
-&nbsp;&nbsp;&nbsp;&nbsp;**Write a stream of schema changes into a table**   
-&nbsp;&nbsp;&nbsp;&nbsp;**Write streaming aggregates in Update Mode** 
+&nbsp;&nbsp;&nbsp;&nbsp;Write raw data from a file location into a schema   
+&nbsp;&nbsp;&nbsp;&nbsp;Write data that generates multiple downstream tables    
+&nbsp;&nbsp;&nbsp;&nbsp;**Write data to a table with automatic deduplication**     
+&nbsp;&nbsp;&nbsp;&nbsp;**Write a stream of schema changes into a table**    
+&nbsp;&nbsp;&nbsp;&nbsp;**Write streaming aggregates in Update Mode**  
 
 
 **A data engineer needs to update the table people. The engineer only wants records to be updated if the existing row has a NULL
-value in the column email and the new row does not.**
+value in the column email and the new row does not.**  
 
  
-They have the following incomplete
+They have the following incomplete  
 
 ```
 MERGE INTO people a
@@ -1155,75 +1113,74 @@ ON a.people_id = b.people_id
 _____
 
 WHEN NOT MATCHED THEN DELETE
-```**Which of the following statements correctly fills in the blank? Select one response.**
+```
+**Which of the following statements correctly fills in the blank? Select one response.**  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN MATCHED AND a.email IS NULL  
-&nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN a.email IS NULL  
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN MATCHED AND a.email IS NULL THEN INSERT (email = b.email)  
-&nbsp;&nbsp;&nbsp;&nbsp;INSERT (email = b.email) WHEN MATCHED AND a.email IS NULL  
-&nbsp;&nbsp;&nbsp;&nbsp;**WHEN MATCHED AND a.email IS NULL THEN UPDATE SET email = b.email** 
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN MATCHED AND a.email IS NULL   
+&nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN a.email IS NULL   
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN MATCHED AND a.email IS NULL THEN INSERT (email = b.email)   
+&nbsp;&nbsp;&nbsp;&nbsp;INSERT (email = b.email) WHEN MATCHED AND a.email IS NULL   
+&nbsp;&nbsp;&nbsp;&nbsp;**WHEN MATCHED AND a.email IS NULL THEN UPDATE SET email = b.email**  
 
 
 **A data engineer needs to create the new database clients at a location represented by the variable path. The database will only contain JSON files.
-Which of the following commands does the data engineer need to run to complete this task? Select two responses.**
+Which of the following commands does the data engineer need to run to complete this task? Select two responses.**  
 
-	Tip:"at a location represented by the variable path" --> would need the word `LOCATION`
+	Tip:"at a location represented by the variable path" --> would need the word `LOCATION`  
 	
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE IF NOT EXISTS clients '${path}';  
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE SCHEMA IF NOT EXISTS clients json. '${path}';  
-&nbsp;&nbsp;&nbsp;&nbsp;**CREATE DATABASE clients LOCATION '${path}';** 
-&nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE clients DELTA json. '${path}';  
-&nbsp;&nbsp;&nbsp;&nbsp;**CREATE SCHEMA clients LOCATION '${path}';**    
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE IF NOT EXISTS clients '${path}';   
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE SCHEMA IF NOT EXISTS clients json. '${path}';   
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE DATABASE clients LOCATION '${path}';**  
+&nbsp;&nbsp;&nbsp;&nbsp;CREATE DATABASE clients DELTA json. '${path}';   
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE SCHEMA clients LOCATION '${path}';**     
 
 
 **Which of the following conditions must be met for data to be loaded incrementally with the COPY INTO command? Select three responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**COPY INTO must target an existing Delta table.**  
-&nbsp;&nbsp;&nbsp;&nbsp;**The source file must specify the file’s format.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The schema for the data must be defined.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data must be in JSON or CSV format.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The data cannot contain duplicate records.  
+&nbsp;&nbsp;&nbsp;&nbsp;**COPY INTO must target an existing Delta table.**    
+&nbsp;&nbsp;&nbsp;&nbsp;**The source file must specify the file’s format.**   
+&nbsp;&nbsp;&nbsp;&nbsp;The schema for the data must be defined.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data must be in JSON or CSV format.**   
+&nbsp;&nbsp;&nbsp;&nbsp;The data cannot contain duplicate records.    
 
 
-**Which of the following statements about managed and external tables are true? Select two responses.**
+**Which of the following statements about managed and external tables are true? Select two responses.**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**When moving a managed table to a new database, the table’s data must be written to the new location.** 
-&nbsp;&nbsp;&nbsp;&nbsp;**External tables will always specify a LOCATION during table creation.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Managed tables are specified with the CREATE MANAGED TABLE command in SQL.  
-&nbsp;&nbsp;&nbsp;&nbsp;When dropping an external table, the underlying data and metadata are also deleted.  
-&nbsp;&nbsp;&nbsp;&nbsp;When dropping a managed table, only the underlying metadata stays intact.  
+&nbsp;&nbsp;&nbsp;&nbsp;**When moving a managed table to a new database, the table’s data must be written to the new location.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**External tables will always specify a LOCATION during table creation.**   
+&nbsp;&nbsp;&nbsp;&nbsp;Managed tables are specified with the CREATE MANAGED TABLE command in SQL.    
+&nbsp;&nbsp;&nbsp;&nbsp;When dropping an external table, the underlying data and metadata are also deleted.    
+&nbsp;&nbsp;&nbsp;&nbsp;When dropping a managed table, only the underlying metadata stays intact.   
 
 
-**Which of the following validates that the temporary view trees has exactly six records? Select one response.**
+**Which of the following validates that the temporary view trees has exactly six records? Select one response.**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;assert spark.load("trees").count() == 6  
-&nbsp;&nbsp;&nbsp;&nbsp;**assert spark.table("trees").count() == 6**
-&nbsp;&nbsp;&nbsp;&nbsp;assert spark.temp("trees").count() == 6  
-&nbsp;&nbsp;&nbsp;&nbsp;assert spark("trees").count() == 6  
-&nbsp;&nbsp;&nbsp;&nbsp;assert spark.view("trees").count() == 6  
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark.load("trees").count() == 6    
+&nbsp;&nbsp;&nbsp;&nbsp;**assert spark.table("trees").count() == 6**  
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark.temp("trees").count() == 6    
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark("trees").count() == 6    
+&nbsp;&nbsp;&nbsp;&nbsp;assert spark.view("trees").count() == 6    
 
 
 
 
 **A data engineer is creating a live streaming table to be used by other members of their team. They want to indicate that the table contains silver quality data.
-Which of the following describes how the data engineer can clarify this to other members of their team? Select two responses.**
+Which of the following describes how the data engineer can clarify this to other members of their team? Select two responses.**  
 
- 
-
-&nbsp;&nbsp;&nbsp;&nbsp;WHEN QUALITY = SILVER THEN PASS  
-&nbsp;&nbsp;&nbsp;&nbsp;**TBLPROPERTIES ("quality" = "silver")** 
-&nbsp;&nbsp;&nbsp;&nbsp;None of these answer choices are correct.  
-&nbsp;&nbsp;&nbsp;&nbsp;**COMMENT "This is a silver table"**
-&nbsp;&nbsp;&nbsp;&nbsp;EXPECT QUALITY = SILVER"  
+&nbsp;&nbsp;&nbsp;&nbsp;WHEN QUALITY = SILVER THEN PASS   
+&nbsp;&nbsp;&nbsp;&nbsp;**TBLPROPERTIES ("quality" = "silver")**   
+&nbsp;&nbsp;&nbsp;&nbsp;None of these answer choices are correct.   
+&nbsp;&nbsp;&nbsp;&nbsp;**COMMENT "This is a silver table"**  
+&nbsp;&nbsp;&nbsp;&nbsp;EXPECT QUALITY = SILVER"    
 
 
 CHECK AGAIN!!
-**A data engineer needs to examine how data is flowing through tables within their pipeline.Which of the following correctly describes how they can accomplish this? Select one.
+**A data engineer needs to examine how data is flowing through tables within their pipeline.Which of the following correctly describes how they can accomplish this? Select one.**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can query the flow definition for the direct predecessor of each table and then combine the results.** 
-*This implies tracing the data flow by identifying the table (or data source) that directly feeds data to the current table in question.
-By determining the immediate predecessor for each table in the pipeline and combining these results,
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer can query the flow definition for the direct predecessor of each table and then combine the results.**   
+*This implies tracing the data flow by identifying the table (or data source) that directly feeds data to the current table in question.  
+By determining the immediate predecessor for each table in the pipeline and combining these results,  
 the engineer can piece together the data flow from start to finish.*
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can view the flow definition of each table in the pipeline from the Pipeline Events log.  
@@ -1242,28 +1199,28 @@ WHERE event_type = 'flow_definition' AND
       origin.update_id = '${latest_update.id}'
 ```
 **A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
-**Which of the following modes do they need to use and why? Select one.
+Which of the following modes do they need to use and why? Select one.**  
 
 	**my opinion**: It depends to of how for who and how going to be that data consume, for example if we had a source raw data that is beeing incremented every 5 minutes with new resuls
 	but the at the end after the transformations from raw data to Gold data, the people taht is examinating that data they are just doing that one a week o one a day, it doesnt make
 	sense to have a DTL with his cost continuesly inserting data if we can acchive the same results with a manual trigger once a day (or a week)
 
  
-&nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines ingest new data as it arrives.  
+&nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines ingest new data as it arrives.   
 &nbsp;&nbsp;&nbsp;&nbsp;Triggered; triggered pipelines update once and cannot be updated again for 24 hours.  
 &nbsp;&nbsp;&nbsp;&nbsp;Triggered; triggered pipelines update once and cannot be updated again until they are manually run.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Triggered; triggered pipelines run once and then shut down until the next manual or scheduled update.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines run at set intervals and then shut down until the next manual or scheduled update.
+&nbsp;&nbsp;&nbsp;&nbsp;**Triggered; triggered pipelines run once and then shut down until the next manual or scheduled update.**  
+&nbsp;&nbsp;&nbsp;&nbsp;Continuous; continuous pipelines run at set intervals and then shut down until the next manual or scheduled update.  
 
 
 
-**Which of the following correctly describes how to access contents of the table directory? Select one response.
+**Which of the following correctly describes how to access contents of the table directory? Select one response.**
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the checkpointing directory.  
-&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the Auto Loader directory.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The contents of the table directory can be viewed through the metastore.** 
-&nbsp;&nbsp;&nbsp;&nbsp;*The metastore is where the metadata of tables, including their locations schema and other properties are sotred.By querying the metastore you can find out wherethe data*    
+&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the checkpointing directory.   
+&nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the Auto Loader directory.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The contents of the table directory can be viewed through the metastore.**   
+&nbsp;&nbsp;&nbsp;&nbsp;*The metastore is where the metadata of tables, including their locations schema and other properties are sotred.By querying the metastore you can find out wherethe data*      
 &nbsp;&nbsp;&nbsp;&nbsp;for a particular table is stored and access its directory path.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the flow definition’s output dataset.  
 &nbsp;&nbsp;&nbsp;&nbsp;The contents of the table directory can be viewed through the event log.  
@@ -1272,7 +1229,7 @@ WHERE event_type = 'flow_definition' AND
 
 
 **A data engineer has built and deployed a DLT pipeline. They want to see the output for each individual task. 
-**Which of the following describes how to explore the output for each task in the pipeline? Select one response.
+Which of the following describes how to explore the output for each task in the pipeline? Select one response.**  
 
 *note  that the question is "ouput of task" no the ouput of every table or the result, here the focus is just on task*
 
@@ -1332,7 +1289,8 @@ CREATE OR REFRESH STREAMING LIVE TABLE transactions_silver
 
 FROM LIVE.transactions_bronze
 
-```**Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
+```
+**Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
 
 &nbsp;&nbsp;&nbsp;&nbsp;LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Initializing stage.  
 &nbsp;&nbsp;&nbsp;&nbsp;**A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Initializing stage.** 
@@ -1737,7 +1695,8 @@ on="customer_id"
 dlt.readStream("customers_silver").alias("b"),
 on="customer_id"  
 
-```**A data engineer has created the following code block to create a streaming live table from orders_bronze.**
+```
+**A data engineer has created the following code block to create a streaming live table from orders_bronze.**
 
 ```
 @dlt.table
@@ -1781,33 +1740,22 @@ A data engineer is using the following code block to create a live table. After 
 
  
 
-```@dlt.view
-
+```
+@dlt.view
 def subscribed_order_emails():
-
     return (
-
         dlt.read("orders_silver").filter("notifications = 'Y'").alias("a")
-
             .join(
-
                 dlt.read("status_silver").alias("b"), 
-
                 on="status_id"
-
             ).select(
-
                 "a.status_id", 
-
                 "a.order_id", 
-
                 "b.email"
-
             )
-
     )
-
-```**Which of the following statements correctly identifies the error? Select one response.**
+```
+**Which of the following statements correctly identifies the error? Select one response.**
 
  
 
@@ -1840,13 +1788,9 @@ Their primary responsibility is to oversee the entire Dtabricks platformm, ensur
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The workspace administrator can set the maximum number of users who can access the table at the group level.
-
 &nbsp;&nbsp;&nbsp;&nbsp;**The platform administrator can set who can view job results or manage runs of a job with access control lists at the user or group level.**
-
 &nbsp;&nbsp;&nbsp;&nbsp;The platform administrator can set who can search for jobs by id or grant access permissions with access control lists at the user or group level.
-
 &nbsp;&nbsp;&nbsp;&nbsp;The platform administrator can set who can grant access permissions or view job history with access control lists at the user level.
-
 &nbsp;&nbsp;&nbsp;&nbsp;The workspace administrator can set the maximum number of users who can access the table at the user level.
 
 
@@ -2478,15 +2422,13 @@ Which of the following clusters does the data engineer need to attach to their n
 &nbsp;&nbsp;&nbsp;&nbsp;This type of workload is not supported by any cluster mode  
 
 
-## Udemy Questions
+## Udemy Questions Exam 
 
 I bought a coruse in udemy to help me achieve the "Associate Data Engineer"
 
 
 **Which of the following locations hosts the Databricks web application ?**
 &nbsp;&nbsp;&nbsp;&nbsp;Control plane
-
-
 
 **Databricks Repos, which of the following operations a data engineer can user to update the local version of a repo from its remote Git repository ?**
 &nbsp;&nbsp;&nbsp;&nbsp;Pull
@@ -2508,16 +2450,12 @@ I bought a coruse in udemy to help me achieve the "Associate Data Engineer"
 &nbsp;&nbsp;&nbsp;&nbsp;Delta Lake supports unified streaming and batgch datga processing
 
 
-
-**How long is the default retention period of the VACUUM command ?**
+**How long is the default retention period of the VACUUM command ?**  
 &nbsp;&nbsp;&nbsp;&nbsp;7 days
 
 **A data engineer wants to create a relational object by pulling data from two tables. The relational object must be used by other data engineers in other
-sessions on the same cluster only. In order to save on storage costs, the date engineer wants to avoid copying and storing physical data.**
+sessions on the same cluster only. In order to save on storage costs, the date engineer wants to avoid copying and storing physical data.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Global Temporary view
-
-
-
 
 ```
 CREATE TABLE employees
@@ -2527,23 +2465,24 @@ CREATE TABLE employees
 		dbtable "employees"
 	)
 ```
-**Comments in Table creation**
+**How to make comments in Table creation?**  
 
 ```
 CREATE TABLE juan
 COMMENT "this is a table"
 AS QUERY
-```**A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
-of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?** 
+```
+**A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
+of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO
 
 
 **A data engineer is designing a Delta Live Tables pipeline. The source system generates files containing changes captured in the source data.
 Each change event has metadata indicating whether the specified record was inserted, updated, or deleted. In addition to a timestamp column indicating
-the order in which the changes happened. The data engineer needs to update a target table based on these change events.** 
+the order in which the changes happened. The data engineer needs to update a target table based on these change events.**   
 
-&nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO
+&nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO   
 
 	The events described in the question represent Change Data Capture (CDC) feed. CDC is logged at the source as events that contain both the data of the records
 	along with metadata information:
@@ -2552,27 +2491,28 @@ the order in which the changes happened. The data engineer needs to update a tar
 	2)  Sequence column that is usually a timestamp indicating the order in which the changes happened
 	    You can use the APPLY CHANGES INTO statement to use Delta Live Tables CDC functionality
 
-**In PySpark, which of the following commands can you use to query the Delta table employees created in Spark SQL?**
-&nbsp;&nbsp;&nbsp;&nbsp;spark.table("employees")
+**In PySpark, which of the following commands can you use to query the Delta table employees created in Spark SQL?**  
+&nbsp;&nbsp;&nbsp;&nbsp;spark.table("employees")  
 
 
 
-**Syntax to create a UDF**
+**Syntax to create a UDF**  
 ```
 CREATE [OR REPLACE] FUNCTION function_name ([parameter_name data_type])
 RETURN { expression | query}
-```**When dropping a Delta table, which of the following explains why only the table´s metadata will be deleted, while the data files will be kept in storage?**
-&nbsp;&nbsp;&nbsp;&nbsp;The table is external
+```  
+**When dropping a Delta table, which of the following explains why only the table´s metadata will be deleted, while the data files will be kept in storage?**  
+&nbsp;&nbsp;&nbsp;&nbsp;The table is external  
 
-**Given the following command**
-`CREATE DATABASE IF NOT EXISTS hr_db;`
+**Given the following command**  
+`CREATE DATABASE IF NOT EXISTS hr_db;`  
 
-In which of the following locations will the **hr_db**database be located ?
+In which of the following locations will the **hr_db**database be located ?  
 
-`dbfs:/user/hive/warehouse`  --> that is the default location.
+`dbfs:/user/hive/warehouse`  --> that is the default location.  
 
 
-**Fill in the below blank to get the students enrolled in less that 3 courses from array column students**
+**Fill in the below blank to get the students enrolled in less that 3 courses from array column students**  
 
 ```
 SELECT
@@ -2581,19 +2521,16 @@ SELECT
 	________ AS few_courses_students --> FILTER(students, i-> i.total_courses <3)
 	
 FROM faculties
-```	`filter(input_array, lamda_function)` is a higher order function that returns an output array from an input array by extracting 
-	elements for which the predicate of a lambda function holds.
+```	  
 
+`filter(input_array, lamda_function)` is a higher order function that returns an output array from an input array by extracting lements for which the predicate of a lambda function holds.
 
-
-	Extracting odd numbers from an input array of integers:
-
-	`SELECT filter(array(1, 2, 3, 4), i -> i % 2 == 1);`
-
+Extracting odd numbers from an input array of integers:  
+`SELECT filter(array(1, 2, 3, 4), i -> i % 2 == 1);`
 	output: [1, 3]
 
-**Code for micro-batch to process datga every 2 minuts
-
+**Code for micro-batch to process datga every 2 minuts**  
+```
 (spark.table("oders")
       .withColumn("total_after_tax", col("total") + col("tax"))
 	.writeStream
@@ -2602,32 +2539,30 @@ FROM faculties
 		.___________   trigger(processingTime="2minutes")
 		.table("new_orders")
 )
-
+```
   
-**Wich of the following is used by Auto Loader to load data incrementally ?**
+**Wich of the following is used by Auto Loader to load data incrementally ?**  
 	Spark Structrued Streaming
 	
-
-**Which of the following statements best describes Auto Loader ?**
+**Which of the following statements best describes Auto Loader ?**  
 	Auto loader monitors a source location, in which files accumulate, to indentify and ingest only new arriving files with each command run. 
 	While the files that have already been ingested in previous runs are skipped.
 	
 
 
-**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:**
+**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:**  
 
-`CONSTRAINT valid_id EXPECT (id IS NOT NULL) _____________ `
+`CONSTRAINT valid_id EXPECT (id IS NOT NULL) _____________ `  
 
-**Fill in the above blank so records violating this constraint will be added to the target table, and reported in metrics**
+**Fill in the above blank so records violating this constraint will be added to the target table, and reported in metrics**  
 
-	There is no need to add ON VIOLATION clause. By default, records violating the constraint will be kept, and reported as invalid in the event log.
+	There is no need to add ON VIOLATION clause. By default, records violating the constraint will be kept, and reported as invalid in the event log.  
 
 
 **The data engineer team has a DLT pipeline that updates all the tables once and then stops. The compute resources of the pipeline continue running to allow for quick testing.
-Which of the following best describes the execution modes of this DLT pipeline ?**
+Which of the following best describes the execution modes of this DLT pipeline ?**  
 
-    *Typp**The word "quick-testing" indicates that is developmen.
-	The DLT pipeline executes tin Triggered Pipeline mode under Development mode.
+	- *Typp**The word "quick-testing" indicates that is developmen. The DLT pipeline executes tin Triggered Pipeline mode under Development mode.
 
 
 	Triggered pipelines update each table with whatever data is currently available and then they shut down.
@@ -2637,11 +2572,11 @@ Which of the following best describes the execution modes of this DLT pipeline ?
 		2 Disabling pipeline retries so you can immediately detect and fix errors.
 
 
-**Code to quey streaming table events**
+**Code to quey streaming table events**  
 
 `spark.readStream.table("events")`
 
-**Code to silver live table**
+**Code to silver live table**  
 
 ```
 CREATE LIVE TABLE table_silver
@@ -2650,45 +2585,46 @@ AS
 	FROM LIVE.cleaned_sales
 	GROUP BY store_id
 
-```**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:
-Fill in the above blank so records violating this constraint will be dropped, and reported in metrics**
+```
+**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:
+Fill in the above blank so records violating this constraint will be dropped, and reported in metrics**  
 
 
-`CONSTRAINT valid_id EXPECT (id IS NOT NULL) _____________ ` -->ON VIOLATION DROP ROW
+`CONSTRAINT valid_id EXPECT (id IS NOT NULL) _____________ ` -->ON VIOLATION DROP ROW  
 
 
 
-**Which of the following compute resources is availabe in DAtabricks SQL**
+**Which of the following compute resources is availabe in DAtabricks SQL**  
 	SQL warehouses
 
 
-**Wich of the following is the benefit of using the Auto Stop feature of Databricks SQL wharehoues ?**
-    Minimizes the total running time of warehouse
+**Wich of the following is the benefit of using the Auto Stop feature of Databricks SQL wharehoues ?**  
+    Minimizes the total running time of warehouse  
 
-**Alerts destinations that Support Databricks SQL**
-    Slack, Webhook, Teams, Email
+**Alerts destinations that Support Databricks SQL**  
+    Slack, Webhook, Teams, Email  
 
 
 **A data engineering team has a long-running multi-tasks Job. The team members need to be notified when the run of this job completes.
-Which of the following approaches can be used to send emails to the team members when the job completes ?**
+Which of the following approaches can be used to send emails to the team members when the job completes ?**  
 
 	They can configues email notification settings in the job page
 	
 
-A data engineer wants to increase the cluster size of an existing Databricks SQL warehouse.
+A data engineer wants to increase the cluster size of an existing Databricks SQL warehouse.  
 
 
 
-**Which of the following is the benefit of increasing the cluster size of Databricks SQL warehouses ?**
-	Improves the latency of the queries execution
+**Which of the following is the benefit of increasing the cluster size of Databricks SQL warehouses ?**  
+	Improves the latency of the queries execution  
 
-**Which of the following describes Cron syntax in Databricks Jobs ?**
-    Its an expression to represent comples job schedule that can be defined programmatically
+**Which of the following describes Cron syntax in Databricks Jobs ?**  
+    Its an expression to represent comples job schedule that can be defined programmatically  
 	
 
 **The data engineer team has a DLT pipeline that updates all the tables at defined intervals until manually stopped. 
 The compute resources terminate when the pipeline is stopped.
-Which of the following best describes the execution modes of this DLT pipeline ?**
+Which of the following best describes the execution modes of this DLT pipeline ?**  
 
 	The DLT pipeline executes in Continuous Pipeline mode under Production mode.
 
@@ -2702,86 +2638,68 @@ Which of the following best describes the execution modes of this DLT pipeline ?
 
 
 
-**Which part of the Databricks Platform can a data engineer use to grant permission on tables to user?** 
+**Which part of the Databricks Platform can a data engineer use to grant permission on tables to user?**   
 	Data Explorere
 	
-**Which of the following commands can a data engineer use to grant full permissions to the HR team on the table employees ?**
-	`GRANT ALL PRIVILEGES ON TABLE employees TO hr_team`
+**Which of the following commands can a data engineer use to grant full permissions to the HR team on the table employees ?**  
+	`GRANT ALL PRIVILEGES ON TABLE employees TO hr_team`  
 	
-**A data engineer uses teh following SQL query ** 
-`GRANT MODIFY ON TABLE employees TO hr_team`
+**A data engineer uses teh following SQL query **   
+`GRANT MODIFY ON TABLE employees TO hr_team`  
 
-Which ability is given by the `MODIFY` privilege ?
-
+**Which ability is given by the `MODIFY` privilege ?**    
 	ability to add data from the table, delte data from the table, modify data in the table.
 
 
 ## Practique Exam Databricks
 
 **Which of the following locations hosts the driver and worker nodes of a
-Databricks-managed cluster?**
-A. Data plane
-B. Control plane
-C. Databricks Filesystem
-D. JDBC data source
-E. Databricks web application
-
-
-In the context of Databricks, the terms "data plane" and "control plane" refer to distinct components of its architecture:
-
-Data plane: This is where the actual processing of data takes place. It is responsible for executing tasks, handling storage, and running computations.
-Control plane: This manages and orchestrates the data plane. It doesn't do the actual data processing but instead sets up clusters, schedules jobs, and manages security, among other tasks.
-Given this distinction:
-
-The driver and worker nodes of a Databricks-managed cluster, which are responsible for data processing, run in the data plane.
-So, the correct answer is:
-
-A. Data plane
-
-
-
-## Practice Exam Databricks Certified Data Engineer Associate
------------------------------------------------------------------
-Overview
-This is a practice exam for the Databricks Certified Data Engineer Associate exam. The
-questions here are retired questions from the actual exam that are representative of the
-questions one will receive while taking the actual exam. After taking this practice exam, one
-should know what to expect while taking the actual Data Engineer Associate exam.
-Just like the actual exam, it contains 45 multiple-choice questions. Each of these questions
-has one correct answer. The correct answer for each question is listed at the bottom in the
-Correct Answers section.
-There are a few more things to be aware of:
-1. There is a 90-minute time limit to take the actual exam.
-2. In order to pass the actual exam, testers will need to correctly answer at least 32 of
-the 45 questions.
-3. Testers will not have access to any documentation or Databricks environments
-during the exam.
-4. These questions are representative of questions that are on the actual exam, but
-they are no longer on the actual exam.
-
-
-Question 1
-**Which of the following describes a benefit of a data lakehouse that is unavailable in a traditional data warehouse?**  
-
-&nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse provides a relational system of data management.
-&nbsp;&nbsp;&nbsp;&nbsp;B. A data lakehouse captures snapshots of data for version control purposes.
-&nbsp;&nbsp;&nbsp;&nbsp;C. A data lakehouse couples storage and compute for complete control.
-&nbsp;&nbsp;&nbsp;&nbsp;D. A data lakehouse utilizes proprietary storage formats for data.
-&nbsp;&nbsp;&nbsp;&nbsp;**E. A data lakehouse enables both batch and streaming analytics.**
-
-Question 2
-**Which of the following locations hosts the driver and worker nodes of a Databricks-managed cluster?**
-
-&nbsp;&nbsp;&nbsp;&nbsp;**A. Data plane**  
+Databricks-managed cluster?**  
+&nbsp;&nbsp;&nbsp;&nbsp;A. Data plane  
 &nbsp;&nbsp;&nbsp;&nbsp;B. Control plane  
 &nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Filesystem  
 &nbsp;&nbsp;&nbsp;&nbsp;D. JDBC data source  
 &nbsp;&nbsp;&nbsp;&nbsp;E. Databricks web application  
 
 
+In the context of Databricks, the terms "data plane" and "control plane" refer to distinct components of its architecture:
+
+**Data plane**: This is where the actual processing of data takes place. It is responsible for executing tasks, handling storage, and running computations.  
+**Control plane**: This manages and orchestrates the data plane. It doesn't do the actual data processing but instead sets up clusters, schedules jobs, and manages security, among other tasks.  
+Given this distinction:
+
+**The driver and worker nodes of a Databricks-managed cluster, which are responsible for data processing, run in the data plane.
+So, the correct answer is:**  
+A. Data plane  
+
+
+
+## Practice Exam Databricks Certified Data Engineer Associate
+-----------------------------------------------------------------
+
+
+Question 1
+**Which of the following describes a benefit of a data lakehouse that is unavailable in a traditional data warehouse?**  
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse provides a relational system of data management.  
+&nbsp;&nbsp;&nbsp;&nbsp;B. A data lakehouse captures snapshots of data for version control purposes.  
+&nbsp;&nbsp;&nbsp;&nbsp;C. A data lakehouse couples storage and compute for complete control.  
+&nbsp;&nbsp;&nbsp;&nbsp;D. A data lakehouse utilizes proprietary storage formats for data.  
+&nbsp;&nbsp;&nbsp;&nbsp;**E. A data lakehouse enables both batch and streaming analytics.**  
+
+Question 2
+**Which of the following locations hosts the driver and worker nodes of a Databricks-managed cluster?**  
+
+&nbsp;&nbsp;&nbsp;&nbsp;**A. Data plane**    
+&nbsp;&nbsp;&nbsp;&nbsp;B. Control plane    
+&nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Filesystem    
+&nbsp;&nbsp;&nbsp;&nbsp;D. JDBC data source    
+&nbsp;&nbsp;&nbsp;&nbsp;E. Databricks web application  
+
+
 Question 3
 **A data architect is designing a data model that works for both video-based machine learning workloads and highly audited batch ETL/ELT workloads.
-Which of the following describes how using a data lakehouse can help the data architect meet the needs of both workloads?**
+Which of the following describes how using a data lakehouse can help the data architect meet the needs of both workloads?**  
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse requires very little data modeling.  
@@ -2792,9 +2710,7 @@ Which of the following describes how using a data lakehouse can help the data ar
 
 Question 4
 **Which of the following describes a scenario in which a data engineer will want to use a Job cluster instead of an all-purpose cluster?**
-
-
-&nbsp;&nbsp;&nbsp;&nbsp;A. An ad-hoc analytics report needs to be developed while minimizing compute costs.
+&nbsp;&nbsp;&nbsp;&nbsp;A. An ad-hoc analytics report needs to be developed while minimizing compute costs.  
 &nbsp;&nbsp;&nbsp;&nbsp;B. A data team needs to collaborate on the development of a machine learning model.  
 &nbsp;&nbsp;&nbsp;&nbsp;**C. An automated workflow needs to be run every 30 minutes.**    
 &nbsp;&nbsp;&nbsp;&nbsp;D. A Databricks SQL query needs to be scheduled for upward reporting.  
@@ -2802,13 +2718,11 @@ Question 4
 
 
 Question 5
-**A data engineer has created a Delta table as part of a data pipeline. Downstream data
-analysts now need SELECT permission on the Delta table.
+**A data engineer has created a Delta table as part of a data pipeline. Downstream data analysts now need SELECT permission on the Delta table.
 Assuming the data engineer is the Delta table owner, which part of the Databricks
-Lakehouse Platform can the data engineer use to grant the data analysts the appropriate access?**
+Lakehouse Platform can the data engineer use to grant the data analysts the appropriate access?**  
 
-
-&nbsp;&nbsp;&nbsp;&nbsp;A. Repos  
+&nbsp;&nbsp;&nbsp;&nbsp;A. Repos   
 &nbsp;&nbsp;&nbsp;&nbsp;B. Jobs  
 &nbsp;&nbsp;&nbsp;&nbsp;**C. Data Explorer**  
 &nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Filesystem  
@@ -2819,10 +2733,10 @@ Question 6
 **Two junior data engineers are authoring separate parts of a single data pipeline notebook.
 They are working on separate Git branches so they can pair program on the same notebook
 simultaneously. A senior data engineer experienced in Databricks suggests there is a better alternative for this type of collaboration.
-Which of the following supports the senior data engineer’s claim ?**
+Which of the following supports the senior data engineer’s claim ?**  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Notebooks support automatic change-tracking and versioning  
+&nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Notebooks support automatic change-tracking and versioning   
 &nbsp;&nbsp;&nbsp;&nbsp;**B. Databricks Notebooks support real-time coauthoring on a single notebook**  
 &nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Notebooks support commenting and notification comments  
 &nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Notebooks support the use of multiple languages in the same notebook  
@@ -2831,7 +2745,6 @@ Which of the following supports the senior data engineer’s claim ?**
 
 Question 7
 **Which of the following describes how Databricks Repos can help facilitate CI/CD workflows on the Databricks Lakehouse Platform?**
-
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Repos can facilitate the pull request, review, and approval process before merging branches  
 &nbsp;&nbsp;&nbsp;&nbsp;B. Databricks Repos can merge changes from a secondary Git branch into a main Git branch  
@@ -3021,7 +2934,8 @@ Question 20
 ```
 cart_id STRING,
 items ARRAY<item_id:STRING>
-```**The junior data engineer would like to unnest the items column in raw_table to result in a new table with the following schema:**
+```
+**The junior data engineer would like to unnest the items column in raw_table to result in a new table with the following schema:**
 
 ```
 cart_id STRING,
@@ -3509,7 +3423,8 @@ The DLT pipeline executes in Triggered Pipeline mode under Production mode.
 
 )
 
-```**What kind of SCD is taking of Apply Changes into**
+```
+**What kind of SCD is taking of Apply Changes into**
 
 APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
 
