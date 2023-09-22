@@ -235,10 +235,10 @@ SELECT * FROM csv.`${path}`;**
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;The query loads the contents of a directory of CSV files from a source table to a target table.  
+&nbsp;&nbsp;&nbsp;&nbsp;The query loads the contents of a directory of CSV files from a source table to a target table.   
 &nbsp;&nbsp;&nbsp;&nbsp;The query streams data from a directory of CSV files into a table.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The query displays the underlying file contents of a directory of CSV files.**
-&nbsp;&nbsp;&nbsp;&nbsp;The query converts a directory of files into CSV format.  
+&nbsp;&nbsp;&nbsp;&nbsp;**The query displays the underlying file contents of a directory of CSV files.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The query converts a directory of files into CSV format.   
 &nbsp;&nbsp;&nbsp;&nbsp;The query displays the metadata of a directory of CSV files.  
 
 
@@ -285,9 +285,7 @@ exploded_eventsDF
      _____
 
  
-```
-
-**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.** 
+```**Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.** 
 
  
 
@@ -307,7 +305,7 @@ Which of the following SQL commands accomplishes this task? Select one response.
 
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt` as TEXT;   
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;  
-&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM ${dbfs:/mnt/datasets}/001.txt`;    
+&nbsp;&nbsp;&nbsp;&nbsp;SELECT text(*) FROM `${dbfs:/mnt/datasets}/001.txt`;    
 &nbsp;&nbsp;&nbsp;&nbsp;SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;  
 &nbsp;&nbsp;&nbsp;&nbsp;**SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;** 
 
@@ -379,8 +377,6 @@ SELECT COUNT(*) FROM emails;**
 REFRESH TABLE emails;
 SELECT DISTINCT_COUNT(*) FROM emails;
 ```
-
-
 **A data engineer is using the following code block to create and register a function that returns the first letter of the string email.
 Another data engineer points out that there is a more efficient way to do this.
 Which of the following identifies how the data engineer can eliminate redundancies in the code? Select one response.**
@@ -389,21 +385,13 @@ Which of the following identifies how the data engineer can eliminate redundanci
 ```
 from pyspark.sql.functions import udf
 
- 
-
 @udf("string")
-
 def first_letter_function(email: str) -> str:
 
     return email[0]
 
- 
-
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
-
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
+```&nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the return statement at the end of the function.  
 &nbsp;&nbsp;&nbsp;&nbsp;**They can eliminate the statement that registers the function.**
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the parameters in the function declaration.  
 &nbsp;&nbsp;&nbsp;&nbsp;They can eliminate the import statement in the beginning of the code block.  
@@ -438,22 +426,17 @@ domain that contains the domain from the email_address column? Select one respon
 
 
 
-**A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination.**
+**A data engineer has a table high_temps with the following schema, where avg_high_temp represents the monthly average high temperatures for each unique year-month combination.**  
 
- 
-
-	year string
-
-	month string
-
-	avg_high_temp string
-
+```
+year string
+month string
+avg_high_temp string
+```
  
 
 **They need to reformat the data with years as the primary record key and months as the columns. The existing average high temperature value for each year-month combination needs
 to be in the month columns. How can the data engineer accomplish this? Select one response.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from wide to long format using the .pivot() function.  
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer can rotate the data from long to wide format using the .transform()clause.  
@@ -465,12 +448,10 @@ to be in the month columns. How can the data engineer accomplish this? Select on
 
 **A data engineer has a DataFrame events_df that has been registered against an external JSON file.  
 They need to access the field date within events_df. The events_df DataFrame has the following schema:**
-
-	date string
-
-	month string
-
-	event_type string
+    
+	```date string
+	   month string
+	   event_type string```
 
  
 
@@ -531,17 +512,10 @@ Which of the following explains why the query is not returning the expected resu
 ```
 from pyspark.sql.functions import countDistinct
 
- 
-
 usersDF
-
     .groupBy("phone_number")
-
     .agg(countDistinct("user_id").alias("unique_user_ids")) 
-
-```
-
-&nbsp;&nbsp;&nbsp;&nbsp;A.dropDuplicates() statement needs to be added after the .agg() function.  
+```&nbsp;&nbsp;&nbsp;&nbsp;A.dropDuplicates() statement needs to be added after the .agg() function.  
 &nbsp;&nbsp;&nbsp;&nbsp;A.merge statement on row_count == count(phone_number) needs to be added after the groupBy() function.  
 &nbsp;&nbsp;&nbsp;&nbsp;**A.select(max("unique_user_ids") <= 1)function needs to be added after the .agg() function.** 
 &nbsp;&nbsp;&nbsp;&nbsp;.groupBy("phone_number") needs to be changed to count(*).when(user_id != null).  
@@ -553,16 +527,12 @@ One of their colleagues gives them the following code to register the table. How
 
  
 
-```
-
-CREATE TABLE users_jdbc
+```CREATE TABLE users_jdbc
 USING JDBC
 OPTIONS (
   url = "jdbc:sqlite:${DA.paths.ecommerce_db}"
 )
-```
-
- 
+``` 
 
 **Which of the following correctly identifies why running the code is resulting in an error? Select one response.** 
 
@@ -583,7 +553,6 @@ created table sales withthe Spark DataFrame items_df when sales and items_df hav
 sales_df = (spark
 
     .table("sales")
-
     .withColumn("item", explode("items"))
 
 )
@@ -591,9 +560,6 @@ sales_df = (spark
  
 
 items_df = spark.table("item_lookup")
-
- 
-
 item_purchasesDF = (sales_df
 
    ______________________)
@@ -612,6 +578,7 @@ item_purchasesDF = (sales_df
 
 
 
+
 **A data engineer wants to extract lines as raw strings from a text file. Which of the following SQL commands accomplishes this task? Select one response.**
 
 ```
@@ -621,9 +588,7 @@ SELECT (*) FROM ${dbfs:/mnt/datasets}/001.txt`;
 SELECT * FROM `${dbfs:/mnt/datasets}/001.txt`;
 SELECT * FROM text.`${dbfs:/mnt/datasets}/001.txt`;  --> the correct one
 
-```
-
-**A data engineer has the following query, where path is a variable that represents the location of a directory.**
+```**A data engineer has the following query, where path is a variable that represents the location of a directory.**
 
 
 Query:
@@ -660,8 +625,6 @@ spark.sql("SELECT CREATE_USER(username) AS user FROM users") -->solution
 spark.udf.register("CREATE_USER", createUser) --> solution
 spark.udf.register(createUser(username)) 
 ```
-
-
 **Which of the following statements about querying tables defined against external sources is true? Select one response.**
 
  
@@ -690,13 +653,9 @@ _____
 
 LOCATION "${dbfs:/mnt/datasets}"
 
- ```
+ ```Which of the following correctly fills in the blank for the table options? Select one response.
 
-Which of the following correctly fills in the blank for the table options? Select one response.
-
-```
-
-OPTIONS (
+```OPTIONS (
   header = "true",
   delimiter = "|"
 ) --> the correct one
@@ -718,8 +677,6 @@ header = "true",
 delimiter = "|"
 )
 ```
-
-
 **Which of the following statements about the difference between views and temporary views are correct? Select two responses.**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Temporary views do not contain a preserved schema. Views are tied to a system preserved temporary schema global_temp.   
@@ -742,9 +699,7 @@ usersDF.selectExpr("count_if(email IS NULL)")
 ```
 usersDF.where(col("email").isNull()).count()
 usersDF.selectExpr("count_if(email IS NULL)")
-```
-
-´**A data engineer needs to extract the calendar date and time in human readable format from a DataFrame containing the timestamp column user_last_touch_timestamp.
+```´**A data engineer needs to extract the calendar date and time in human readable format from a DataFrame containing the timestamp column user_last_touch_timestamp.
 Which of the following lines of code correctly fills in the blank by adding the column end_date of type date in human readable format? Select one response.**
 
 *1 clue: The type have to be date so it means HH:mm:ss can not be as ist not data but hour*
@@ -756,8 +711,6 @@ Which of the following lines of code correctly fills in the blank by adding the 
 .withColumn(date_time("end_date"), user_last_touch_timestamp, "MMM d, yyyy")
 .withColumn("end_date", date_format("user_last_touch_timestamp", "MMM d, yyyy"))  --> Correct one
 ```
-
-
 **A data engineer has a table records with a column email. They want to check if there are null values in the email column.
 Which of the following approaches accomplishes this? Select one response.**
 
@@ -775,16 +728,12 @@ One of their colleagues gives them the following code to register the table. How
 
  
 
-```
-
-CREATE TABLE users_jdbc
+```CREATE TABLE users_jdbc
 USING JDBC
 OPTIONS (
   url = "jdbc:sqlite:${DA.paths.ecommerce_db}"
 )
-```
-
-Which of the following correctly identifies why running the code is resulting in an error? Select one response.
+```Which of the following correctly identifies why running the code is resulting in an error? Select one response.
 
 &nbsp;&nbsp;&nbsp;&nbsp;USING JDBC needs to be changed to USING SQL    
 &nbsp;&nbsp;&nbsp;&nbsp;None of these responses correctly identify the cause of the error.  
@@ -811,8 +760,6 @@ exploded_eventsDF
      _____
 
 ```
-
-
 Which of the following lines of code fills in the blank to create the column event_history as a unique collection of events? Select one response.
 
  
@@ -951,9 +898,7 @@ they notice an error in the following line of code.Which of the following comman
 
  
 
-```
-
-date DATE GENERATED ALWAYS AS (
+```date DATE GENERATED ALWAYS AS (
 
     cast(cast(transaction_timestamp/1e6) AS DATE)))
 ```
@@ -1016,13 +961,9 @@ The column date represents the date the records were created.**
 
  
 
-```
+```__1__ transaction_dates __2__ valid_date __3__;
 
-__1__ transaction_dates __2__ valid_date __3__;
-
-```
-
-**Which of the following correctly fills in the numbered blanks within the code block to complete this task? Select one response.**
+```**Which of the following correctly fills in the numbered blanks within the code block to complete this task? Select one response.**
 
 ```
 ALTER TABLE
@@ -1045,9 +986,7 @@ ALTER TABLE
 CONSTRAINT
 (date > '2022-10-01')
 
-```
-
-**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.**
+```**A data engineer is using the code shown below to replace data from the table sales with data from a new query. However, the query isn’t running as expected.**
 
  
 
@@ -1056,8 +995,6 @@ INSERT INTO sales
 
 SELECT *, current_timestamp() FROM parquet `${da.paths.datasets}/ecommerce/raw/sales-historical`
 ```
-
-
 
 **Which of the following statements correctly explains why the query is not running as expected? Select one response.**
 
@@ -1127,9 +1064,7 @@ changes before restoring the table back to that state.**
 
 
 
-```
-
-SELECT * FROM foods VERSION AS OF 2;
+```SELECT * FROM foods VERSION AS OF 2;
 
 REFRESH TABLE foods;
 
@@ -1234,9 +1169,7 @@ ON a.people_id = b.people_id
 _____
 
 WHEN NOT MATCHED THEN DELETE
-```
-
-**Which of the following statements correctly fills in the blank? Select one response.**
+```**Which of the following statements correctly fills in the blank? Select one response.**
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;UPDATE SET email = b.email WHEN MATCHED AND a.email IS NULL  
@@ -1322,8 +1255,6 @@ FROM event_log_raw
 WHERE event_type = 'flow_definition' AND 
       origin.update_id = '${latest_update.id}'
 ```
-
-
 **A data engineer is configuring a new DLT pipeline and is unsure what mode to choose.They are working with a small batch of unchanging data and need to minimize the costs associated with the pipeline.
 **Which of the following modes do they need to use and why? Select one.
 
@@ -1376,17 +1307,13 @@ WHERE event_type = 'flow_definition' AND
 **A data engineer has created the following query to create a streaming live table from transactions. Which of the following lines of code correctly fills in the blank? Select two responses.**
 
  
-```
-
-CREATE OR REFRESH STREAMING LIVE TABLE transactions
+```CREATE OR REFRESH STREAMING LIVE TABLE transactions
 
 AS SELECT timestamp(transaction_timestamp) AS transaction_timestamp, * EXCEPT (transaction_timestamp, source)
 
 ________________________
 
 ```
-
-
 
  
 
@@ -1419,9 +1346,7 @@ CREATE OR REFRESH STREAMING LIVE TABLE transactions_silver
 
 FROM LIVE.transactions_bronze
 
-```
-
-**Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
+```**Which of the following statements correctly identifies the error and the stage at which the error was thrown? Select one response.
 
 &nbsp;&nbsp;&nbsp;&nbsp;LIVE.orders_bronze needs to be changed to STREAM(LIVE.orders_bronze). The error will be detected during the Initializing stage.  
 &nbsp;&nbsp;&nbsp;&nbsp;**A SELECT statement needs to be added to create the columns for the transactions_silver table. The error will be detected during the Initializing stage.** 
@@ -1733,9 +1658,7 @@ CONSTRAINT valid_operation EXCEPT (operation) ON VIOLATION DROP ROW
 
 
 
-```
-
-@dlt.table
+```@dlt.table
 
 def orders_bronze():
 
@@ -1763,9 +1686,7 @@ def orders_bronze():
 
     )
 
- ```
-
-Which of the following lines of code correctly fills in the blank? Assume the variable path represents the string file path to the data source. Select one response.
+ ```Which of the following lines of code correctly fills in the blank? Assume the variable path represents the string file path to the data source. Select one response.
 
  
 
@@ -1830,9 +1751,7 @@ on="customer_id"
 dlt.readStream("customers_silver").alias("b"),
 on="customer_id"  
 
-```
-
-**A data engineer has created the following code block to create a streaming live table from orders_bronze.**
+```**A data engineer has created the following code block to create a streaming live table from orders_bronze.**
 
 ```
 @dlt.table
@@ -1876,9 +1795,7 @@ A data engineer is using the following code block to create a live table. After 
 
  
 
-```
-
-@dlt.view
+```@dlt.view
 
 def subscribed_order_emails():
 
@@ -1904,9 +1821,7 @@ def subscribed_order_emails():
 
     )
 
-```
-
-**Which of the following statements correctly identifies the error? Select one response.**
+```**Which of the following statements correctly identifies the error? Select one response.**
 
  
 
@@ -2391,8 +2306,6 @@ AS SELECT * FROM hive_metastore.customers.records;
 CREATE TABLE records.customers.records_silver
 AS SELECT * FROM hive_metastore.records.records_silver;
 ```
-
-
 **A data engineer needs to configure their cluster to enable Unity Catalog. They have workspace administrator privileges only. (CHECK)
 Which of the following steps needs to be completed for the data engineer to enable Unity Catalog on their cluster? Select two responses.**
 
@@ -2634,9 +2547,7 @@ CREATE TABLE employees
 CREATE TABLE juan
 COMMENT "this is a table"
 AS QUERY
-```
-
-**A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
+```**A junior data engineer usually uses INSERT INTO command to write data into a Delta table. A senior data engineer suggested using another command that avoids writing
 of duplicate records. Which of the following commands is the one suggested by the senior data engineer ?** 
 
 &nbsp;&nbsp;&nbsp;&nbsp;MERGE INTO
@@ -2664,9 +2575,7 @@ the order in which the changes happened. The data engineer needs to update a tar
 ```
 CREATE [OR REPLACE] FUNCTION function_name ([parameter_name data_type])
 RETURN { expression | query}
-```
-
-**When dropping a Delta table, which of the following explains why only the table´s metadata will be deleted, while the data files will be kept in storage?**
+```**When dropping a Delta table, which of the following explains why only the table´s metadata will be deleted, while the data files will be kept in storage?**
 &nbsp;&nbsp;&nbsp;&nbsp;The table is external
 
 **Given the following command**
@@ -2686,9 +2595,7 @@ SELECT
 	________ AS few_courses_students --> FILTER(students, i-> i.total_courses <3)
 	
 FROM faculties
-```
-
-	`filter(input_array, lamda_function)` is a higher order function that returns an output array from an input array by extracting 
+```	`filter(input_array, lamda_function)` is a higher order function that returns an output array from an input array by extracting 
 	elements for which the predicate of a lambda function holds.
 
 
@@ -2757,9 +2664,7 @@ AS
 	FROM LIVE.cleaned_sales
 	GROUP BY store_id
 
-```
-
-**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:
+```**A data engineer has defined the following data quality constraint in a Delta Live Tables pipeline:
 Fill in the above blank so records violating this constraint will be dropped, and reported in metrics**
 
 
@@ -3130,9 +3035,7 @@ Question 20
 ```
 cart_id STRING,
 items ARRAY<item_id:STRING>
-```
-
-**The junior data engineer would like to unnest the items column in raw_table to result in a new table with the following schema:**
+```**The junior data engineer would like to unnest the items column in raw_table to result in a new table with the following schema:**
 
 ```
 cart_id STRING,
@@ -3620,9 +3523,7 @@ The DLT pipeline executes in Triggered Pipeline mode under Production mode.
 
 )
 
-```
-
-**What kind of SCD is taking of Apply Changes into**
+```**What kind of SCD is taking of Apply Changes into**
 
 APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
 
