@@ -16,6 +16,8 @@ on the oder side.
 `Data Wharehouse` Is a centralized repository for storing large volumens of data from multiple sources. It is designed for query and analysis, often used for business Intelligence activities.
 
 
+**Streaming Design Patterns**  
+
 	
 
 ### Bronze Ingestions Patterns
@@ -40,6 +42,12 @@ on the oder side.
 	- Soft-deletes if necessary  
 	- Hard-deletes may be required by regulatory processes.  
 
+**Bronze Inmgestion Patterns**  
+- **Singleplex Ingestion**: Every Raw data to a Delta Lake   
+- **Mutiplex Ingestion**: For nearly real-time data ingestion, normaly from a pop up system.  
+	- Do not use the pop up system as bronze leyer as they are not real tables and have limited time of retention.  
+	
+
 ### Promoting to Silver
 
 **Silver Layer**  
@@ -50,9 +58,30 @@ on the oder side.
 - Captures the full history of business action modeled  
 	- Each record processes is preserved  
 	- All records can be efficiently queried  
+- Reduces data stroage complexity, latency and redundancy  
+	- Built for both ETL throughput AND analytic query performance.  
+	
+- Silver Layer guiding Principles  
+
+	- Uses Delta Lake tables(with SQL table names)  
+	- Preserves grain of original data(no aggregation)  
+	- Eliminate duplicate records   
+	- Production schema enforced   
+	- Data quality checks passed  
+	- Corrupt data guarantine   
+	- Data stored to support production workloads  
+	- Optimized for long-term retention and ad-hoch queries  
+	
 
 
 ### Gold Query Layer
+
+**Gold Layer**
+- Powers ML applications, reporting, dashboards, ad hoch analytics
+- Reduces costs associated with ad hoch queries on silver tables
+- Allow fine grained permissions
+- Reduces strain on production systems  
+- Shifts query updates to production workloads
 
 ### Storing Data Securely
 
