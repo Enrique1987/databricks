@@ -1984,9 +1984,10 @@ Which of the following steps need to be completed in order for the data engineer
 
 **Which of the following is a recommended best practice to segregate data within an organization? Select one response**
 
-	Here the key-word is `organizations` if we wante to segregate in the same organization but for project the anwer would be segregate by schemas
+&nbsp;&nbsp;&nbsp;&nbsp;*Tip*Here the key-word is `organizations` if we wante to segregate in the same organization but for project the anwer would be segregate by schemas  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**It is recommended to segregate data using catalogs.** 
+
+&nbsp;&nbsp;&nbsp;&nbsp;**It is recommended to segregate data using catalogs.**   
 &nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using schemas.  
 &nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using clusters.  
 &nbsp;&nbsp;&nbsp;&nbsp;It is recommended to segregate data using tables.  
@@ -2000,7 +2001,7 @@ data format.Which of the following tables does the data engineering team need to
 
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables; Unity Catalog does not drop the underlying data for managed tables.  
 &nbsp;&nbsp;&nbsp;&nbsp;External tables; only external tables support Delta format.  
-&nbsp;&nbsp;&nbsp;&nbsp;**External tables; external tables support Delta and other formats.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**External tables; external tables support Delta and other formats.**   
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables; only managed tables support Delta format.  
 &nbsp;&nbsp;&nbsp;&nbsp;Managed tables; Unity Catalog retains the underlying data for up to 30 days.  
 
