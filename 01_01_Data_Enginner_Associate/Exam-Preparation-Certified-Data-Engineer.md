@@ -2044,7 +2044,7 @@ AS SELECT * FROM hive_metastore.records.records_silver;
 **A data engineer needs to configure their cluster to enable Unity Catalog. They have workspace administrator privileges only. (CHECK)
 Which of the following steps needs to be completed for the data engineer to enable Unity Catalog on their cluster? Select two responses.**
 
- 
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must use a supported cluster mode.**   
 &nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have a storage credential to access the cluster.    
@@ -2058,7 +2058,7 @@ Which of the following steps needs to be completed for the data engineer to enab
 &nbsp;&nbsp;&nbsp;&nbsp;Data optimization, data access audit, data analysis, data discovery  
 &nbsp;&nbsp;&nbsp;&nbsp;Data integrity, data optimization, data lineage, data science  
 &nbsp;&nbsp;&nbsp;&nbsp;Data science, data integrity, data lineage, data versioning  
-&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Data access control, data access audit, data lineage, data discovery**  
 
 **Which of the following statements correctly identifies the benefits of using a managed table over an external table? Select two responses.(CHECK)**
 
@@ -2077,13 +2077,13 @@ Which of the following steps needs to be completed for the data engineer to enab
 &nbsp;&nbsp;&nbsp;&nbsp;A separate external database managed by Databricks  
 
 
-**Which of the following security modes supports Unity Catalog? Select two responses.**
+**Which of the following security modes supports Unity Catalog? Select two responses.**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Passthrough only mode  
 &nbsp;&nbsp;&nbsp;&nbsp;Table ACL only mode  
 &nbsp;&nbsp;&nbsp;&nbsp;None (no security)  
 &nbsp;&nbsp;&nbsp;&nbsp;**User isolation mode** 
-&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Single user mode**  
 
 
 **A metastore administrator has enabled identity federation for a Unity Catalog namespace.(acawokex2)
@@ -2095,16 +2095,15 @@ Which of the following correctly describes the privileges that users who have ac
 
 &nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by an account administrator through the account console.  
 &nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by the workspace administrator through their workspace administration console.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the workspace administrator through their workspace administration console.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by a workspace user through the identity provider.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the account administrators through the account console.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the workspace administrator through their workspace administration console.**  
+&nbsp;&nbsp;&nbsp;&nbsp;The users can be assigned from the workspace to the account by a workspace user through the identity provider.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The users can be assigned from the account to the workspace by the account administrators through the account console.**  
 
 
 **A data engineering team has members at several different geographic locations. Each member of the team needs to be able to access the securables 
 in the team's Unity Catalog namespace from their location. How can the data be managed in a way that each team member’s
 region has access to the securables within the catalog? Select one response.**
 
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator needs to create one metastore to be used in all regions.  
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator needs to create a catalog for each region.  
@@ -2117,8 +2116,7 @@ region has access to the securables within the catalog? Select one response.**
 Which of the following recommendations is considered a best practice in this situation? Select one response.**
 
  
-
-&nbsp;&nbsp;&nbsp;&nbsp;**Keep the table managed and use Delta Sharing for external consumption.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Keep the table managed and use Delta Sharing for external consumption.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Make a copy of the table in an external location and use Delta Sharing for external consumption.  
 &nbsp;&nbsp;&nbsp;&nbsp;Move the table to an external location and use Delta Sharing to capture upstream sources only.  
 &nbsp;&nbsp;&nbsp;&nbsp;Keep the table managed and use Delta Sharing to capture upstream sources only.  
@@ -2135,14 +2133,12 @@ Which of the following recommendations is considered a best practice in this sit
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not provide scaling for storage costs.  
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not allow access control for groups.  
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services do not support unstructured and semistructured data.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Cloud storage services only provide access control at the file level through cloud-specific interfaces.** 
+&nbsp;&nbsp;&nbsp;&nbsp;**Cloud storage services only provide access control at the file level through cloud-specific interfaces.**  
 &nbsp;&nbsp;&nbsp;&nbsp;Cloud storage services are usually based on their own proprietary data format, increasing vendor lock-in.  
 
 
 **A metastore administrator needs to create data access control policies for a workspace. They need to provide several users access to a single file in a scalable, efficient way.
 Which of the following correctly describes the Databricks-recommended best practice to complete this task? Select one response.**
-
- 
 
 &nbsp;&nbsp;&nbsp;&nbsp;The metastore administrator can assign access to the file by individually assigning access to each user who needs access to the file.    
 &nbsp;&nbsp;&nbsp;&nbsp;None of the provided answer choices are correct.  
@@ -2154,31 +2150,29 @@ Which of the following correctly describes the Databricks-recommended best pract
 **A data engineer needs to copy an external table from their default Hive metastore to the Unity Catalog metastore.(creuppa)
 Which of the following are required to upgrade the table to be managed by Unity Catalog? Select three responses.**
 
- 
 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must create their own Hive metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.** 
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have workspace administrator level privileges.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.** 
-
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must create their own Hive metastore.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have a storage credential with an IAM role that authorizes Unity Catalog to access the tables’ location path.**   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must be granted CREATE EXTERNAL TABLE permission on the external location of the table to be upgraded.**   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer must have workspace administrator level privileges.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer must have the file path to an external location that references the storage credential.**   
 
 
 **Which of the following privileges do storage credentials AND external locations support? Select three responses.**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**READ FILES** 
-&nbsp;&nbsp;&nbsp;&nbsp;**WRITE FILES** 
-&nbsp;&nbsp;&nbsp;&nbsp;EXECUTE  
-&nbsp;&nbsp;&nbsp;&nbsp;DELETE  
-&nbsp;&nbsp;&nbsp;&nbsp;**CREATE EXTERNAL TABLE**
+&nbsp;&nbsp;&nbsp;&nbsp;**READ FILES**  
+&nbsp;&nbsp;&nbsp;&nbsp;**WRITE FILES**   
+&nbsp;&nbsp;&nbsp;&nbsp;EXECUTE    
+&nbsp;&nbsp;&nbsp;&nbsp;DELETE    
+&nbsp;&nbsp;&nbsp;&nbsp;**CREATE EXTERNAL TABLE**  
 
 **Which of the following statements describes the relationship between Unity Catalog and data access control in the overall Databricks Lakehouse architecture? (gema-aw)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Users, identities, and access control on securables are centrally managed across workspaces.  
 &nbsp;&nbsp;&nbsp;&nbsp;Groups, metastores, and audit control on securables are centrally managed across accounts.  
-&nbsp;&nbsp;&nbsp;&nbsp;**Groups, metastores, and access control on securables are centrally managed across workspaces.** 
-&nbsp;&nbsp;&nbsp;&nbsp;Identities, groups, and access control on securables are centrally managed across accounts.  
-&nbsp;&nbsp;&nbsp;&nbsp;Accounts, workspaces, and audit control on securables are centrally managed across catalogs.  
+&nbsp;&nbsp;&nbsp;&nbsp;**Groups, metastores, and access control on securables are centrally managed across workspaces.**    
+&nbsp;&nbsp;&nbsp;&nbsp;Identities, groups, and access control on securables are centrally managed across accounts.   
+&nbsp;&nbsp;&nbsp;&nbsp;Accounts, workspaces, and audit control on securables are centrally managed across catalogs.   
 
 
 **A data engineer needs to connect the output of their Unity Catalog-supported Databricks SQL workload to an external BI tool.
@@ -2186,31 +2180,29 @@ Which of the following describes what needs to be done to complete this task? Se
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new job cluster.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new Databricks SQL dashboard.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to attach their query to a new SQL warehouse.** 
-&nbsp;&nbsp;&nbsp;&nbsp;*In some scenarions, organizations might want to move their processed data to a SQL warehouse like Snowflake or Redshift*  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to an existing all-purpose cluster.  
-&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new pipeline.  
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new job cluster.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new Databricks SQL dashboard.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The data engineer needs to attach their query to a new SQL warehouse.**  
+&nbsp;&nbsp;&nbsp;&nbsp;*In some scenarions, organizations might want to move their processed data to a SQL warehouse like Snowflake or Redshift*   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to an existing all-purpose cluster.   
+&nbsp;&nbsp;&nbsp;&nbsp;The data engineer needs to attach their query to a new pipeline.   
 
 **A lead data engineer needs to create a new workspace for their team. They only have workspace administrator privileges.(iaa-aa)
 Which of the following tasks needs to be performed so that the data engineer is granted the necessary permissions to create the workspace? Select one response.**
 
- 
+&nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.   
+&nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use   
+&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.   
+&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an account administrator level**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.  
-&nbsp;&nbsp;&nbsp;&nbsp;The identity administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use  
-&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to assign the data engineer a unique access token to authenticate the platform at an identity administrator level.  
-&nbsp;&nbsp;&nbsp;&nbsp;The account administrator needs to generate new storage credentials with account administrator level permissions for the data engineer to use.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The identity administrator needs to assign the data engineer a unique access token to authenticate the platform at an account administrator level** 
+**Which of the following describes an additional benefit of the three-level namespace provided by Unity Catalog? Select one response.**  
 
-**Which of the following describes an additional benefit of the three-level namespace provided by Unity Catalog? Select one response.**
-
-&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace provides access to advanced options to optimize data through versioning techniques.  
-&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces a list of privilege grants for each securable data object in the Hive metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;**The three-level namespace provides more data segregation options while still making legacy Hive metastore data easily accessible.** 
-&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces data governance through cluster modes over data objects in the Hive metastore.  
-&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace allows implicit access grants so permissions can easily be inherited by securable data objects.  
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace provides access to advanced options to optimize data through versioning techniques.   
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces a list of privilege grants for each securable data object in the Hive metastore.   
+&nbsp;&nbsp;&nbsp;&nbsp;**The three-level namespace provides more data segregation options while still making legacy Hive metastore data easily accessible.**   
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace enforces data governance through cluster modes over data objects in the Hive metastore.   
+&nbsp;&nbsp;&nbsp;&nbsp;The three-level namespace allows implicit access grants so permissions can easily be inherited by securable data objects.   
 
 
 
@@ -2220,11 +2212,11 @@ Which of the following clusters does the data engineer need to attach to their n
 
  
 
-&nbsp;&nbsp;&nbsp;&nbsp;High concurrency cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;Single-user cluster  
+&nbsp;&nbsp;&nbsp;&nbsp;High concurrency cluster    
+&nbsp;&nbsp;&nbsp;&nbsp;Single-user cluster    
 &nbsp;&nbsp;&nbsp;&nbsp;Multi-user cluster  
-&nbsp;&nbsp;&nbsp;&nbsp;**User isolation cluster** 
-&nbsp;&nbsp;&nbsp;&nbsp;This type of workload is not supported by any cluster mode  
+&nbsp;&nbsp;&nbsp;&nbsp;**User isolation cluster**   
+&nbsp;&nbsp;&nbsp;&nbsp;This type of workload is not supported by any cluster mode   
 
 
 ## Udemy Questions Exam 
@@ -2232,27 +2224,27 @@ Which of the following clusters does the data engineer need to attach to their n
 I bought a coruse in udemy to help me achieve the "Associate Data Engineer"
 
 
-**Which of the following locations hosts the Databricks web application ?**
-&nbsp;&nbsp;&nbsp;&nbsp;Control plane
+**Which of the following locations hosts the Databricks web application ?**  
+&nbsp;&nbsp;&nbsp;&nbsp;Control plane  
 
-**Databricks Repos, which of the following operations a data engineer can user to update the local version of a repo from its remote Git repository ?**
-&nbsp;&nbsp;&nbsp;&nbsp;Pull
+**Databricks Repos, which of the following operations a data engineer can user to update the local version of a repo from its remote Git repository ?**  
+&nbsp;&nbsp;&nbsp;&nbsp;Pull  
 
-**According to the Databricks Lakehouse architecture, which of the following is located in the customer's cloud account?**
-&nbsp;&nbsp;&nbsp;&nbsp;Cluster on virtual machines
+**According to the Databricks Lakehouse architecture, which of the following is located in the customer's cloud account?**  
+&nbsp;&nbsp;&nbsp;&nbsp;Cluster on virtual machines  
 
-**Best describes Databricks Lakehause?**
+**Best describes Databricks Lakehause?**  
 &nbsp;&nbsp;&nbsp;&nbsp;Single,flexible, high-performance system that supports data, analyticsn and machine learning workloads.
 
 
-**Wich of the following task is not supported by Databricks Repos, and must be performed in your Git provider?**
-&nbsp;&nbsp;&nbsp;&nbsp;Delete branches
+**Wich of the following task is not supported by Databricks Repos, and must be performed in your Git provider?**  
+&nbsp;&nbsp;&nbsp;&nbsp;Delete branches  
 
-**True Facts about Delta Lake**
-&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides ACID transaction guarantees
-&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides scalabe datga and metadata handling
-&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides audit history and time travel
-&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake supports unified streaming and batgch datga processing
+**True Facts about Delta Lake**  
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides ACID transaction guarantees  
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides scalabe datga and metadata handling  
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake provides audit history and time travel  
+&nbsp;&nbsp;&nbsp;&nbsp;Delta Lake supports unified streaming and batgch datga processing  
 
 
 **How long is the default retention period of the VACUUM command ?**  
@@ -2287,18 +2279,17 @@ of duplicate records. Which of the following commands is the one suggested by th
 Each change event has metadata indicating whether the specified record was inserted, updated, or deleted. In addition to a timestamp column indicating
 the order in which the changes happened. The data engineer needs to update a target table based on these change events.**   
 
-&nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO   
+&nbsp;&nbsp;&nbsp;&nbsp;`APPLY CHANGES INTO`  
+
 
 	The events described in the question represent Change Data Capture (CDC) feed. CDC is logged at the source as events that contain both the data of the records
 	along with metadata information:
-	1)  Operation column indicating whether the specified record was inserted, updated, or deleted
-	
-	2)  Sequence column that is usually a timestamp indicating the order in which the changes happened
-	    You can use the APPLY CHANGES INTO statement to use Delta Live Tables CDC functionality
+	1) Operation column indicating whether the specified record was inserted, updated, or deleted
+	2) Sequence column that is usually a timestamp indicating the order in which the changes happened
+	   You can use the APPLY CHANGES INTO statement to use Delta Live Tables CDC functionality
 
 **In PySpark, which of the following commands can you use to query the Delta table employees created in Spark SQL?**  
 &nbsp;&nbsp;&nbsp;&nbsp;spark.table("employees")  
-
 
 
 **Syntax to create a UDF**  
@@ -2310,9 +2301,9 @@ RETURN { expression | query}
 &nbsp;&nbsp;&nbsp;&nbsp;The table is external  
 
 **Given the following command**  
-`CREATE DATABASE IF NOT EXISTS hr_db;`  
+&nbsp;&nbsp;&nbsp;&nbsp;`CREATE DATABASE IF NOT EXISTS hr_db;`  
 
-In which of the following locations will the **hr_db**database be located ?  
+**In which of the following locations will the `hr_db` database be located ?**  
 
 `dbfs:/user/hive/warehouse`  --> that is the default location.  
 
@@ -2347,11 +2338,11 @@ Extracting odd numbers from an input array of integers:
 ```
   
 **Wich of the following is used by Auto Loader to load data incrementally ?**  
-	Spark Structrued Streaming
+&nbsp;&nbsp;&nbsp;&nbsp;Spark Structrued Streaming
 	
 **Which of the following statements best describes Auto Loader ?**  
-	Auto loader monitors a source location, in which files accumulate, to indentify and ingest only new arriving files with each command run. 
-	While the files that have already been ingested in previous runs are skipped.
+&nbsp;&nbsp;&nbsp;&nbsp;Auto loader monitors a source location, in which files accumulate, to indentify and ingest only new arriving files with each command run. 
+&nbsp;&nbsp;&nbsp;&nbsp;While the files that have already been ingested in previous runs are skipped.
 	
 
 
@@ -2361,16 +2352,16 @@ Extracting odd numbers from an input array of integers:
 
 **Fill in the above blank so records violating this constraint will be added to the target table, and reported in metrics**  
 
-	There is no need to add ON VIOLATION clause. By default, records violating the constraint will be kept, and reported as invalid in the event log.  
+&nbsp;&nbsp;&nbsp;&nbsp;There is no need to add ON VIOLATION clause. By default, records violating the constraint will be kept, and reported as invalid in the event log.  
 
 
 **The data engineer team has a DLT pipeline that updates all the tables once and then stops. The compute resources of the pipeline continue running to allow for quick testing.
 Which of the following best describes the execution modes of this DLT pipeline ?**  
 
-	- *Typp**The word "quick-testing" indicates that is developmen. The DLT pipeline executes tin Triggered Pipeline mode under Development mode.
+	- *Typp*: The word "quick-testing" indicates that is developmen. The DLT pipeline executes tin Triggered Pipeline mode under Development mode.
 
-
-	Triggered pipelines update each table with whatever data is currently available and then they shut down.
+&nbsp;&nbsp;&nbsp;&nbsp;Triggered pipelines update each table with whatever data is currently available and then they shut down.
+	
 	
 	In Development mode, the Delta Live Tables system ease the development process by
 		1 Reusing a cluster to avoid the overhead of restarts. The cluster runs for two hours when development mode is enabled.´
@@ -2400,31 +2391,28 @@ Fill in the above blank so records violating this constraint will be dropped, an
 
 
 **Which of the following compute resources is availabe in DAtabricks SQL**  
-	SQL warehouses
 
+&nbsp;&nbsp;&nbsp;&nbsp;QL warehouses
 
 **Wich of the following is the benefit of using the Auto Stop feature of Databricks SQL wharehoues ?**  
-    Minimizes the total running time of warehouse  
+&nbsp;&nbsp;&nbsp;&nbsp;Minimizes the total running time of warehouse  
 
 **Alerts destinations that Support Databricks SQL**  
-    Slack, Webhook, Teams, Email  
+&nbsp;&nbsp;&nbsp;&nbsp;Slack, Webhook, Teams, Email  
 
 
 **A data engineering team has a long-running multi-tasks Job. The team members need to be notified when the run of this job completes.
 Which of the following approaches can be used to send emails to the team members when the job completes ?**  
 
-	They can configues email notification settings in the job page
+&nbsp;&nbsp;&nbsp;&nbsp;They can configues email notification settings in the job page
 	
 
-A data engineer wants to increase the cluster size of an existing Databricks SQL warehouse.  
-
-
-
-**Which of the following is the benefit of increasing the cluster size of Databricks SQL warehouses ?**  
-	Improves the latency of the queries execution  
+**A data engineer wants to increase the cluster size of an existing Databricks SQL warehouse.  
+Which of the following is the benefit of increasing the cluster size of Databricks SQL warehouses ?**  
+&nbsp;&nbsp;&nbsp;&nbsp;Improves the latency of the queries execution  
 
 **Which of the following describes Cron syntax in Databricks Jobs ?**  
-    Its an expression to represent comples job schedule that can be defined programmatically  
+&nbsp;&nbsp;&nbsp;&nbsp;Its an expression to represent comples job schedule that can be defined programmatically  
 	
 
 **The data engineer team has a DLT pipeline that updates all the tables at defined intervals until manually stopped. 
@@ -2460,6 +2448,7 @@ Which of the following best describes the execution modes of this DLT pipeline ?
 
 **Which of the following locations hosts the driver and worker nodes of a
 Databricks-managed cluster?**  
+
 &nbsp;&nbsp;&nbsp;&nbsp;A. Data plane  
 &nbsp;&nbsp;&nbsp;&nbsp;B. Control plane  
 &nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Filesystem  
@@ -2486,20 +2475,20 @@ A. Data plane
 Question 1
 **Which of the following describes a benefit of a data lakehouse that is unavailable in a traditional data warehouse?**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse provides a relational system of data management.  
-&nbsp;&nbsp;&nbsp;&nbsp;B. A data lakehouse captures snapshots of data for version control purposes.  
-&nbsp;&nbsp;&nbsp;&nbsp;C. A data lakehouse couples storage and compute for complete control.  
-&nbsp;&nbsp;&nbsp;&nbsp;D. A data lakehouse utilizes proprietary storage formats for data.  
-&nbsp;&nbsp;&nbsp;&nbsp;**E. A data lakehouse enables both batch and streaming analytics.**  
+&nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse provides a relational system of data management.   
+&nbsp;&nbsp;&nbsp;&nbsp;B. A data lakehouse captures snapshots of data for version control purposes.   
+&nbsp;&nbsp;&nbsp;&nbsp;C. A data lakehouse couples storage and compute for complete control.   
+&nbsp;&nbsp;&nbsp;&nbsp;D. A data lakehouse utilizes proprietary storage formats for data.   
+&nbsp;&nbsp;&nbsp;&nbsp;**E. A data lakehouse enables both batch and streaming analytics.**   
 
 Question 2
-**Which of the following locations hosts the driver and worker nodes of a Databricks-managed cluster?**  
+**Which of the following locations hosts the driver and worker nodes of a Databricks-managed cluster?**    
 
-&nbsp;&nbsp;&nbsp;&nbsp;**A. Data plane**    
-&nbsp;&nbsp;&nbsp;&nbsp;B. Control plane    
-&nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Filesystem    
-&nbsp;&nbsp;&nbsp;&nbsp;D. JDBC data source    
-&nbsp;&nbsp;&nbsp;&nbsp;E. Databricks web application  
+&nbsp;&nbsp;&nbsp;&nbsp;**A. Data plane**     
+&nbsp;&nbsp;&nbsp;&nbsp;B. Control plane     
+&nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Filesystem      
+&nbsp;&nbsp;&nbsp;&nbsp;D. JDBC data source     
+&nbsp;&nbsp;&nbsp;&nbsp;E. Databricks web application   
 
 
 Question 3
@@ -2507,19 +2496,20 @@ Question 3
 Which of the following describes how using a data lakehouse can help the data architect meet the needs of both workloads?**  
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse requires very little data modeling.  
-&nbsp;&nbsp;&nbsp;&nbsp;B. A data lakehouse combines compute and storage for simple governance.  
-&nbsp;&nbsp;&nbsp;&nbsp;C. A data lakehouse provides autoscaling for compute clusters.    
-&nbsp;&nbsp;&nbsp;&nbsp;**D. A data lakehouse stores unstructured data and is ACID-compliant.**    
-&nbsp;&nbsp;&nbsp;&nbsp;E. A data lakehouse fully exists in the cloud.  
+&nbsp;&nbsp;&nbsp;&nbsp;A. A data lakehouse requires very little data modeling.   
+&nbsp;&nbsp;&nbsp;&nbsp;B. A data lakehouse combines compute and storage for simple governance.   
+&nbsp;&nbsp;&nbsp;&nbsp;C. A data lakehouse provides autoscaling for compute clusters.     
+&nbsp;&nbsp;&nbsp;&nbsp;**D. A data lakehouse stores unstructured data and is ACID-compliant.**     
+&nbsp;&nbsp;&nbsp;&nbsp;E. A data lakehouse fully exists in the cloud.   
 
 Question 4
-**Which of the following describes a scenario in which a data engineer will want to use a Job cluster instead of an all-purpose cluster?**
+**Which of the following describes a scenario in which a data engineer will want to use a Job cluster instead of an all-purpose cluster?**  
+
 &nbsp;&nbsp;&nbsp;&nbsp;A. An ad-hoc analytics report needs to be developed while minimizing compute costs.  
 &nbsp;&nbsp;&nbsp;&nbsp;B. A data team needs to collaborate on the development of a machine learning model.  
 &nbsp;&nbsp;&nbsp;&nbsp;**C. An automated workflow needs to be run every 30 minutes.**    
 &nbsp;&nbsp;&nbsp;&nbsp;D. A Databricks SQL query needs to be scheduled for upward reporting.  
-&nbsp;&nbsp;&nbsp;&nbsp;E. A data engineer needs to manually investigate a production error.  
+&nbsp;&nbsp;&nbsp;&nbsp;E. A data engineer needs to manually investigate a production error.   
 
 
 Question 5
@@ -2527,11 +2517,11 @@ Question 5
 Assuming the data engineer is the Delta table owner, which part of the Databricks
 Lakehouse Platform can the data engineer use to grant the data analysts the appropriate access?**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. Repos   
-&nbsp;&nbsp;&nbsp;&nbsp;B. Jobs  
-&nbsp;&nbsp;&nbsp;&nbsp;**C. Data Explorer**  
-&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Filesystem  
-&nbsp;&nbsp;&nbsp;&nbsp;E. Dashboards  
+&nbsp;&nbsp;&nbsp;&nbsp;A. Repos    
+&nbsp;&nbsp;&nbsp;&nbsp;B. Jobs   
+&nbsp;&nbsp;&nbsp;&nbsp;**C. Data Explorer**   
+&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Filesystem   
+&nbsp;&nbsp;&nbsp;&nbsp;E. Dashboards   
 
 
 Question 6
@@ -2544,25 +2534,25 @@ Which of the following supports the senior data engineer’s claim ?**
 &nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Notebooks support automatic change-tracking and versioning   
 &nbsp;&nbsp;&nbsp;&nbsp;**B. Databricks Notebooks support real-time coauthoring on a single notebook**  
 &nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Notebooks support commenting and notification comments  
-&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Notebooks support the use of multiple languages in the same notebook  
-&nbsp;&nbsp;&nbsp;&nbsp;E. Databricks Notebooks support the creation of interactive data visualizations  
+&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Notebooks support the use of multiple languages in the same notebook   
+&nbsp;&nbsp;&nbsp;&nbsp;E. Databricks Notebooks support the creation of interactive data visualizations   
 
 
 Question 7
 **Which of the following describes how Databricks Repos can help facilitate CI/CD workflows on the Databricks Lakehouse Platform?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Repos can facilitate the pull request, review, and approval process before merging branches  
-&nbsp;&nbsp;&nbsp;&nbsp;B. Databricks Repos can merge changes from a secondary Git branch into a main Git branch  
-&nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Repos can be used to design, develop, and trigger Git automation pipelines  
-&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Repos can store the single-source-of-truth Git repository  
-&nbsp;&nbsp;&nbsp;&nbsp;**E. Databricks Repos can commit or push code changes to trigger a CI/CD process**  
+&nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Repos can facilitate the pull request, review, and approval process before merging branches    
+&nbsp;&nbsp;&nbsp;&nbsp;B. Databricks Repos can merge changes from a secondary Git branch into a main Git branch    
+&nbsp;&nbsp;&nbsp;&nbsp;C. Databricks Repos can be used to design, develop, and trigger Git automation pipelines   
+&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Repos can store the single-source-of-truth Git repository   
+&nbsp;&nbsp;&nbsp;&nbsp;**E. Databricks Repos can commit or push code changes to trigger a CI/CD process**   
 
 
 Question 8
-**Which of the following statements describes Delta Lake?**
+**Which of the following statements describes Delta Lake?**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. Delta Lake is an open source analytics engine used for big data workloads.  
-&nbsp;&nbsp;&nbsp;&nbsp;**B. Delta Lake is an open format storage layer that delivers reliability, security, and performance.**  
+&nbsp;&nbsp;&nbsp;&nbsp;**B. Delta Lake is an open format storage layer that delivers reliability, security, and performance.**   
 &nbsp;&nbsp;&nbsp;&nbsp;C. Delta Lake is an open source platform to help manage the complete machine learning lifecycle.  
 &nbsp;&nbsp;&nbsp;&nbsp;D. Delta Lake is an open source data storage format for distributed data.  
 &nbsp;&nbsp;&nbsp;&nbsp;E. Delta Lake is an open format storage layer that processes data.  
@@ -2570,28 +2560,29 @@ Question 8
 
 Question 9
 
-**A data architect has determined that a table of the following format is necessary:
+**A data architect has determined that a table of the following format is necessary:**  
 
+```
 id birthDate avgRating
 a1 1990-01-06 5.5
 a2 1974-11-21 7.1
 … … …
+```
 
-
-Which of the following code blocks uses SQL DDL commands to create an empty Delta
+**Which of the following code blocks uses SQL DDL commands to create an empty Delta
 table in the above format regardless of whether a table already exists with this name?**
 
 	Tip: "wheter a table already exists" = CREATE OR REPLACE 
 	
-&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE OR REPLACE TABLE table_name AS SELECT id STRING, birthDate DATE, avgRating FLOAT USING DELTA  
-&nbsp;&nbsp;&nbsp;&nbsp;**B. CREATE OR REPLACE TABLE table_name (id STRING, birthDate DATE, avgRating FLOAT)**  
-&nbsp;&nbsp;&nbsp;&nbsp;C. CREATE TABLE IF NOT EXISTS table_name (id STRING,birthDate DATE, avgRating FLOAT)  
-&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE TABLE table_name AS SELECT id STRING, birthDate DATE, avgRating FLOAT  
-&nbsp;&nbsp;&nbsp;&nbsp;E. CREATE OR REPLACE TABLE table_name WITH COLUMNS (id STRING, birthDate DATE, avgRating FLOAT) USING DELTA  
+&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE OR REPLACE TABLE table_name AS SELECT id STRING, birthDate DATE, avgRating FLOAT USING DELTA    
+&nbsp;&nbsp;&nbsp;&nbsp;**B. CREATE OR REPLACE TABLE table_name (id STRING, birthDate DATE, avgRating FLOAT)**    
+&nbsp;&nbsp;&nbsp;&nbsp;C. CREATE TABLE IF NOT EXISTS table_name (id STRING,birthDate DATE, avgRating FLOAT)    
+&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE TABLE table_name AS SELECT id STRING, birthDate DATE, avgRating FLOAT    
+&nbsp;&nbsp;&nbsp;&nbsp;E. CREATE OR REPLACE TABLE table_name WITH COLUMNS (id STRING, birthDate DATE, avgRating FLOAT) USING DELTA    
 
 
 Question 10
-**Which of the following SQL keywords can be used to append new rows to an existing Delta table?**
+**Which of the following SQL keywords can be used to append new rows to an existing Delta table?**  
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. UPDATE  
@@ -2609,24 +2600,24 @@ rows meeting the condition are sparsely located throughout each of the data file
 Based on the scenario, which of the following optimization techniques could speed up the query?**
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. Data skipping
-&nbsp;&nbsp;&nbsp;&nbsp;**B. Z-Ordering**
-&nbsp;&nbsp;&nbsp;&nbsp;C. Bin-packing
-&nbsp;&nbsp;&nbsp;&nbsp;D. Write as a Parquet file
-&nbsp;&nbsp;&nbsp;&nbsp;E. Tuning the file size
+&nbsp;&nbsp;&nbsp;&nbsp;A. Data skipping  
+&nbsp;&nbsp;&nbsp;&nbsp;**B. Z-Ordering**   
+&nbsp;&nbsp;&nbsp;&nbsp;C. Bin-packing  
+&nbsp;&nbsp;&nbsp;&nbsp;D. Write as a Parquet file  
+&nbsp;&nbsp;&nbsp;&nbsp;E. Tuning the file size  
 
 Question 12
 **A data engineer needs to create a database called customer360 at the location `/customer/customer360`. 
 The data engineer is unsure if one of their colleagues has already created the database.
 Which of the following commands should the data engineer run to complete this task?**
 
-	Tip: "unsure if one of their colleagues has already created the databese" = "IF NOT EXISTS"  
+	Tip: "unsure if one of their colleagues has already created the databese" = "IF NOT EXISTS"    
 	
-&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE DATABASE customer360 LOCATION '/customer/customer360';  
-&nbsp;&nbsp;&nbsp;&nbsp;B. CREATE DATABASE IF NOT EXISTS customer360;  
-&nbsp;&nbsp;&nbsp;&nbsp;**C. CREATE DATABASE IF NOT EXISTS customer360 LOCATION '/customer/customer360';**    
-&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE DATABASE IF NOT EXISTS customer360 DELTA LOCATION '/customer/customer360';  
-&nbsp;&nbsp;&nbsp;&nbsp;E. CREATE DATABASE customer360 DELTA LOCATION '/customer/customer360';  
+&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE DATABASE customer360 LOCATION '/customer/customer360';    
+&nbsp;&nbsp;&nbsp;&nbsp;B. CREATE DATABASE IF NOT EXISTS customer360;    
+&nbsp;&nbsp;&nbsp;&nbsp;**C. CREATE DATABASE IF NOT EXISTS customer360 LOCATION '/customer/customer360';**      
+&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE DATABASE IF NOT EXISTS customer360 DELTA LOCATION '/customer/customer360';    
+&nbsp;&nbsp;&nbsp;&nbsp;E. CREATE DATABASE customer360 DELTA LOCATION '/customer/customer360';    
 
 Question 13
 **A junior data engineer needs to create a Spark SQL table my_table for which Spark manages both the data and the metadata.
@@ -2634,11 +2625,11 @@ The metadata and data should also be stored in the Databricks Filesystem (DBFS).
 Which of the following commands should a senior data engineer share with the junior data engineer to complete this task?**
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE TABLE my_table (id STRING, value STRING) USING org.apache.spark.sql.parquet OPTIONS (PATH "storage-path");
-&nbsp;&nbsp;&nbsp;&nbsp;B. CREATE MANAGED TABLE my_table (id STRING, value STRING) USING org.apache.spark.sql.parquet OPTIONS (PATH "storage-path");
-&nbsp;&nbsp;&nbsp;&nbsp;C. CREATE MANAGED TABLE my_table (id STRING, value STRING);
-&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE TABLE my_table (id STRING, value STRING) USING DBFS;
-&nbsp;&nbsp;&nbsp;&nbsp;**E. CREATE TABLE my_table (id STRING, value STRING);**
+&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE TABLE my_table (id STRING, value STRING) USING org.apache.spark.sql.parquet OPTIONS (PATH "storage-path");  
+&nbsp;&nbsp;&nbsp;&nbsp;B. CREATE MANAGED TABLE my_table (id STRING, value STRING) USING org.apache.spark.sql.parquet OPTIONS (PATH "storage-path");  
+&nbsp;&nbsp;&nbsp;&nbsp;C. CREATE MANAGED TABLE my_table (id STRING, value STRING);  
+&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE TABLE my_table (id STRING, value STRING) USING DBFS;  
+&nbsp;&nbsp;&nbsp;&nbsp;**E. CREATE TABLE my_table (id STRING, value STRING);**  
 
 
 Question 14
@@ -2647,10 +2638,10 @@ The relational object must be used by other data engineers in other sessions. In
 Which of the following relational objects should the data engineer create?**
 
 
-&nbsp;&nbsp;&nbsp;&nbsp;**A. View**   
-&nbsp;&nbsp;&nbsp;&nbsp;B. Temporary view  
-&nbsp;&nbsp;&nbsp;&nbsp;C. Delta Table  
-&nbsp;&nbsp;&nbsp;&nbsp;D. Database  
+&nbsp;&nbsp;&nbsp;&nbsp;**A. View**    
+&nbsp;&nbsp;&nbsp;&nbsp;B. Temporary view   
+&nbsp;&nbsp;&nbsp;&nbsp;C. Delta Table   
+&nbsp;&nbsp;&nbsp;&nbsp;D. Database   
 &nbsp;&nbsp;&nbsp;&nbsp;E. Spark SQL Table  
 
 
@@ -2660,18 +2651,18 @@ external system. The team is noticing that after appending new rows to the data 
 external system, their queries within Databricks are not returning the new rows. They identify
 the caching of the previous data as the cause of this issue.
 Which of the following approaches will ensure that the data returned by queries is always
-up-to-date?**
+up-to-date?**  
 
 	*Explination: Data Lake Hause combine a lot of tables: Delta TAbles, External TAbles, Managed TAbles, View,*
 
 &nbsp;&nbsp;&nbsp;&nbsp;**A. The tables should be converted to the Delta format**  
-&nbsp;&nbsp;&nbsp;&nbsp;B. The tables should be stored in a cloud-based external system  
-&nbsp;&nbsp;&nbsp;&nbsp;C. The tables should be refreshed in the writing cluster before the next query is run
-&nbsp;&nbsp;&nbsp;&nbsp;D. The tables should be altered to include metadata to not cache  
-&nbsp;&nbsp;&nbsp;&nbsp;E. The tables should be updated before the next query is run  
+&nbsp;&nbsp;&nbsp;&nbsp;B. The tables should be stored in a cloud-based external system   
+&nbsp;&nbsp;&nbsp;&nbsp;C. The tables should be refreshed in the writing cluster before the next query is run  
+&nbsp;&nbsp;&nbsp;&nbsp;D. The tables should be altered to include metadata to not cache   
+&nbsp;&nbsp;&nbsp;&nbsp;E. The tables should be updated before the next query is run   
 
 Question 16
-**A table customerLocations exists with the following schema:**  
+**A table customerLocations exists with the following schema:**   
 
 ```
 id STRING,
@@ -2679,7 +2670,7 @@ date STRING,
 city STRING,
 country STRING
 ```
-**A senior data engineer wants to create a new table from this table using the following command:**
+**A senior data engineer wants to create a new table from this table using the following command:**  
 
 ```
 CREATE TABLE customersPerCountry AS
@@ -2689,7 +2680,7 @@ FROM customerLocations
 GROUP BY country;
 
 ```
-**A junior data engineer asks why the schema is not being declared for the new table. Which of the following responses explains why declaring the schema is not necessary?**
+**A junior data engineer asks why the schema is not being declared for the new table. Which of the following responses explains why declaring the schema is not necessary?**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;**A. CREATE TABLE AS SELECT statements adopt schema details from the source table and query.**  
 &nbsp;&nbsp;&nbsp;&nbsp;B. CREATE TABLE AS SELECT statements infer the schema by scanning the data.  
@@ -2703,11 +2694,11 @@ Question 17
 Another data engineer suggests that this is inefficient and the table should simply be overwritten instead.
 Which of the following reasons to overwrite the table instead of deleting and recreating the table is incorrect?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;**A. Overwriting a table is efficient because no files need to be deleted.**  
-&nbsp;&nbsp;&nbsp;&nbsp;B. Overwriting a table results in a clean table history for logging and audit purposes.  
-&nbsp;&nbsp;&nbsp;&nbsp;C. Overwriting a table maintains the old version of the table for Time Travel.  
-&nbsp;&nbsp;&nbsp;&nbsp;D. Overwriting a table is an atomic operation and will not leave the table in an unfinished state.  
-&nbsp;&nbsp;&nbsp;&nbsp;E. Overwriting a table allows for concurrent queries to be completed while in progress.  
+&nbsp;&nbsp;&nbsp;&nbsp;**A. Overwriting a table is efficient because no files need to be deleted.**   
+&nbsp;&nbsp;&nbsp;&nbsp;B. Overwriting a table results in a clean table history for logging and audit purposes.   
+&nbsp;&nbsp;&nbsp;&nbsp;C. Overwriting a table maintains the old version of the table for Time Travel.   
+&nbsp;&nbsp;&nbsp;&nbsp;D. Overwriting a table is an atomic operation and will not leave the table in an unfinished state.   
+&nbsp;&nbsp;&nbsp;&nbsp;E. Overwriting a table allows for concurrent queries to be completed while in progress.   
 
 
 Question 18
@@ -2717,8 +2708,8 @@ Question 18
 &nbsp;&nbsp;&nbsp;&nbsp;A. DROP DUPLICATES FROM my_table;  
 &nbsp;&nbsp;&nbsp;&nbsp;B. SELECT * FROM my_table WHERE duplicate = False;  
 &nbsp;&nbsp;&nbsp;&nbsp;C. **SELECT DISTINCT * FROM my_table;**  
-&nbsp;&nbsp;&nbsp;&nbsp;D. MERGE INTO my_table a USING new_records b ON a.id = b.id WHEN NOT MATCHED THEN INSERT *;  
-&nbsp;&nbsp;&nbsp;&nbsp;E. MERGE INTO my_table a USING new_records b;  
+&nbsp;&nbsp;&nbsp;&nbsp;D. MERGE INTO my_table a USING new_records b ON a.id = b.id WHEN NOT MATCHED THEN INSERT *;   
+&nbsp;&nbsp;&nbsp;&nbsp;E. MERGE INTO my_table a USING new_records b;   
 
 Question 19
 **A data engineer wants to horizontally combine two tables as a part of a query. They want to use a shared column as a key column, 
@@ -2726,11 +2717,11 @@ and they only want the query result to contain rows whose value in the key colum
 Which of the following SQL commands can they use to accomplish this task ?**
 
 
-**A. INNER JOIN**  
-B. OUTER JOIN  
-C. LEFT JOIN  
-D. MERGE  
-E. UNION  
+**A. INNER JOIN**   
+B. OUTER JOIN   
+C. LEFT JOIN   
+D. MERGE   
+E. UNION   
 
 
 Question 20
@@ -2746,14 +2737,14 @@ items ARRAY<item_id:STRING>
 cart_id STRING,
 item_id STRING
 ```
-Which of the following commands should the junior data engineer run to complete this task?
+Which of the following commands should the junior data engineer run to complete this task?  
 
 	Tip:**explode()** separates the elements of an array into multiple rows; this creates a new row  for each elemnt.
 
-A. SELECT cart_id, filter(items) AS item_id FROM raw_table;  
-B. SELECT cart_id, flatten(items) AS item_id FROM raw_table;  
-C. SELECT cart_id, reduce(items) AS item_id FROM raw_table;  
-**D. SELECT cart_id, explode(items) AS item_id FROM raw_table;**  
+A. SELECT cart_id, filter(items) AS item_id FROM raw_table;   
+B. SELECT cart_id, flatten(items) AS item_id FROM raw_table;   
+C. SELECT cart_id, reduce(items) AS item_id FROM raw_table;   
+**D. SELECT cart_id, explode(items) AS item_id FROM raw_table;**   
 E. SELECT cart_id, slice(items) AS item_id FROM raw_table;  
 
 
@@ -2844,16 +2835,17 @@ The code block is below:**
 Which of the following changes should be made to the code block to configure the block to
 successfully perform a streaming read?**
 
-**A. The .read line should be replaced with .readStream.**  
-B. A new .stream line should be added after the .read line.  
-C. The .format("cloudFiles") line should be replaced with .format("stream").  
-D. A new .stream line should be added after the spark line.  
-E. A new .stream line should be added after the .load(dataSource) line.  
+**A. The .read line should be replaced with .readStream.**   
+B. A new .stream line should be added after the .read line.   
+C. The .format("cloudFiles") line should be replaced with .format("stream").   
+D. A new .stream line should be added after the spark line.   
+E. A new .stream line should be added after the .load(dataSouce) line.   
 
 Question 26
 **A data engineer has configured a Structured Streaming job to read from a table, manipulate
 the data, and then perform a streaming write into a new table.
 The code block used by the data engineer is below:**  
+
 ```
 (spark.table("sales")
 .withColumn("avg_price", col("sales") / col("units"))
@@ -2895,6 +2887,7 @@ Question 28
 **A data engineering team is in the process of converting their existing data pipeline to utilize
 Auto Loader for incremental processing in the ingestion of JSON files. One data engineer
 comes across the following code block in the Auto Loader documentation:**  
+
 ```
 (streaming_df = spark.readStream.format("cloudFiles")
 .option("cloudFiles.format", "json")
@@ -2977,11 +2970,11 @@ Question 32
 **Which of the following benefits does Delta Live Tables provide for ELT pipelines over
 standard data pipelines that utilize Spark and Delta Lake on Databricks?**
 
-**A. The ability to declare and maintain data table dependencies**
-B. The ability to write pipelines in Python and/or SQL
-C. The ability to access previous versions of data tables
-D. The ability to automatically scale compute resources
-E. The ability to perform batch and streaming queries
+**A. The ability to declare and maintain data table dependencies**  
+B. The ability to write pipelines in Python and/or SQL  
+C. The ability to access previous versions of data tables  
+D. The ability to automatically scale compute resources  
+E. The ability to perform batch and streaming queries  
 
 
 Question 33
@@ -2990,11 +2983,11 @@ The data engineer would like to use Delta Live Tables to manage this process.
 Which of the following steps must the data engineer take as part of implementing this pipeline using Delta Live Tables?**
 
 
-A. They need to create a Delta Live Tables pipeline from the Data page.
-**B. They need to create a Delta Live Tables pipeline from the Jobs page.**
-C. They need to create a Delta Live tables pipeline from the Compute page.
-D. They need to refactor their notebook to use Python and the dlt library.
-E. They need to refactor their notebook to use SQL and CREATE LIVE TABLE keyword.
+A. They need to create a Delta Live Tables pipeline from the Data page.  
+**B. They need to create a Delta Live Tables pipeline from the Jobs page.**  
+C. They need to create a Delta Live tables pipeline from the Compute page.  
+D. They need to refactor their notebook to use Python and the dlt library.  
+E. They need to refactor their notebook to use SQL and CREATE LIVE TABLE keyword.  
 
 
 Question 34
@@ -3006,12 +2999,12 @@ FROM json.`/path/to/json/file.json`;
 ```
 
 **The data engineer asks a colleague for help to convert this query for use in a Delta Live Tables (DLT) pipeline. 
-The query should create the first table in the DLT pipeline. Which of the following describes the change the colleague needs to make to the query ?**
+The query should create the first table in the DLT pipeline. Which of the following describes the change the colleague needs to make to the query ?**   
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. They need to add a COMMENT line at the beginning of the query.  
 &nbsp;&nbsp;&nbsp;&nbsp;**B. They need to add a CREATE LIVE TABLE table_name AS line at the beginning of the query.**  
-&nbsp;&nbsp;&nbsp;&nbsp;C. They need to add a live. prefix prior to json. in the FROM line.  
+&nbsp;&nbsp;&nbsp;&nbsp;C. They need to add a live. prefix prior to json. in the FROM line.   
 &nbsp;&nbsp;&nbsp;&nbsp;D. They need to add a CREATE DELTA LIVE TABLE table_name AS line at the beginning of the query.    
 &nbsp;&nbsp;&nbsp;&nbsp;E. They need to add the cloud_files(...) wrapper to the JSON file path.  
 
@@ -3189,7 +3182,7 @@ Which of the following commands can the data engineer use to complete this task 
 &nbsp;&nbsp;&nbsp;&nbsp;`DESCRIBE DATABASE db_hr`
 
 
-**Give the following Code**
+**Wich is the correct one code to create the database db_hr**
 
 &nbsp;&nbsp;&nbsp;&nbsp;`CREATE DATABASE db_hr;`
 
@@ -3197,7 +3190,7 @@ Which of the following commands can the data engineer use to complete this task 
 
 **For production jobs, it's recommended to use**
 
-&nbsp;&nbsp;&nbsp;&nbsp;B: Job cluster
+&nbsp;&nbsp;&nbsp;&nbsp;B: Job cluster  
 &nbsp;&nbsp;&nbsp;&nbsp;*Explination*: Job clusters are specifically designed for running jobs, they start up when the job starts and terminate when the job completes. 
 This ensures that each run is isolated with a fresh environment, making it more suitable and reliable for production workload
 
@@ -3233,4 +3226,3 @@ Which of the following best describes the execution modes of this DLT pipeline ?
 **What kind of SCD is taking of Apply Changes into**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
-
