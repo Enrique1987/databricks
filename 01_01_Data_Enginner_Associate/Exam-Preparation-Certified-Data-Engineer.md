@@ -2750,55 +2750,56 @@ Which of the following commands should the junior data engineer run to complete 
 
 	Tip:**explode()** separates the elements of an array into multiple rows; this creates a new row  for each elemnt.
 
-A. SELECT cart_id, filter(items) AS item_id FROM raw_table;
-B. SELECT cart_id, flatten(items) AS item_id FROM raw_table;
-C. SELECT cart_id, reduce(items) AS item_id FROM raw_table;
-**D. SELECT cart_id, explode(items) AS item_id FROM raw_table;**
-E. SELECT cart_id, slice(items) AS item_id FROM raw_table;
+A. SELECT cart_id, filter(items) AS item_id FROM raw_table;  
+B. SELECT cart_id, flatten(items) AS item_id FROM raw_table;  
+C. SELECT cart_id, reduce(items) AS item_id FROM raw_table;  
+**D. SELECT cart_id, explode(items) AS item_id FROM raw_table;**  
+E. SELECT cart_id, slice(items) AS item_id FROM raw_table;  
 
 
 Question 21
-A data engineer has ingested a JSON file into a table raw_table with the following schema:
-transaction_id STRING,
-payload ARRAY<customer_id:STRING, date:TIMESTAMP, store_id:STRING>
+**A data engineer has ingested a JSON file into a table raw_table with the following schema:
+transaction_id STRING:**  
 
-The data engineer wants to efficiently extract the date of each transaction into a table with
-the following schema:
+`payload ARRAY<customer_id:STRING, date:TIMESTAMP, store_id:STRING>`
 
+**The data engineer wants to efficiently extract the date of each transaction into a table with
+the following schema:**
+
+```
 transaction_id STRING,
 date TIMESTAMP
+```
 
-Which of the following commands should the data engineer run to complete this task?
+**Which of the following commands should the data engineer run to complete this task?**
 
 
-A. SELECT transaction_id, explode(payload) FROM raw_table;
-**B. SELECT transaction_id, payload.date FROM raw_table;**
-C. SELECT transaction_id, date FROM raw_table;
-D. SELECT transaction_id, payload[date] FROM raw_table;
-E. SELECT transaction_id, date from payload FROM raw_table;
+A. SELECT transaction_id, explode(payload) FROM raw_table;   
+**B. SELECT transaction_id, payload.date FROM raw_table;**  
+C. SELECT transaction_id, date FROM raw_table;  
+D. SELECT transaction_id, payload[date] FROM raw_table;  
+E. SELECT transaction_id, date from payload FROM raw_table;  
 
 
 Question 22
-A data analyst has provided a data engineering team with the following Spark SQL query:
+**A data analyst has provided a data engineering team with the following Spark SQL query
+The data analyst would like the data engineering team to run this query every day. The date
+at the end of the table name (20220101) should automatically be replaced with the current date each time the query is run.
+Which of the following approaches could be used by the data engineering team to
+efficiently automate this process?**  
+
 ```
 SELECT district,
 avg(sales)
 FROM store_sales_20220101
 GROUP BY district;
 ```
-The data analyst would like the data engineering team to run this query every day. The date
-at the end of the table name (20220101) should automatically be replaced with the current date each time the query is run.
 
-Which of the following approaches could be used by the data engineering team to
-efficiently automate this process?
-
-
-**A. They could wrap the query using PySpark and use Python’s string variable system toautomatically update the table name.**
-B. They could manually replace the date within the table name with the current day’sdate.
-C. They could request that the data analyst rewrites the query to be run less frequently.
-D. They could replace the string-formatted date in the table with a timestamp-formatted date.
-E. They could pass the table into PySpark and develop a robustly tested module on the
-existing query.
+**A. They could wrap the query using PySpark and use Python’s string variable system toautomatically update the table name.**  
+B. They could manually replace the date within the table name with the current day’sdate.  
+C. They could request that the data analyst rewrites the query to be run less frequently.  
+D. They could replace the string-formatted date in the table with a timestamp-formatted date.  
+E. They could pass the table into PySpark and develop a robustly tested module on the existing query.  
 
 
 Question 23
@@ -2807,30 +2808,29 @@ They need to briefly make this data available in SQL for a data analyst to perfo
 Which of the following commands should the data engineer run to make this data available in SQL for only the remainder of the Spark session?**
 
 
-**A. raw_df.createOrReplaceTempView("raw_df")**
-B. raw_df.createTable("raw_df")
-C. raw_df.write.save("raw_df")
-D. raw_df.saveAsTable("raw_df")
-E. There is no way to share data between PySpark and SQL.
+**A. raw_df.createOrReplaceTempView("raw_df")**  
+B. raw_df.createTable("raw_df")  
+C. raw_df.write.save("raw_df")  
+D. raw_df.saveAsTable("raw_df")  
+E. There is no way to share data between PySpark and SQL.  
 
 Question 24
-A data engineer needs to dynamically create a table name string using three Python variables: region, store, and year. 
+**A data engineer needs to dynamically create a table name string using three Python variables: region, store, and year. 
 An example of a table name is below when region = "nyc", store = "100", and year = "2021": nyc100_sales_2021
-
-
 Which of the following commands should the data engineer use to construct the table name
-in Python?
+in Python?**
 
-A. "{region}+{store}+_sales_+{year}"
-B. f"{region}+{store}+_sales_+{year}"
-C. "{region}{store}_sales_{year}"
-D. **f"{region}{store}_sales_{year}"**
-E. {region}+{store}+"_sales_"+{year}
+A. "{region}+{store}+_sales_+{year}"  
+B. f"{region}+{store}+_sales_+{year}"  
+C. "{region}{store}_sales_{year}"  
+D. **f"{region}{store}_sales_{year}"**  
+E. {region}+{store}+"_sales_"+{year}  
 
 Question 25
-A data engineer has developed a code block to perform a streaming read on a data source.
-The code block is below:
+**A data engineer has developed a code block to perform a streaming read on a data source.
+The code block is below:**
 
+```
 (spark
 .read
 .schema(schema)
@@ -2838,20 +2838,23 @@ The code block is below:
 .option("cloudFiles.format", "json")
 .load(dataSource)
 )
+```
 
-The code block is returning an error.
+**The code block is returning an error.
 Which of the following changes should be made to the code block to configure the block to
-successfully perform a streaming read?
-**A. The .read line should be replaced with .readStream.**
-B. A new .stream line should be added after the .read line.
-C. The .format("cloudFiles") line should be replaced with .format("stream").
-D. A new .stream line should be added after the spark line.
-E. A new .stream line should be added after the .load(dataSource) line.
+successfully perform a streaming read?**
+
+**A. The .read line should be replaced with .readStream.**  
+B. A new .stream line should be added after the .read line.  
+C. The .format("cloudFiles") line should be replaced with .format("stream").  
+D. A new .stream line should be added after the spark line.  
+E. A new .stream line should be added after the .load(dataSource) line.  
 
 Question 26
-A data engineer has configured a Structured Streaming job to read from a table, manipulate
+**A data engineer has configured a Structured Streaming job to read from a table, manipulate
 the data, and then perform a streaming write into a new table.
-The code block used by the data engineer is below:
+The code block used by the data engineer is below:**  
+```
 (spark.table("sales")
 .withColumn("avg_price", col("sales") / col("units"))
 .writeStream
@@ -2860,29 +2863,32 @@ The code block used by the data engineer is below:
 ._____
 .table("new_sales")
 )
-If the data engineer only wants the query to execute a single micro-batch to process all of
+```
+
+**If the data engineer only wants the query to execute a single micro-batch to process all of
 the available data, which of the following lines of code should the data engineer use to fill in
-the blank?
-**A. trigger(once=True)**
-B. trigger(continuous="once")
-C. processingTime("once")
-D. trigger(processingTime="once")
-E. processingTime(1)
+the blank?**  
+
+
+**A. trigger(once=True)**  
+B. trigger(continuous="once")  
+C. processingTime("once")  
+D. trigger(processingTime="once")  
+E. processingTime(1)  
 
 Question 27
 **A data engineer is designing a data pipeline. The source system generates files in a shared
 directory that is also used by other processes. As a result, the files should be kept as is and
 will accumulate in the directory. The data engineer needs to identify which files are new
 since the previous run in the pipeline, and set up the pipeline to only ingest those new files
-with each run.
-Which of the following tools can the data engineer use to solve this problem?** 
+with each run. Which of the following tools can the data engineer use to solve this problem?** 
 
  
-A. Databricks SQL
-B. Delta Lake
-C. Unity Catalog
-D. Data Explorer
-**E. Auto Loader**
+A. Databricks SQL  
+B. Delta Lake  
+C. Unity Catalog  
+D. Data Explorer  
+**E. Auto Loader**  
 
 
 Question 28
@@ -2895,35 +2901,36 @@ comes across the following code block in the Auto Loader documentation:**
 .option("cloudFiles.schemaLocation", schemaLocation)
 .load(sourcePath))
 ```
-Assuming that schemaLocation and sourcePath have been set correctly, which of the
-following changes does the data engineer need to make to convert this code block to use
-Auto Loader to ingest the data?  
 
-A. The data engineer needs to change the format("cloudFiles") line to format("autoLoader").
-B. There is no change required. Databricks automatically uses Auto Loader for streaming reads.
-**C. There is no change required. The inclusion of format("cloudFiles") enables the use of Auto Loader.**
-D. The data engineer needs to add the .autoLoader line before the .load(sourcePath) line.
-E. There is no change required. The data engineer needs to ask their administrator to turn on Auto Loader.
+**Assuming that schemaLocation and sourcePath have been set correctly, which of the
+following changes does the data engineer need to make to convert this code block to use
+Auto Loader to ingest the data?**    
+
+A. The data engineer needs to change the format("cloudFiles") line to format("autoLoader").  
+B. There is no change required. Databricks automatically uses Auto Loader for streaming reads.  
+**C. There is no change required. The inclusion of format("cloudFiles") enables the use of Auto Loader.**  
+D. The data engineer needs to add the .autoLoader line before the .load(sourcePath) line.  
+E. There is no change required. The data engineer needs to ask their administrator to turn on Auto Loader.   
 
 Question 29
 **Which of the following data workloads will utilize a Bronze table as its source?**
 
 	Tip: So they are asking Table utilize a Bronze table as it source = Silver table --> "what is a Silver table made for"
 	
-A. A job that aggregates cleaned data to create standard summary statistics
-B. A job that queries aggregated data to publish key insights into a dashboard
-C. A job that ingests raw data from a streaming source into the Lakehouse--> that would be a bronze table but not a silver.
-D. A job that develops a feature set for a machine learning application
-E. **A job that enriches data by parsing its timestamps into a human-readable format** --> that could be A or E (aparently E is already a Gold talbe)
+A. A job that aggregates cleaned data to create standard summary statistics  
+B. A job that queries aggregated data to publish key insights into a dashboard  
+C. A job that ingests raw data from a streaming source into the Lakehouse--> that would be a bronze table but not a silver.  
+D. A job that develops a feature set for a machine learning application  
+E. **A job that enriches data by parsing its timestamps into a human-readable format** --> that could be A or E (aparently E is already a Gold talbe)  
 
 Question 30
 **Which of the following data workloads will utilize a Silver table as its source?**  
 
-A. A job that enriches data by parsing its timestamps into a human-readable format
-B. A job that queries aggregated data that already feeds into a dashboard
-C. A job that ingests raw data from a streaming source into the Lakehouse
-**D. A job that aggregates cleaned data to create standard summary statistics**
-E. A job that cleans data by removing malformatted records
+A. A job that enriches data by parsing its timestamps into a human-readable format  
+B. A job that queries aggregated data that already feeds into a dashboard  
+C. A job that ingests raw data from a streaming source into the Lakehouse  
+**D. A job that aggregates cleaned data to create standard summary statistics**  
+E. A job that cleans data by removing malformatted records  
 
 Question 31
 **Which of the following Structured Streaming queries is performing a hop from a Bronze table to a Silver table?**
@@ -2967,8 +2974,8 @@ E. (spark.read.load(rawSalesLocation)
 
 ```
 Question 32
-Which of the following benefits does Delta Live Tables provide for ELT pipelines over
-standard data pipelines that utilize Spark and Delta Lake on Databricks?
+**Which of the following benefits does Delta Live Tables provide for ELT pipelines over
+standard data pipelines that utilize Spark and Delta Lake on Databricks?**
 
 **A. The ability to declare and maintain data table dependencies**
 B. The ability to write pipelines in Python and/or SQL
@@ -2978,9 +2985,9 @@ E. The ability to perform batch and streaming queries
 
 
 Question 33
-A data engineer has three notebooks in an ELT pipeline. The notebooks need to be executed in a specific order for the pipeline to complete successfully.
+**A data engineer has three notebooks in an ELT pipeline. The notebooks need to be executed in a specific order for the pipeline to complete successfully.
 The data engineer would like to use Delta Live Tables to manage this process.
-Which of the following steps must the data engineer take as part of implementing this pipeline using Delta Live Tables?
+Which of the following steps must the data engineer take as part of implementing this pipeline using Delta Live Tables?**
 
 
 A. They need to create a Delta Live Tables pipeline from the Data page.
@@ -2991,19 +2998,21 @@ E. They need to refactor their notebook to use SQL and CREATE LIVE TABLE keyword
 
 
 Question 34
-**A data engineer has written the following query:**
+**A data engineer has written the following query:**  
+
 ```
 SELECT *
 FROM json.`/path/to/json/file.json`;
 ```
-*The data engineer asks a colleague for help to convert this query for use in a Delta Live Tables (DLT) pipeline. 
+
+**The data engineer asks a colleague for help to convert this query for use in a Delta Live Tables (DLT) pipeline. 
 The query should create the first table in the DLT pipeline. Which of the following describes the change the colleague needs to make to the query ?**
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. They need to add a COMMENT line at the beginning of the query.  
 &nbsp;&nbsp;&nbsp;&nbsp;**B. They need to add a CREATE LIVE TABLE table_name AS line at the beginning of the query.**  
 &nbsp;&nbsp;&nbsp;&nbsp;C. They need to add a live. prefix prior to json. in the FROM line.  
-&nbsp;&nbsp;&nbsp;&nbsp;D. They need to add a CREATE DELTA LIVE TABLE table_name AS line at the beginning of the query.  
+&nbsp;&nbsp;&nbsp;&nbsp;D. They need to add a CREATE DELTA LIVE TABLE table_name AS line at the beginning of the query.    
 &nbsp;&nbsp;&nbsp;&nbsp;E. They need to add the cloud_files(...) wrapper to the JSON file path.  
 
 
@@ -3016,7 +3025,7 @@ constraints is processed?**
 &nbsp;&nbsp;&nbsp;&nbsp;**A. Records that violate the expectation are added to the target dataset and recorded as invalid in the event log.**    
 &nbsp;&nbsp;&nbsp;&nbsp;B. Records that violate the expectation are dropped from the target dataset and recorded as invalid in the event log.  
 &nbsp;&nbsp;&nbsp;&nbsp;C. Records that violate the expectation cause the job to fail.  
-&nbsp;&nbsp;&nbsp;&nbsp;D. Records that violate the expectation are added to the target dataset and flagged as invalid in a field added to the target dataset.
+&nbsp;&nbsp;&nbsp;&nbsp;D. Records that violate the expectation are added to the target dataset and flagged as invalid in a field added to the target dataset.  
 &nbsp;&nbsp;&nbsp;&nbsp;E. Records that violate the expectation are dropped from the target dataset and loaded into a quarantine table.  
 
 Question 36
@@ -3024,13 +3033,13 @@ Question 36
 Three datasets are defined against Delta Lake table sources using LIVE TABLE.
 The table is configured to run in Development mode using the Triggered Pipeline Mode.
 Assuming previously unprocessed data exists and all definitions are valid, what is the
-expected outcome after clicking Start to update the pipeline ?**
+expected outcome after clicking Start to update the pipeline ?**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. All datasets will be updated once and the pipeline will shut down. The compute resources will be terminated.  
 &nbsp;&nbsp;&nbsp;&nbsp;B. All datasets will be updated at set intervals until the pipeline is shut down. The compute resources will be deployed for the update and terminated when the pipeline is stopped.  
 &nbsp;&nbsp;&nbsp;&nbsp;C. All datasets will be updated at set intervals until the pipeline is shut down. The compute resources will persist after the pipeline is stopped to allow for additional testing.  
-&nbsp;&nbsp;&nbsp;&nbsp;**D. All datasets will be updated once and the pipeline will shut down. The compute resources will persist to allow for additional testing.**
--->  But then what is the sense of having streamimg live tables if the run one ans will shut down ?
+&nbsp;&nbsp;&nbsp;&nbsp;**D. All datasets will be updated once and the pipeline will shut down. The compute resources will persist to allow for additional testing.**  
+-->  But then what is the sense of having streamimg live tables if the run one ans will shut down ?  
 
 &nbsp;&nbsp;&nbsp;&nbsp;E. All datasets will be updated continuously and the pipeline will not shut down. The compute resources will persist with the pipeline.  
 
@@ -3048,7 +3057,7 @@ Which of the following actions can the data engineer perform to ensure the Job c
 
 
 Question 38
-**A data engineer has set up two Jobs that each run nightly. The first Job starts at 12:00 AM, and it usually completes in about 20 minutes.
+**A data engineer has set up two Jobs that each run nightly. The first Job starts at 12:00 AM, and it usually completes in about 20 minutes. 
 The second Job depends on the first Job, and it starts at 12:30 AM. Sometimes, the second Job fails when the first Job does not complete
 by 12:30 AM. Which of the following approaches can the data engineer use to avoid this problem ?**
 
@@ -3080,7 +3089,7 @@ claim that this issue is affecting all of their sequentially run queries. They a
 engineering team for help. The data engineering team notices that each of the queries uses
 the same SQL endpoint, but the SQL endpoint is not used by any other user.
 Which of the following approaches can the data engineering team use to improve the
-latency of the data analyst’s queries?**
+latency of the data analyst’s queries?**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. They can turn on the Serverless feature for the SQL endpoint.  
 &nbsp;&nbsp;&nbsp;&nbsp;B. They can increase the maximum bound of the SQL endpoint’s scaling range.  
@@ -3110,7 +3119,7 @@ Question 42
 performance of an ELT job. The ELT job is triggered by a specific number of input records
 being ready to process. The Databricks SQL query returns the number of minutes since the
 job’s most recent runtime. Which of the following approaches can enable the data engineering team to be notified if
-the ELT job has not been run in an hour ?**
+the ELT job has not been run in an hour ?**  
 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. They can set up an Alert for the accompanying dashboard to notify them if the returned value is greater than 60.  
@@ -3127,13 +3136,13 @@ dashboard takes a few minutes to update when they manually click the “Refresh�
 They are curious why this might be occurring, so a team member provides a variety of
 reasons on why the delay might be occurring.
 Which of the following reasons fails to explain why the dashboard might be taking a few
-minutes to update?**
+minutes to update?**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. The SQL endpoint being used by each of the queries might need a few minutes tostart up.
-&nbsp;&nbsp;&nbsp;&nbsp;B. The queries attached to the dashboard might take a few minutes to run under normal circumstances.
-&nbsp;&nbsp;&nbsp;&nbsp;C. The queries attached to the dashboard might first be checking to determine if new data is available.
-&nbsp;&nbsp;&nbsp;&nbsp;**D. The Job associated with updating the dashboard might be using a non-pooled endpoint.**
-&nbsp;&nbsp;&nbsp;&nbsp;E. The queries attached to the dashboard might all be connected to their own, unstarted Databricks clusters.
+&nbsp;&nbsp;&nbsp;&nbsp;A. The SQL endpoint being used by each of the queries might need a few minutes tostart up.  
+&nbsp;&nbsp;&nbsp;&nbsp;B. The queries attached to the dashboard might take a few minutes to run under normal circumstances.  
+&nbsp;&nbsp;&nbsp;&nbsp;C. The queries attached to the dashboard might first be checking to determine if new data is available.  
+&nbsp;&nbsp;&nbsp;&nbsp;**D. The Job associated with updating the dashboard might be using a non-pooled endpoint.**  
+&nbsp;&nbsp;&nbsp;&nbsp;E. The queries attached to the dashboard might all be connected to their own, unstarted Databricks clusters.  
 
 Question 44
 **A new data engineer has started at a company. The data engineer has recently been added
@@ -3141,36 +3150,35 @@ to the company’s Databricks workspace as new.engineer@company.com. The data
 engineer needs to be able to query the table sales in the database retail. The new data
 engineer already has been granted USAGE on the database retail.
 Which of the following commands can be used to grant the appropriate permissions to the
-new data engineer?**
+new data engineer?**  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. GRANT USAGE ON TABLE sales TO new.engineer@company.com;  
-&nbsp;&nbsp;&nbsp;&nbsp;B. GRANT CREATE ON TABLE sales TO new.engineer@company.com;
-&nbsp;&nbsp;&nbsp;&nbsp;**C. GRANT SELECT ON TABLE sales TO new.engineer@company.com;**  
-&nbsp;&nbsp;&nbsp;&nbsp;D. GRANT USAGE ON TABLE new.engineer@company.com TO sales;
-&nbsp;&nbsp;&nbsp;&nbsp;E. GRANT SELECT ON TABLE new.engineer@company.com TO sales;
+&nbsp;&nbsp;&nbsp;&nbsp;B. GRANT CREATE ON TABLE sales TO new.engineer@company.com;  
+&nbsp;&nbsp;&nbsp;&nbsp;**C. GRANT SELECT ON TABLE sales TO new.engineer@company.com;**    
+&nbsp;&nbsp;&nbsp;&nbsp;D. GRANT USAGE ON TABLE new.engineer@company.com TO sales;  
+&nbsp;&nbsp;&nbsp;&nbsp;E. GRANT SELECT ON TABLE new.engineer@company.com TO sales;  
 
 Question 45
 **A new data engineer new.engineer@company.com has been assigned to an ELT project.
 The new data engineer will need full privileges on the table sales to fully manage the
 project.Which of the following commands can be used to grant full permissions on the table to the
-new data engineer?**
+new data engineer?**  
 
-&nbsp;&nbsp;&nbsp;&nbsp;**A. GRANT ALL PRIVILEGES ON TABLE sales TO new.engineer@company.com;**  
-&nbsp;&nbsp;&nbsp;&nbsp;B. GRANT USAGE ON TABLE sales TO new.engineer@company.com;  
-&nbsp;&nbsp;&nbsp;&nbsp;C. GRANT ALL PRIVILEGES ON TABLE new.engineer@company.com TO sales;  
-&nbsp;&nbsp;&nbsp;&nbsp;D. GRANT SELECT ON TABLE sales TO new.engineer@company.com;  
-&nbsp;&nbsp;&nbsp;&nbsp;E. GRANT SELECT CREATE MODIFY ON TABLE sales TO new.engineer@company.com;  
+&nbsp;&nbsp;&nbsp;&nbsp;**A. GRANT ALL PRIVILEGES ON TABLE sales TO new.engineer@company.com;**   
+&nbsp;&nbsp;&nbsp;&nbsp;B. GRANT USAGE ON TABLE sales TO new.engineer@company.com;   
+&nbsp;&nbsp;&nbsp;&nbsp;C. GRANT ALL PRIVILEGES ON TABLE new.engineer@company.com TO sales;   
+&nbsp;&nbsp;&nbsp;&nbsp;D. GRANT SELECT ON TABLE sales TO new.engineer@company.com;   
+&nbsp;&nbsp;&nbsp;&nbsp;E. GRANT SELECT CREATE MODIFY ON TABLE sales TO new.engineer@company.com;    
 
 
 ## Udemy Exam 2
-
 
 **A data engineer noticed that there are unused data files in the directory of a Delta table. They executed the VACUUM command on this table;
 however, only some of those unused data files have been deleted.
 Which of the following could explain why only some of the unused data files have been deleted after running the VACUUM command ?**
 
 
-The deleted Data files were older than the default retention threshold. While the remaining files were newer as the retention threshold.
+&nbsp;&nbsp;&nbsp;&nbsp;The deleted Data files were older than the default retention threshold. While the remaining files were newer as the retention threshold.
 
 
 
@@ -3178,27 +3186,24 @@ The deleted Data files were older than the default retention threshold. While th
 Which of the following commands can the data engineer use to complete this task ?**
 
 
-DESCRIBE DATABASE db_hr
+&nbsp;&nbsp;&nbsp;&nbsp;`DESCRIBE DATABASE db_hr`
 
 
 **Give the following Code**
-```
-CREATE DATABASE db_hr;
+
+&nbsp;&nbsp;&nbsp;&nbsp;`CREATE DATABASE db_hr;`
 
 
 
 **For production jobs, it's recommended to use**
 
-B: Job cluster
-
-Job clusters are specifically designed for running jobs, they start up when the job starts and terminate when the job completes. 
+&nbsp;&nbsp;&nbsp;&nbsp;B: Job cluster
+&nbsp;&nbsp;&nbsp;&nbsp;*Explination*: Job clusters are specifically designed for running jobs, they start up when the job starts and terminate when the job completes. 
 This ensures that each run is isolated with a fresh environment, making it more suitable and reliable for production workload
 
-**Job Cluster vs All-purpose-cluster**  
-A Job cluster is ephemeral, created for a specific task and terminated once the task completes. An All-purpose cluster, on the other hand, 
+**Job Cluster vs All-purpose-cluster**    
+&nbsp;&nbsp;&nbsp;&nbsp;A Job cluster is ephemeral, created for a specific task and terminated once the task completes. An All-purpose cluster, on the other hand, 
 is long-running and designed to handle multiple tasks or workloads over an extended period without termination.
-
-
 
 
 ```
@@ -3211,25 +3216,21 @@ is long-running and designed to handle multiple tasks or workloads over an exten
 		.table("new_orders"))
 		
 		
-
 CREATE STREAMING LIVE TABLE silver_table
 AS
 	SELECT column1
 	FROM STREAM(LIVE.bronze_table)
 	
+```
 	
 **The data engineer team has a DLT pipeline that updates all the tables once and then stops.
 The compute resources of the pipeline terminate when the pipeline is stopped.
-Which of the following best describes the execution modes of this DLT pipeline ?**
+Which of the following best describes the execution modes of this DLT pipeline ?**  
 
-The DLT pipeline executes in Triggered Pipeline mode under Production mode.
+&nbsp;&nbsp;&nbsp;&nbsp;The DLT pipeline executes in Triggered Pipeline mode under Production mode.
 
 
+**What kind of SCD is taking of Apply Changes into**  
 
-)
-
-```
-**What kind of SCD is taking of Apply Changes into**
-
-APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
+&nbsp;&nbsp;&nbsp;&nbsp;APPLY CHANGES INTO defaults to creating a Type 1 SCD table, meaning that each unique key will have at most 1 record and that updates will overwrite the original information.
 
