@@ -296,8 +296,9 @@ query = (spark.table("orders_silver_tmp")
 query.awaitTermination()
 ```  
 
-Insted of the middle part in Sql now I will all in Python**
+Fully in Python
 
+**Python**
 ```
 from pyspark.sql import functions as F
 
@@ -320,16 +321,81 @@ query.awaitTermination() # Its used to keep the streaming job alivem, allowing i
 
 Check contrains will be appear under Table Properties when we run the code `DESCRIBE EXTENDED my_table`
 
-Thanks to ACID in that case the "A" from Atomicy, a transaction will either fully sucess or it´ll fail there is no posible that just one part success.
 Thanks to ACID in this case, the "A" standos for Atomicity. This means that a transaciton will either fully succeed or it will fail; its not possible for only a part of it to suceed".
 
+**SQL**
+`ALTER TABLE orders_silver ADD CONSTRAINT timestamp_within_range CHECK (order_timestamp >= '2020-01-01');`    
+drop the Constraint  
+`ALTER TABLE orders_silver DROP CONSTRAINT timestamp_within_range;`  
 
 
 ### Streaming Deduplication (code)
 
+*Watermark*
+A watermark is a moving threshold in time, which helps Spark to keep track of the progress of the stream. By definig a watermark, you are essentially telling Spark
+Structure Streaming how long you´re willingo to wait for out of oder or late data.
+
+Watermark determines how late(in terms of system processing time) and event can arrive and still be included in its respective window. Watermark its directly attached to the 
+concern of latency. I we were somehow 100% certain that:  
+
+- Data always arrives in order and There is no latency, meaning that events are processed nstantly or within thei respective windows the we wouldn´t need to use a watermark.
+Every event would be processend in its correct time window, and there would be no need to provide a buffer for late-arriving data.
+
+Example.
+**Use Case**  
+In a streaming system where I m trying to compute hourly sales.
+
+**Problem**  
+Due to the fact aht the shops are located in different geogfraphical location aroun the world they sometimes take time to arrive, so how could I process the sales having a window latency of 10 minutes`?
+
+**Solution**  
+
+- By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes
+
+**2 Problem**  
+
+I have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says 
+2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, 
+provide the actual order timesteamp indicates it was mede within that our
+
+Howerver, how does the system differentiate between an order that genuinely took place at 3:07 pm and an order that was made earlier but only processed at 3:07 due to system latencies?
+How does the system ensure that each order is placed in the correct aggregation window based on its actual timestam and not the processing time?
+
+**Solution 2**
+
+When we are processing streaming data, each event typically has a timestam associate with it. This timestamp, which in our example is `order_timestamp`, represent when the order was actually made.
+This is different from the processing time.  
+
+In our example:  
+- An order made at 2:57 but arriving at 3:07 hast an `order_timestamp` of 2:57 pm. The system processing time is 3:07  
+- An order actually made at 3:07 has an `oder_timestamp` of 3:07  
+
+The watermark works with the oder_timestamp no the system processing time.
+
+
+**Other use of watermark**
+
+```
+deduped_df = (spark.readStream
+                   .table("bronze")
+                   .filter("topic = 'orders'")
+                   .select(F.from_json(F.col("value").cast("string"), json_schema).alias("v"))
+                   .select("v.*")
+                   .withWatermark("order_timestamp", "30 seconds")
+                   .dropDuplicates(["order_id", "order_timestamp"]))
+				   
+```
+
+In that case will just wait 30 seg to drop the duplicates if a duplicate row come 35 delate will be inserted.	That is the difference between streaming and batch procesing mean in batch processing we could process all our data
+in streaming the data its continuosly comming and therefore we must set a range of time for our operations(range of latency)	
+		 
+
+When using `dropDuplicates()` in conjuntion with `watermarks`, it ensures that the system will deduplicate records based on the provided columns,
+but only within the bound of the watermark. After the watermak has passed a certain timestamp, Spark won´t deduplicate old data with that timestamp
+
 ### Slowly Changing Dimensions 
 
-### Type2 SCD (Hands On)
+### Type2 SCD (code)
 
 
 
