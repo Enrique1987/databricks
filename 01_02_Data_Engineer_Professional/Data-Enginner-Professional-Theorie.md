@@ -43,9 +43,12 @@ on the oder side.
 	- Hard-deletes may be required by regulatory processes.  
 
 **Bronze Inmgestion Patterns**  
-- **Singleplex Ingestion**: Every Raw data to a Delta Lake   
+- **Singleplex Ingestion**: Every Raw data to a Delta Lake, usually works well fro Batch processing.     
 - **Mutiplex Ingestion**: For nearly real-time data ingestion, normaly from a pop up system.  
-	- Do not use the pop up system as bronze leyer as they are not real tables and have limited time of retention.  
+	- Do not use the pop up system as bronze leyer as they are not real tables and have limited time of retention. Normally every topic will be later split in tables, but at first from the Stream system to Data Lakehause are all together in one table.
+  
+  
+    
 	
 ![](img/Bronze_Patterns.PNG)	
 
@@ -85,6 +88,7 @@ Streaming is a method of processing data in real-time as it's generated, without
 **Streaming from Multiplex Bronze**    
 
 We going to proceed with stream read agains a bronze table, the bronze table recive data from kafka.  
+- When are just interested in the topic 'bpm'
 ```
 from pyspark.sql import functions as F
 
@@ -94,7 +98,7 @@ json_schema = "device_id LONG, time TIMESTAMP, heartrate DOUBLE"
    .readStream.table("bronze")
    .filter("topic = 'bpm'")
    .select(F.from_json(F.col("value").cast("string"), json_schema).alias("v"))
-   .select("v.*")
+   .select("v.*") # select all sufields of previous column
    .writeStream
        .option("checkpointLocation", f"{DA.paths.checkpoints}/heart_rate")
        .option("path", f"{DA.paths.user_db}/heart_rate_silver.delta")
@@ -109,7 +113,7 @@ query.awaitTermination()
 
 ### Promoting to Silver
 
-**Silver Layer**  
+**Silver Layer**   
 - Easier to query than the non-curated Bronzed   
 	- Data is clean  
 	- Transactions have ACID guarantees  
@@ -131,6 +135,37 @@ query.awaitTermination()
 	- Data stored to support production workloads  
 	- Optimized for long-term retention and ad-hoch queries  
 	
+**Promotion Bronze to Silver**  
+
+- Schema enforcement  
+	- Prevents bad records from entering table   
+	- Mismatch in Type or field name.  
+- Schema evolution   
+	- Allows new fields to be added  
+	- Useful when schema changes in production/new fields added to nested data   
+	- All previous records will show newly added as Null   
+		- For previously written records, the underlying file isn´t modified.   
+		- The additional field is simply defined in the metadata and dynamically read as null.   
+
+
+**Streaming Deduplication**
+
+How to eliminte duplicate records while working with Structure Streaming and Delta Lake.  
+While Spark Structure Streaming provides exactly-once preocessing guaranteees, many source system will introduce duplicate records
+
+**Quality Enforcemnt**
+
+**Promotion to Silver**
+
+**Slowly Changing Dimensions**
+
+
+**Type 2 SCD**
+
+**Streaming Joins and Statefulness**
+
+**Stream Static Join**
+
 
 
 ### Gold Query Layer
@@ -142,17 +177,94 @@ query.awaitTermination()
 - Reduces strain on production systems  
 - Shifts query updates to production workloads
 
+**Lakehouse and the Query Layer**
+
+**Stored Views**
+
+**Materialized Gold Tables**
+
+
 ### Storing Data Securely
+
+
+**PII & REgulatory Compliance**
+
+**PII Lookup Table**
+
+**Storing PII Securely**
+
+**Managing ACLs**
+
+**Deidentified PII Access**
+
 
 ### Propagating Updated and Deletes
 
+**Change Data Feed**
+
+**Processing Records from Change Data Feed**
+
+
+**Propagating Deletes with CDF**
+
+**Deleting at PArtitions Boundaries**
+
+
+
 ### Orchestration and Scheduling
+
+**Orchestration and Scheduling with Multi-Task Jobs**
+
+**Multi-Task Jobs**
+
+**Promoting Code with Repos**
+
+**CLI**
+
+**REST API**
+
+**Deploying Batch and Streaming Workloads**
+
+
+
 
 
 
 ## Udemy
 
-## Data Modeling
+## Modeling Data Management Solutions.  
+
+![](img/Data_Management_Solutions.PNG)
+
+
+#### Multiplex Bronze Code
+
+```
+from pyspark.sql import functions as F
+
+def process_bronze():
+  
+    schema = "key BINARY, value BINARY, topic STRING, partition LONG, offset LONG, timestamp LONG"
+
+    query = (spark.readStream
+                        .format("cloudFiles")
+                        .option("cloudFiles.format", "json")
+                        .schema(schema)
+                        .load(f"{dataset_bookstore}/kafka-raw")
+                        .withColumn("timestamp", (F.col("timestamp")/1000).cast("timestamp"))  
+                        .withColumn("year_month", F.date_format("timestamp", "yyyy-MM"))
+                  .writeStream
+                      .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/bronze")
+                      .option("mergeSchema", True) # If the dataset changes and there is a new column is added there is not problem (schema evolution)
+                      .partitionBy("topic", "year_month")
+                      .trigger(availableNow=True) # All data will processed in multiple micro batching untill not more data ise available.
+                      .table("bronze"))
+
+    query.awaitTermination()
+```
+#### Streaming from Multiplex Bronze (code)
+
+
 
 ## Data Processing
 
