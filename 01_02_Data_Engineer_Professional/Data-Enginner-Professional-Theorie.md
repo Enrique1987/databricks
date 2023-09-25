@@ -262,7 +262,76 @@ def process_bronze():
 
     query.awaitTermination()
 ```
-#### Streaming from Multiplex Bronze (code)
+
+### Streaming from Multiplex Bronze (code)  
+
+**Python**  
+
+```
+(spark.readStream
+      .table("bronze")
+      .createOrReplaceTempView("bronze_tmp"))
+```
+
+**SQL**
+
+```
+CREATE OR REPLACE TEMPORARY VIEW orders_silver_tmp AS
+  SELECT v.*
+  FROM (
+    SELECT from_json(cast(value AS STRING), "order_id STRING, order_timestamp Timestamp, customer_id STRING, quantity BIGINT, total BIGINT, books ARRAY<STRUCT<book_id STRING, quantity BIGINT, subtotal BIGINT>>") v
+    FROM bronze_tmp
+    WHERE topic = "orders")
+```
+
+
+**Python**  
+```
+query = (spark.table("orders_silver_tmp")
+               .writeStream
+               .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/orders_silver")
+               .trigger(availableNow=True)
+               .table("orders_silver"))
+
+query.awaitTermination()
+```  
+
+Insted of the middle part in Sql now I will all in Python**
+
+```
+from pyspark.sql import functions as F
+
+json_schema = "order_id STRING, order_timestamp Timestamp, customer_id STRING, quantity BIGINT, total BIGINT, books ARRAY<STRUCT<book_id STRING, quantity BIGINT, subtotal BIGINT>>"
+
+query = (spark.readStream.table("bronze")
+        .filter("topic = 'orders'")
+        .select(F.from_json(F.col("value").cast("string"), json_schema).alias("v"))
+        .select("v.*")
+     .writeStream
+        .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/orders_silver")
+        .trigger(availableNow=True)
+        .table("orders_silver"))
+
+query.awaitTermination() # Its used to keep the streaming job alivem, allowing it to coninuosly process icoming data.
+```
+
+### Quality Enforcement (code)
+
+
+Check contrains will be appear under Table Properties when we run the code `DESCRIBE EXTENDED my_table`
+
+Thanks to ACID in that case the "A" from Atomicy, a transaction will either fully sucess or it´ll fail there is no posible that just one part success.
+Thanks to ACID in this case, the "A" standos for Atomicity. This means that a transaciton will either fully succeed or it will fail; its not possible for only a part of it to suceed".
+
+
+
+### Streaming Deduplication (code)
+
+### Slowly Changing Dimensions 
+
+### Type2 SCD (Hands On)
+
+
 
 
 
