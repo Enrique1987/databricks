@@ -391,13 +391,118 @@ in streaming the data its continuosly comming and therefore we must set a range 
 		 
 
 When using `dropDuplicates()` in conjuntion with `watermarks`, it ensures that the system will deduplicate records based on the provided columns,
-but only within the bound of the watermark. After the watermak has passed a certain timestamp, Spark won´t deduplicate old data with that timestamp
+but only within the bound of the watermark. After the watermak has passed a certain timestamp, Spark won´t deduplicate old data with that timestamp.
+
+
+
+```
+def upsert_data(microBatchDF, batch):
+    microBatchDF.createOrReplaceTempView("orders_microbatch")
+    
+    sql_query = """
+      MERGE INTO orders_silver a
+      USING orders_microbatch b
+      ON a.order_id=b.order_id AND a.order_timestamp=b.order_timestamp
+      WHEN NOT MATCHED THEN INSERT *
+    """
+    
+    microBatchDF.sparkSession.sql(sql_query)
+```
+
+
+
+```
+query = (deduped_df.writeStream
+                   .foreachBatch(upsert_data)
+                   .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/orders_silver")
+                   .trigger(availableNow=True)
+                   .start())
+```
+
 
 ### Slowly Changing Dimensions 
+
+- **Type 0**: The type 0 dimensions attributes never change.7  
+- **Type 1**: Overwrite old with new data and therefore does not track historical data.  
+- **Type 2**: Add a new row, tracks historical data by creating amultiple records for a given natural key. We could add "effective date" columns.  
+
+| Supplier_Key | Supplier_Code | Supplier_Name  | Supplier_State | Start_Date           | End_Date             |
+|--------------|---------------|----------------|----------------|----------------------|----------------------|
+| 123          | ABC           | Acme Supply Co | CA             | 2000-01-01T00:00:00  | 2004-12-22T00:00:00  |
+| 124          | ABC           | Acme Supply Co | IL             | 2004-12-22T00:00:00  | NULL                 |
+
+
+Another method from SCD2 uses an effective date and current flag.
+
+| Supplier_Key | Supplier_Code | Supplier_Name  | Supplier_State | Effective_Date       | Current_Flag |
+|--------------|---------------|----------------|----------------|----------------------|--------------|
+| 123          | ABC           | Acme Supply Co | CA             | 2000-01-01T00:00:00  | N            |
+| 124          | ABC           | Acme Supply Co | IL             | 2004-12-22T00:00:00  | Y            |
+
+
+- **Type 3**: Add a new attribute  
+
+This methos tracks changes using separate columsn and preservers limited history.
+
+| Supplier_Key | Supplier_Code | Supplier_Name  | Original_Supplier_State | Effective_Date       | Current_Supplier_State |
+|--------------|---------------|----------------|-------------------------|----------------------|------------------------|
+| 123          | ABC           | Acme Supply Co | CA                       | 2004-12-22T00:00:00  | IL                    |
+
+- **Type 4**: Same as Type 3 but win unlimited histroy by using a **separate history table**
+
+Supplier Table:
+| Supplier_Key | Supplier_Code | Supplier_Name              | Supplier_State |
+|--------------|---------------|----------------------------|----------------|
+| 124          | ABC           | Acme & Johnson Supply Co   | IL             |
+
+Supplier_History Table
+| Supplier_Key | Supplier_Code | Supplier_Name              | Supplier_State | Create_Date           |
+|--------------|---------------|----------------------------|----------------|----------------------|
+| 123          | ABC           | Acme Supply Co             | CA             | 2003-06-14T00:00:00  |
+| 124          | ABC           | Acme & Johnson Supply Co   | IL             | 2004-12-22T00:00:00  |
+
+
+
+- **Type 5** Type 4 + Type 1
+- **Type 6** Type 1,2 and 3
+
 
 ### Type2 SCD (code)
 
 
+Setup:
+
+Target_table (existing data, acts as our dimension table)
+
+Supplier_Key	Supplier_Code	Supplier_Name	Supplier_State	Start_Date	End_Date
+
+
+Incoming_data (incoming data):
+
+Supplier_Key	Supplier_Code	Supplier_Name	Supplier_State
+
+```
+MERGE INTO Target_table AS Target
+USING Incoming_data AS Source
+ON Target.Supplier_Key = Source.Supplier_Key
+
+-- When matched and all columns are the same, update the End_Date
+WHEN MATCHED AND 
+   (Target.Supplier_Name = Source.Supplier_Name AND Target.Supplier_State = Source.Supplier_State) THEN
+    UPDATE SET End_Date = CURRENT_DATE 
+
+-- When matched and any column is different, insert as a new record
+WHEN MATCHED AND 
+   (Target.Supplier_Name <> Source.Supplier_Name OR Target.Supplier_State <> Source.Supplier_State) THEN
+    INSERT (Supplier_Key, Supplier_Code, Supplier_Name, Supplier_State, Start_Date, End_Date)
+    VALUES (Source.Supplier_Key, Source.Supplier_Code, Source.Supplier_Name, Source.Supplier_State, CURRENT_DATE, NULL)
+
+-- When not matched by target, insert the record
+WHEN NOT MATCHED THEN
+    INSERT (Supplier_Key, Supplier_Code, Supplier_Name, Supplier_State, Start_Date, End_Date)
+    VALUES (Source.Supplier_Key, Source.Supplier_Code, Source.Supplier_Name, Source.Supplier_State, CURRENT_DATE, NULL);
+
+```
 
 
 
