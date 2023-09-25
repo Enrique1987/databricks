@@ -501,12 +501,24 @@ WHEN MATCHED AND
 WHEN NOT MATCHED THEN
     INSERT (Supplier_Key, Supplier_Code, Supplier_Name, Supplier_State, Start_Date, End_Date)
     VALUES (Source.Supplier_Key, Source.Supplier_Code, Source.Supplier_Name, Source.Supplier_State, CURRENT_DATE, NULL);
-
 ```
 
-
-
 ## Data Processing
+
+### Change Data Capture
+
+### Processing CDC (code)
+
+### Delta Lake CDF**
+
+### Stream-Stream Joins(Hands On)
+
+### Stream-Static Join
+
+### Stream-Static Join (Hands On)
+
+### Materialized Gold Tables
+
 
 ## Databricks Tooling
 
