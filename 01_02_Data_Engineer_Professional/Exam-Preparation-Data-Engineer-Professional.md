@@ -5,7 +5,7 @@
 Tranlsate that code from Python to SQL ?**
 
 **Python**  
-```
+```python
 from pyspark.sql.window import Window
 
 window = Window.partitionBy("customer_id").orderBy(F.col("row_time").desc())
