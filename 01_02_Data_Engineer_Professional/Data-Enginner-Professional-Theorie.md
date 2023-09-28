@@ -59,7 +59,7 @@ The initialization script has loaded a **`date_lookup`** table. This table has a
  
 *Note: I dont know why Databricks consider to make the join with the lookup table from raw to bronze and not later from Bronze to Silver..bronze should be just to store data from data sources*  
 
-```
+```python
 query = (spark.readStream
               .format(cloudFiles) # that configure the Auto Loader
               .option("cloudFiles.format", "json") # configure Auto Loader to use the JSON format
@@ -88,8 +88,9 @@ Streaming is a method of processing data in real-time as it's generated, without
 **Streaming from Multiplex Bronze**    
 
 We going to proceed with stream read agains a bronze table, the bronze table recive data from kafka.  
-- When are just interested in the topic 'bpm'
-```
+- When are just interested in the topic 'bpm'  
+
+```python
 from pyspark.sql import functions as F
 
 json_schema = "device_id LONG, time TIMESTAMP, heartrate DOUBLE"
@@ -324,8 +325,8 @@ Thanks to ACID in this case, the "A" standos for Atomicity. This means that a tr
 
 
 `ALTER TABLE orders_silver ADD CONSTRAINT timestamp_within_range CHECK (order_timestamp >= '2020-01-01');`    
-drop the Constraint  
-`ALTER TABLE orders_silver DROP CONSTRAINT timestamp_within_range;`  
+drop the Constraint    
+`ALTER TABLE orders_silver DROP CONSTRAINT timestamp_within_range;`   
 
 
 ### Streaming Deduplication (code)
