@@ -104,10 +104,14 @@ We will implement a medallion architecture, where we will enrich the user profil
 The data engineers of the above company are wondering whether they should apply CDF to their tables or whether it does not apply in this case.
  What is your decision as a data architect ?**
 
-The table sin the scneario described above should be applied to CDFs as they meet the 2 fundamental requiremetns for the use of CDF´s 
+The table in the scneario described above should be applied to CDFs as they meet the 2 fundamental requiremetns for the use of CDF´s 
 
 - **Tables changes include updates and/or deletes**
 	- **Updates:** As customers interact with the platform, their preferences, recent activity, or personal information might change.
 	For instance, they might update their delivery address, change their associated phone number, or modify their email subscription preferences.  
 	- **Deletes:** Sometimes, customers may choose to delete their accounts or the company might need to remove records for compliance reasons.  
 
+- **Small fraction of records updated in each batch (from CDC feed)**
+	- Given the vast number of customers, in each batch (daily/weekly), only a small fraction of the total customer profiles might change. 
+	For example, only a small percentage of users might update their information or delete their accounts in any given batch interval.
+	- CDC (Change Data Capture) from the operational database can detect and send only these changed records to be processed and updated in the data lake house.
