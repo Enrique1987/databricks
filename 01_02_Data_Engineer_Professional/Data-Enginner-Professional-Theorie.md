@@ -609,6 +609,10 @@ query.awaitTermination()
 - Automatically generate CDC feed about Delta Lake Tables.    
 - Records row-level changes for all data written into a Delta table.  
 	- Row data + metadata (whether row was inserted, deleted or updated)  
+	
+**USE CDF when**
+- Table´s changes include updates and/or deletes
+- Small fraction of records updated in each batch(from CDC feed)
 
 ### Stream-Stream Joins(Hands On)
 
