@@ -61,9 +61,8 @@ display(ranked_df)
 
 &nbsp;&nbsp;&nbsp;&nbsp;Stream DataFrames do not support windows functions.
 
-Question 3.
-
-**You are creating a Table in Databricks with the following Code**
+**Question 3.  
+You are creating a Table in Databricks with the following Code**
 
 ```
 %python
@@ -83,6 +82,8 @@ CREATE OR REPLACE TABLE customer_window (
     row_time TIMESTAMP
 )
 """)
+```
+
 
 **A senior Data Engineer comes to you and let you know that you dont need to initializing "SparkSession" do you know why ?**  
 &nbsp;&nbsp;&nbsp;&nbsp;In a management environments like Databricks a SparkSession is automatically created for you. When you start a Spark cluster. As 
