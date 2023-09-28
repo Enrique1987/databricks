@@ -239,7 +239,7 @@ While Spark Structure Streaming provides exactly-once preocessing guaranteees, m
 
 #### Multiplex Bronze Code
 
-```
+```python
 from pyspark.sql import functions as F
 
 def process_bronze():
@@ -265,17 +265,16 @@ def process_bronze():
 
 ### Streaming from Multiplex Bronze (code)  
 
-**Python**  
-
-```
+  
+```python
 (spark.readStream
       .table("bronze")
       .createOrReplaceTempView("bronze_tmp"))
 ```
 
-**SQL**
 
-```
+
+```sql
 CREATE OR REPLACE TEMPORARY VIEW orders_silver_tmp AS
   SELECT v.*
   FROM (
@@ -285,8 +284,8 @@ CREATE OR REPLACE TEMPORARY VIEW orders_silver_tmp AS
 ```
 
 
-**Python**  
-```
+  
+```python
 query = (spark.table("orders_silver_tmp")
                .writeStream
                .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/orders_silver")
@@ -298,8 +297,8 @@ query.awaitTermination()
 
 Fully in Python
 
-**Python**
-```
+
+```python
 from pyspark.sql import functions as F
 
 json_schema = "order_id STRING, order_timestamp Timestamp, customer_id STRING, quantity BIGINT, total BIGINT, books ARRAY<STRUCT<book_id STRING, quantity BIGINT, subtotal BIGINT>>"
@@ -323,7 +322,7 @@ Check contrains will be appear under Table Properties when we run the code `DESC
 
 Thanks to ACID in this case, the "A" standos for Atomicity. This means that a transaciton will either fully succeed or it will fail; its not possible for only a part of it to suceed".
 
-**SQL**
+
 `ALTER TABLE orders_silver ADD CONSTRAINT timestamp_within_range CHECK (order_timestamp >= '2020-01-01');`    
 drop the Constraint  
 `ALTER TABLE orders_silver DROP CONSTRAINT timestamp_within_range;`  
@@ -375,7 +374,7 @@ The watermark works with the oder_timestamp no the system processing time.
 
 **Other use of watermark**
 
-```
+```python
 deduped_df = (spark.readStream
                    .table("bronze")
                    .filter("topic = 'orders'")
@@ -395,7 +394,7 @@ but only within the bound of the watermark. After the watermak has passed a cert
 
 
 
-```
+```python
 def upsert_data(microBatchDF, batch):
     microBatchDF.createOrReplaceTempView("orders_microbatch")
     
@@ -411,7 +410,7 @@ def upsert_data(microBatchDF, batch):
 
 
 
-```
+```python
 query = (deduped_df.writeStream
                    .foreachBatch(upsert_data)
                    .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/orders_silver")
@@ -481,7 +480,7 @@ Incoming_data (incoming data):
 
 Supplier_Key	Supplier_Code	Supplier_Name	Supplier_State
 
-```
+```sql
 MERGE INTO Target_table AS Target
 USING Incoming_data AS Source
 ON Target.Supplier_Key = Source.Supplier_Key
@@ -506,10 +505,109 @@ WHEN NOT MATCHED THEN
 ## Data Processing
 
 ### Change Data Capture
+Its a technique to identify and capture changes made to data. The changes can be inserts, updates or deletes. The primary goal is to ensure data synchronization, replication, or loading without needing to scan the entire databse or data source.
+
+
+Imagine we have an e-commerce website with a database taht stores production information. Each day, new products are added, old ones are updated, and some might be removed. Using traditional methods, if you wanted to synchronize this production
+data to a data warehouse for analytics, you would have to extract ALL product data nightly, which is bor resource-intensive and time-consuming.
+
+With CDC, instead of extracting all the products, you had only capture the changes made since the last extraction. If 50 products were added, 30 pudated and 10 deleted you had only process those 90 records. This save a lot of computational resources and time.
+
+**microBatchDF`**  
+In structured streaming, certain operations, like window functions, required processing in discrete chunks rather than on a continuous stream. this is achive using micro-batches
+`microBatchDF` represents the data of a single micro-batch, allowing stateful operations to be applied efficiently on streamed data.
 
 ### Processing CDC (code)
 
-### Delta Lake CDF**
+Create a Windows function to insert the most recent records. The SQL code would be as follows.
+
+```sql
+SELECT newest.*
+FROM 
+(
+    SELECT 
+        *,
+        RANK() OVER (PARTITION BY customer_id ORDER BY row_time DESC) AS rank
+    FROM 
+        customer_window
+) AS newest
+WHERE 
+    newest.rank = 1;
+```
+
+The goal is to package that code into a function so that we can launch it in Stream.
+
+```python
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+# Assuming you've already loaded the data into a DataFrame
+df = spark.read.table("customer_window")
+
+# Define the window specification
+window_spec = Window.partitionBy("customer_id").orderBy(F.desc("row_time"))
+
+# Use the rank function over the window specification
+ranked_df = df.withColumn("rank", F.rank().over(window_spec))
+
+# Filter the rows where rank is 1
+newest_df = ranked_df.filter(F.col("rank") == 1).drop("rank")
+
+# If you need to show or collect the result
+newest_df.show()
+
+```
+
+Declare function
+
+```python
+from pyspark.sql.window import Window
+
+def batch_upsert(microBatchDF, batchId):
+    window = Window.partitionBy("customer_id").orderBy(F.col("row_time").desc())
+    
+    (microBatchDF.withColumn("rank", F.rank().over(window))
+                 .filter("rank == 1")
+                 .drop("rank")
+                 .createOrReplaceTempView("ranked_updates"))
+    
+    query = """
+        MERGE INTO customers_silver c
+        USING ranked_updates r
+        ON c.customer_id=r.customer_id
+            WHEN MATCHED AND c.row_time < r.row_time
+              THEN UPDATE SET *
+            WHEN NOT MATCHED
+              THEN INSERT *
+    """
+    
+    microBatchDF.sparkSession.sql(query)
+
+```
+
+```python
+query = (spark.readStream
+                  .table("bronze")
+                  .filter("topic = 'customers'")
+                  .select(F.from_json(F.col("value").cast("string"), schema).alias("v"))
+                  .select("v.*")
+                  .join(F.broadcast(df_country_lookup), F.col("country_code") == F.col("code") , "inner")
+               .writeStream
+                  .foreachBatch(batch_upsert)
+                  .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/customers_silver")
+                  .trigger(availableNow=True)
+                  .start()
+          )
+
+query.awaitTermination()
+```
+
+### Delta Lake CDF
+
+**CDF** Stands for Change Data Feed  
+- Automatically generate CDC feed about Delta Lake Tables.    
+- Records row-level changes for all data written into a Delta table.  
+	- Row data + metadata (whether row was inserted, deleted or updated)  
 
 ### Stream-Stream Joins(Hands On)
 
