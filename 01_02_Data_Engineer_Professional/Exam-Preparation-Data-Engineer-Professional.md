@@ -17,26 +17,20 @@ display(ranked_df)
 ```
 
 **SQL**
-```
-SELECT
-    customer_id,
-    email,
-    first_name,
-    last_name,
-    gender,
-    row_time
+```sql
+SELECT newest.*
 FROM 
-    (
+(
     SELECT 
         *,
         RANK() OVER (PARTITION BY customer_id ORDER BY row_time DESC) AS rank
     FROM 
-        customers
-    ) AS RankedCustomers
+        customer_window
+) AS newest
 WHERE 
-    rank = 1;
-
+    newest.rank = 1;
 ```
+
 
 **Question 2.    
 The following code produces an error. Can you determine why ?** 
