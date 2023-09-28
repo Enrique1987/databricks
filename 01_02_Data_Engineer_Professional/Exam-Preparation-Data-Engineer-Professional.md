@@ -87,8 +87,8 @@ CREATE OR REPLACE TABLE customer_window (
 
 **A senior Data Engineer comes to you and let you know that you dont need to initializing "SparkSession" do you know why ?**  
 &nbsp;&nbsp;&nbsp;&nbsp;In a management environments like Databricks a SparkSession is automatically created for you. When you start a Spark cluster. As 
-paor tof this process, Databricks automatically initializates a SparkSession named `spark`. This is why you can directly start running Spark commands using the `spark` object without
-explicitly creating a session.  
+&nbsp;&nbsp;&nbsp;&nbsp;part of this process, Databricks automatically initializates a SparkSession named `spark`. This is why you can directly start running Spark commands using the `spark` object without
+&nbsp;&nbsp;&nbsp;&nbsp;explicitly creating a session.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks simplifies many of the setup and configuration steps for Spark, making it user-friendly. However, if you wre to run your PySpark code outise of such 
 management environments, that´s when explicit initialization would be necessary.  
