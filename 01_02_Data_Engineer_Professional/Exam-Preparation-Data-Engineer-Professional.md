@@ -89,7 +89,7 @@ What does `microBatchDF` and what is it used for ?**
 `microBatchDF` represents the data of a single micro-batch, allowing stateful operations to be applied efficiently on streamed data.
 
 
-**Question 5
+**Question 5  
 As a data architect you are in charge of implementing an Analytics system on the following company that has a specific use case:
 Use Case: Updating Customer Profiles in an E-commerce Data Lake Hause**
   
@@ -100,7 +100,7 @@ An e-commerce company stores detailed profiles of its customers in a data lake h
 **Solution**
 We will implement a medallion architecture, where we will enrich the user profiles in the silver layer and finally reach the gold layer to apply advanced analysis (ML/BI).
 
-**Quesiton 6
+**Quesiton 6  
 The data engineers of the above company are wondering whether they should apply CDF to their tables or whether it does not apply in this case.
  What is your decision as a data architect ?**
 
@@ -111,4 +111,3 @@ The table sin the scneario described above should be applied to CDFs as they mee
 	For instance, they might update their delivery address, change their associated phone number, or modify their email subscription preferences.  
 	- **Deletes:** Sometimes, customers may choose to delete their accounts or the company might need to remove records for compliance reasons.  
 
-`
