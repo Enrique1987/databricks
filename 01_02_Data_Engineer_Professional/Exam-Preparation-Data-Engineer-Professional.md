@@ -35,7 +35,7 @@ WHERE
 **Question 2.    
 The following code produces an error. Can you determine why ?** 
 
-```
+```python
 window = Window.partitionBy("customer_id").orderBy(F.col("row_time").desc())
 
 ranked_df = (spark.readStream
@@ -57,8 +57,7 @@ display(ranked_df)
 **Question 3.  
 You are creating a Table in Databricks with the following Code**
 
-```
-%python
+```python
 from pyspark.sql import SparkSession
 
 # Initialize Spark session
