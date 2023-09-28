@@ -1,9 +1,8 @@
 ## Exan questions for Databricks Data Engineer Professional
 ------------------------------------------------------------
 
-Question 1.
-
-**Tranlsate that code from Python to SQL ?**
+**Question 1.  
+Tranlsate that code from Python to SQL ?**
 
 **Python**  
 ```
@@ -39,8 +38,8 @@ WHERE
 
 ```
 
-Question 2.  
-**The following code produces an error. Can you determine why ?** 
+**Question 2.    
+The following code produces an error. Can you determine why ?** 
 
 ```
 window = Window.partitionBy("customer_id").orderBy(F.col("row_time").desc())
@@ -86,9 +85,9 @@ CREATE OR REPLACE TABLE customer_window (
 
 
 **A senior Data Engineer comes to you and let you know that you dont need to initializing "SparkSession" do you know why ?**  
-&nbsp;&nbsp;&nbsp;&nbsp;In a management environments like Databricks a SparkSession is automatically created for you. When you start a Spark cluster. As 
-&nbsp;&nbsp;&nbsp;&nbsp;part of this process, Databricks automatically initializates a SparkSession named `spark`. This is why you can directly start running Spark commands using the `spark` object without
-&nbsp;&nbsp;&nbsp;&nbsp;explicitly creating a session.  
+&nbsp;&nbsp;&nbsp;&nbsp;In a management environments like Databricks a SparkSession is automatically created for you. When you start a Spark cluster. As
+part of this process, Databricks automatically initializates a SparkSession named `spark`. This is why you can directly start running Spark commands using the `spark` object without
+explicitly creating a session.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks simplifies many of the setup and configuration steps for Spark, making it user-friendly. However, if you wre to run your PySpark code outise of such 
 management environments, that´s when explicit initialization would be necessary.  
