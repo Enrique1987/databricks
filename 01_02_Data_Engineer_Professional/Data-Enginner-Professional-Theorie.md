@@ -514,7 +514,7 @@ data to a data warehouse for analytics, you would have to extract ALL product da
 
 With CDC, instead of extracting all the products, you had only capture the changes made since the last extraction. If 50 products were added, 30 pudated and 10 deleted you had only process those 90 records. This save a lot of computational resources and time.
 
-**microBatchDF`**  
+**microBatchDF**  
 In structured streaming, certain operations, like window functions, required processing in discrete chunks rather than on a continuous stream. this is achive using micro-batches
 `microBatchDF` represents the data of a single micro-batch, allowing stateful operations to be applied efficiently on streamed data.
 
