@@ -610,11 +610,43 @@ query.awaitTermination()
 - Records row-level changes for all data written into a Delta table.  
 	- Row data + metadata (whether row was inserted, deleted or updated)  
 	
-**USE CDF when**
+**USE CDF when**  
 - Table´s changes include updates and/or deletes
 - Small fraction of records updated in each batch(from CDC feed)
 
-### Stream-Stream Joins(Hands On)
+**Dont use CDF when**  
+- Tables´s change are append only
+- Most records in the table updated in each batch
+
+### CDF (Code)
+
+`delta.enableChangeDataFeed` The primary purpose of this future is to generate a log of changes made to a Delta table. This log can be read as a stream and provides details
+about inserted, deleted and updated records.
+
+**What it does**  
+	- **Logs Changes** When the Change Data Feed is enable on Delta table, Delta Lake maintains a change log that records details about every change made to the table.
+	
+**What i doesnt do**
+	- **Automatic Propagation** Enable CDF doesn´t automatically propagate changes to another table or external system. If you want to propagate the changes, you would typically set up 
+	a separate streaming job that reads from the change feed and then applies those chanes wherever necessary.
+	
+```sql
+ALTER TABLE customers_silver 
+SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
+
+DESCRIBE TABLE EXTENDED customers_silver
+
+SELECT * 
+FROM table_changes("customers_silver", 2)
+```
+
+
+```python
+files = dbutils.fs.ls("dbfs:/user/hive/warehouse/bookstore_eng_pro.db/customers_silver/_change_data")
+display(files)
+```
+
+### Stream-Stream Joins (code)
 
 ### Stream-Static Join
 
