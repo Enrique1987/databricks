@@ -810,6 +810,12 @@ Imagine you have a sytem whre you´re strogin historical data, say for compilian
 - Is written once an then rarely , if ever update or querid
 - Is ingested in large, infrequent batches, doest not require real-teime or lowlatenciy access
 
+**Scenario2: Optimization Necessary - Use Case: Real-time Analytics Dashboard**
+
+- Ingest data continuosly as users interact with an e-commerce platform.
+- Requires frequent updates and deletes, e.g.. when orders are modified or canceled.
+- Needs to serve queries for the dashboard with low latency.
+
 
 ### Delta Lake Transaction Logs
 
@@ -819,15 +825,74 @@ Thanks to the transition logs the delta tables are faster becasue every 10 logs 
 
 ## Databricks Tooling
 
-### Jobs**
+- We can add parameters(key name of the widget)  
+- We can crete a new job cluster (could be single node to save cost). Job cluster auto terminates once the job is completed, which save costs compared to all-purpose clusters.  
+- retry plicit  
+- Depends on (will give us the legacy). will be atuomatically secuenciyl but if you give the name of a previous job it would generate them in parallel. A task can depend on multiple task.
 
-### Troubleshooting Jobs failures
+- Advance Options  
+	- Schedule Trigger Type can be done by cron syntax.
+	- Edit permision can be done. Owner can change but need to be a person not a group. We have can viw and can management
 
-### REST API**
+### REST API
+
+- We need a bearerAuth, we need a bearer token. --> user settings --> Generate new token.
+- Postman --> Authorization --> BearerToken --> paste your token
 
 ### Databricks CLI
 
+Databricks allow you to work bia CLI therefore you need to have pyhton installed and then you wpip install databricks-cli 
+
 ## Security and Governance
+
+- Propagating deletes.
+
+### Dynamic Views
+
+Access Control Column - Level.
+
+Users with sufficient privileges will be able to see all the fields, while rstricted user will just see part of the View.
+
+Admin Console --> Groups --> Create a Group --> (name of the group should be the one you give to the view to have permision of read) in this case 'admins_demo' -->
+
+```sql
+CREATE OR REPLACE VIEW customers_vw AS
+  SELECT
+    customer_id,
+    CASE 
+      WHEN is_member('admins_demo') THEN email
+      ELSE 'REDACTED'
+    END AS email,
+    gender,
+    CASE 
+      WHEN is_member('admins_demo') THEN first_name
+      ELSE 'REDACTED'
+    END AS first_name,
+    CASE 
+      WHEN is_member('admins_demo') THEN last_name
+      ELSE 'REDACTED'
+    END AS last_name,
+    CASE 
+      WHEN is_member('admins_demo') THEN street
+      ELSE 'REDACTED'
+    END AS street,
+    city,
+    country,
+    row_time
+  FROM customers_silver
+```
+
+**On the Row Level**
+
+```sql
+CREATE OR REPLACE VIEW customers_fr_vw AS
+SELECT * FROM customers_vw
+WHERE 
+  CASE 
+    WHEN is_member('admins_demo') THEN TRUE
+    ELSE country = "France" AND row_time > "2022-01-01"
+  END
+```
 
 ## Testing and Deployment
 
