@@ -623,10 +623,10 @@ query.awaitTermination()
 `delta.enableChangeDataFeed` The primary purpose of this future is to generate a log of changes made to a Delta table. This log can be read as a stream and provides details
 about inserted, deleted and updated records.
 
-**What it does**  
+**What it does**   
 	- **Logs Changes** When the Change Data Feed is enable on Delta table, Delta Lake maintains a change log that records details about every change made to the table.
 	
-**What i doesnt do**
+**What it doesn´t do**  
 	- **Automatic Propagation** Enable CDF doesn´t automatically propagate changes to another table or external system. If you want to propagate the changes, you would typically set up 
 	a separate streaming job that reads from the change feed and then applies those chanes wherever necessary.
 	
@@ -648,14 +648,184 @@ display(files)
 
 ### Stream-Stream Joins (code)
 
+**How to use CDF to propagate changes**
+
+```python
+from pyspark.sql import functions as F
+from pyspark.sql.window import Window
+
+def batch_upsert(microBatchDF, batchId):
+    window = Window.partitionBy("order_id", "customer_id").orderBy(F.col("_commit_timestamp").desc())
+    
+    (microBatchDF.filter(F.col("_change_type").isin(["insert", "update_postimage"]))
+                 .withColumn("rank", F.rank().over(window))
+                 .filter("rank = 1")
+                 .drop("rank", "_change_type", "_commit_version")
+                 .withColumnRenamed("_commit_timestamp", "processed_timestamp")
+                 .createOrReplaceTempView("ranked_updates"))
+    
+    query = """
+        MERGE INTO customers_orders c
+        USING ranked_updates r
+        ON c.order_id=r.order_id AND c.customer_id=r.customer_id
+            WHEN MATCHED AND c.processed_timestamp < r.processed_timestamp
+              THEN UPDATE SET *
+            WHEN NOT MATCHED
+              THEN INSERT *
+    """
+    
+    microBatchDF.sparkSession.sql(query)
+```
+
+```python
+def porcess_customers_orders():
+    orders_df = spark.readStream.table("orders_silver")
+    
+    cdf_customers_df = (spark.readStream
+                             .option("readChangeData", True)
+                             .option("startingVersion", 2)
+                             .table("customers_silver")
+                       )
+
+    query = (orders_df
+                .join(cdf_customers_df, ["customer_id"], "inner")
+                .writeStream
+                    .foreachBatch(batch_upsert)
+                    .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/customers_orders")
+                    .trigger(availableNow=True)
+                    .start()
+            )
+    
+    query.awaitTermination()
+    
+porcess_customers_orders()
+```
+
 ### Stream-Static Join
 
-### Stream-Static Join (Hands On)
+**Stream vs Static tables**
+
+	- Streaming tables are ever-appending data sources.  
+	- Static tables contain data that may be changed or overwritten.
+	- Only append data in the stream table will appear in the resulting table, adding new records in the static table will not appear in the end table.+
+	
+When you are joining a static DataFrame(TableA) with a streaming DataFrame(TableB), the static DataFrame acts as fixed reference.
+ During the execution of each micro-batch of the streaming query:  
+ 
+- **Static DataFrame(TableA)** The contents of this table are read and cached at the start of the streaming job. Any changes made to the underlying data of Table A after the
+streaming job hast started will no be reflected in the ongoing streaming joins.
+
+- **Streaming DataFrame(TableB)** For every micro-batch, the new incoming data (or changes) in Table B will be joined with the cached version of Table A. Therefore, if new data is added 
+to TableB, it gets joined with TableA and the results will be reflected in the result table(TableC)
+
+	
+```python
+from pyspark.sql import functions as F
+
+def process_books_sales():
+    
+    orders_df = (spark.readStream.table("orders_silver")
+                        .withColumn("book", F.explode("books"))
+                )
+
+    books_df = spark.read.table("current_books") # static table.
+
+    query = (orders_df
+                  .join(books_df, orders_df.book.book_id == books_df.book_id, "inner")
+                  .writeStream
+                     .outputMode("append")
+                     .option("checkpointLocation", "dbfs:/mnt/demo_pro/checkpoints/books_sales")
+                     .trigger(availableNow=True)
+                     .table("books_sales")
+    )
+
+    query.awaitTermination()
+    
+process_books_sales()
+```
+
 
 ### Materialized Gold Tables
 
+```python
+from pyspark.sql import functions as F
+
+query = (spark.readStream
+                 .table("books_sales")
+                 .withWatermark("order_timestamp", "10 minutes")
+                 .groupBy(
+                     F.window("order_timestamp", "5 minutes").alias("time"),
+                     "author")
+                 .agg(
+                     F.count("order_id").alias("orders_count"),
+                     F.avg("quantity").alias ("avg_quantity"))
+              .writeStream
+                 .option("checkpointLocation", f"dbfs:/mnt/demo_pro/checkpoints/authors_stats")
+                 .trigger(availableNow=True)
+                 .table("authors_stats")
+            )
+
+query.awaitTermination()
+```
+
+## Improving Performance
+
+### Partitioning Delta Lake Tables
+
+Choosing partitions columns
+
+- **Cardinality** Low cardinality fields should be used for partitioning.  
+- **Total records share a given value for a column**  
+	- Partition should be at least 1 GB in size.  
+- **Records with a given value will continue to arrive indefinetely**  
+	- Datetime fields can be used for partitioning.  
+	
+**Avoid Over-Partitioning**  
+- Partitioned small tables increas storage costs and total number of fiels to scan.
+- If most partitons < 1GB of data, the table is over-partitioned
+
+
+`optimizeWrite`:
+	- optimizes the writing of data into Delta Lake. coalesces small files produced by task into larger, more efficient files during writes, without needing a separate bin-packing  
+	- Helps reducing the number of small files as they can cause inefficiencies in storage and query performance.  
+`autoCompatc`:
+	- triggers a compaction operation(bin-packing) on small files during writes.  
+	- Compaction is the process of combining multiple small files into larger ones.
+	- Auto-compaction ensures that your Delta table doesnt accumulate too many smal lfiles
+```python
+spark.conf.set("spark.databricks.delta.optimizeWrite.enabled", True)
+spark.conf.set("spark.databricks.delta.autoCompact.enabled", True)
+```
+
+So..Why aren´t these configurations enable by default if they appear to significantly benefit table performance ? What´s Databriks rationale for requirement manual activation instead ?
+
+- Workload Variation: Not all workloads and use case benefit equally from every optimization. Whats optima for one scenarion might be suboptimal or even detrimental for another. For instance if wirtes are infrequeent or if the data is mostly append-only with large batches, then the overhed of optimizing every write might not be necesseary    
+- Performance Overhed: Operations like optimization consume additional resources and they can introduce latency to the write operations, which might not be acceptable for all use cases.   
+- Resource Consumption: Automatic compaction and optimization can consume additional CPU, memory and I/O in cloud environments, where resources equate to costs, not every user or oganization might want these features enabled all the time.   
+
+**Scenario1: Optimization Not Necessary -  Use Case: Historical Data Archive**  
+
+Imagine you have a sytem whre you´re strogin historical data, say for compiliance or archival purposes.  
+
+- Is written once an then rarely , if ever update or querid
+- Is ingested in large, infrequent batches, doest not require real-teime or lowlatenciy access
+
+
+### Delta Lake Transaction Logs
+
+Thanks to the transition logs the delta tables are faster becasue every 10 logs a check-point is save where to search for information you only have to go to that specific site.
+
+
 
 ## Databricks Tooling
+
+### Jobs**
+
+### Troubleshooting Jobs failures
+
+### REST API**
+
+### Databricks CLI
 
 ## Security and Governance
 
