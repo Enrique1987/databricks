@@ -13,10 +13,10 @@ are good for Machine Learning and Big Data but are lacking in BI and face challe
 
 on the oder side.
 
-`Data Wharehouse` Is a centralized repository for storing large volumens of data from multiple sources. It is designed for query and analysis, often used for business Intelligence activities.
+`Data Warehouse` Is a centralized repository for storing large volumens of data from multiple sources. It is designed for query and analysis, often used for business Intelligence activities.
 
 
-**Streaming Design Patterns**  
+`Data Lakehause` Join the best of both worlds from `Data Lake` and `Data Warehouse`
 
 	
 
@@ -24,7 +24,7 @@ on the oder side.
 
 **Bronze Layer**   
 - Replaces the raditional data lake.  
-- Represents the full, unprocessed hisotry of the data.  
+- Represents the full, unprocessed history of the data.  
 - Captures the provenance(what,when and from where) of data loaded intoe the lakehouse.  
 - Data is stored efficiently using Delta Lakehouse.  
 - If downstream layers discover later they need to ingest more, they can come back to the Bronze source to obtain it.  
@@ -81,7 +81,7 @@ The function **F.broadcast** is a hint to Spark taht the given dataframe (date_l
  each node has a fully copy of the smaller DataFrame in memory and can perform the join locally without any network shuffling. This can significantly speed up the join operation.
  
 **Streaming vs Auto Load**  
-Streaming is a method of processing data in real-time as it's generated, without waiting for batch intervals. Auto-load, especially in the context
+*Streaming* is a method of processing data in real-time as it's generated, without waiting for batch intervals. *Auto-load*, especially in the context
  of cloud data platforms like Databricks, refers to the automatic detection and ingestion of new data into the system, often combined with both batch
  and streaming processing methods.  
  
@@ -154,15 +154,31 @@ query.awaitTermination()
 How to eliminte duplicate records while working with Structure Streaming and Delta Lake.  
 While Spark Structure Streaming provides exactly-once preocessing guaranteees, many source system will introduce duplicate records
 
-**Quality Enforcemnt**
+**Quality Enforcemnt**  
+
+	- Add Check contrains to Delta tables.  
+	- Describe and implement a quarantine table.  
+	- Apply logic to add a data quality tags to Delta tables.  
+
+
+`sql ALTER TABLE heart_rate_silver ADD CONSTRAINT date_within_range CHECK (time > '2017-01-01');`   
+
+**Quarantine** The Idea behind quarantinniin is that a bad records will be written to a separate location,
+ This allows good data to be processed efficiently while additional logicand or manual review of erroneous records can be dfine and executed away from the main pipeline.
+
+**Flagging** You may choose to implement a flagging system to warn about violatins while avoiding job failures.
+
+`python F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check")`
 
 **Promotion to Silver**
 
+	- Apply table constrains   
+	- Flagging to identify records    
+	- Apply de-duplication within an incremental microbatch  
+	- Use **MERGE** to avoid inserting duplicate recores to a Delta Lake table.  
+
 **Slowly Changing Dimensions**
-
-
 **Type 2 SCD**
-
 **Streaming Joins and Statefulness**
 
 **Stream Static Join**
@@ -180,9 +196,55 @@ While Spark Structure Streaming provides exactly-once preocessing guaranteees, m
 
 **Lakehouse and the Query Layer**
 
-**Stored Views**
+	- Stores refined datasets for use by data scientists  
+	- Serves results for pre-computed ML models  
+	- Contains enriched, aggregated views for use by analysts  
+	- Star-schemas and data marts for BI queries  
+	- Power data-driver applications, dashboards and reports.  
+	
+**Gold Tables**   
+	- Refined typically aggregated views of data saved using Delta Lake.  
+	- Can be update with batch or stream processing  
+	- Configure and schedule as part of ETL workloads  
+	- Results compute on write  
+	- Read is simple deserialization, additional filters can be applied with pushdowns.  
+	
+**Databricks SQL Endpoints**  
+	- Clusters optimized for SQL queries   
+	- Serverless option for quick cluster startup and autoscaling   
+	- Photon-enable for vectorized execution  
+	- Enhanced throughput for exchanging data with exeternal SQL systems  
+	- Optimized connectos for popular BI tools.  
+
+**Recommendations**
+	- Use saved views when filtering silver tables.  
+	- Use Delta tables for common partial aggregates.    
+	- Share Databricks SQL queries and dashboards within teams.  
+	- Analyze query history to identify new candidate gold tables.  
+	- Transitioning these queries to gold tables and scheduling as engineering jobs may reduce total operation costs.  
+	- Query history can also be useful for identifying predicates used most frequently; useful for ZORDER indexing during optimization.   
+
+**Stored Views**  
+
+	- Display the query plan associate with a view: A Spark Dataframe and a view re nearly identical constructs. calling **explain** we can see our source table. `df.explain("formatted")`  
+
+**Register View and check your job**
+
+`sql CREATE VIEW IF NOT EXISTS gym_user_stats AS (...)`
+
+```python
+# Check your work
+assert spark.sql("SHOW TABLES").filter("tableName='gym_user_stats'").count() >= 1, "View 'gym_user_stats' does not exist."
+assert spark.sql("SHOW TABLES").filter("tableName='gym_user_stats'").first()["isTemporary"]==False, "View 'gym_user_stats' should be not temporary."
+assert spark.sql("DESCRIBE EXTENDED gym_user_stats").filter("col_name='Type'").first()['data_type']=='VIEW', "Found a table 'gym_user_stats' when a view was expected."
+assert spark.table("gym_user_stats").count() == 304, "Incorrect query used for view 'gym_user_stats'."
+print("All tests passed.")
+```
+	
 
 **Materialized Gold Tables**
+
+To make things run faster and more cost-effectively, its a good practice to save frequently-used query results in a specialized table (gold table in Delta lake) instead of the traditional method of materialized view.
 
 
 ### Storing Data Securely
@@ -331,7 +393,7 @@ drop the Constraint
 
 ### Streaming Deduplication (code)
 
-*Watermark*
+`Watermark`  
 A watermark is a moving threshold in time, which helps Spark to keep track of the progress of the stream. By definig a watermark, you are essentially telling Spark
 Structure Streaming how long you´re willingo to wait for out of oder or late data.
 
@@ -342,38 +404,28 @@ concern of latency. I we were somehow 100% certain that:
 Every event would be processend in its correct time window, and there would be no need to provide a buffer for late-arriving data.
 
 Example.
-**Use Case**  
-In a streaming system where I m trying to compute hourly sales.
+	- **Use Case** In a streaming system where we are trying to compute hourly sales.
 
-**Problem**  
-Due to the fact aht the shops are located in different geogfraphical location aroun the world they sometimes take time to arrive, so how could I process the sales having a window latency of 10 minutes`?
+		- **Problem**  Due to the fact aht the shops are located in different geogfraphical location aroun the world they sometimes take time to arrive, so how could I process the sales having a window latency of 10 minutes`?
 
-**Solution**  
+		- **Solution** By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes
 
-- By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes
+		- **Second Problem** I have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says  2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, provide the actual order timesteamp indicates it was mede within that hour. 
+		Howerver, how does the system differentiate between an order that genuinely took place at 3:07 pm and an order that was made earlier but only processed at 3:07 due to system latencies?
+	How does the system ensure that each order is placed in the correct aggregation window based on its actual timestam and not the processing time?
 
-**2 Problem**  
+		- **Solution 2** When we are processing streaming data, each event typically has a timestam associate with it. This timestamp, which in our example is `order_timestamp`, represent when the order was actually made. This is different from the processing time.  
 
-I have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says 
-2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, 
-provide the actual order timesteamp indicates it was mede within that our
-
-Howerver, how does the system differentiate between an order that genuinely took place at 3:07 pm and an order that was made earlier but only processed at 3:07 due to system latencies?
-How does the system ensure that each order is placed in the correct aggregation window based on its actual timestam and not the processing time?
-
-**Solution 2**
-
-When we are processing streaming data, each event typically has a timestam associate with it. This timestamp, which in our example is `order_timestamp`, represent when the order was actually made.
-This is different from the processing time.  
-
-In our example:  
-- An order made at 2:57 but arriving at 3:07 hast an `order_timestamp` of 2:57 pm. The system processing time is 3:07  
-- An order actually made at 3:07 has an `oder_timestamp` of 3:07  
+		- In our example:  
+			- An order made at 2:57 but arriving at 3:07 hast an `order_timestamp` of 2:57 pm. The system processing time is 3:07  
+			- An order actually made at 3:07 has an `oder_timestamp` of 3:07  
 
 The watermark works with the oder_timestamp no the system processing time.
 
 
-**Other use of watermark**
+**Other use of watermark**  
+
+Deleting duplicate records.
 
 ```python
 deduped_df = (spark.readStream
@@ -845,7 +897,7 @@ Databricks allow you to work bia CLI therefore you need to have pyhton installed
 
 ## Security and Governance
 
-- Propagating deletes.
+- **Propagating deletes**: When for security reasons we have to delete data and the same data are in different tables
 
 ### Dynamic Views
 
