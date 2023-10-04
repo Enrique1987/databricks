@@ -47,7 +47,7 @@ on the oder side.
 - **Mutiplex Ingestion**: For nearly real-time data ingestion, normaly from a pop up system.  
 	- Do not use the pop up system as bronze leyer as they are not real tables and have limited time of retention. Normally every topic will be later split in tables, but at first from the Stream system to Data Lakehause are all together in one table.
   
-  
+   
     
 	
 ![](img/Bronze_Patterns.PNG)	
@@ -406,9 +406,9 @@ Every event would be processend in its correct time window, and there would be n
 Example.  
  
 **Use Case** In a streaming system where we are trying to compute hourly sales.  
-	- **Problem**  Due to the fact aht the shops are located in different geogfraphical location aroun the world they sometimes take time to arrive, so how could I process the sales having a window latency of 10 minutes`?  
-		-**Solution** By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes    
-		-**Second Problem** I have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says  2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, provide the actual order timesteamp indicates it was mede within that hour. 
+	- **Problem**  Due to the fact aht the shops are located in different geogfraphical location aroun the world they sometimes take time to arrive, so how could I process the sales having a window latency of 10 minutes`?   
+		- **Solution** By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes    
+		- **Second Problem** I have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says  2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, provide the actual order timesteamp indicates it was mede within that hour. 
 		Howerver, how does the system differentiate between an order that genuinely took place at 3:07 pm and an order that was made earlier but only processed at 3:07 due to system latencies?
 	How does the system ensure that each order is placed in the correct aggregation window based on its actual timestam and not the processing time?
 
