@@ -896,5 +896,50 @@ WHERE
 
 ## Testing and Deployment
 
+### Relative Imports 
+
+%pip install .. (some package that I need), should be done at the beginning of the program as python interpreter will e restarted.  
+%sh   
+%run  
+
+### Data pipeline testing.
+
+**Data quality tests** test the quality of the data  
+	- Apply check constraints to Delta tables  
+	
+**Standard testes: test the code logic**  
+	- **Unit testing** 
+		- Approach to testing individuals units of code, such as functions.
+		- If you make any changes to them in the future, you can determine whether they still work as you expected them to.
+		- This helps you find problems with your code faster and earlier in the development life cycle.
+		
+		`python assert funct() == expected_value`  
+  
+	- **Integration Testing**
+		- Approach to testing the interaction between subsystems of an apllication  
+		- Sofware module sare integrated logically and tested as a group  
+	- **End-to-End Testing**
+	
+		- Approach to ensure that your application can run properly under real-world scenarios.
+		- Simulate a user experience from start to finish.
+
+		
+		
+
+
+
 ## Monitoring and logging
 
+### Managing Cluster
+
+Two types of cluster Permision.
+
+- Admin Console, at the user tab you can control user ability ot ceate clusters by enabling the allow unrestricted.  
+- **Cluster Level Permission**:  --> compute `:`  --> can Manage, Restart, Attacht  
+	- **Event log**: Logs outside the cluster, select what happend in the cluster, we can decide which log do we have interst to monitorizing.  
+	- **Driver Logs**: Logs generated within the cluster
+		- Standar Output: Print statement
+		- Standar Error
+	- **Metrics** Access to the Ganglia UI
+
+- Cluster Level Permision: 

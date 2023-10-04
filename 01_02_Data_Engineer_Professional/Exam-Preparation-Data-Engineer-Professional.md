@@ -115,3 +115,16 @@ The table in the scneario described above should be applied to CDFs as they meet
 	- Given the vast number of customers, in each batch (daily/weekly), only a small fraction of the total customer profiles might change. 
 	For example, only a small percentage of users might update their information or delete their accounts in any given batch interval.
 	- CDC (Change Data Capture) from the operational database can detect and send only these changed records to be processed and updated in the data lake house.
+	
+**Question 7
+Determinate if in the following scneario do we need a CDF:    
+"Use Case: Tracking User Activities on an Online News Portal"  
+A popular online news portal wants to understand its readers' behaviors better. Every time a user interacts with an article - be 
+it reading an article, clicking on an ad, leaving a comment, or sharing an article on social media - an event is generated.**
+
+No.  We should not apply CDF as the Table is a Append-Only Table.
+
+**Why append only?**  
+	- **Immutable Events** Each user interaction is a unique event with its timestamp. Once an event is generated, it doesnt´change. Instead of updating existing records, new interacions    
+	- **Scalability** Given the large number of reader and the multitude of interactions they can have on the platform, the system generates a massive volume of events daily. An append only system scales well to handle such high-velocity data.
+
