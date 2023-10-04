@@ -404,6 +404,7 @@ concern of latency. I we were somehow 100% certain that:
 Every event would be processend in its correct time window, and there would be no need to provide a buffer for late-arriving data.
 
 Example.  
+  
 	- **Use Case** In a streaming system where we are trying to compute hourly sales.  
 		- **Problem**  Due to the fact aht the shops are located in different geogfraphical location aroun the world they sometimes take time to arrive, so how could I process the sales having a window latency of 10 minutes`?  
 		-**Solution** By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes    
