@@ -52,7 +52,7 @@ ranked_df = (spark.readStream
 display(ranked_df)
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;Stream DataFrames do not support windows functions.
+&nbsp;&nbsp;&nbsp;&nbsp;Stream DataFrames do not support windows functions. The data would need to be processed in micro-Batches.
 
 **Question 3.  
 You are creating a Table in Databricks with the following Code, A senior Data Engineer comes to you and let you know that you dont need to initializing "SparkSession" do you know why ?**  
@@ -137,7 +137,7 @@ The team wants to store only the most recent information for each customer in th
 
 &nbsp;&nbsp;&nbsp;&nbsp;Use MERGE INTO with SEQUENCE BY clause on the update_time for ordering how operations should be applied.
 
-&nbsp;&nbsp;&nbsp;&nbsp;```sql
+```sql
 MERGE INTO target_table AS target
 USING source_table AS source
 ON target.id = source.id
