@@ -128,3 +128,22 @@ No.  We should not apply CDF as the Table is a Append-Only Table.
 	- **Immutable Events** Each user interaction is a unique event with its timestamp. Once an event is generated, it doesnt´change. Instead of updating existing records, new interacions    
 	- **Scalability** Given the large number of reader and the multitude of interactions they can have on the platform, the system generates a massive volume of events daily. An append only system scales well to handle such high-velocity data.
 
+**Question 8  
+The data engineering team wants to build a pipeline that receives customers data as change data capture (CDC) feed from a source system. The CDC events logged at the source 
+contain the data of the records along with metadata information. This metadata indicates whether the specified record was inserted, updated, or deleted. 
+In addition to a timestamp column identified by the field update_time indicating the order in which the changes happened. 
+Each record has a primary key identified by the field customer_id.In the same batch, multiple changes for the same customer could be received with different update_time. 
+The team wants to store only the most recent information for each customer in the target Delta Lake table.**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Use MERGE INTO with SEQUENCE BY clause on the update_time for ordering how operations should be applied.
+
+```sql
+MERGE INTO target_table AS target
+USING source_table AS source
+ON target.id = source.id
+WHEN MATCHED THEN
+    UPDATE SET ...
+WHEN NOT MATCHED THEN
+    INSERT ...
+SEQUENCE BY source.timestamp;
+```
