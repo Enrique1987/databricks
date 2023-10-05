@@ -122,11 +122,11 @@ Determinate if in the following scneario do we need a CDF:
 A popular online news portal wants to understand its readers' behaviors better. Every time a user interacts with an article - be 
 it reading an article, clicking on an ad, leaving a comment, or sharing an article on social media - an event is generated.**
 
-No.  We should not apply CDF as the Table is a Append-Only Table.
+&nbsp;&nbsp;&nbsp;&nbsp;No.  We should not apply CDF as the Table is a Append-Only Table.
 
 **Why append only?**  
-	- **Immutable Events** Each user interaction is a unique event with its timestamp. Once an event is generated, it doesnt´change. Instead of updating existing records, new interacions    
-	- **Scalability** Given the large number of reader and the multitude of interactions they can have on the platform, the system generates a massive volume of events daily. An append only system scales well to handle such high-velocity data.
+&nbsp;&nbsp;&nbsp;&nbsp;- **Immutable Events** Each user interaction is a unique event with its timestamp. Once an event is generated, it doesnt´change. Instead of updating existing records, new interacions    
+&nbsp;&nbsp;&nbsp;&nbsp;- **Scalability** Given the large number of reader and the multitude of interactions they can have on the platform, the system generates a massive volume of events daily. An append only system scales well to handle such high-velocity data.
 
 **Question 8  
 The data engineering team wants to build a pipeline that receives customers data as change data capture (CDC) feed from a source system. The CDC events logged at the source 
@@ -137,7 +137,7 @@ The team wants to store only the most recent information for each customer in th
 
 &nbsp;&nbsp;&nbsp;&nbsp;Use MERGE INTO with SEQUENCE BY clause on the update_time for ordering how operations should be applied.
 
-```sql
+&nbsp;&nbsp;&nbsp;&nbsp;```sql
 MERGE INTO target_table AS target
 USING source_table AS source
 ON target.id = source.id
