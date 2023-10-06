@@ -387,7 +387,7 @@ query = (spark.readStream
 
 Silver to Gold
 
-````python
+```python
 silver_stream_df = (spark.readStream
                          .format("delta")
                          .option("readChangeData", True)
