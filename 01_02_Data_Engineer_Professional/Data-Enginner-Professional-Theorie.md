@@ -171,7 +171,8 @@ ALTER TABLE heart_rate_silver ADD CONSTRAINT date_within_range CHECK (time > '20
 **Flagging** You may choose to implement a flagging system to warn about violatins while avoiding job failures.
 
 ```python 
-F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check")```
+F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check")
+```
 
 **Promotion to Silver**
 
