@@ -181,12 +181,6 @@ F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check
 - Apply de-duplication within an incremental microbatch  
 - Use **MERGE** to avoid inserting duplicate recores to a Delta Lake table.  
 
-**Slowly Changing Dimensions**
-**Type 2 SCD**
-**Streaming Joins and Statefulness**
-
-**Stream Static Join**
-
 
 
 ### Gold Query Layer
@@ -200,41 +194,45 @@ F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check
 
 **Lakehouse and the Query Layer**
 
-	- Stores refined datasets for use by data scientists  
-	- Serves results for pre-computed ML models  
-	- Contains enriched, aggregated views for use by analysts  
-	- Star-schemas and data marts for BI queries  
-	- Power data-driver applications, dashboards and reports.  
+- Stores refined datasets for use by data scientists  
+- Serves results for pre-computed ML models  
+- Contains enriched, aggregated views for use by analysts  
+- Star-schemas and data marts for BI queries  
+- Power data-driver applications, dashboards and reports.  
 	
 **Gold Tables**   
-	- Refined typically aggregated views of data saved using Delta Lake.  
-	- Can be update with batch or stream processing  
-	- Configure and schedule as part of ETL workloads  
-	- Results compute on write  
-	- Read is simple deserialization, additional filters can be applied with pushdowns.  
+
+- Refined typically aggregated views of data saved using Delta Lake.  
+- Can be update with batch or stream processing  
+- Configure and schedule as part of ETL workloads  
+- Results compute on write  
+- Read is simple deserialization, additional filters can be applied with pushdowns.  
 	
 **Databricks SQL Endpoints**  
-	- Clusters optimized for SQL queries   
-	- Serverless option for quick cluster startup and autoscaling   
-	- Photon-enable for vectorized execution  
-	- Enhanced throughput for exchanging data with exeternal SQL systems  
-	- Optimized connectos for popular BI tools.  
+- Clusters optimized for SQL queries   
+- Serverless option for quick cluster startup and autoscaling   
+- Photon-enable for vectorized execution  
+- Enhanced throughput for exchanging data with exeternal SQL systems  
+- Optimized connectos for popular BI tools.  
 
-**Recommendations**
-	- Use saved views when filtering silver tables.  
-	- Use Delta tables for common partial aggregates.    
-	- Share Databricks SQL queries and dashboards within teams.  
-	- Analyze query history to identify new candidate gold tables.  
-	- Transitioning these queries to gold tables and scheduling as engineering jobs may reduce total operation costs.  
-	- Query history can also be useful for identifying predicates used most frequently; useful for ZORDER indexing during optimization.   
+**Recommendations**   
+- Use saved views when filtering silver tables.  
+- Use Delta tables for common partial aggregates.    
+- Share Databricks SQL queries and dashboards within teams.  
+- Analyze query history to identify new candidate gold tables.  
+- Transitioning these queries to gold tables and scheduling as engineering jobs may reduce total operation costs.  
+- Query history can also be useful for identifying predicates used most frequently; useful for ZORDER indexing during optimization.   
 
 **Stored Views**  
 
-	- Display the query plan associate with a view: A Spark Dataframe and a view re nearly identical constructs. calling **explain** we can see our source table. `df.explain("formatted")`  
+- Display the query plan associate with a view: A Spark Dataframe and a view re nearly identical constructs.
+ calling **explain** we can see our source table. `df.explain("formatted")`  
 
 **Register View and check your job**
 
-`sql CREATE VIEW IF NOT EXISTS gym_user_stats AS (...)`
+```sql 
+CREATE VIEW IF NOT EXISTS gym_user_stats AS (...)
+```
 
 ```python
 # Check your work
@@ -254,7 +252,7 @@ To make things run faster and more cost-effectively, its a good practice to save
 ### Storing Data Securely
 
 **Salting before hashing**
-When hash personal data or sensitive information  we transofmr original data into a fix-size string that look like random but that in fact same imput will always produce same hash
+When hash personal data or sensitive information  we transform original data into a fix-size string that look like random but that in fact same imput will always produce same hash
 it had the vulnerabilities that if two persons have same password will produce the same hash, `salt` play with the concept that adding minimal input values(words to our passowrd) will produce a extremly different hash.
 So the concept of salt is just adding some words to the passwords before to hash it to make it much more secure.
 
@@ -361,8 +359,8 @@ SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
 
 `.outputMode`: Determinate how the output of a streaming DataFrame will be written to the sink. Whenthere are new rows and/or updates to exisitng rows in the streaming
 - **Append Mode ("append")**: Only new rows added to the DataFrame/Dataset will be written to the sink.  
-- **Complete Mode("complete"): Whole DataFrame will be written to the sink after every trigger. This mode is typically used for aggregations where the result can change with new data.
-- **Update Mode("update"): Only the rows in the DataFrame/Dataset that were updates will be written to the sink.
+- **Complete Mode("complete")**: Whole DataFrame will be written to the sink after every trigger. This mode is typically used for aggregations where the result can change with new data.
+- **Update Mode("update")**: Only the rows in the DataFrame/Dataset that were updates will be written to the sink.
 
 ```python
 def upsert_to_delta(microBatchDF, batchId):
@@ -427,16 +425,10 @@ query = (new_df.withWatermark("processed_timestamp", "3 minutes")
 
 ```
 
-**Upsert Data with Delta Lake**
-
-
 
 **Propagating Deletes with CDF**
 
 The most importan delete requestes are those that allow companies to maintain compliance with privacy regulations such as GDPR. Most companies have stated SLAs around how long these request will take the process.
-
-
-**Deleting at Partitions Boundaries**
 
 
 
@@ -463,11 +455,6 @@ The most importan delete requestes are those that allow companies to maintain co
 **Promoting Code with Repos**   
 - CI/CD Integration: Version, Review, Test 
 - Supported Git Providers: Azure DevOps, GitHub, GitLab, Bitbucket.
-
-**Deploying Batch and Streaming Workloads**
-
-
-
 
 
 
@@ -569,7 +556,7 @@ drop the Constraint
 `ALTER TABLE orders_silver DROP CONSTRAINT timestamp_within_range;`   
 
 
-### Streaming Deduplication (code)
+### Streaming Deduplication
 
 `Watermark`  
 A watermark is a moving threshold in time, which helps Spark to keep track of the progress of the stream. By definig a watermark, you are essentially telling Spark
