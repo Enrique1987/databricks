@@ -156,26 +156,29 @@ While Spark Structure Streaming provides exactly-once preocessing guaranteees, m
 
 **Quality Enforcemnt**  
 
-	- Add Check contrains to Delta tables.  
-	- Describe and implement a quarantine table.  
-	- Apply logic to add a data quality tags to Delta tables.  
+- Add Check contrains to Delta tables.  
+- Describe and implement a quarantine table.  
+- Apply logic to add a data quality tags to Delta tables.  
 
 
-`sql ALTER TABLE heart_rate_silver ADD CONSTRAINT date_within_range CHECK (time > '2017-01-01');`   
+```sql 
+ALTER TABLE heart_rate_silver ADD CONSTRAINT date_within_range CHECK (time > '2017-01-01');
+```   
 
-**Quarantine** The Idea behind quarantinniin is that a bad records will be written to a separate location,
+**Quarantine** The Idea behind quarantin is that a bad records will be written to a separate location,
  This allows good data to be processed efficiently while additional logicand or manual review of erroneous records can be dfine and executed away from the main pipeline.
 
 **Flagging** You may choose to implement a flagging system to warn about violatins while avoiding job failures.
 
-`python F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check")`
+```python 
+F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check")```
 
 **Promotion to Silver**
 
-	- Apply table constrains   
-	- Flagging to identify records    
-	- Apply de-duplication within an incremental microbatch  
-	- Use **MERGE** to avoid inserting duplicate recores to a Delta Lake table.  
+- Apply table constrains   
+- Flagging to identify records    
+- Apply de-duplication within an incremental microbatch  
+- Use **MERGE** to avoid inserting duplicate recores to a Delta Lake table.  
 
 **Slowly Changing Dimensions**
 **Type 2 SCD**
@@ -249,28 +252,190 @@ To make things run faster and more cost-effectively, its a good practice to save
 
 ### Storing Data Securely
 
+**Salting before hashing**
+When hash personal data or sensitive information  we transofmr original data into a fix-size string that look like random but that in fact same imput will always produce same hash
+it had the vulnerabilities that if two persons have same password will produce the same hash, `salt` play with the concept that adding minimal input values(words to our passowrd) will produce a extremly different hash.
+So the concept of salt is just adding some words to the passwords before to hash it to make it much more secure.
 
-**PII & REgulatory Compliance**
+```python 
+salt = 'BEANS'
+spark.conf.set("da.salt", salt)
+```
 
-**PII Lookup Table**
+```sql
+SELECT *, sha2(concat(user_id,"${da.salt}"), 256) AS alt_id
+FROM registered_users
+```
 
-**Storing PII Securely**
-
-**Managing ACLs**
 
 **Deidentified PII Access**
+
+Apply dynamic views to sensitive data to obscure columns containing PII
+Use dynamic views to filter data, only showing relevant rows to relevant audiences
+
+**Condtion on Column level**  
+```sql
+CREATE OR REPLACE VIEW users_vw AS
+  SELECT
+    alt_id,
+    CASE 
+      WHEN is_member('ade_demo') THEN dob
+      ELSE 'REDACTED'
+    END AS dob,
+    sex,
+    gender,
+    CASE 
+      WHEN is_member('ade_demo') THEN first_name
+      ELSE 'REDACTED'
+    END AS first_name,
+    CASE 
+      WHEN is_member('ade_demo') THEN last_name
+      ELSE 'REDACTED'
+    END AS last_name,
+    CASE 
+      WHEN is_member('ade_demo') THEN street_address
+      ELSE 'REDACTED'
+    END AS street_address,
+    city,
+    state,
+    CASE 
+      WHEN is_member('ade_demo') THEN zip
+      ELSE 'REDACTED'
+    END AS zip,
+    updated
+  FROM users
+```
+
+**Adding Conditiona Row Access**  
+
+Adding views with **WHERE** caluses to filter source data on different conditions for teams.
+```sql
+CREATE OR REPLACE VIEW users_la_vw AS
+SELECT * FROM users_vw
+WHERE 
+  CASE 
+    WHEN is_member('ade_demo') THEN TRUE
+    ELSE city = "Los Angeles" AND updated > "2019-12-12"
+  END
+```
+
+**Generalize PII in Aggregate Tables**
+
+```Python
+def age_bins(dob_col):
+    age_col = F.floor(F.months_between(F.current_date(), dob_col)/12).alias("age")
+    
+    return (F.when((age_col < 18), "under 18")
+             .when((age_col >= 18) & (age_col < 25), "18-25")
+             .when((age_col >= 25) & (age_col < 35), "25-35")
+             .when((age_col >= 35) & (age_col < 45), "35-45")
+             .when((age_col >= 45) & (age_col < 55), "45-55")
+             .when((age_col >= 55) & (age_col < 65), "55-65")
+             .when((age_col >= 65) & (age_col < 75), "65-75")
+             .when((age_col >= 75) & (age_col < 85), "75-85")
+             .when((age_col >= 85) & (age_col < 95), "85-95")
+             .when((age_col >= 95), "95+")
+             .otherwise("invalid age").alias("age"))
+```
 
 
 ### Propagating Updated and Deletes
 
 **Change Data Feed**
 
+**Operations that break stream composability:**  
+- **Complete aggregations** You can´t aggregate over the entire dataset because it´s infinite. However, you can perform aggregations over windows of data, like computing the sum of values in the last 5 minutes,, or counting in the last hour.  
+- **Delete** Deleting specific rows from a streaming DataFrame isn´t supported. This is because in a streaming context, data is continuosly arriving and being processed, delete could complicate teh processin logic.  
+- **UPDATE/MERGE** Similar to delete, but there are ways to handle scenarios that require updates, like using the `foreachBatch`   
+
+
 **Processing Records from Change Data Feed**
+
+Tables that were not create with CDF enables will no have it turned on by default, but can be altered to capture changes.
+
+```sql
+ALTER TABLE silver 
+SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
+```
+
+`.outputMode`: Determinate how the output of a streaming DataFrame will be written to the sink. Whenthere are new rows and/or updates to exisitng rows in the streaming
+- **Append Mode ("append")**: Only new rows added to the DataFrame/Dataset will be written to the sink.  
+- **Complete Mode("complete"): Whole DataFrame will be written to the sink after every trigger. This mode is typically used for aggregations where the result can change with new data.
+- **Update Mode("update"): Only the rows in the DataFrame/Dataset that were updates will be written to the sink.
+
+```python
+def upsert_to_delta(microBatchDF, batchId):
+    microBatchDF.createOrReplaceTempView("updates")
+    microBatchDF._jdf.sparkSession().sql("""
+        MERGE INTO silver s
+        USING updates u
+        ON s.mrn = u.mrn
+        WHEN MATCHED AND s.dob <> u.dob 
+            THEN UPDATE SET *
+        WHEN NOT MATCHED
+            THEN INSERT *
+    """)
+	
+query = (spark.readStream
+              .table("bronze")
+              .writeStream
+              .foreachBatch(upsert_to_delta)
+              .outputMode("update")
+              # .trigger(availableNow=True)
+              .trigger(processingTime='5 seconds')
+              .start())
+```
+
+Silver to Gold
+
+````python
+silver_stream_df = (spark.readStream
+                         .format("delta")
+                         .option("readChangeData", True)
+                         .option("startingVersion", 0)
+                         .table("silver"))
+```
+
+```python
+from pyspark.sql import functions as F
+
+new_df = (silver_stream_df
+         .filter(F.col("_change_type").isin(["update_postimage", "insert"]))
+         .selectExpr("mrn",
+                     "street_address AS new_street_address",
+                     "_commit_timestamp AS processed_timestamp"))
+                                                                                         
+goold_df = (silver_stream_df
+         .filter(F.col("_change_type").isin(["update_preimage"]))
+         .selectExpr("mrn",
+                     "street_address AS old_street_address",
+                     "_commit_timestamp AS processed_timestamp"))
+```
+
+```python
+
+query = (new_df.withWatermark("processed_timestamp", "3 minutes")
+               .join(gold_df, ["mrn", "processed_timestamp"], "left")
+               .filter("new_street_address <> old_street_address OR old_street_address IS NULL")
+               .writeStream
+               .outputMode("append")
+               #.trigger(availableNow=True)
+               .trigger(processingTime="5 seconds")
+               .option("checkpointLocation", f"{DA.paths.checkpoints}/gold")
+               .table("gold"))
+
+```
+
+**Upsert Data with Delta Lake**
+
 
 
 **Propagating Deletes with CDF**
 
-**Deleting at PArtitions Boundaries**
+The most importan delete requestes are those that allow companies to maintain compliance with privacy regulations such as GDPR. Most companies have stated SLAs around how long these request will take the process.
+
+
+**Deleting at Partitions Boundaries**
 
 
 
@@ -278,13 +443,25 @@ To make things run faster and more cost-effectively, its a good practice to save
 
 **Orchestration and Scheduling with Multi-Task Jobs**
 
-**Multi-Task Jobs**
 
-**Promoting Code with Repos**
+**Job**  
+	- **Task**: What ?
+	- **Schedule**: When ?  
+	- **Cluster**: How ?
+	
+**Workflow orchestration patterns.**
 
-**CLI**
+- **Fan-out Pattern:**A single task or job is followed by multiple tasks that can be executed in parallel  
+- **Funnel Pattern**Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
+- **Hourglas Pattern**Combine Fan-out and Funnel
+- **Sequence Pattern**Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+- **Multi-sequence Pattern**Multi sequences of task that can run in parallel with each other.
 
-**REST API**
+**Multi-Task Jobs**: Orchestate the need previos patterns by "Depend on"
+
+**Promoting Code with Repos**   
+- CI/CD Integration: Version, Review, Test 
+- Supported Git Providers: Azure DevOps, GitHub, GitLab, Bitbucket.
 
 **Deploying Batch and Streaming Workloads**
 
@@ -411,7 +588,7 @@ Example.
 	
 **Solution** By using `watermark`  we can indicate to our system to compute by ranks in that case we can use a watermark of 10 minutes    
 	
-**Second Problem** I have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says  2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, provide the actual order timesteamp indicates it was mede within that hour. 
+**Second Problem** we have set a watermark of 10 minutes to account for pssible latencies. If I m aggregating sales for two time windows says  2-3pm and 3-4pm and a order comes in at 3:07 the watermark ensures that this lates orger gest accounted for in the 2-3 pm window, provide the actual order timesteamp indicates it was mede within that hour. 
 		Howerver, how does the system differentiate between an order that genuinely took place at 3:07 pm and an order that was made earlier but only processed at 3:07 due to system latencies?
 	How does the system ensure that each order is placed in the correct aggregation window based on its actual timestam and not the processing time?
 
@@ -572,6 +749,111 @@ In structured streaming, certain operations, like window functions, required pro
 `microBatchDF` represents the data of a single micro-batch, allowing stateful operations to be applied efficiently on streamed data.
 
 ### Processing CDC (code)
+
+CDC is a concept or pattern in data integration that identifies anc captures changes in soure data so that downstream systems can consume and reflect those changes. its not 
+tied to a specific piece of code or a single technology. Rather, its an approach to data synchronization and integration.
+
+Some features in Databricks facilites the CDC.
+
+**Delta MERGE**: Delta Lakes `MERGE INTO` command allows you to efficiently upsert data making it easier to handle inserts, updates and deltes base on incoming change.  
+**Stream Processing** Databrics support structure streaming, which can consume data in a near real -time, allowing for more real-time CDC  
+**Delta Lake Time Travel** This Features allows you to query previous versins of your Delta table, which can be usedful in CDC scenarios to understadn how data has changed over time.
+
+**CDC vs ETL**  
+
+We can see CDC as specific type of ETL that focuses oncapturing and processing changes in the source data. While the overall concept is similar, there are some unique consierations and mechanisms associate with CDC.
+
+**Change Tracking** Unlike traditional batch ETL process, that might process all data, CDC focuses on only processing new or change data.  
+**Low Latency** CDC often aims for near rea-time processing, so changs in the source system are reflected in the target system with minimal delay.  
+**Handling Updates & Deletes** Traditional ETL might be more focused on inserting new data. With CDC you need mechanisms to handle updates and deltes, not just inserts.  
+
+```python
+# Using Delta Lake in Databricks
+
+# Create the Bronze table
+spark.sql("""
+CREATE TABLE IF NOT EXISTS bronze (
+    id INT,
+    name STRING,
+    age INT,
+    change_type STRING,
+    timestamp TIMESTAMP
+) USING delta
+""")
+
+# Insert some initial data into the Bronze table
+spark.sql("""
+INSERT INTO bronze VALUES
+(1, 'Alice', 25, 'INSERT', CURRENT_TIMESTAMP),
+(2, 'Bob', 30, 'INSERT', CURRENT_TIMESTAMP),
+(3, 'Charlie', 35, 'INSERT', CURRENT_TIMESTAMP)
+""")
+
+# Create the Silver table
+spark.sql("""
+CREATE TABLE IF NOT EXISTS silver (
+    id INT,
+    name STRING,
+    age INT
+) USING delta
+""")
+
+# Create the Gold table
+spark.sql("""
+CREATE TABLE IF NOT EXISTS gold (
+    id INT,
+    name STRING,
+    age INT
+) USING delta
+""")
+```
+**CDC process**  
+
+
+```python
+def process_changes_bronze_to_silver():
+    # Read new changes from the Bronze table
+    changes = spark.sql("SELECT * FROM bronze ORDER BY timestamp DESC")
+
+    for row in changes.collect():
+        if row.change_type == 'INSERT':
+            spark.sql(f"INSERT INTO silver VALUES ({row.id}, '{row.name}', {row.age})")
+        elif row.change_type == 'UPDATE':
+            spark.sql(f"UPDATE silver SET name='{row.name}', age={row.age} WHERE id={row.id}")
+        elif row.change_type == 'DELETE':
+            spark.sql(f"DELETE FROM silver WHERE id={row.id}")
+
+    # After processing, we might want to archive or delete processed records from the Bronze table
+    # For this example, I'll delete them.
+    spark.sql("DELETE FROM bronze")
+```
+
+
+```python
+
+def process_changes_silver_to_gold():
+    # Read from Silver and write to Gold. For this example, I'll overwrite the Gold table.
+    silver_df = spark.sql("SELECT * FROM silver")
+    silver_df.write.format("delta").mode("overwrite").saveAsTable("gold")
+```
+
+Simulate Bronze to Gold
+
+```python
+# Simulate new changes in Bronze table
+spark.sql("""
+INSERT INTO bronze VALUES
+(4, 'David', 40, 'INSERT', CURRENT_TIMESTAMP),
+(2, 'Bob Jr.', 31, 'UPDATE', CURRENT_TIMESTAMP),
+(3, 'Charlie', null, 'DELETE', CURRENT_TIMESTAMP)
+""")
+
+# Process changes from Bronze to Silver
+process_changes_bronze_to_silver()
+
+# Process changes from Silver to Gold
+process_changes_silver_to_gold()
+```
 
 Create a Windows function to insert the most recent records. The SQL code would be as follows.
 
@@ -758,9 +1040,9 @@ porcess_customers_orders()
 
 **Stream vs Static tables**
 
-	- Streaming tables are ever-appending data sources.  
-	- Static tables contain data that may be changed or overwritten.
-	- Only append data in the stream table will appear in the resulting table, adding new records in the static table will not appear in the end table.+
+- Streaming tables are ever-appending data sources.  
+- Static tables contain data that may be changed or overwritten.
+- Only append data in the stream table will appear in the resulting table, adding new records in the static table will not appear in the end table.
 	
 When you are joining a static DataFrame(TableA) with a streaming DataFrame(TableB), the static DataFrame acts as fixed reference.
  During the execution of each micro-batch of the streaming query:  
