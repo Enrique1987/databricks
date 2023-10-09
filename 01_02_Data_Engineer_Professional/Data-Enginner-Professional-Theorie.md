@@ -224,7 +224,8 @@ F.when(F.col("heartrate") <= 0, "Negative BPM").otherwise("OK").alias("bpm_check
 - Query history can also be useful for identifying predicates used most frequently; useful for ZORDER indexing during optimization.   
 
 **Stored Views**  
-
+- Stored views are a mechanism to pre-compute and store the result of a query.Unlike regula views, which are essentially save queries that saved queries that compute results on-the-fly when accessed,
+stored views persist the results, making data revieval faster.  
 - Display the query plan associate with a view: A Spark Dataframe and a view re nearly identical constructs.
  calling **explain** we can see our source table. `df.explain("formatted")`  
 
@@ -438,17 +439,17 @@ The most importan delete requestes are those that allow companies to maintain co
 
 
 **Job**  
-	- **Task**: What ?
-	- **Schedule**: When ?  
-	- **Cluster**: How ?
+- **Task**: What ?  
+- **Schedule**: When ?   
+- **Cluster**: How ?
 	
-**Workflow orchestration patterns.**
+**Workflow orchestration patterns.**  
 
-- **Fan-out Pattern:**A single task or job is followed by multiple tasks that can be executed in parallel  
-- **Funnel Pattern**Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
-- **Hourglas Pattern**Combine Fan-out and Funnel
-- **Sequence Pattern**Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
-- **Multi-sequence Pattern**Multi sequences of task that can run in parallel with each other.
+- **Fan-out Pattern:** A single task or job is followed by multiple tasks that can be executed in parallel  
+- **Funnel Pattern** Multiple task or jobs that run in parallel are followed by a single tas that stgart afther all parallel task completed  
+- **Hourglas Pattern** Combine Fan-out and Funnel
+- **Sequence Pattern** Task or jobs are organized in a sgtrict sequence, where each task starts only after the previous one has completed.
+- **Multi-sequence Pattern** Multi sequences of task that can run in parallel with each other.
 
 **Multi-Task Jobs**: Orchestate the need previos patterns by "Depend on"
 
@@ -456,6 +457,80 @@ The most importan delete requestes are those that allow companies to maintain co
 - CI/CD Integration: Version, Review, Test 
 - Supported Git Providers: Azure DevOps, GitHub, GitLab, Bitbucket.
 
+### Tiggers
+
+**Fixed Interval Micro-batches**
+
+`(.trigger(Trigger.ProcessingTime(interval)))`
+
+- This option allows you to process the data at fixed time intervals, regardless of when the data arrived.  
+- Interval could be a string like "1 minute" or a duration in milliseconds.  
+- Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.  
+
+```
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.ProcessingTime("1 minute"))
+.table("output_table"))
+```
+
+**Once Trigger**
+
+`(.trigger(Trigger.Once()))`
+
+- Processes the available data in the stream just once and then stops the query.  
+- Use Case: When you have a backlog of data and you want to process it once to bring your output table up to date.  
+
+```
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.Once())
+.table("output_table"))
+```
+
+
+**Continuous Processing**
+
+`.trigger(Trigger.Continuous(interval)))`
+
+- This option will continuously process the data with a low-latency.
+- Interval specifies the checkpoint interval.  
+- Note: Continuous processing is an experimental feature and has some limitations.
+- Use Case: When low-latency is more important than throughput and you need near real-time processing.
+
+```
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.Continuous("1 second"))  # e.g., checkpoint every second
+.table("output_table"))
+```
+
+**Available Now (using trigger(availableNow=True))**
+
+- This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.  
+- Is very similar to *trigger-once* but can run multiple batches untill all availabe data is consumed, instead of once big batch.  
+*Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.*
+
+```
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(availableNow=True)
+.table("output_table"))
+```
 
 
 ## Udemy
@@ -1108,13 +1183,13 @@ Choosing partitions columns
 - If most partitons < 1GB of data, the table is over-partitioned
 
 
-`optimizeWrite`:
-	- optimizes the writing of data into Delta Lake. coalesces small files produced by task into larger, more efficient files during writes, without needing a separate bin-packing  
-	- Helps reducing the number of small files as they can cause inefficiencies in storage and query performance.  
-`autoCompatc`:
-	- triggers a compaction operation(bin-packing) on small files during writes.  
-	- Compaction is the process of combining multiple small files into larger ones.
-	- Auto-compaction ensures that your Delta table doesnt accumulate too many smal lfiles
+`optimizeWrite`:  
+- optimizes the writing of data into Delta Lake. coalesces small files produced by task into larger, more efficient files during writes, without needing a separate bin-packing  
+- Helps reducing the number of small files as they can cause inefficiencies in storage and query performance.  
+`autoCompatc`:  
+- triggers a compaction operation(bin-packing) on small files during writes.  
+- Compaction is the process of combining multiple small files into larger ones.
+- Auto-compaction ensures that your Delta table doesnt accumulate too many smal lfiles
 ```python
 spark.conf.set("spark.databricks.delta.optimizeWrite.enabled", True)
 spark.conf.set("spark.databricks.delta.autoCompact.enabled", True)
@@ -1128,7 +1203,7 @@ So..Why aren´t these configurations enable by default if they appear to signifi
 
 **Scenario1: Optimization Not Necessary -  Use Case: Historical Data Archive**  
 
-Imagine you have a sytem whre you´re strogin historical data, say for compiliance or archival purposes.  
+Imagine you have a sytem whre you´re storing historical data, say for compiliance or archival purposes.  
 
 - Is written once an then rarely , if ever update or querid
 - Is ingested in large, infrequent batches, doest not require real-teime or lowlatenciy access
@@ -1144,18 +1219,34 @@ Imagine you have a sytem whre you´re strogin historical data, say for compilian
 
 Thanks to the transition logs the delta tables are faster becasue every 10 logs a check-point is save where to search for information you only have to go to that specific site.
 
+**Transaction Logs** records all changes made to the dataset. This log ensures that operations on the data are atomic, consistent, isolates and durable.
+File statistics are crucial metadata stored in the Delta transactionlog. They provide detailed information about teh data files in a Delta table.
+
+Statistics captured:
+
+-**Partition values** If the table is partitioned, the exact partition values for a file are stored.  
+-**Number of Records** This statistic represents the coount of rows in a particular  data file.   
+-**Minimum and Maximum Values** This is especially useful for query optimization. For example if a query filters ona specific column value, these statistics can help determine if a file needs to be read at all.  
+-**Size of the File** This includes the byte size of the file on disk.   
+-**Data File Path** The location of the data file in the storage system.   
+-**Timestamps**
+
 
 
 ## Databricks Tooling
 
 - We can add parameters(key name of the widget)  
 - We can crete a new job cluster (could be single node to save cost). Job cluster auto terminates once the job is completed, which save costs compared to all-purpose clusters.  
-- retry plicit  
-- Depends on (will give us the legacy). will be atuomatically secuenciyl but if you give the name of a previous job it would generate them in parallel. A task can depend on multiple task.
+- retry politic  
+- Depends on (will give us the legacy). Will be atuomatically secuencilly but if you give the name of a previous job it would generate them in parallel. A task can depend on multiple task.
 
 - Advance Options  
-	- Schedule Trigger Type can be done by cron syntax.
-	- Edit permision can be done. Owner can change but need to be a person not a group. We have can viw and can management
+- Schedule Trigger Type can be done by cron syntax.
+- Edit permision can be done. Owner can change but need to be a person not a group. We have can viw and can management
+
+**Cluster Politics**
+
+Can management > can restart > can attach
 
 ### REST API
 
@@ -1266,3 +1357,5 @@ Two types of cluster Permision.
 	- **Metrics** Access to the Ganglia UI
 
 - Cluster Level Permision: 
+
+**Ganglia UI**

@@ -147,3 +147,125 @@ WHEN NOT MATCHED THEN
     INSERT ...
 SEQUENCE BY source.timestamp;
 ```
+
+**Question 9
+Wich statement regarding checkpointing in Spark Structured Streaming is not correct ?**
+
+A)checkpoints stores the current state of a streaming job to cloud storage  
+B)checkpoiting allows the streaming engine to track the progress of a stream processing  
+C)Checkpoints can be shared between separates streams  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;*Solution* Checkpoints can be shared between separates streams.   	
+
+As checkpoints are designed to store the progress and state of a specific streaming query. They should not be shared between multiple streaming quereis. 
+
+
+**Question 10
+
+What is the trigger configuration of a stream table that need to fetch the data in near real time process without any wait and shold be active continuously making that**
+
+**Solution**  
+ 
+**Available Now (using trigger(availableNow=True))**
+
+- This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.  
+- Is very similar to *trigger-once* but can run multiple batches untill all availabe data is consumed, instead of once big batch.  
+*Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.*
+
+```
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(availableNow=True)
+.table("output_table"))
+```
+
+**Question 11
+A data engineer wants to pass multiple parameters from a Databricks Job to a notebook. They already configured the key and value of each parameter in the configurations of the job.
+Which of the following utilities can the data engineer use to read the passed parameters inside the notebook ?**
+
+&nbsp;&nbsp;&nbsp;&nbsp;dbutils.widgets
+
+**Question 12 
+Which of the following describes the minimal permissions a data engineer needs to view the metrics, driver logs, and Spark UI of an existing cluster ?**
+
+&nbsp;&nbsp;&nbsp;&nbsp;"Can Attach To" privilege on the cluster.
+
+*Explination*: You can configure two types of cluster permissions:
+
+1- The "Allow cluster creation" entitlement controls your ability to create clusters.   
+2- Cluster-level permissions control you ability to use and  modify a specific cluster. There are foru permissions levels for a cluster    
+
+![](img/Cluster-Permissions.PNG)
+
+
+**Question 13
+
+For production Databricks jobs, which of the following cluster types is recommended to use ?**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Job clusters
+
+*Explination* Job clusters are dedicated clusters for a job or task run. A job cluster auto terminates once the job is completed, which save costs compared to all-purpose clusters.
+In addition, Databricks recommends using job clusters in production so that each job rns, in a fully isolate enviroment.
+
+**Question 14 
+The data engineering team ahs a Delta Lake table creted with following query:**
+
+```sql
+CREATE TABLE target
+AS SELECT * FROM source
+```
+
+**A Data engineer wants to drop the source table with the following query:**
+
+`DROP TABLE source`
+
+**Which statement describes the result of running this drop command ?**
+
+&nbsp;&nbsp;&nbsp;&nbsp;Only the source table will be dropped, while the target table will not be affected.
+
+
+**Question 15 Which of the following describes the minimal permissions a data engineer needs to start and terminate and existing cluster?**
+
+&nbsp;&nbsp;&nbsp;&nbsp;"Can Restart" privilege on the cluster
+
+**Question 16 
+The data engineering team has a Delta Lake table created with following querey**
+
+```sql
+CREATE TABLE customers_clone
+LOCATION 'somelocation'
+AS SELECT * FROM customers
+```
+
+A data engineer wants to drop the table with the following query:
+
+`DROP TABLE customers_clone`
+
+Wich statements describes the result of running this drop command?
+
+&nbsp;&nbsp;&nbsp;&nbsp;Only the table´s metadata will be deleted from the catalog, while the data files will be kept in the storage.
+
+*Explination* External tables are whose dat is stored in an external storage path by using LOCATION clause, when drop table in a external table just the metadata its dropped while the underlying data files are kept.
+
+
+
+
+**Question 17 
+Which of the following describes the minimal permissions a data engineer needs to edit the configurations of an existing cluster ?**
+
+&nbsp;&nbsp;&nbsp;&nbsp;"Can Manage" privilege on the cluster
+
+**Question 18
+Given the following code block in a notegook**
+
+```python
+db_password = dbutils.secret.get(scope="dev", key=""database_password)
+print(db_password)
+
+```
+
+
+
