@@ -81,7 +81,7 @@ part of this process, Databricks automatically initializates a SparkSession name
 explicitly creating a session.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;Databricks simplifies many of the setup and configuration steps for Spark, making it user-friendly. However, if you wre to run your PySpark code outise of such 
-management environments, that¥s when explicit initialization would be necessary.  
+management environments, that¬¥s when explicit initialization would be necessary.  
 
 **Question 4  
 What does `microBatchDF` and what is it used for ?**  
@@ -104,7 +104,7 @@ We will implement a medallion architecture, where we will enrich the user profil
 The data engineers of the above company are wondering whether they should apply CDF to their tables or whether it does not apply in this case.
  What is your decision as a data architect ?**
 
-The table in the scneario described above should be applied to CDFs as they meet the 2 fundamental requiremetns for the use of CDF¥s 
+The table in the scneario described above should be applied to CDFs as they meet the 2 fundamental requiremetns for the use of CDF¬¥s 
 
 - **Tables changes include updates and/or deletes**
 	- **Updates:** As customers interact with the platform, their preferences, recent activity, or personal information might change.
@@ -125,7 +125,7 @@ it reading an article, clicking on an ad, leaving a comment, or sharing an artic
 &nbsp;&nbsp;&nbsp;&nbsp;No.  We should not apply CDF as the Table is a Append-Only Table.
 
 **Why append only?**  
-&nbsp;&nbsp;&nbsp;&nbsp;- **Immutable Events** Each user interaction is a unique event with its timestamp. Once an event is generated, it doesnt¥change. Instead of updating existing records, new interacions    
+&nbsp;&nbsp;&nbsp;&nbsp;- **Immutable Events** Each user interaction is a unique event with its timestamp. Once an event is generated, it doesnt¬¥change. Instead of updating existing records, new interacions    
 &nbsp;&nbsp;&nbsp;&nbsp;- **Scalability** Given the large number of reader and the multitude of interactions they can have on the platform, the system generates a massive volume of events daily. An append only system scales well to handle such high-velocity data.
 
 **Question 8  
@@ -246,7 +246,7 @@ A data engineer wants to drop the table with the following query:
 
 Wich statements describes the result of running this drop command?
 
-&nbsp;&nbsp;&nbsp;&nbsp;Only the table¥s metadata will be deleted from the catalog, while the data files will be kept in the storage.
+&nbsp;&nbsp;&nbsp;&nbsp;Only the table¬¥s metadata will be deleted from the catalog, while the data files will be kept in the storage.
 
 *Explination* External tables are whose dat is stored in an external storage path by using LOCATION clause, when drop table in a external table just the metadata its dropped while the underlying data files are kept.
 
@@ -276,7 +276,7 @@ Which of the following could explain why a data engineer may need to avoid using
 &nbsp;&nbsp;&nbsp;&nbsp;%sh executes shell code only on the local driver machine which leads to significant performance overhead.
 
 **Question 20
-The data engineering team has a table ëorders_backupí that was created using Delta Lakeís SHALLOW CLONE functionality from the table ëordersí. Recently, the team started getting an error when querying the ëorders_backupí table indicating that some data files are no longer present.
+The data engineering team has a table ‚Äòorders_backup‚Äô that was created using Delta Lake‚Äôs SHALLOW CLONE functionality from the table ‚Äòorders‚Äô. Recently, the team started getting an error when querying the ‚Äòorders_backup‚Äô table indicating that some data files are no longer present.
 Which of the following correctly explains this error ?**
 
 
@@ -306,7 +306,7 @@ Executing `CREATE OR REPLACE TABLE` command can sync changes from the source to 
 
 
 
-The data engineering team has a Delta Lake table named ëdaily_activitiesí that is completely overwritten each night with new data received from the source system.
+The data engineering team has a Delta Lake table named ‚Äòdaily_activities‚Äô that is completely overwritten each night with new data received from the source system.
 
 
 **Questions 22
@@ -369,8 +369,8 @@ For clusters with Databricks Runtime version below 10.5, the syntax to access th
 
 
 **Question 25
-The data engineering team has a singleplex bronze table called ëorders_rawí where new orders data is appended every night. 
-They created a new Silver table called ëorders_cleanedí in order to provide a more refined view of the orders data.
+The data engineering team has a singleplex bronze table called ‚Äòorders_raw‚Äô where new orders data is appended every night. 
+They created a new Silver table called ‚Äòorders_cleaned‚Äô in order to provide a more refined view of the orders data.
 The team wants to create a batch processing pipeline to process all new records inserted in the orders_raw table and propagate them to the orders_cleaned table.
 Which solution minimizes the compute costs to propagate this batch of data?**
 
@@ -381,11 +381,11 @@ Which solution minimizes the compute costs to propagate this batch of data?**
 
 
 **Question 26
-The data engineering team has a Silver table called ësales_cleanedí where new sales data is appended in near real-time.
-They want to create a new Gold-layer entity against the ësales_cleanedí table to calculate the year-to-date (YTD) of the sales amount. 
+The data engineering team has a Silver table called ‚Äòsales_cleaned‚Äô where new sales data is appended in near real-time.
+They want to create a new Gold-layer entity against the ‚Äòsales_cleaned‚Äô table to calculate the year-to-date (YTD) of the sales amount. 
 The new entity will have the following schema:
 country_code STRING, category STRING, ytd_total_sales FLOAT, updated TIMESTAMP
-Itís enough for these metrics to be recalculated once daily. But since they will be queried very frequently by several business teams, the data engineering team wants to cut
+It‚Äôs enough for these metrics to be recalculated once daily. But since they will be queried very frequently by several business teams, the data engineering team wants to cut
  down the potential costs and latency associated with materializing the results.
 Which of the following solutions meets these requirements?**
 
@@ -398,7 +398,7 @@ Which of the following commands can a data engineer use to compact small data fi
 
 
 **Question 28
-ìA Delta Lakeís functionality that automatically compacts small files during individual writes to a table by performing two complementary operations on the tableî
+‚ÄúA Delta Lake‚Äôs functionality that automatically compacts small files during individual writes to a table by performing two complementary operations on the table‚Äù
 Which of the following is being described in the above statement?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;Auto OPTIMIZE
@@ -486,7 +486,7 @@ spark.readStream
 
 &nbsp;&nbsp;&nbsp;&nbsp;Newly update records will be append to the target table --> that is thanks to the readChangeFeed that is activate. 
 
-*Databricks supports reading tableís changes captured by CDF in streaming queries using spark.readStream. This allows you to get only the new changes captured since the last time the streaming query was run.
+*Databricks supports reading table‚Äôs changes captured by CDF in streaming queries using spark.readStream. This allows you to get only the new changes captured since the last time the streaming query was run.
 The checkpointLocation ensures that Spark keeps track of which records it has already processed.
 So, only the newly updated records (after the last checkpoint) will be appended to the target table.*
 
@@ -545,18 +545,18 @@ Which of the following likely explains the cause of these slowdowns?**
 &nbsp;&nbsp;&nbsp;&nbsp;Lifecycle events of the cluster
 
 
-**Question 43 In Spark UI, which of the following is Not part of the metrics displayed in a stageís details page ?**
+**Question 43 In Spark UI, which of the following is Not part of the metrics displayed in a stage‚Äôs details page ?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;DBU Cost
 
 *Explination*
-In Spark UI, the stageís details page shows summary metrics for completed tasks. This includes:
+In Spark UI, the stage‚Äôs details page shows summary metrics for completed tasks. This includes:
 
 Duration of tasks.
 - GC time: is the total JVM garbage collection time.
 - Shuffle spill (memory): is the size of the deserialized form of the shuffled data in memory.
 - Shuffle spill (disk): is the size of the serialized form of the data on disk.
-and others Ö
+and others ‚Ä¶
 
 **Question 44 Wich of the following statements best describes DBFS ?**
 
@@ -567,7 +567,7 @@ and others Ö
 &nbsp;&nbsp;&nbsp;&nbsp;The failure of a task will always be aprtion which means that the operaitions in the notebook before the coee failure will be sucesfully run and commited, while the opeariotn after code failure will be skipped
 
 
-**Question 46 A data engineer wants to calculate predictions using a MLFlow model logged in a given ìmodel_urlî. They want to register the model as a Spark UDF in order to apply it to a test dataset.
+**Question 46 A data engineer wants to calculate predictions using a MLFlow model logged in a given ‚Äúmodel_url‚Äù. They want to register the model as a Spark UDF in order to apply it to a test dataset.
 Which code block allows the data engineer to register the MLFlow model as a Spark UDF ?**
 
 `predict_udf = mlflow.pyfunc.spark_udf(spark, "model_url")`
@@ -576,9 +576,9 @@ Which code block allows the data engineer to register the MLFlow model as a Spar
 
 &nbsp;&nbsp;&nbsp;&nbsp;Unlimit Retries, with 1 Maximum Concurrent Run
 
-**A data engineer has a MLFlow model logged in a given ìmodel_urlî. They have registered the model as a Spark UDF using the following code:
+**A data engineer has a MLFlow model logged in a given ‚Äúmodel_url‚Äù. They have registered the model as a Spark UDF using the following code:
 predict_udf = mlflow.pyfunc.spark_udf(spark, "model_url")
-The data engineer wants to apply this model UDF to a test dataset loaded in the ìtest_dfî DataFrame in order to calculate predictions in a new column ìpredictionî
+The data engineer wants to apply this model UDF to a test dataset loaded in the ‚Äútest_df‚Äù DataFrame in order to calculate predictions in a new column ‚Äúprediction‚Äù
 Which of the following code blocks allows the data engineer to accomplish this task ?**
 
 ```python
@@ -588,8 +588,8 @@ test_df.select("record_id", predict_udf(*column_list).allas("prediction"))
 ```
 
 **Question 48 
-A data engineer has a MLFlow model logged in a given ìmodel_urlî. They have registered the model as a Spark UDF using the following code:
-The data engineer wants to apply this model UDF to a test dataset loaded in the ìtest_dfî DataFrame in order to calculate predictions in a new column ìpredictionî
+A data engineer has a MLFlow model logged in a given ‚Äúmodel_url‚Äù. They have registered the model as a Spark UDF using the following code:
+The data engineer wants to apply this model UDF to a test dataset loaded in the ‚Äútest_df‚Äù DataFrame in order to calculate predictions in a new column ‚Äúprediction‚Äù
 Which of the following code blocks allows the data engineer to accomplish this task ?**
 
 
@@ -621,7 +621,7 @@ spark.readStream
 ```
 
 **Question 51 A senior data engineer pointed out that this approach is not enough for having distinct records in the target table when there are late-arriving, duplicate records.
-Which of the following could explain the senior data engineerís remark?**
+Which of the following could explain the senior data engineer‚Äôs remark?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;The new records need also to be deduplicate against previously inserted data into the table.
 
@@ -630,15 +630,15 @@ Which of the following could explain the senior data engineerís remark?**
 &nbsp;&nbsp;&nbsp;&nbsp;Running the VACUUM command on the table deletes CDF data as well.
 
 
-**Question 53 A data engineer has a streaming job that updates a Delta table named ëuser_activitiesí by the results of a join between a streaming Delta table ëactivity_logsí and a static Delta table ëusersí.
-They noticed that adding new users into the ëusersí table does not automatically trigger updates to the ëuser_activitiesí table, even when there were activities for those users in the ëactivity_logsí table.
+**Question 53 A data engineer has a streaming job that updates a Delta table named ‚Äòuser_activities‚Äô by the results of a join between a streaming Delta table ‚Äòactivity_logs‚Äô and a static Delta table ‚Äòusers‚Äô.
+They noticed that adding new users into the ‚Äòusers‚Äô table does not automatically trigger updates to the ‚Äòuser_activities‚Äô table, even when there were activities for those users in the ‚Äòactivity_logs‚Äô table.
 Which of the following likely explains this issue ?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;The streaming portion of this stream-static join drives the join process. Only new data appearing on the streaming side of the join will trigger the processing.
 
 
 **Question 54
-Given the following query on the Delta table ëcustomersí on which Change Data Feed is enabled:
+Given the following query on the Delta table ‚Äòcustomers‚Äô on which Change Data Feed is enabled:
 Which statement describes the result of this query each time it is executed ?**
 
 ```python
@@ -695,7 +695,7 @@ spark.readStream
 
 **Question 57
 A data engineer is using the following spark configurations in a pipeline to enable Optimized Writes and Auto Compaction:
-They also want to enable Z-order indexing with Auto Compaction to leverage data skipping on all the pipelineís tables.
+They also want to enable Z-order indexing with Auto Compaction to leverage data skipping on all the pipeline‚Äôs tables.
 Which of the following solutions allows the data engineer to complete this task ?**
 
 ```python
@@ -709,7 +709,7 @@ spark.conf.set("spark.databricks.delta.autoCompact.enabled", True)
 
 
 **Question 56
-The data engineering team has a large Delta Lake table named ëuser_postsí which is partitioned over the ëyearí column. The table is used as an input streaming source in a streaming job. The streaming query is displayed below with a blank:
+The data engineering team has a large Delta Lake table named ‚Äòuser_posts‚Äô which is partitioned over the ‚Äòyear‚Äô column. The table is used as an input streaming source in a streaming job. The streaming query is displayed below with a blank:
 They want to remove previous 2 years data from the table without breaking the append-only requirement of streaming sources.
 Which option correctly fills in the blank to enable stream processing from the table after deleting the partitions ?**
 
@@ -734,7 +734,7 @@ spark.readStream
 
 
 **Question 57
-The data engineering team maintains a Delta Lake table of SCD Type 1. A junior data engineer noticed a folder named ë_change_dataí in the table directory, and wants to understand what this folder is used for.
+The data engineering team maintains a Delta Lake table of SCD Type 1. A junior data engineer noticed a folder named ‚Äò_change_data‚Äô in the table directory, and wants to understand what this folder is used for.
 Which of the following describes the purpose of this folder ?**
 
 &nbsp;&nbsp;&nbsp;&nbsp;CDF feature is enable on the table. The `_change_data` folder is the location where CDF data is stored.
@@ -749,5 +749,5 @@ Which conclusion can the data engineer draw from the above statistics ?**
 ![](img/SparkUI-TASK.png)
 
 Usually, if your computation was completely symmetric across tasks, you would see all of the statistics clustered tightly around the 50th percentile value.
-Here, we see the distribution is reasonable, except that we have a bunch of ìMinî values near zero. This suggests that we have almost empty partitions.
+Here, we see the distribution is reasonable, except that we have a bunch of ‚ÄúMin‚Äù values near zero. This suggests that we have almost empty partitions.
 
