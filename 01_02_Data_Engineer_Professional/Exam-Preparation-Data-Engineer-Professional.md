@@ -751,3 +751,14 @@ Which conclusion can the data engineer draw from the above statistics ?**
 Usually, if your computation was completely symmetric across tasks, you would see all of the statistics clustered tightly around the 50th percentile value.
 Here, we see the distribution is reasonable, except that we have a bunch of “Min” values near zero. This suggests that we have almost empty partitions.
 
+and that one ?
+
+![](img/SkewData.png)
+
+
+Usually, if your computation was completely symmetric across tasks, you would see all of the statistics clustered tightly around the 50th percentile value.
+
+
+
+Here, the “Max” metrics task took 10x the time and read about 5x the data of the 75th-percentile task. 
+This suggests a number of “straggler” tasks that operating over partitions with larger skewed amounts of data.
