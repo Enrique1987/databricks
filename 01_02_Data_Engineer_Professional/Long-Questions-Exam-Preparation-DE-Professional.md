@@ -1,17 +1,17 @@
-**Question1
+**Question1  
 A data engineer is working on a real-time data processing pipeline using Databricks. Before being loaded into a target database,
 the pipeline must process and transform several data sources. The engineer has chosen to process and transform data using Python DataFrames. 
 Which of the following DataFrame statements is the best course of action in this situation to implement a real-time workload autoloader ?**
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.Use the df.writeStream method to write the transformed data directly to the target database.
-&nbsp;&nbsp;&nbsp;&nbsp;B.Use the df.foreachBatch method to write the transformed data in micro-batches to the target database.
-&nbsp;&nbsp;&nbsp;&nbsp;C.Use the df.groupBy method to group the data by key, then use the df.write method to write the transformed data to the target database.
-&nbsp;&nbsp;&nbsp;&nbsp;D.Use the df.window method to create sliding windows of data, then use the df.write method to write the transformed data to the target database.
+&nbsp;&nbsp;&nbsp;&nbsp;A.Use the df.writeStream method to write the transformed data directly to the target database.  
+&nbsp;&nbsp;&nbsp;&nbsp;B.Use the df.foreachBatch method to write the transformed data in micro-batches to the target database.  
+&nbsp;&nbsp;&nbsp;&nbsp;C.Use the df.groupBy method to group the data by key, then use the df.write method to write the transformed data to the target database.  
+&nbsp;&nbsp;&nbsp;&nbsp;D.Use the df.window method to create sliding windows of data, then use the df.write method to write the transformed data to the target database.  
 
 Solution
 B
 
-**Question2
+**Question2  
 A data engineer is creating a data model for the sales data of a retail company. Information on sales transactions, goods, clients, and stores is included in the data.
 The business wants to examine the data to learn more about consumer and sales trends. Which strategy from the list below would be ideal for creating the data model?** 
  
