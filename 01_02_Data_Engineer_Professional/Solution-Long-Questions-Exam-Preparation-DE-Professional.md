@@ -403,18 +403,18 @@ Solutions:
 
 Options:
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.Increase the number of partitions
-&nbsp;&nbsp;&nbsp;&nbsp;B.Decrease the number of partitions
-&nbsp;&nbsp;&nbsp;&nbsp;C.Increase the number of executors
-&nbsp;&nbsp;&nbsp;&nbsp;D.Decrease the number of executors
+&nbsp;&nbsp;&nbsp;&nbsp;A.Increase the number of partitions  
+&nbsp;&nbsp;&nbsp;&nbsp;B.Decrease the number of partitions  
+&nbsp;&nbsp;&nbsp;&nbsp;C.Increase the number of executors  
+&nbsp;&nbsp;&nbsp;&nbsp;D.Decrease the number of executors  
 
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Increasing the number of executors is not the correct approach. The processing time can be sped up by increasing the number of executors, but this method is less efficient than increasing the number of partitions. This is because adding more executors may not necessarily result in increased parallelism and may even cause resource contention, which would slow down processing.
-&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. Increasing the number of partitions is the right approach. Partitioning is one of the crucial components of performance optimization when working with a large dataset. To speed up computation, Databricks divides data into partitions and then processes in parallel. We can distribute the data among the nodes more evenly by increasing the number of partitions, which could aid in reducing the execution time of the notebook.
-&nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Decreasing the number of partitions is not the correct approach. If we decrease the number of partitions, the amount of data processed by each executor will increase, which can lead to longer execution times. This is because the workload of each executor will increase, potentially leading to resource contention and slower processing times.
-&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Decreasing the number of executors is also not the correct approach. Slower processing times may result from less parallelism, which can be achieved by reducing the number of executors. This is because each executor will have to deal with more data, which could result in resource conflicts and slower execution times.
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Increasing the number of executors is not the correct approach. The processing time can be sped up by increasing the number of executors, but this method is less efficient than increasing the number of partitions. This is because adding more executors may not necessarily result in increased parallelism and may even cause resource contention, which would slow down processing.  
+&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. Increasing the number of partitions is the right approach. Partitioning is one of the crucial components of performance optimization when working with a large dataset. To speed up computation, Databricks divides data into partitions and then processes in parallel. We can distribute the data among the nodes more evenly by increasing the number of partitions, which could aid in reducing the execution time of the notebook.  
+&nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Decreasing the number of partitions is not the correct approach. If we decrease the number of partitions, the amount of data processed by each executor will increase, which can lead to longer execution times. This is because the workload of each executor will increase, potentially leading to resource contention and slower processing times.  
+&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Decreasing the number of executors is also not the correct approach. Slower processing times may result from less parallelism, which can be achieved by reducing the number of executors. This is because each executor will have to deal with more data, which could result in resource conflicts and slower execution times.  
 
 
 
