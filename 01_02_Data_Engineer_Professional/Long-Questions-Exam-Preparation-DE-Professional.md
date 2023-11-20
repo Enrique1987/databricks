@@ -8,10 +8,15 @@ Which of the following DataFrame statements is the best course of action in this
 &nbsp;&nbsp;&nbsp;&nbsp;C.Use the `df.groupBy` method to group the data by key, then use the df.write method to write the transformed data to the target database.  
 &nbsp;&nbsp;&nbsp;&nbsp;D.Use the `df.window` method to create sliding windows of data, then use the df.write method to write the transformed data to the target database.  
 
-Solution
-B
+Solutions: 
 
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. Data aggregation is done using the df.groupBy method, which is not required in this case. Already transformed and prepared to be loaded into the intended database, the data. 
 
+&nbsp;&nbsp;&nbsp;&nbsp;B. is correct. The df.foreachBatch method offers fine-grained control over the data writing process. It enables data to be written to the target database in micro-batches, making it the best method for implementing a real-time workload autoloader in this scenario. The data can be processed further using this method before being written to the target database, making it more effective and scalable than writing the data in a single batch. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. For streaming data, which is not the case in this scenario, use the df.writeStream method. Micro-batches rather than real-time processing of the data are used. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. In this situation, it is unnecessary to use the df.window method, which is used to create sliding windows of data. Micro-batches rather than real-time processing of the data are used. 
 
 **Question2  
 A data engineer is creating a data model for the sales data of a retail company. Information on sales transactions, goods, clients, and stores is included in the data.
@@ -24,15 +29,17 @@ The business wants to examine the data to learn more about consumer and sales tr
  
  
 Solution  
-Correct Answer: C 
 
-Option A is incorrect. Star schemas work best when dimension tables are manageable and can be easily represented as a single table. If the dimension tables are overly complicated, 
+&nbsp;&nbsp;&nbsp;&nbsp;Option A is incorrect. Star schemas work best when dimension tables are manageable and can be easily represented as a single table. If the dimension tables are overly complicated, 
 it may be difficult to maintain data integrity and experience performance problems.  
-Option B is incorrect. Snowflake schemas work best when dimension tables are highly normalized to remove redundancy. This strategy, however, might lead to complex queries and
+
+&nbsp;&nbsp;&nbsp;&nbsp;Option B is incorrect. Snowflake schemas work best when dimension tables are highly normalized to remove redundancy. This strategy, however, might lead to complex queries and
 decreased query performance, particularly for complex queries involving multiple tables.  
-Option C is correct. A hybrid schema combines elements from the star and snowflake schemas. A hybrid schema reduces complexity by denormalizing some dimension tables while
+
+&nbsp;&nbsp;&nbsp;&nbsp;Option C is correct. A hybrid schema combines elements from the star and snowflake schemas. A hybrid schema reduces complexity by denormalizing some dimension tables while
 reducing redundancy by normalizing others. This method allows for efficient querying while upholding data integrity, making it especially helpful for data models with large and intricate dimension tables.   
-Option D is incorrect. Entity-relationship models may not be the best choice for physically modeling huge datasets; they work best for conceptual modeling. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;Option D is incorrect. Entity-relationship models may not be the best choice for physically modeling huge datasets; they work best for conceptual modeling. 
 It can be challenging to convert effective physical data models from ER models, particularly for complex datasets
 
 
@@ -47,25 +54,26 @@ Which of the following is the best method for performing the join in Structured 
 &nbsp;&nbsp;&nbsp;&nbsp;D. Use the Databricks MLflow to train a machine learning model on the lookup data, then use the MLflow integration with Structured Streaming to perform the join with the streaming DataFrame. 
 
 
-Answer Explanation: Correct Answer: A It is typical to need to add data from a static lookup table to the streaming data when creating a real-time data pipeline with Databricks Structured Streaming.
+Solutions:
+&nbsp;&nbsp;&nbsp;&nbsp; A It is typical to need to add data from a static lookup table to the streaming data when creating a real-time data pipeline with Databricks Structured Streaming.
  There are a few ways to accomplish this join, but the best method is to load the lookup table as a static DataFrame and use the join method of the DataFrame API to perform the 
 join with the streaming DataFrame. 
 
 
-Option A is correct. Structured Streaming is the best and simplest method to perform the join. This method enables a join operation that 
+&nbsp;&nbsp;&nbsp;&nbsp;Option A is correct. Structured Streaming is the best and simplest method to perform the join. This method enables a join operation that 
 is quick and easy, with no added complexity or overhead. It also performs much more quickly than the other methods due to the absence of network I/O and serialization overhead.
 The lookup table is already loaded in memory as a static DataFrame, making the join operation quick and effective. 
 
-Option B is incorrect.It is not the best practice to convert the lookup table into a Kafka topic and then use the Spark-Kafka integration to perform a join between the streaming
+&nbsp;&nbsp;&nbsp;&nbsp;Option B is incorrect.It is not the best practice to convert the lookup table into a Kafka topic and then use the Spark-Kafka integration to perform a join between the streaming
  and lookup topics in Kafka because this increases the pipeline's complexity unnecessarily. In addition, it adds network I/O overhead,
  which, particularly for large lookup tables, can be slow and unreliable. It is more effective to simply load the lookup table as a static DataFrame and execute
  the join using the DataFrame API than to use this method. 
  
-Option C is incorrect. It may be overkill for a straightforward lookup table,
+&nbsp;&nbsp;&nbsp;&nbsp;Option C is incorrect. It may be overkill for a straightforward lookup table,
  so using Delta Lake to store the lookup table is not the best course of action. A small lookup table might not require Delta Lake's ability to handle complex data pipelines
  with large volumes of data. It may not be the most effective method to perform the join because it adds more overhead to managing the Delta Lake table. 
  
-Option D is incorrect. Because MLflow is intended for machine learning workflows rather than straightforward data enrichment tasks like joining a static lookup table with a streaming DataFrame, using it to perform the join is not the best course of action. Although using MLflow to perform the join might be possible, it wouldn't be the most effective method and would add needless complexity to the pipeline.
+&nbsp;&nbsp;&nbsp;&nbsp;Option D is incorrect. Because MLflow is intended for machine learning workflows rather than straightforward data enrichment tasks like joining a static lookup table with a streaming DataFrame, using it to perform the join is not the best course of action. Although using MLflow to perform the join might be possible, it wouldn't be the most effective method and would add needless complexity to the pipeline.
 
 
 **Question 4
@@ -94,6 +102,10 @@ average_quantity = df.agg({"quantity": "avg"}).collect()[0][0]
 
 D. df = spark.read.format("delta").load("/mnt/data")
 average_quantity = df.agg({"avg(quantity)": "avg"}).collect()[0][0] 
+
+
+Solution:
+B
 
 
 **Question 5
@@ -127,7 +139,8 @@ df = spark.read.format("cloudfiles").option("format", "json").option("inferSchem
 df = df.select("field1", "field2", explode("field3").alias("nested_field")) 
 ```
 
-Correct Answer: A Option A is correct. This option's code effectively makes use of the spark.readStream function, which is required to read streaming data.
+
+Option A is correct. This option's code effectively makes use of the spark.readStream function, which is required to read streaming data.
 The format is specified as "cloudfiles" by the .format("cloudfiles") directive, indicating that the files are kept in cloud storage. The files' format is set to JSON
 by the .option("format", "json"). Automatic schema inference is made possible by the .option("inferSchema", "true") based on the information in the files. 
 Finally, the .load("dbfs:/mnt/data") specifies where the JSON files are located in the cloud storage. The engineer uses the
@@ -137,7 +150,7 @@ This makes it possible to process and analyze the transformed data further.
 
 
 Option B is incorrect. This option's code is not the best strategy because it employs spark.read rather than spark.readStream, which is inappropriate for handling streaming data.
- Additionally, reading files from cloud storage using the "cloudfiles" format is not a valid option because of the spark.read function does not directly support it. 
+Additionally, reading files from cloud storage using the "cloudfiles" format is not a valid option because of the spark.read function does not directly support it. 
  
 Option C is incorrect. Because it makes use of spark.readStream's "autoloader" format, the code in this option is not the best strategy. The "autoloader" format does not satisfy the requirement for loading JSON files into Python DataFrames because it is not a legitimate format for loading JSON files.
 
