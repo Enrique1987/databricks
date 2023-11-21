@@ -1,3 +1,4 @@
+
 **Question1  
 A data engineer is working on a real-time data processing pipeline using Databricks. Before being loaded into a target database,
 the pipeline must process and transform several data sources. The engineer has chosen to process and transform data using Python DataFrames. 
@@ -13,13 +14,22 @@ Which of the following DataFrame statements is the best course of action in this
 
 Solutions: 
 
+&nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. For streaming data, which is not the case in this scenario, use the df.writeStream method. 
+Micro-batches rather than real-time processing of the data are used. `writeStream` its certanly use in streaming scenarios but it doesnt´t offer same leverl of control or customization for batch-wise processing as `foreachBatch`.
+It is more suitable for direct streamming writes withou complex per-batch logic
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. is correct. The df.foreachBatch method offers fine-grained control over the data writing process.
+It enables data to be written to the target database in micro-batches, making it the best method for implementing a real-time workload autoloader in this scenario. The data can be processed further using this method before being written to the target database, making it more effective and scalable than writing the data in a single batch. 
+
 &nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. Data aggregation is done using the df.groupBy method, which is not required in this case. Already transformed and prepared to be loaded into the intended database, the data. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;B. is correct. The df.foreachBatch method offers fine-grained control over the data writing process. It enables data to be written to the target database in micro-batches, making it the best method for implementing a real-time workload autoloader in this scenario. The data can be processed further using this method before being written to the target database, making it more effective and scalable than writing the data in a single batch. 
-
-&nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. For streaming data, which is not the case in this scenario, use the df.writeStream method. Micro-batches rather than real-time processing of the data are used. 
-
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. In this situation, it is unnecessary to use the df.window method, which is used to create sliding windows of data. Micro-batches rather than real-time processing of the data are used. 
+
+*Lesson learned* micro-batching is indeed a form of real-time processing, though it´s a bit different from what is traditionally considere "pure" real-time processing. In 
+micro-batching, datais collected and processend in small, discrete batches, or "micro-batches" that are processed sequentially and typically very quickly, often within seconds and miliseconds.
+This approach allows systems to handle streaming data in near-real-time while mainteining some of the efficiencies of batch processing.
+
+
 
 **Question2  
 A data engineer is creating a data model for the sales data of a retail company. Information on sales transactions, goods, clients, and stores is included in the data.
@@ -31,10 +41,10 @@ The business wants to examine the data to learn more about consumer and sales tr
 
 &nbsp;&nbsp;&nbsp;&nbsp;C. Use a hybrid schema to model the data. The fact table would contain sales transaction data, and the dimension tables would be partially denormalized to reduce complexity. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;D. Use an entity-relationship (ER) model to model the data. The model would include entities for sales transactions, products, customers, and stores, as well as relationships between these entities. hide Answer Explanation: 
+&nbsp;&nbsp;&nbsp;&nbsp;D. Use an entity-relationship (ER) model to model the data. The model would include entities for sales transactions, products, customers, and stores, as well as relationships between these entities.
  
  
-Solution  
+Solution:
 
 &nbsp;&nbsp;&nbsp;&nbsp;Option A is incorrect. Star schemas work best when dimension tables are manageable and can be easily represented as a single table. If the dimension tables are overly complicated, 
 it may be difficult to maintain data integrity and experience performance problems.  
@@ -86,7 +96,7 @@ The lookup table is already loaded in memory as a static DataFrame, making the j
 
 
 **Question 4
-Data Modeling When storing and processing large amounts of numerical data for a project using Databricks, a data engineering team wants to use external Delta tables.
+When storing and processing large amounts of numerical data for a project using Databricks, a data engineering team wants to use external Delta tables.
 They must carry out intricate aggregations of the data, such as averaging a particular column's value across various partitions.
 In the external Delta table, which of the following options calculates the average value of the "quantity" column across all partitions?** 
  
@@ -95,33 +105,34 @@ A.
 ```python
 df = spark.read.format("delta").load("/mnt/data")
 average_quantity = df.selectExpr("avg(quantity)").collect()[0][0] 
-````
+```
 
 B. 
 ```python
 df = spark.read.format("delta").load("/mnt/data")
 average_quantity = df.groupBy().avg("quantity").collect()[0][0] 
-````
+```
 
 C. 
-````python
+```python
 df = spark.read.format("delta").load("/mnt/data")
 average_quantity = df.agg({"quantity": "avg"}).collect()[0][0]
-````
+```
 
-D. df = spark.read.format("delta").load("/mnt/data")
+D. 
+```python
+df = spark.read.format("delta").load("/mnt/data")
 average_quantity = df.agg({"avg(quantity)": "avg"}).collect()[0][0] 
-
+```
 
 Solution:
 B
 
 
 **Question 5
-Data Modeling A data senior engineer is working on a complex data processing project using Databricks and wants to leverage the AutoLoader feature to load JSON files
-stored in cloud storage into Python DataFrames. The JSON files have nested fields and arrays that are organized hierarchically. Before continuing with the processing,
-the engineer must perform specific transformations on the loaded data. Which syntax for a Python DataFrame should the engineer use to load the JSON files,
-automatically infer the schema, and perform the necessary transformations?**
+A data senior engineer is working on a complex data processing project using Databricks and wants to leverage the AutoLoader feature to load JSON files
+stored in cloud storage into Python DataFrames. The JSON files have nested fields and arrays that are organized hierarchically.
+Before continuing with the processing, the engineer must perform specific transformations on the loaded data. Which syntax for a Python DataFrame should the engineer use to load the JSON files, automatically infer the schema, and perform the necessary transformations?**
 
 
 A. 
@@ -134,7 +145,7 @@ B.
 ```python
 df = spark.read.format("json").option("inferSchema", "true").load("dbfs:/mnt/data")
 df = df.select("field1", "field2", explode("field3").alias("nested_field")) 
-````
+```
 
 C. 
 ```python
@@ -148,27 +159,24 @@ df = spark.read.format("cloudfiles").option("format", "json").option("inferSchem
 df = df.select("field1", "field2", explode("field3").alias("nested_field")) 
 ```
 
+Solutions:
 
 Option A is correct. This option's code effectively makes use of the spark.readStream function, which is required to read streaming data.
-The format is specified as "cloudfiles" by the .format("cloudfiles") directive, indicating that the files are kept in cloud storage. The files' format is set to JSON
-by the .option("format", "json"). Automatic schema inference is made possible by the .option("inferSchema", "true") based on the information in the files. 
-Finally, the .load("dbfs:/mnt/data") specifies where the JSON files are located in the cloud storage. The engineer uses the
-.select function to perform specific transformations after loading the JSON files into the DataFrame df. In this instance,
+The format is specified as "cloudfiles" by the `.format("cloudfiles")` directive, indicating that the files are kept in cloud storage.
+
+The files' format is set to JSON by the `.option("format", "json")`. 
+
+Automatic schema inference is made possible by the `.option("inferSchema", "true")` based on the information in the files. 
+
+Finally, the `.load("dbfs:/mnt/data")` specifies where the JSON files are located in the cloud storage.
+
+The engineer uses the `.select` function to perform specific transformations after loading the JSON files into the DataFrame df. In this instance,
 the engineer chooses the fields "field1" and "field2" as well as the nested "field3" and gives it the alias "nested_field" using the explode function.
 This makes it possible to process and analyze the transformed data further. 
 
 
-Option B is incorrect. This option's code is not the best strategy because it employs spark.read rather than spark.readStream, which is inappropriate for handling streaming data.
-Additionally, reading files from cloud storage using the "cloudfiles" format is not a valid option because of the spark.read function does not directly support it. 
- 
-Option C is incorrect. Because it makes use of spark.readStream's "autoloader" format, the code in this option is not the best strategy. The "autoloader" format does not satisfy the requirement for loading JSON files into Python DataFrames because it is not a legitimate format for loading JSON files.
-
-Option D is incorrect. This option's code uses spark.read rather than sp   ark, which is not the best strategy.it is incompatible with streaming data because readStream is used. 
-Additionally, the spark.read function does not directly support the "cloudfiles" format, making it inappropriate for reading files from cloud storage
-
-
 **Question 6
-Data Modeling A data engineer works on a real-time data processing pipeline using Databricks and Kafka as a messaging system.
+A data engineer works on a real-time data processing pipeline using Databricks and Kafka as a messaging system.
 The pipeline consists of several data sources that must be processed and transformed before being loaded into a target database.
 The engineer has decided to use Medallion architecture for data modeling. Which of the following is the best approach for implementing the pipeline?**
 
@@ -184,7 +192,6 @@ The engineer has decided to use Medallion architecture for data modeling. Which 
  
 Solutions:
 
-
 Option A is incorrect. It involves distributing data evenly across a single topic using Kafka's default partitioning mechanism. This can result in an uneven data distribution and make it challenging to scale and manage the pipeline. Additionally, it cannot filter the data according to a schema, which can cause problems with data quality.     
 
 Option B is incorrect. It recommends setting up distinct Kafka topics for every data source and using Kafka's built-in default partitioning algorithm to distribute data across all topics evenly. While this method may be effective for small pipelines with a limited number of data sources, it may become more challenging to manage and scale as the number of data sources rises. Additionally, it cannot filter the data and perform schema validation on it.     
@@ -194,7 +201,7 @@ Option C is correct. In this process, raw data from Kafka is first ingested into
 Option D is incorrect. It recommends developing a Gold layer to directly ingest data from Kafka, model and transform the data, and then write the transformed data to a target database. The Bronze layer, which handles fundamental data transformations, cleaning, and schema validation, is disregarded in this method. Avoiding the Bronze layer, data quality problems may arise that will impact downstream processing and analysis    
 
 
-**Question 7: Security and Governance Using best practices for security and governance, including controlling notebook and job permissions with ACLs, a large retail company has hired a data engineer to build production pipelines. The business must make sure that only individuals with the proper authorization have access to sensitive data and adhere to strict standards for data security and privacy. Data ingestion, processing, and storage are all parts of the data pipeline that the data engineer must design. The business must also guarantee that the data pipeline is scalable, fault-tolerant, and capable of handling large data volumes. The data engineer has chosen to construct the data pipeline using Databricks. What option from the list below should the data engineer select to make sure that the notebook and job permissions are managed with ACLs in accordance with the company's security requirements?** 
+**Question 7: Using best practices for security and governance, including controlling notebook and job permissions with ACLs, a large retail company has hired a data engineer to build production pipelines. The business must make sure that only individuals with the proper authorization have access to sensitive data and adhere to strict standards for data security and privacy. Data ingestion, processing, and storage are all parts of the data pipeline that the data engineer must design. The business must also guarantee that the data pipeline is scalable, fault-tolerant, and capable of handling large data volumes. The data engineer has chosen to construct the data pipeline using Databricks. What option from the list below should the data engineer select to make sure that the notebook and job permissions are managed with ACLs in accordance with the company's security requirements?** 
 
 Options: 
 
@@ -219,33 +226,42 @@ Solutions:
 
 
 
-**Question 8: Security and Governance To ensure strict security and governance regarding data access, a healthcare organization has tasked a data engineer with building a production pipeline. The organization must develop a row-oriented dynamic view to limit user/group access to private patient information in the "patients" table. The data engineer chooses to use Databricks to construct the pipeline and desires to use built-in features to impose access limitations. Which of the following SQL statements should the data engineer use to build a dynamic row-oriented view that only allows users who are part of the "healthcare" group and the patients themselves to access the personal health information (PHI) of patients?** 
+**Question 8: To ensure strict security and governance regarding data access, a healthcare organization has tasked a data engineer with building a production pipeline. The organization must develop a row-oriented dynamic view to limit user/group access to private patient information in the "patients" table. The data engineer chooses to use Databricks to construct the pipeline and desires to use built-in features to impose access limitations. Which of the following SQL statements should the data engineer use to build a dynamic row-oriented view that only allows users who are part of the "healthcare" group and the patients themselves to access the personal health information (PHI) of patients?** 
 
 Options: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. CREATE VIEW patient_phi AS SELECT * FROM patients WHERE is_account_group_member('healthcare') AND current_user() = patient_id;  
-
-&nbsp;&nbsp;&nbsp;&nbsp;B. CREATE VIEW patient_phi AS SELECT * FROM patients WHERE is_member('healthcare') AND current_user() = patient_id;  
-
-&nbsp;&nbsp;&nbsp;&nbsp;C. CREATE VIEW patient_phi AS SELECT patient_id, patient_name, age, gender, is_account_group_member('healthcare') AS in_group, current_user() AS current_user FROM patients;  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D. CREATE VIEW patient_phi AS SELECT * FROM patients WHERE is_member('healthcare') AND current_user() IN (SELECT patient_id FROM patients);  
-
+&nbsp;&nbsp;&nbsp;&nbsp;A. 
+```sql
+CREATE VIEW patient_phi AS SELECT * FROM patients WHERE is_account_group_member('healthcare') AND current_user() = patient_id;  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;B. 
+```sql
+CREATE VIEW patient_phi AS SELECT * FROM patients WHERE is_member('healthcare') AND current_user() = patient_id;  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;C.
+```sql
+CREATE VIEW patient_phi AS SELECT patient_id, patient_name, age, gender, is_account_group_member('healthcare') AS in_group, current_user() AS current_user FROM patients;  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;D.
+```sql
+CREATE VIEW patient_phi AS SELECT * FROM patients WHERE is_member('healthcare') AND current_user() IN (SELECT patient_id FROM patients);  
+```
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. All of the columns in the "patients" table are included in the view that is returned, along with two extra columns that show whether the current user is a member of the "healthcare" group and their ID. In this case, the requirement is not a row-oriented view that restricts access to the PHI data. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. group name is passed to the is_member() function, which returns a Boolean value indicating whether the current user is a member of that group or not. The hierarchical structure of group membership in Databricks, which is crucial in this scenario, is not taken into account by this function. 
+&nbsp;&nbsp;&nbsp;&nbsp;A. is correct group name is passed to the is_member() function, which returns a Boolean value indicating whether the current user is a member of that group or not. The hierarchical structure of group membership in Databricks, which is crucial in this scenario, is not taken into account by this function. 
+&nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. Instead of the is_account_group_member() function, it uses the is_member() function. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. All of the columns in the "patients" table are included in the view that is returned, along with two extra columns that show whether the current user is a member of the "healthcare" group and their ID. In this case, the requirement is not a row-oriented view that restricts access to the PHI data. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. Instead of using the is_account_group_member() function, it uses the is_member() function and a subquery to determine whether the current user matches any of the patient IDs in the "patients" table. This strategy does not take into account the hierarchical structure of group membership in Databricks, making it ineffective in limiting access to PHI data. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. Instead of the is_account_group_member() function, it uses the is_member() function. 
 
 
+*Personal Opinion* its note clear why we should use is_account_group_member and not is_member
 
-
-**Question 9: Security and Governance A healthcare organization is responsible for maintaining the security and privacy of sensitive patient data while adhering to data privacy laws. To achieve this, the company must create a data pipeline that manages sensitive patient data while ensuring that data can be safely deleted upon patients' requests, following laws requiring the company to abide by data deletion requests. The company wants to put best practices for protecting sensitive data at rest and in transit into practice, in addition to adhering to data privacy laws. According to the organization, sensitive data must be encrypted when being stored, transmitted, and accessed by only authorized users. Which of the following approaches would be most appropriate for building this pipeline?** 
+**Question 9: A healthcare organization is responsible for maintaining the security and privacy of sensitive patient data while adhering to data privacy laws. To achieve this, the company must create a data pipeline that manages sensitive patient data while ensuring that data can be safely deleted upon patients' requests, following laws requiring the company to abide by data deletion requests. The company wants to put best practices for protecting sensitive data at rest and in transit into practice, in addition to adhering to data privacy laws. According to the organization, sensitive data must be encrypted when being stored, transmitted, and accessed by only authorized users. Which of the following approaches would be most appropriate for building this pipeline?** 
 
 Options: 
 
@@ -260,16 +276,18 @@ Options:
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. along with encryption and secure data deletion would be safer. 
+ 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. is correct. To comply with data privacy laws, healthcare organizations must ensure the security and privacy of sensitive patient data. The statement given here suggests using SSL/TLS to encrypt sensitive data in transit and Databricks' built-in encryption features to encrypt sensitive data at rest. By identifying all pertinent data throughout the pipeline and securely deleting it when a data deletion request is received, the organization can implement a secure data deletion process that complies with regulatory requirements. This strategy addresses the essential needs of the healthcare organization, making it the most suitable option for creating the data pipeline. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. The recommendation made in this sentence is to obfuscate sensitive data using Databricks' built-in masking features and to limit pipeline access by IP whitelisting. Obfuscation can conceal sensitive information, but it is less secure than encryption. Masking could aid in preventing unauthorized parties from viewing the data. The data can still be stolen despite this; if the masked data is compromised, it cannot be recovered. Additionally, IP whitelisting is not completely reliable for limiting pipeline access because IP addresses can be spoofed. 
 
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect cause RBAC is a useful method of restricting access to data but it soes not offer encryption or secure data deletion .
+
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. The suggestion made in this sentence is to use Databricks' internal data lineage tracking features to track access to sensitive data and implement a secure data deletion process that complies with legal requirements by locating all pertinent data along the data pipeline and securely erasing it when a data deletion request is made. While useful for monitoring access to private information, data lineage tracking does not offer encryption or secure data deletion. Sensitive patient data cannot be protected or secured solely through monitoring. 
 
 
-**Question 10: Monitoring and Logging A large retail company utilizes a Databricks cluster to run several production jobs essential to their daily operations. Various workflows, including data ingestion, data transformation, and data analysis, among others, may be included in these production jobs. To maintain the reliability and integrity of their services, the organization must ensure that these tasks are completed without incident. However, problems like job failures, mistakes, or other anomalies can happen and cause delays and downtime. The organization wants to configure alerting and storage to be notified when jobs fail or encounter errors and to store the logs for later use. They also want to set up notifications for the specific teams or people in charge of fixing the problems. Which of the following approaches is the most appropriate for configuring alerting and storage to monitor and log production jobs?** 
+**Question 10: A large retail company utilizes a Databricks cluster to run several production jobs essential to their daily operations. Various workflows, including data ingestion, data transformation, and data analysis, among others, may be included in these production jobs. To maintain the reliability and integrity of their services, the organization must ensure that these tasks are completed without incident. However, problems like job failures, mistakes, or other anomalies can happen and cause delays and downtime. The organization wants to configure alerting and storage to be notified when jobs fail or encounter errors and to store the logs for later use. They also want to set up notifications for the specific teams or people in charge of fixing the problems. Which of the following approaches is the most appropriate for configuring alerting and storage to monitor and log production jobs?** 
 
 Options: 
 
@@ -284,11 +302,13 @@ Options:
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It suggests using an SNMP trap system to activate notifications whenever a job fails or encounters an error. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. pager notification system is a tool that notifies the designated people or teams in charge of resolving the issues by sending alerts via a pager or mobile device. Although this technique has the potential to be effective, it might not be the best choice for tracking and logging production jobs in a Databricks cluster. Although it can be helpful to log job information using the Databricks Runtime Metrics API and store it in an AWS S3 bucket for future reference, there is no quick and efficient way to alert the designated people or teams in charge of quickly fixing the problems. 
+&nbsp;&nbsp;&nbsp;&nbsp;A. Several configuration options are available to set up alerting and storage when it comes to monitoring and logging production jobs in a Databricks cluster. A strong and efficient strategy is needed to configure alerting and storage to monitor and log production jobs in a Databricks cluster, ensuring timely notification and proper logging storage for future reference. The approach present in option A proves to be the most optimal way of handling the aforementioned scenario.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. When a job fails or encounters an error, it advises using a webhook notification system to send out alerts. Although this option has its uses, it might not always be the best course of action. For instance, it might be appropriate in some circumstances to log the job information using the Databricks Logging API and store it in a Google Cloud Storage bucket for future use. Still, it might not be the best choice in this particular case. Email notifications offer a quick and efficient way to alert the designated people or teams in charge of resolving the issues as the company runs a large number of production jobs. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It suggests using an SNMP trap system to activate notifications whenever a job fails or encounters an error. 
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. It recommends setting up a pager alert system to send notifications when a job fails or encounters an error. 
 
@@ -296,7 +316,7 @@ Solutions:
 
 
  
-**Question 11: Monitoring and Logging A data engineer is tasked with speeding up a Spark job that is running slowly. Which of the following metrics available in Spark UI can help identify potential performance bottlenecks?** 
+**Question 11: A data engineer is tasked with speeding up a Spark job that is running slowly. Which of the following metrics available in Spark UI can help identify potential performance bottlenecks?** 
 
 Options: 
 
@@ -311,18 +331,18 @@ Options:
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. Because executor CPU time does not always point to a performance bottleneck, it is also not the proper response. High CPU usage can have an impact on performance, but it does not always indicate a bottleneck. Depending on the complexity of the tasks and the available resources, the CPU usage of the executor nodes, which process tasks in parallel, can change. 
-
-&nbsp;&nbsp;&nbsp;&nbsp;D. is correct. It is essential to identify performance bottlenecks when optimizing a Spark job that is running slowly. Shuffle write time is the most useful metric for locating potential performance bottlenecks among those offered in the Spark UI. Although input data size, executor CPU time, and driver memory usage are also significant metrics, they are less useful for identifying performance bottlenecks. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. The size of the input data is not the appropriate response because it is a poor predictor of potential bottlenecks. While the amount of data a job processes can have an impact on performance, a bottleneck is not always the result. For instance, the job can process the data effectively if it is evenly and well-partitioned across the cluster. On the other hand, even small input data sizes can result in performance problems if the data is skewed or unbalanced. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. It is not the proper response because driver memory usage is not always a sign of a performance bottleneck. High driver memory usage can affect performance, but it does not always indicate a bottleneck. The driver program must keep track of the status of the application and communicate with the cluster manager to coordinate the job's execution. As a result, it is anticipated to consume a lot of memory. 
 
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. Because executor CPU time does not always point to a performance bottleneck, it is also not the proper response. High CPU usage can have an impact on performance, but it does not always indicate a bottleneck. Depending on the complexity of the tasks and the available resources, the CPU usage of the executor nodes, which process tasks in parallel, can change. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. is correct. It is essential to identify performance bottlenecks when optimizing a Spark job that is running slowly. Shuffle write time is the most useful metric for locating potential performance bottlenecks among those offered in the Spark UI. Although input data size, executor CPU time, and driver memory usage are also significant metrics, they are less useful for identifying performance bottlenecks. 
 
 
 
-**Question 12: Monitoring and Logging A manufacturer uses a Databricks cluster to run numerous production jobs crucial to their business operations. The company must monitor and record these jobs to ensure their smooth operation and address any potential issues. They want to set up alerting and storage to notify them when jobs fail or encounter errors and that the logs are stored for later use. To understand job performance and spot potential bottlenecks, they also want to record and monitor specific metrics like CPU usage, memory usage, and disc I/O. Which of the following methods is best for setting up alerting and storage to keep track of production jobs and log them, including logging metrics?** 
+**Question 12: A manufacturer uses a Databricks cluster to run numerous production jobs crucial to their business operations. The company must monitor and record these jobs to ensure their smooth operation and address any potential issues. They want to set up alerting and storage to notify them when jobs fail or encounter errors and that the logs are stored for later use. To understand job performance and spot potential bottlenecks, they also want to record and monitor specific metrics like CPU usage, memory usage, and disc I/O. Which of the following methods is best for setting up alerting and storage to keep track of production jobs and log them, including logging metrics?** 
 
 Options: 
 
@@ -336,19 +356,21 @@ Options:
 
 
 Solutions: 
-
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It is not the most appropriate approach because it uses SparkListener to log job information and CloudWatch to record job-specific metrics. While CloudWatch provides visualization capabilities, it may not be as flexible as Prometheus in terms of analysis and integration with other systems. 
+ 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. is correct. It is the most appropriate approach for configuring alerting and storage to monitor and log production jobs, including recording logged metrics. The custom log4j appender writes the job logs to a Kafka topic, and a Kafka consumer can be configured to send alerts to the designated individuals or teams when a job fails or has an error. Spark metrics can be used to record job-specific metrics such as CPU usage, memory usage, and disk I/O, and write them to a Prometheus database for monitoring and analysis. This approach allows for integrating different tools and systems, giving the company a comprehensive view of job performance and quickly addressing any issues. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. It is not the most appropriate approach because it relies on the Spark monitoring UI to log job information and Azure Blob Storage to store the logs. While Azure Monitor can be used to monitor job-specific metrics, it may not be as flexible as Prometheus in terms of analysis and visualization. 
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It is not the most appropriate approach because it uses SparkListener to log job information and CloudWatch to record job-specific metrics. While CloudWatch provides visualization capabilities, it may not be as flexible as Prometheus in terms of analysis and integration with other systems.
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. It is not the most appropriate approach because it uses the Databricks Logging API to log job information and Google Cloud Storage to store the logs. While Stackdriver can be used to monitor job-specific metrics, it may not be as flexible as Prometheus in terms of analysis and visualization
 
 
 
 
-**Question 13: Testing and Deployment On a Databricks cluster, a data engineer must install a new Python package. The package depends on several things, one of which is a library that is not part of the default Databricks runtime environment. Despite the engineer's best efforts, the package installation using the databricks-connect method failed due to unresolved dependencies. What is the best course of action to fix this problem and complete the package installation?** 
+**Question 13:  A Data engineer must install a new Python package. The package depends on several things, one of which is a library that is not part of the default Databricks runtime environment. Despite the engineer's best efforts, the package installation using the databricks-connect method failed due to unresolved dependencies. What is the best course of action to fix this problem and complete the package installation?** 
 
 Options: 
 
@@ -363,16 +385,18 @@ Options:
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It's also not the best practice to manually install the necessary dependencies on the cluster before attempting to install the package. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. time-consuming and error-prone process would require the engineer to manually install each dependency needed for the package to operate properly. Conflicts arising between dependencies and other packages installed on the cluster are also more likely to occur with this option. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. The bst strategy is to creat a custom runtime environment, which enables the engineer to install all necessary dependencies and packages into a separete runtime environment.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is incorrect. It is not recommended to install a package without its dependencies using the pip command's --no-deps flag because doing so ignores the package's dependencies and could negatively affect other packages or cluster-based applications that rely on those dependencies. This choice could also lead to the package's reduced functionality or even failure. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It's also not the best practice to manually install the necessary dependencies on the cluster before attempting to install the package. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. It is also not the best practice to use the pip command's --target flag to specify a custom installation directory and then manually copy the necessary libraries to that directory. This option increases the likelihood of introducing errors because the engineer must manually copy the necessary libraries to the designated directory. Additionally, when dealing with multiple dependencies or dependencies that cannot be simply copied over, this option is ineffective
 
 
-**Question 14: Testing and Deployment Using Databricks, a data engineer must schedule a complicated job that necessitates running several tasks concurrently. Processing a lot of data is part of the job, and each task has its requirements and dependencies. What would be the best approach to schedule this job using the Databricks REST API?** 
+**Question 14: A Data engineer must schedule a complicated job that necessitates running several tasks concurrently. Processing a lot of data is part of the job, and each task has its requirements and dependencies. What would be the best approach to schedule this job using the Databricks REST API?** 
 
 Options: 
 
@@ -387,43 +411,19 @@ Options:
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. The execution of tasks in parallel would not be possible if the job script and dependencies were uploaded via the Workspace API and the job was run as a single task. This method works better for tasks that have a single, linear workflow. 
-
-&nbsp;&nbsp;&nbsp;&nbsp;B. is correct. It enables the most detailed management of each task's requirements and dependencies, ensuring that each task has everything it needs to complete. Data engineers can optimize the job's performance and lower the risk of failure by creating a job with multiple tasks and specifying the dependencies and requirements for each task. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. Running tasks simultaneously on the same cluster can cause resource conflicts and slowdowns if the tasks have different resource requirements. Additionally, this method does not give precise control over the requirements and dependencies of each task. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. Parallel task execution would not be possible if dependencies were installed using the Libraries API and the job was run as a single task. Jobs with a single, linear workflow and fewer dependencies are better suited for this strategy. 
-
-
-
-**Question 14: Testing and Deployment Using Databricks, a data engineer must schedule a complicated job that necessitates running several tasks concurrently. Processing a lot of data is part of the job, and each task has its requirements and dependencies. What would be the best approach to schedule this job using the Databricks REST API?** 
-
-Options: 
-
-&nbsp;&nbsp;&nbsp;&nbsp;A. Use the Clusters API to create a new cluster with the required configuration and run the tasks in parallel on the same cluster. Use the Runs API to submit each task and monitor the status of each run.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;B. Use the Jobs API to create a job with multiple tasks, specifying the dependencies and requirements for each task. Use the Runs API to submit each task in parallel and monitor the status of each run.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;C. Use the Workspace API to upload the job script and required dependencies, then use the Jobs API to create a job with a single task that runs the script. Use the Runs API to submit the job and monitor the status of the run.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D. Use the Libraries API to install the required dependencies on a Databricks cluster, then use the Jobs API to create a job with a single task that runs the job script. Use the Runs API to submit the job and monitor the status of the run.  
-
-
-Solutions: 
-
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. The execution of tasks in parallel would not be possible if the job script and dependencies were uploaded via the Workspace API and the job was run as a single task. This method works better for tasks that have a single, linear workflow. 
-
 &nbsp;&nbsp;&nbsp;&nbsp;B. is correct. It enables the most detailed management of each task's requirements and dependencies, ensuring that each task has everything it needs to complete. Data engineers can optimize the job's performance and lower the risk of failure by creating a job with multiple tasks and specifying the dependencies and requirements for each task. 
 
-&nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. Running tasks simultaneously on the same cluster can cause resource conflicts and slowdowns if the tasks have different resource requirements. Additionally, this method does not give precise control over the requirements and dependencies of each task. 
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. The execution of tasks in parallel would not be possible if the job script and dependencies were uploaded via the Workspace API and the job was run as a single task. This method works better for tasks that have a single, linear workflow. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. Parallel task execution would not be possible if dependencies were installed using the Libraries API and the job was run as a single task. Jobs with a single, linear workflow and fewer dependencies are better suited for this strategy. 
 
 
 
 
-**Question 16: Databricks Tooling A major financial services company is thinking about using Databricks to move its on-premise data warehouse to the cloud. The company needs a solution that can handle its current workload and scale up as its data volume increases because its data volume is growing quickly. The Data Engineer must design a solution to meet the company's business requirements. Which of the following components of the Databricks platform should the Data Engineer consider?** 
+**Question 16: A major financial services company is thinking about using Databricks to move its on-premise data warehouse to the cloud. The company needs a solution that can handle its current workload and scale up as its data volume increases because its data volume is growing quickly. The Data Engineer must design a solution to meet the company's business requirements. Which of the following components of the Databricks platform should the Data Engineer consider?** 
 
 Options: 
 
@@ -438,14 +438,16 @@ Options:
 
 Solutions: 
 
-&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. Users can query data using standard SQL syntax using the cloud-native, distributed SQL engine known as Databricks SQL. Large datasets can be handled by Databricks SQL, which can scale out horizontally across multiple nodes. Structured, semi-structured, and unstructured data sources can all be supported by Databricks SQL. Although Databricks SQL is a strong data querying tool, moving a data warehouse to the cloud might not be the best choice. It might not be cost-effective to replace an existing data warehouse with Databricks SQL because it is intended to supplement the existing data lake or data warehouse. Furthermore, switching from an existing data warehouse to Databricks SQL may require a lot of work and may not be an option for everyone in an organization. 
+&nbsp;&nbsp;&nbsp;&nbsp;A is incorrect, Notebooks is not enought to simulate the operatio of a DWH.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is correct. A crucial part of the platform that offers the computing power required for large-scale data processing is Databricks Clusters. Batch operations, stream processing, and interactive workloads are all run on clusters. The number of nodes, the amount of memory and CPU resources, and the types of nodes can all be customized when configuring clusters. Clusters can scale up or down as needed and are made to handle heavy workloads involving large amounts of data processing. Additionally, they are fault-tolerant, which means that workloads are automatically transferred to other nodes to maintain high availability in the event of a node failure. In this case, the Data Engineer should consider Databricks Clusters as a crucial part of the data warehouse's cloud migration. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. Users can query data using standard SQL syntax using the cloud-native, distributed SQL engine known as Databricks SQL. Large datasets can be handled by Databricks SQL, which can scale out horizontally across multiple nodes. Structured, semi-structured, and unstructured data sources can all be supported by Databricks SQL. Although Databricks SQL is a strong data querying tool, moving a data warehouse to the cloud might not be the best choice. It might not be cost-effective to replace an existing data warehouse with Databricks SQL because it is intended to supplement the existing data lake or data warehouse. Furthermore, switching from an existing data warehouse to Databricks SQL may require a lot of work and may not be an option for everyone in an organization. 
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. Databricks Users can store, manage, and collaborate on notebooks, scripts, and other artifacts using repos, a version control system. Users can track changes in repos, merge changes, and work together on projects using pull requests. Repos can be integrated with Git, enabling users to take advantage of the workflows and tools already present in Git. Repos are a crucial part of the platform for managing code and teamwork, but they might not be the most crucial factor to take into account when moving a data warehouse to the cloud.
 
 
-**Question 17: Databricks Tooling A Data Engineer is working on a Databricks project where he needs to perform various transformations and analyses on a large dataset. The Data Engineer is using Databricks notebooks for this purpose. However, he notices that the notebook takes too much time to execute. He wants to optimize the performance. Which of the following actions can the data engineer take to optimize the performance of the notebook?** 
+**Question 17: A Data Engineer is working on a Databricks project where he needs to perform various transformations and analyses on a large dataset. The Data Engineer is using Databricks notebooks for this purpose. However, he notices that the notebook takes too much time to execute. He wants to optimize the performance. Which of the following actions can the data engineer take to optimize the performance of the notebook?** 
 
 Options:
 
@@ -460,11 +462,13 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Increasing the number of executors is not the correct approach. The processing time can be sped up by increasing the number of executors, but this method is less efficient than increasing the number of partitions. This is because adding more executors may not necessarily result in increased parallelism and may even cause resource contention, which would slow down processing.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is correct. Increasing the number of partitions is the right approach. Partitioning is one of the crucial components of performance optimization when working with a large dataset. To speed up computation, Databricks divides data into partitions and then processes in parallel. We can distribute the data among the nodes more evenly by increasing the number of partitions, which could aid in reducing the execution time of the notebook.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Decreasing the number of partitions is not the correct approach. If we decrease the number of partitions, the amount of data processed by each executor will increase, which can lead to longer execution times. This is because the workload of each executor will increase, potentially leading to resource contention and slower processing times.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Increasing the number of executors is not the correct approach. The processing time can be sped up by increasing the number of executors, but this method is less efficient than increasing the number of partitions. This is because adding more executors may not necessarily result in increased parallelism and may even cause resource contention, which would slow down processing.  
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Decreasing the number of executors is also not the correct approach. Slower processing times may result from less parallelism, which can be achieved by reducing the number of executors. This is because each executor will have to deal with more data, which could result in resource conflicts and slower execution times.  
 
