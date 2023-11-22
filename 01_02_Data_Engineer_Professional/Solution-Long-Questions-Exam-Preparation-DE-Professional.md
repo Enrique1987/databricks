@@ -469,14 +469,13 @@ Solutions:
 
 &nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Increasing the number of executors is not the correct approach. The processing time can be sped up by increasing the number of executors, but this method is less efficient than increasing the number of partitions. This is because adding more executors may not necessarily result in increased parallelism and may even cause resource contention, which would slow down processing.  
 
-
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Decreasing the number of executors is also not the correct approach. Slower processing times may result from less parallelism, which can be achieved by reducing the number of executors. This is because each executor will have to deal with more data, which could result in resource conflicts and slower execution times.  
 
 
 
 
 
-**Question 18:  Databricks Tooling One of the main issues a large e-commerce company is having is slow query response times on their customer data. This company recently migrated its data to Databricks. Customer information for the business is kept in a sizable DataFrame in PySpark, which is frequently accessed by various teams within the organization. These teams use the customer data for various initiatives, including marketing campaigns, sales analysis, and consumer behavior research. The company's revenue is impacted because these teams can't work effectively because of slow query response times. What strategy can a Data Engineer use to enhance query performance when utilizing PySpark's DataFrame API?** 
+**Question 18:  One of the main issues a large e-commerce company is having is slow query response times on their customer data. This company recently migrated its data to Databricks. Customer information for the business is kept in a sizable DataFrame in PySpark, which is frequently accessed by various teams within the organization. These teams use the customer data for various initiatives, including marketing campaigns, sales analysis, and consumer behavior research. The company's revenue is impacted because these teams can't work effectively because of slow query response times. What strategy can a Data Engineer use to enhance query performance when utilizing PySpark's DataFrame API?** 
 
 Options:
 
@@ -500,8 +499,9 @@ Solutions:
 
 &nbsp;&nbsp;&nbsp;&nbsp;D is inccorect. It required converting a DataFrame to an RDD.
 
+**Note** Extremly disagree with the solution purposed. ID colum is possibly the column with the highest cardinality and that makes it over partitioned, the columns to partition the table, should be columns with low cardinality to optimize the process.
 
-**Question 19: Databricks Tooling You are a data engineer for a major retailer that offers a broad selection of goods and services. The business has recently begun utilizing Databricks for its data analysis requirements to remain competitive and deliver better customer service. The business has a vast amount of customer data, including transactional data, demographic data, and behavioral data, that needs to be analyzed. The information is kept in a sizable PySpark DataFrame that numerous teams within the company frequently access. But, there are a lot of missing values and outliers in the data, which is also very complex. Missing values can occur for several reasons, including technical errors, inadequate data collection, or data entry errors. Data entry errors, measurement errors, or arbitrary fluctuations in the data can all be causes of outliers. This data must be cleaned and preprocessed for accurate insights to be drawn from it. As a data engineer, you are in charge of cleaning and preprocessing this data. Which of the following approaches can you use for PySpark to carry out this task?** 
+**Question 19: You are a data engineer for a major retailer that offers a broad selection of goods and services. The business has recently begun utilizing Databricks for its data analysis requirements to remain competitive and deliver better customer service. The business has a vast amount of customer data, including transactional data, demographic data, and behavioral data, that needs to be analyzed. The information is kept in a sizable PySpark DataFrame that numerous teams within the company frequently access. But, there are a lot of missing values and outliers in the data, which is also very complex. Missing values can occur for several reasons, including technical errors, inadequate data collection, or data entry errors. Data entry errors, measurement errors, or arbitrary fluctuations in the data can all be causes of outliers. This data must be cleaned and preprocessed for accurate insights to be drawn from it. As a data engineer, you are in charge of cleaning and preprocessing this data. Which of the following approaches can you use for PySpark to carry out this task?** 
 
 Options:
 
@@ -516,17 +516,19 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It suggests filling missing values with mode and dropping outliers. While using the mode to fill in missing values can be beneficial, the results may be skewed if the mode is not representative of the entire data set. Furthermore, discarding outliers without conducting a thorough investigation can result in the loss of crucial data. As a result, this option is not the most effective method for preprocessing and cleaning the data.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. It suggests dropping missing values and outliers. Even though it might seem like a quick fix, it might mean losing important data. Eliminating missing values may result in biased findings and insufficient analysis. Furthermore, discarding outliers without conducting a thorough investigation can result in the loss of crucial data. As a result, this option is not the most effective method for preprocessing and cleaning the data.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is correct . Data cleaning and preprocessing techniques frequently involve handling outliers and replacing missing values with the mean or median. This method addresses missing values and outliers while also preserving the information in the data. When there are a lot of missing values in the data, replacing them with the mean or median can give a more accurate picture of the data. Several methods can be used to handle outliers, including replacing them with the closest non-outlier value or capping them at a predetermined threshold. These methods guarantee accurate analysis while also preserving the data's integrity.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. It suggests dropping missing values and outliers. Even though it might seem like a quick fix, it might mean losing important data. Eliminating missing values may result in biased findings and insufficient analysis. Furthermore, discarding outliers without conducting a thorough investigation can result in the loss of crucial data. As a result, this option is not the most effective method for preprocessing and cleaning the data.
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It suggests filling missing values with mode and dropping outliers. While using the mode to fill in missing values can be beneficial, the results may be skewed if the mode is not representative of the entire data set. Furthermore, discarding outliers without conducting a thorough investigation can result in the loss of crucial data. As a result, this option is not the most effective method for preprocessing and cleaning the data.
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It advises discarding missing values and substituting random values for outliers. It is not advised to choose this option because it might tamper with the data and produce false results. The use of random values to replace outliers can also produce biased findings and insufficient analysis.
 
 
 
-**Question 20: Databricks Tooling A senior data engineer is working for a large financial institution that has recently started using Databricks for its data analysis needs. In a complicated workflow, the business uses multiple notebooks for data cleaning, transformation, and visualization. The senior data engineer's duties include using the Databricks CLI to deploy these notebook-based workflows. She must ensure the deployment procedure is automated, secure, and scalable. Which of the following approaches can the data engineer use with the Databricks CLI to complete this task?** 
+**Question 20: A senior data engineer is working for a large financial institution that has recently started using Databricks for its data analysis needs. In a complicated workflow, the business uses multiple notebooks for data cleaning, transformation, and visualization. The senior data engineer's duties include using the Databricks CLI to deploy these notebook-based workflows. She must ensure the deployment procedure is automated, secure, and scalable. Which of the following approaches can the data engineer use with the Databricks CLI to complete this task?** 
 
 Options:
 
@@ -541,16 +543,18 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. In this case, the best course of action is to use the Databricks CLI to build a workspace template with all the required notebooks, libraries, and environment variables. Using this method, the data engineer can design a unique template that is simple to deploy in various settings. Version control of the template makes it simple to track changes and offers a scalable method of implementing notebook-based workflows.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. It is not scalable or effective to manually download and upload the notebooks using the Databricks CLI. This method calls for manual work, which can take time and may not be appropriate for extensive and complex workflows. Furthermore, it does not offer an automated deployment process.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It is also not the best course of action in this situation to use the Databricks CLI to export the notebooks as JSON files before importing them into a new workspace. Although this method can be effective in some circumstances, it does not offer a complete solution for implementing notebook-based workflows. It also necessitates manual work and does not offer an automated deployment process.
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. In this case, the best course of action is to use the Databricks CLI to build a workspace template with all the required notebooks, libraries, and environment variables. Using this method, the data engineer can design a unique template that is simple to deploy in various settings. Version control of the template makes it simple to track changes and offers a scalable method of implementing notebook-based workflows.
+
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. This situation does not lend itself to using the Databricks CLI to clone the entire workspace and modify the required notebooks. Even though this method can be helpful in some circumstances, it can be time-consuming and might not offer the level of automation needed for a significant and complex workflow.
 
 
-**Question 21: Databricks Tooling A large retail company is expanding its business and needs to process and analyze huge volumes of data from various sources, including social media, sales, and customer feedback. The company has hired a data engineer to design and implement a data pipeline using Delta Lake's SQL-based Delta APIs because they want to use Delta Lake for their data processing requirements. The data engineer must ensure the data pipeline's robustness, scalability, and fault tolerance. The data engineer must select the best options for the architecture and core functions of the data pipeline based on the company's CTO's strict requirements. Which of the following choices for implementing the data pipeline using Delta Lake should the data engineer make?** 
+**Question 21: A large retail company is expanding its business and needs to process and analyze huge volumes of data from various sources, including social media, sales, and customer feedback. The company has hired a data engineer to design and implement a data pipeline using Delta Lake's SQL-based Delta APIs because they want to use Delta Lake for their data processing requirements. The data engineer must ensure the data pipeline's robustness, scalability, and fault tolerance. The data engineer must select the best options for the architecture and core functions of the data pipeline based on the company's CTO's strict requirements. Which of the following choices for implementing the data pipeline using Delta Lake should the data engineer make?** 
 
 Options:
 
@@ -565,16 +569,18 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The STREAM operation does not meet the requirement for a strong, scalable, and fault-tolerant data pipeline, even though it is useful for ingesting real-time data into the Delta table. Although using the Z-ordering feature can enhance query performance, ensuring data consistency and reliability is more crucial.
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Although partitioning the Delta table can enhance query performance, updating data with the MERGE operation can be error- and inconsistency-prone. The data pipeline may take longer to process more data because of the MERGE operation.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is correct. To guarantee data consistency and dependability, the data engineer should make use of Delta Lake's transactional features, such as ACI
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Although partitioning the Delta table can enhance query performance, updating data with the MERGE operation can be error- and inconsistency-prone. The data pipeline may take longer to process more data because of the MERGE operation.
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The STREAM operation does not meet the requirement for a strong, scalable, and fault-tolerant data pipeline, even though it is useful for ingesting real-time data into the Delta table. Although using the Z-ordering feature can enhance query performance, ensuring data consistency and reliability is more crucial.
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Although the automatic schema enforcement feature in Delta Lake ensures data consistency and the Time Travel feature allows for data querying at specific points in time, these features do not satisfy the need for a reliable, scalable, and fault-tolerant data pipeline. These features do not address the main requirements for the data pipeline, but they are helpful for data exploration and ensuring data quality.
 
 
-**Question 22: Data Processing A data engineering team is working on a data processing project using Databricks, where they need to process data stored in a cloud object store. They recently implemented a Change Data Capture (CDC) mechanism to keep track of changes to the data source. By utilizing CDC and processing only the modified data effectively, the team hopes to improve the efficiency of its data processing pipeline. But, they ran into a complicated situation with numerous data sources and different kinds of changes. The situation is given below: The team works with two data sources: Source A and Source B. While Source B contains transaction data, which records the specifics of customer transactions, Source A contains customer data, including their profiles and contact information. Both sources frequently get new records and updates. The group wants to effectively and separately process the updated data from both sources. For Source A, updates to already-existing customer profiles and new customer registrations are the two categories into which the changes can be divided. The group must document both kinds of changes and apply particular modifications to the updated profiles, such as enriching them with new information from outside sources. Before continuing with the processing of new customer registrations, they want to apply many data quality checks. For Source B, there are three categories of changes: new transactions, updates to existing transactions, and deletions of transactions. All three types of changes must be captured, and the team must analyze the transaction data by aggregating transaction amounts and figuring out average transaction values. They also want to find any suspicious patterns or anomalies in the transaction data. Based on the given situation, what will be the best approach for processing the data using CDC?** 
+**Question 22: A data engineering team is working on a data processing project using Databricks, where they need to process data stored in a cloud object store. They recently implemented a Change Data Capture (CDC) mechanism to keep track of changes to the data source. By utilizing CDC and processing only the modified data effectively, the team hopes to improve the efficiency of its data processing pipeline. But, they ran into a complicated situation with numerous data sources and different kinds of changes. The situation is given below: The team works with two data sources: Source A and Source B. While Source B contains transaction data, which records the specifics of customer transactions, Source A contains customer data, including their profiles and contact information. Both sources frequently get new records and updates. The group wants to effectively and separately process the updated data from both sources. For Source A, updates to already-existing customer profiles and new customer registrations are the two categories into which the changes can be divided. The group must document both kinds of changes and apply particular modifications to the updated profiles, such as enriching them with new information from outside sources. Before continuing with the processing of new customer registrations, they want to apply many data quality checks. For Source B, there are three categories of changes: new transactions, updates to existing transactions, and deletions of transactions. All three types of changes must be captured, and the team must analyze the transaction data by aggregating transaction amounts and figuring out average transaction values. They also want to find any suspicious patterns or anomalies in the transaction data. Based on the given situation, what will be the best approach for processing the data using CDC?** 
 
 Options:
 
@@ -589,17 +595,16 @@ Options:
 
 Solutions:
 
+&nbsp;&nbsp;&nbsp;&nbsp;A is incorrect.
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.and setting up and managing Kafka topics can add complexity and dependencies. Additionally, real-time data processing might not be required or practical for all use cases and might not provide a significant advantage over batch processing with Delta Lake.
+&nbsp;&nbsp;&nbsp;&nbsp;B. is correct While this strategy might be effective in some circumstances, it adds complexity and necessitates manual scripting and upkeep. The comparison logic would need to be handled by the custom scripts, which would also need to extract modified records and perform the necessary calculations and transformations. This method might not be as effective as utilizing Delta Lake's built-in capabilities because it lacks the scalability and reliability offered by a platform designed specifically for data processing, like Databricks
 
-&nbsp;&nbsp;&nbsp;&nbsp;B.to spot changes. While this strategy might be effective in some circumstances, it adds complexity and necessitates manual scripting and upkeep. The comparison logic would need to be handled by the custom scripts, which would also need to extract modified records and perform the necessary calculations and transformations. This method might not be as effective as utilizing Delta Lake's built-in capabilities because it lacks the scalability and reliability offered by a platform designed specifically for data processing, like Databricks.
-
-&nbsp;&nbsp;&nbsp;&nbsp;A.and Source B, configuring CD
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Setting up and managing Kafka topics can add complexity and dependencies. Additionally, real-time data processing might not be required or practical for all use cases and might not provide a significant advantage over batch processing with Delta Lake.
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It recommends creating distinct Apache Kafka topics for Source
 
 
-**Question 23: Data Processing A data engineering team is at work to improve the efficiency of their data processing pipeline in Databricks. The team is working with a sizable dataset kept in a Delta Lake table and wants to use Z-Ordering to boost query performance. The dataset includes transaction records from a retail business that include details like the transaction date, the customer's ID, the product's ID, the quantity, and the total amount. The team frequently performs data queries based on the transaction date range, customer ID, and product ID. To enhance the query performance for these frequently used filters, they want to optimize Z-Ordering. Which of the following approaches can the data engineering team follow to get the best-optimized results?** 
+**Question 23: A data engineering team is at work to improve the efficiency of their data processing pipeline in Databricks. The team is working with a sizable dataset kept in a Delta Lake table and wants to use Z-Ordering to boost query performance. The dataset includes transaction records from a retail business that include details like the transaction date, the customer's ID, the product's ID, the quantity, and the total amount. The team frequently performs data queries based on the transaction date range, customer ID, and product ID. To enhance the query performance for these frequently used filters, they want to optimize Z-Ordering. Which of the following approaches can the data engineering team follow to get the best-optimized results?** 
 
 Options:
 
@@ -614,11 +619,12 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect.
+&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Given that the transaction date column is the one that gets used as a filter the most in queries, it is advised only to apply Z-Ordering to that column as per this option. While using this method may speed up queries that specifically filter by transaction date, it ignores other frequently used filters like customer.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is correct. It suggests applying Z-Ordering on all three columns (transaction date, customer ID, and product ID). The information is rearranged in this manner according to their combined order. This guarantees that queries using any combination of these columns will experience better query performance. Significant performance gains result from the reduced amount of data that must be scanned for each query and the effective filtering made possible by the combined order.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Given that the transaction date column is the one that gets used as a filter the most in queries, it is advised only to apply Z-Ordering to that column as per this option. While using this method may speed up queries that specifically filter by transaction date, it ignores other frequently used filters like customer.
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect.
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It advises applying Z-Ordering to each of the three columns—transaction date, customer ID, and product ID—separately. Although this method takes into account all three columns, applying Z-Ordering to each column separately does not benefit from the combined order of these columns. The data can be arranged to maximize filtering based on multiple columns at once by taking into account the combined order.  
 
@@ -638,11 +644,12 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. According to the common key column, the right outer join combines every record from the right stream with any matching records from the left stream. Similar to the left outer join, the right outer join's suitability for watermarking depends on whether the join condition's nullable side has a watermark defined. Using a right outer join with watermarking when the nullable side has a defined watermark may result in inaccurate results because the join operation may take into account events that arrive later on the left stream.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is correct. Based on the common key column, the inner join only brings together the matching records from both streams. It guarantees that the result only contains the records that meet the join condition. Spark Structured Streaming's inner join is compatible with the use of watermarking because it takes the position of the watermark into account when performing the join. It ensures that the join operation will include only pertinent and up-to-date data, producing accurate results.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. According to the common key column, the left outer join combines every record from the left stream with any matching records from the right stream. However, the left outer join might not always work with watermarking. It depends on whether or not the watermark is defined on the join condition's nullable side. Using a left outer join with watermarking when the nullable side has a defined watermark may produce inaccurate results because it may include events that arrive later on the right stream.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. According to the common key column, the right outer join combines every record from the right stream with any matching records from the left stream. Similar to the left outer join, the right outer join's suitability for watermarking depends on whether the join condition's nullable side has a watermark defined. Using a right outer join with watermarking when the nullable side has a defined watermark may result in inaccurate results because the join operation may take into account events that arrive later on the left stream.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. According to the common key column, the entire outer join combines all records from both streams, including those that match and those that don't. Like left and right outer joins, the entire outer join's compatibility with watermarking depends on the presence of a watermark on the join condition's nullable side. When using a full outer join with watermarking and the nullable side has a defined watermark, the inclusion of late-arriving events from both streams may lead to inaccurate results.  
 
@@ -662,20 +669,22 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The AvailableNow trigger initiates processing as soon as data is available for consumption. While this trigger can provide immediate processing, it may not be the most efficient choice for near real-time processing. It relies on the availability of data and may introduce variability in the processing time, potentially affecting the end-to-end latency. The data engineer aims to achieve the lowest possible end-to-end latency, and the AvailableNow trigger may not provide the desired level of control over the processing flow.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. The fixed interval trigger with a processing interval of 1 second can provide frequent updates and processing. However, in this scenario, the data engineer requires near real-time processing and wants to minimize processing latency. Using a fixed interval trigger may introduce unnecessary overhead and increase processing latency. It operates on a fixed schedule and may not be able to provide the continuous flow of data processing required for near real-time analytics.
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is correct. To achieve the objectives of almost real-time processing, minimal processing latency, and a continuous flow of data processing without interruptions, the data engineer should use the Continuous trigger. The Continuous trigger minimizes pipeline latency by ensuring that the streaming query processes the data as soon as it becomes available. It makes it possible to process data continuously, giving the desired close to real-time analytics capabilities.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. The fixed interval trigger with a processing interval of 1 second can provide frequent updates and processing. However, in this scenario, the data engineer requires near real-time processing and wants to minimize processing latency. Using a fixed interval trigger may introduce unnecessary overhead and increase processing latency. It operates on a fixed schedule and may not be able to provide the continuous flow of data processing required for near real-time analytics.
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The AvailableNow trigger initiates processing as soon as data is available for consumption. While this trigger can provide immediate processing, it may not be the most efficient choice for near real-time processing. It relies on the availability of data and may introduce variability in the processing time, potentially affecting the end-to-end latency. The data engineer aims to achieve the lowest possible end-to-end latency, and the AvailableNow trigger may not provide the desired level of control over the processing flow.
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. The Once trigger is designed for one-time batch-like processing rather than continuous or near real-time processing. It is not suitable for the requirements of the data engineer, as it does not provide the continuous flow of data processing they need. The Once trigger is more appropriate for scenarios where a single data processing is sufficient, such as running a batch job on a static dataset.
 
 
-**Question 26: Data Processing Which of the configuration in Spark should be used to optimize the Spark job and improve performance by tuning the partitioning configuration?** 
+**Question 26: Data Processing Which of the configuration in Spark should be used to optimize the Spark job and improve performance by tuning the partitioning configuration? The configuration should also help achieve better parallelism and resource utilization during data processing.** 
 
 Options:
 
-&nbsp;&nbsp;&nbsp;&nbsp;T.e configuration should also help achieve better parallelism and resource utilization during data processing.
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.spark.sql.shuffle.partitions
 
@@ -688,11 +697,13 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The maximum size of each partition when reading data from files is determined by the configuration parameter spark.sql.files.maxPartitionBytes. Although it impacts partitioning during data ingestion, it does not directly impact how partitioning configurations are optimized during data processing in Spark. This parameter does not affect parallelism or resource usage during data processing; instead, it is primarily used to control the partition size during data ingestion. More information about this configuration parameter and its application can be found in the Databricks documentation.
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is correct. The configuration parameter spark.sql.shuffle.partitions is essential in deciding how many partitions to use for shuffle operations like joins and aggregations. By raising this value, we can increase parallelism and optimize resource usage during data processing. This setting has a direct impact on partitioning configuration and improves performance. Additional information about this configuration parameter's effect on shuffle behavior and performance tuning can be found in the Databricks documentation. In conclusion, only option A, spark.sql.shuffle.partitions, is the best option for optimizing Spark's partitioning configuration to maximize parallelism and resource usage while processing data. The alternative choices either concentrate on different performance tuning facets or have no direct connection to partitioning configuration. Data engineers can effectively tune the partitioning behavior and improve the performance of their Spark jobs by properly configuring spark.sql.shuffle.partitions.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Although the spark.sql.autoBroadcastJoinThreshold configuration parameter is crucial for maximizing join operations. Partitioning configuration is not directly impacted by it. The threshold for automatically broadcasting small tables during joins to prevent shuffling is controlled by this parameter. Although it has an impact on performance, it is more concerned with joining behavior optimization than partitioning. This parameter's significance to join optimization is covered in the Databricks documentation.
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The maximum size of each partition when reading data from files is determined by the configuration parameter spark.sql.files.maxPartitionBytes. Although it impacts partitioning during data ingestion, it does not directly impact how partitioning configurations are optimized during data processing in Spark. This parameter does not affect parallelism or resource usage during data processing; instead, it is primarily used to control the partition size during data ingestion. More information about this configuration parameter and its application can be found in the Databricks documentation.
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Spark's adaptive query execution can be enabled or disabled using the configuration parameter spark.sql.adaptive.enabled. Spark can optimize the execution process by dynamically modifying query plans following runtime statistics thanks to adaptive query execution. Despite affecting query optimization, this parameter has no direct bearing on partitioning configuration. Instead of partitioning, adaptive query planning is the main focus. The Databricks documentation provides information on the advantages of adaptive query execution.
 
@@ -712,37 +723,58 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. This statement accurately describes how to achieve optimized writes in Delta Lake. You can define your data partitioning logic by specifying the partitionColumn parameter. This enables more precise control over data distribution by dividing data up into smaller partitions according to predetermined standards. By enabling effective data pruning during query execution, custom partitioning can cut down on the amount of data scanned and enhance write performance. It improves resource utilization and parallelism, resulting in optimized writes in Delta Lake.  
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Using the overwrite mode can be a good option when you want to completely replace the existing data in the Delta Lake table. However, it might not always deliver the best performance, particularly for processing large amounts of data. The write efficiency may be impacted by the resource and time requirements of replacing the entire table with fresh data.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. The checkpointLocation parameter must be set, and the spark.sql.streaming.checkpointLocation property must be configured in order to maintain the state and fault tolerance of streaming queries. However, these actions do not directly improve write performance in Delta Lake. These setups aren't unique to Delta Lake, but rather to Spark Structured Streaming. They guarantee dependability and consistency in streaming operations but do not offer Delta Lake write optimizations.  
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. This statement accurately describes how to achieve optimized writes in Delta Lake. You can define your data partitioning logic by specifying the partitionColumn parameter. This enables more precise control over data distribution by dividing data up into smaller partitions according to predetermined standards. By enabling effective data pruning during query execution, custom partitioning can cut down on the amount of data scanned and enhance write performance. It improves resource utilization and parallelism, resulting in optimized writes in Delta Lake.  
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. In Delta Lake, there is no spark.databricks.delta.optimizeWrite.enabled configuration. Although Delta Lake automatically optimizes write operations by default, this optimization cannot be enabled or disabled through any particular configuration. As a result, this strategy cannot be used to achieve optimized writes in Delta Lake.  
 
 
-**Question 28: Data Processing A senior data engineer uses Spark Structured Streaming to build a real-time data processing pipeline. In order to produce insights almost immediately, the pipeline ingests streaming data from various sources and performs windowed aggregations. She runs into a challenging situation to handle out-of-order data within the streaming window. Timestamped events that represent user interactions are part of the data she receives. Each event is identified by a user ID, an event type, and a timestamp that shows when it happened. Aggregations have a fixed window size of one minute. It is necessary to count the number of unique users for each type of event within the window while taking late-arriving events into account. Which of the following code examples best illustrates how Spark Structured Streaming should use window operations to handle out-of-order data within the designated window in this context?** 
+**Question 28: A senior data engineer uses Spark Structured Streaming to build a real-time data processing pipeline. In order to produce insights almost immediately, the pipeline ingests streaming data from various sources and performs windowed aggregations. She runs into a challenging situation to handle out-of-order data within the streaming window. Timestamped events that represent user interactions are part of the data she receives. Each event is identified by a user ID, an event type, and a timestamp that shows when it happened. Aggregations have a fixed window size of one minute. It is necessary to count the number of unique users for each type of event within the window while taking late-arriving events into account. Which of the following code examples best illustrates how Spark Structured Streaming should use window operations to handle out-of-order data within the designated window in this context?** 
 
 Options:
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.windowedCounts = df \ .withWatermark("timestamp", "5 seconds") \ .groupBy(F.window("timestamp", "1 minute"), "event_type") \ .agg(F.countDistinct("user_id").alias("distinct_users"))   
-
-&nbsp;&nbsp;&nbsp;&nbsp;B.windowedCounts = df \ .withWatermark("timestamp", "1 minute") \ .groupBy(F.window("timestamp", "1 minute"), "event_type") \ .agg(F.countDistinct("user_id").alias("distinct_users"))  
-
-&nbsp;&nbsp;&nbsp;&nbsp;C.windowedCounts = df \ .withWatermark("timestamp", "1 minute") \ .groupBy(F.window("timestamp", "2 minutes"), "event_type") \ .agg(F.countDistinct("user_id").alias("distinct_users"))  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D.windowedCounts = df \ .withWatermark("timestamp", "1 minute") \ .groupBy(F.window("timestamp", "1 minute"), "user_id", "event_type") \ .agg(F.countDistinct("user_id").alias("distinct_users"))  
-
+&nbsp;&nbsp;&nbsp;&nbsp;A.
+```python
+windowedCounts = df.withWatermark("timestamp", "5 seconds") \
+ .groupBy(F.window("timestamp", "1 minute"), "event_type") \
+ .agg(F.countDistinct("user_id").alias("distinct_users"))   
+```
+&nbsp;&nbsp;&nbsp;&nbsp;B.
+```python
+windowedCounts = df.withWatermark("timestamp", "1 minute") \
+.groupBy(F.window("timestamp", "1 minute"), "event_type") \
+.agg(F.countDistinct("user_id").alias("distinct_users"))  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;C.
+```python
+windowedCounts = df.withWatermark("timestamp", "1 minute") \
+.groupBy(F.window("timestamp", "2 minutes"), "event_type") \
+.agg(F.countDistinct("user_id").alias("distinct_users"))  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;D.
+```python
+windowedCounts = df.withWatermark("timestamp", "1 minute") \
+.groupBy(F.window("timestamp", "1 minute"), "user_id", "event_type") \
+.agg(F.countDistinct("user_id").alias("distinct_users"))  
+```
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The fact that it uses a window duration of "2 minutes" rather than the necessary "1 minute" shows incorrect usage of window operations.  
-&nbsp;&nbsp;&nbsp;&nbsp;A.larger window size would result from this, which would produce inaccurate aggregations.  
+&nbsp;&nbsp;&nbsp;&nbsp;A is correct. It shows how to use Spark Sutructure Streaming whindows opeatin properly to thandle out of oder data.
+
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It contains a watermark specification, but the watermark delay is set to "1 minute". This might not be sufficient to handle out-of-order data within the 1-minute window. To account for any potential data lateness, setting an appropriate watermark delay is crucial.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The fact that it uses a window duration of "2 minutes" rather than the necessary "1 minute" shows incorrect usage of window operations.  
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It includes an additional grouping by "user_id" along with "event_type" in the groupBy operation. Although it accurately counts the number of distinct users, it does not specifically address how to handle out-of-order data in the window. For this specific requirement, grouping by the "user_id" column is not necessary.  
 
 
-**Question 29: Data Processing The massive amounts of transactional data kept in Databricks Delta Lake are processed and analyzed by a group of data engineers at a major financial institution. The dataset includes billions of records that represent different types of financial transactions, along with customer information, transaction amounts, timestamps, and transaction IDs. To ensure data integrity and eliminate duplicate transactions, the team must implement a highly sophisticated and effective data deduplication strategy as part of the data processing pipeline. Which of the following strategies represents the most thorough and efficient way to carry out data deduplication in Databricks Delta Lake in this scenario?** 
+**Question 29: The massive amounts of transactional data kept in Databricks Delta Lake are processed and analyzed by a group of data engineers at a major financial institution. The dataset includes billions of records that represent different types of financial transactions, along with customer information, transaction amounts, timestamps, and transaction IDs. To ensure data integrity and eliminate duplicate transactions, the team must implement a highly sophisticated and effective data deduplication strategy as part of the data processing pipeline. Which of the following strategies represents the most thorough and efficient way to carry out data deduplication in Databricks Delta Lake in this scenario?** 
 
 Options:
 
@@ -757,16 +789,18 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. It uses the change data capture (CDC) feature of Delta Lake, which is the suggested method for data deduplication in this case. Due to the CDC's ability to track small data changes, duplicate transactions can be found and removed from the data processing pipeline. This strategy guarantees data integrity and increases overall processing effectiveness by taking into account only the most recent and distinctive transactions.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. It recommends using probabilistic data structures like Bloom filters to find possible duplicates based on chosen attributes. Although this method can quickly filter data, it may also introduce a small chance of false positives and false negatives, which may affect how accurate the deduplication results are.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It suggests combining similar transactions using clustering algorithms. Despite the fact that clustering can be used to find patterns and similarities in data, it may not be specifically intended for deduplication. It could lead to inaccurate or incomplete elimination of duplicate transactions.  
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. It uses the change data capture (CDC) feature of Delta Lake, which is the suggested method for data deduplication in this case. Due to the CDC's ability to track small data changes, duplicate transactions can be found and removed from the data processing pipeline. This strategy guarantees data integrity and increases overall processing effectiveness by taking into account only the most recent and distinctive transactions.  
+
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It uses domain-specific rules and fuzzy matching techniques to compare transaction attributes across time windows. This method may be able to identify some similarities. Still, it might not be strong enough to handle complex financial data with varying transaction patterns and attributes, which could result in false positives or missed duplicates.  
 
 
-**Question 30: Data Processing You are using Databricks Delta Lake to complete a data processing project. Maintaining a bronze table for raw data collection and a silver table for data transformation and curation is part of the project. You must incorporate a method for deduplicating the data as part of the data processing pipeline before putting it in the silver table. Multiple sources continuously update the data on the bronze table. Due to various factors like system failures, data ingestion issues, or concurrent writes, these updates may contain duplicate records. Prior to putting the data into the silver table, it is essential to remove these duplicates in order to preserve data integrity and reduce pointless redundancy. Which approach should you consider for implementing data deduplication in Databricks Delta Lake?** 
+**Question 30: You are using Databricks Delta Lake to complete a data processing project. Maintaining a bronze table for raw data collection and a silver table for data transformation and curation is part of the project. You must incorporate a method for deduplicating the data as part of the data processing pipeline before putting it in the silver table. Multiple sources continuously update the data on the bronze table. Due to various factors like system failures, data ingestion issues, or concurrent writes, these updates may contain duplicate records. Prior to putting the data into the silver table, it is essential to remove these duplicates in order to preserve data integrity and reduce pointless redundancy. Which approach should you consider for implementing data deduplication in Databricks Delta Lake?** 
 
 Options:
 
@@ -785,13 +819,13 @@ Solutions:
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Its suggest creting a readChangeFeed and keeeping track of changes in the bronze table using the changeDataFeed API.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.It suggests setting up a different streaming job to implement deduplication using customized logic while reading data from the bronze table. Although this strategy is workable, it adds complexity because it calls for creating a separate job and unique deduplication logic. Additionally, it creates extra work for managing and coordinating multiple streaming jobs and utilizing the writeStream.foreachBatch API and Spark SQL operations for deduplication.  A, on the other hand, offers a simpler and more efficient method.     
+&nbsp;&nbsp;&nbsp;&nbsp;C. is incorrect. It suggests setting up a different streaming job to implement deduplication using customized logic while reading data from the bronze table. Although this strategy is workable, it adds complexity because it calls for creating a separate job and unique deduplication logic. Additionally, it creates extra work for managing and coordinating multiple streaming jobs and utilizing the writeStream.foreachBatch API and Spark SQL operations for deduplication.  A, on the other hand, offers a simpler and more efficient method.     
 
-&nbsp;&nbsp;&nbsp;&nbsp;D.should not be used to implement data deduplication.  
+&nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. Should not be used to implement data deduplication.  
 
 
 
-**Question 31: Databricks Tooling A data engineer is developing a highly sophisticated Databricks notebook that performs advanced data analysis tasks on large datasets. She wants to incorporate a seamless interactive experience for users into the notebook so they can dynamically control some important analysis-related parameters. The correct setting of these parameters has a significant impact on the analysis's accuracy and effectiveness. Which method from the list below should the data engineer use to use Databricks widgets to fulfill this requirement?** 
+**Question 31: A data engineer is developing a highly sophisticated Databricks notebook that performs advanced data analysis tasks on large datasets. She wants to incorporate a seamless interactive experience for users into the notebook so they can dynamically control some important analysis-related parameters. The correct setting of these parameters has a significant impact on the analysis's accuracy and effectiveness. Which method from the list below should the data engineer use to use Databricks widgets to fulfill this requirement?** 
 
 Options:
 
@@ -806,40 +840,65 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It suggests building a complex HTML form with JavaScript logic for parameter capture using the displayHTML() function and JavaScript frameworks like Vue.js or React. Although this strategy can offer an interactive experience, it adds to the complexity and relies on outside JavaScript frameworks. It might need more setup and not use all the features that Databricks widgets come with by default.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is correct. It advises making a dropdown widget using the dbutils.widgets.dropdown() function. With this strategy, users can choose parameter options from a dropdown list for a fluid and simple interactive experience. The chosen value can be recorded and used to activate the associated analysis logic by registering an event handler. This method is the best fit to meet the requirement because it guarantees real-time responsiveness and effective processing.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It suggests using a complex HTML and JavaScript user interface along with the spark.conf.set() function to set global configuration variables. Although this method allows users to change certain parameters, it does not offer seamless integration with the notebook environment. Furthermore, depending on JavaScript event handling for parameter updates can add complexity and raise the possibility of performance problems. It does not make use of Databricks widgets' unique abilities, which are created for interactive notebook experiences.  
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It suggests building a complex HTML form with JavaScript logic for parameter capture using the displayHTML() function and JavaScript frameworks like Vue.js or React. Although this strategy can offer an interactive experience, it adds to the complexity and relies on outside JavaScript frameworks. It might need more setup and not use all the features that Databricks widgets come with by default.  
+
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It suggests building a text input widget with validation capabilities using the dbutils.widgets.text() function. Although this method enables parameter input from users, it lacks other alternative interactive features. Furthermore, creating a complicated input validation mechanism requires a lot of work and might add more complexity. It doesn't offer the same degree of fluid interaction and usability as the right answer.   
    
 
-**Question 32: Databricks Tooling The following operations must be carried out by a script that needs to be written using the Databricks CLI: Creates a new cluster with a specific configuration. Uploads a set of Python files to the cluster. Executes a Python script on the cluster. Captures the output of the script execution and saves it to a local file. Which of the following commands can be used in the Databricks CLI script to accomplish these tasks efficiently?** 
+**Question 32: The following operations must be carried out by a script that needs to be written using the Databricks CLI: Creates a new cluster with a specific configuration. Uploads a set of Python files to the cluster. Executes a Python script on the cluster. Captures the output of the script execution and saves it to a local file. Which of the following commands can be used in the Databricks CLI script to accomplish these tasks efficiently?** 
 
 Options:
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.databricks clusters create --cluster-name "my-cluster" --node-type "Standard_DS3_v2" --num-workers 4 databricks workspace import_dir /local/path/to/python/files /dbfs/mnt/python/files databricks jobs create --name "my-job" --existing-cluster-id <cluster-id> --python-script /dbfs/mnt/python/files/cli_script.py databricks jobs run-now --job-id <job-id> --sync  
-
-&nbsp;&nbsp;&nbsp;&nbsp;B.databricks clusters create --cluster-name "my-cluster" --instance-profile "my-profile" --num-workers 4 databricks fs cp /local/path/to/python/files dbfs:/mnt/python/files databricks jobs create --name "my-job" --new-cluster spec-file:/path/to/cluster-spec.json --python-script dbfs:/mnt/python/files/cli_script.py databricks jobs run-now --job-id <job-id> --sync  
-
-&nbsp;&nbsp;&nbsp;&nbsp;C.databricks clusters create --cluster-name "my-cluster" --node-type "Standard_DS3_v2" --num-workers 4 databricks fs cp /local/path/to/python/files dbfs:/mnt/python/files databricks jobs create --name "my-job" --existing-cluster-id <cluster-id> --python-script dbfs:/mnt/python/files/cli_script.py databricks jobs run-now --job-id <job-id> --wait  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D.databricks clusters create --cluster-name "my-cluster" --instance-profile "my-profile" --num-workers 4 databricks workspace import_dir /local/path/to/python/files /dbfs/mnt/python/files databricks jobs create --name "my-job" --new-cluster spec-file:/path/to/cluster-spec.json --python-script /dbfs/mnt/python/files/cli_script.py databricks jobs run-now --job-id <job-id> --wait  
-
+&nbsp;&nbsp;&nbsp;&nbsp;A.
+```sh
+databricks clusters create --cluster-name "my-cluster" --node-type "Standard_DS3_v2" \
+                           --num-workers 4 databricks workspace import_dir /local/path/to/python/files /dbfs/mnt/python/files databricks jobs create\
+                            --name "my-job" --existing-cluster-id <cluster-id> --python-script /dbfs/mnt/python/files/cli_script.py \
+                            databricks jobs run-now --job-id <job-id> --sync  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;B.
+```sh
+databricks clusters create --cluster-name "my-cluster" --instance-profile "my-profile"\
+                           --num-workers 4 databricks fs cp /local/path/to/python/files dbfs:/mnt/python/files databricks jobs create\
+                           --name "my-job" --new-cluster spec-file:/path/to/cluster-spec.json \
+                           --python-script dbfs:/mnt/python/files/cli_script.py databricks jobs run-now \
+                           --job-id <job-id> --sync  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;C.
+```sh
+databricks clusters create --cluster-name "my-cluster" --node-type "Standard_DS3_v2"\
+                           --num-workers 4 databricks fs cp /local/path/to/python/files dbfs:/mnt/python/files databricks jobs create \
+                           --name "my-job" --existing-cluster-id <cluster-id> --python-script dbfs:/mnt/python/files/cli_script.py databricks jobs run-now\
+                           --job-id <job-id> --wait  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;D.
+```sh
+databricks clusters create --cluster-name "my-cluster" --instance-profile "my-profile"\
+                           --num-workers 4 databricks workspace import_dir /local/path/to/python/files /dbfs/mnt/python/files databricks jobs create\
+                           --name "my-job" --new-cluster spec-file:/path/to/cluster-spec.json\
+                           --python-script /dbfs/mnt/python/files/cli_script.py databricks jobs run-now\
+                           --job-id <job-id> --wait  
+```
 
 Solutions:
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A is incorrect
+
+&nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. This option also creates a cluster and copies the Python files to the DBFS (Databricks File System). It does not, however, use the workspace's import_dir command, which is a quicker method of uploading files. Additionally, the run-now command does not have the --wait option, which means the script execution might not wait for it to finish, which could cause problems with capturing the output.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. This option suffers from the same issues as  B. The job creation process does not use the import_dir command, and no spec-file parameter restricts the cluster's ability to be configured for script execution.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is correct. It covers all the necessary steps and includes the correct commands and options to accomplish the tasks efficiently. It covers all the requirements given in the question as explained in the following: databricks clusters create:  -  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.new cluster with the specified configuration is created by this command. The --cluster-name parameter specifies the cluster's name, and the --instance-profile parameter configures the cluster's instance profile. The cluster's worker nodes are counted using the --num-workers parameter. databricks workspace import_dir: This command uploads a collection of Python files to the Databricks File System (DBFS) at /dbfs/mnt/python/files from the local path /local/path/to/python/files. This procedure ensures that the necessary Python files are present in the DBFS and ready for further execution. databricks jobs create: The "my-job" command creates a brand-new job. The spec-file:/path/to/cluster-spec.json specifies the path to a cluster specification file that defines the cluster configuration, and the --new-cluster parameter specifies that a new cluster should be created for the job. The /dbfs/mnt/python/files/cli_script.py Python script's location is specified by the --python-script parameter. databricks jobs run-now: This command starts the job with the specified job-id to run. The command will wait for the job execution to finish before returning if the --wait option is used. This enables recording the script execution output and saving it to a local file or processing the output further.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. This option also creates a cluster and copies the Python files to the DBFS (Databricks File System). It does not, however, use the workspace's import_dir command, which is a quicker method of uploading files. Additionally, the run-now command does not have the --wait option, which means the script execution might not wait for it to finish, which could cause problems with capturing the output.  
-
-
-**Question 33: Databricks Tooling A data engineer is developing an application that needs to programmatically interact with Databricks using its REST API. The data Engineer needs to retrieve the job run details for a specific job and perform further analysis of the obtained data. Which combination of Databricks REST API endpoints should the data engineer use to accomplish this task efficiently?** 
+**Question 33:A data engineer is developing an application that needs to programmatically interact with Databricks using its REST API. The data Engineer needs to retrieve the job run details for a specific job and perform further analysis of the obtained data. Which combination of Databricks REST API endpoints should the data engineer use to accomplish this task efficiently?** 
 
 Options:
 
@@ -854,16 +913,18 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.lacks the set of endpoints needed to retrieve the job run details for a particular job effectively.  
+&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect The list of cluster in a DAtabricks workspace ca be retireve using the cluster list endpoint.
 
-&nbsp;&nbsp;&nbsp;&nbsp;B.is correct. The data engineer can identify the specific job for which they want to retrieve run details by using the jobs/list endpoint, which displays all of the jobs in a Databricks workspace. If you know the job ID, you can use the jobs/runs/get endpoint to retrieve information about that specific job run, including the run ID, status, start time, end time, and more. The data engineer can effectively retrieve the job run details for a particular job using this set of endpoints and go on to further analyze the data that has been retrieved.  
+&nbsp;&nbsp;&nbsp;&nbsp;B.is correct. The data engineer can identify the specific job for which they want to retrieve run details by using the jobs/list endpoint, which displays all of the jobs in a Databricks workspace. If you know the job ID, you can use the jobs/runs/get endpoint to retrieve information about that specific job run, including the run ID, status, start time, end time, and more. The data engineer can effectively retrieve the job run details for a particular job using this set of endpoints and go on to further analyze the data that has been retrieved.
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is inadequate for completing the task.  
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Lacks the set of endpoints needed to retrieve the job run details for a particular job effectively.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;D.does not offer the right set of endpoints to complete the task effectively.  
+  
+
+&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Does not offer the right set of endpoints to complete the task effectively.  
 
 
-**Question 34: Databricks Tooling A senior data engineer is working on an extremely intricate and complex data project that necessitates the implementation of a strong and scalable data pipeline using Databricks cutting-edge Delta Lake architecture. The project entails processing enormous amounts of data in real-time, performing complex transformations, and guaranteeing the compatibility and quality of the data. It is essential to create an architecture that makes the most of Delta Lake's capabilities and offers effective data processing. Which of the following statements would be the most sophisticated architecture for this situation?** 
+**Question 34: A senior data engineer is working on an extremely intricate and complex data project that necessitates the implementation of a strong and scalable data pipeline using Databricks cutting-edge Delta Lake architecture. The project entails processing enormous amounts of data in real-time, performing complex transformations, and guaranteeing the compatibility and quality of the data. It is essential to create an architecture that makes the most of Delta Lake's capabilities and offers effective data processing. Which of the following statements would be the most sophisticated architecture for this situation?** 
 
 Options:
 
@@ -878,11 +939,12 @@ Options:
 
 Solutions:
 
+&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. It suggests using a sophisticated data ingestion strategy and using Delta Lake's features to guarantee data integrity, quality, and compatibility through the pipeline by combining a thorough data ingestion strategy with real-time structured streaming for processing and using Delta Lake's features. With the help of schema enforcement and schema evolution, the raw data is seamlessly ingested into a Delta Lake table in this architecture. The data is processed using real-time structured streaming, which carries out complicated transformations and stores the refined outcomes in different Delta Lake tables. This strategy offers a strong basis for sophisticated data analysis, making it the most effective and sophisticated architecture for the situation at hand. 
+
+&nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It advises choosing an external storage strategy in which the unprocessed data is kept on well-known cloud storage services like Azure Blob Storage or AWS S3. Although the Delta Lake architecture supports reading data from external storage, this option falls short of utilizing all its features. It depends on Delta Lake's ACI
+
 &nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It advises using Delta Lake's Auto Loader feature to automatically load data from cloud storage into a Delta Lake table. This option also suggests using the time travel function of Delta Lake, merge capabilities, and schema inference. Although these features are useful for managing dynamic and changing datasets, this option does not cover the project's real-time processing and complex transformations. Instead of offering a complete solution for effective data processing and analysis, it focuses more on data loading and management. As a result, this option is not the best one for the situation.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. It suggests using a sophisticated data ingestion strategy and using Delta Lake's features to guarantee data integrity, quality, and compatibility through the pipeline by combining a thorough data ingestion strategy with real-time structured streaming for processing and using Delta Lake's features. With the help of schema enforcement and schema evolution, the raw data is seamlessly ingested into a Delta Lake table in this architecture. The data is processed using real-time structured streaming, which carries out complicated transformations and stores the refined outcomes in different Delta Lake tables. This strategy offers a strong basis for sophisticated data analysis, making it the most effective and sophisticated architecture for the situation at hand.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It advises choosing an external storage strategy in which the unprocessed data is kept on well-known cloud storage services like Azure Blob Storage or AWS S3. Although the Delta Lake architecture supports reading data from external storage, this option falls short of utilizing all its features. It depends on Delta Lake's ACI  
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It suggests utilizing Delta Lake's MLflow integration feature to streamline the architecture's machine learning pipeline. The needs of the complex data project are not directly addressed by MLflow integration, although it can be useful for managing model versions, tracking experiments, and promoting collaboration between data scientists and engineers. Instead of emphasizing the real-time processing, complex transformations, and data quality requirements for the project, this option primarily focuses on machine learning workflows and model serving. As a result, it is not the best option in the given situation.  
 
@@ -891,14 +953,29 @@ Solutions:
 
 Options:
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.processedDF = originalDF.groupBy('product_category').agg(expr('sum(sales_amount) AS total_sales')).orderBy('total_sales', ascending=False)  
-
-&nbsp;&nbsp;&nbsp;&nbsp;B.processedDF = originalDF.groupBy('product_category').pivot('month').agg(expr('sum(sales_amount) AS monthly_sales')).fillna(0)   
-
-&nbsp;&nbsp;&nbsp;&nbsp;C.processedDF = originalDF.groupBy('product_category').agg(expr('collect_list(sales_amount) AS sales_list')).select('product_category', size('sales_list').alias('total_sales'))  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D.processedDF = originalDF.groupBy('product_category').agg(F.expr('summary("count", "min", "max", "sum").summary(sales_amount).as("summary")')).select('product_category', 'summary.sum')
-
+&nbsp;&nbsp;&nbsp;&nbsp;A.
+```python
+processedDF = originalDF.groupBy('product_category')\
+                        .agg(expr('sum(sales_amount) AS total_sales'))\
+                        .orderBy('total_sales', ascending=False)  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;B.
+```python
+processedDF = originalDF.groupBy('product_category').pivot('month')\
+                        .agg(expr('sum(sales_amount) AS monthly_sales')).fillna(0)   
+```
+&nbsp;&nbsp;&nbsp;&nbsp;C.
+```python
+processedDF = originalDF.groupBy('product_category').agg(expr('collect_list(sales_amount) AS sales_list'))\
+                        .select('product_category', size('sales_list').alias('total_sales'))  
+```
+&nbsp;&nbsp;&nbsp;&nbsp;D.
+```python
+processedDF = originalDF.groupBy('product_category') \
+    .agg(F.expr('summary("count", "min", "max", "sum") \
+    .summary(sales_amount).as("summary")')) \
+    .select('product_category', 'summary.sum')
+```
 
 Solutions:
 
@@ -911,7 +988,7 @@ Solutions:
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It attempts to use the agg operation while misusing the summary function. To calculate different statistics (count, min, max, sum) for "sales_amount," it combines the summary function with the sum aggregation. The fact that this option does not use the summary function correctly leads to an incorrect DataFrame. The resultant DataFrame's selected columns do not give the desired summary of total sales by product category.  
 
 
-**Question 36: Databricks Tooling A senior data engineer uses Databricks Repos to manage the codebase and communicate with other team members while working on a challenging project. The project entails setting up a scalable data pipeline that can handle complex data transformations and analysis. He wants to make use of the Databricks Repos version control features to guarantee code quality and effectiveness. Which of the following options best describes the ideal process for effectively managing code versions in Databricks Repos?**   
+**Question 36: A senior data engineer uses Databricks Repos to manage the codebase and communicate with other team members while working on a challenging project. The project entails setting up a scalable data pipeline that can handle complex data transformations and analysis. He wants to make use of the Databricks Repos version control features to guarantee code quality and effectiveness. Which of the following options best describes the ideal process for effectively managing code versions in Databricks Repos?**   
 
 Options:
 
@@ -924,13 +1001,14 @@ Options:
 &nbsp;&nbsp;&nbsp;&nbsp;D.Utilize the fork and pull request workflow for code collaboration. Fork the main repository to create a personal copy and make changes in your forked repository. Once the changes are completed, submit a pull request to merge the changes into the main repository. Reviewers can provide feedback and approve the changes before merging them.  
 
 
-Solutions:
-
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It advises establishing distinct branches for the development, staging, and production settings. The version control features offered by Databricks Repos are not specifically addressed by this method, even though it is typical in software development. Although environment-specific branches may be a part of the workflow and are relevant to the question's focus on managing code versions, they do not cover all of the version control features provided by Databricks Repos.  
+Solutions:  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is correct. It follows the suggested procedure for efficiently managing code versions in Databricks Repos. For isolated development and simple change tracking, a new branch should be created for every change to the code or addition of a feature. Code integration is maintained by committing the modifications to the branch and merging them into the main branch. Utilizing Databricks Repos' tagging feature enables marking significant releases or milestones. The main branch's changes are periodically reviewed and merged, which keeps the codebase current. The senior data engineer can effectively manage code versions, track changes, work with team members, and guarantee code quality and efficiency within the project by adhering to this workflow.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. It advises keeping all code modifications in a single branch to preserve a straight-line commit history. Although having a linear history may initially seem convenient, tracking changes can quickly become difficult, especially when several developers are working on the project. Additionally, taking regular snapshots of the entire repository can lead to redundant storage and make it more challenging to return to a particular version when necessary. This method falls short of Databricks Repos' level of control and granularity over code versions.  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It advises establishing distinct branches for the development, staging, and production settings. The version control features offered by Databricks Repos are not specifically addressed by this method, even though it is typical in software development. Although environment-specific branches may be a part of the workflow and are relevant to the question's focus on managing code versions, they do not cover all of the version control features provided by Databricks Repos.
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It suggests making use of the fork and pull request workflow, which is frequently employed in scenarios involving collaborative development. Although this workflow encourages code collaboration and review procedures, it does not fully take advantage of the Databricks Repos' version control features. Version control features outside of Databricks Repos' control, such as forking the central repository and submitting pull requests, are typically found on websites like GitHub. Databricks Repos version control features should be used for efficient code version management.  
 
@@ -950,16 +1028,18 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is not the best option.  
+  
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.pre-existing table must be available and suitable for storing the streaming data for this method to work. On the other hand, the Autoloader uses the capabilities of Delta Lake, which offers optimized storage and processing for streaming workloads, to handle streaming data. The most effective and scalable method might not be writing the data directly into an existing table.
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is correct. It advises establishing a fresh directory in the DBFS and setting up the Autoloader to write the data into that directory. This strategy is in line with how the Autoloader feature is supposed to be used and how Delta Lake can stream data. The Autoloader can take advantage of Delta Lake's transactional and optimized storage for quick processing of streaming data by storing the data in the DBFS directory. This guarantees performance, scalability, and reliability when handling high-rate streaming data.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.pre-existing table must be available and suitable for storing the streaming data for this method to work. On the other hand, the Autoloader uses the capabilities of Delta Lake, which offers optimized storage and processing for streaming workloads, to handle streaming data. The most effective and scalable method might not be writing the data directly into an existing table. Therefore, option  
+&nbsp;&nbsp;&nbsp;&nbsp;C.is not the best option
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is not the best option when configuring the Real-Time Workload Autoloader.  
 
 
-**Question 38: Data Processing A data engineer at a retail company uses Databricks to handle hourly batch jobs while dealing with late-arriving dimensions. The team must find an effective approach to ensure accurate processing within the batch window despite delays in dimension updates. The solution should address complex data relationships, high data volume, real-time analytics requirements, and data consistency. Which option should the team choose?** 
+**Question 38: A data engineer at a retail company uses Databricks to handle hourly batch jobs while dealing with late-arriving dimensions. The team must find an effective approach to ensure accurate processing within the batch window despite delays in dimension updates. The solution should address complex data relationships, high data volume, real-time analytics requirements, and data consistency. Which option should the team choose?** 
 
 Options:
 
@@ -974,16 +1054,17 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. This option recommends using an incremental processing strategy to handle late-arriving dimensions separately and merge them with the main batch job. Effectively addressing the problem of late-arriving dimensions. Data accuracy and consistency can be preserved by processing them separately before merging them with the main batch job. It enables effective management of large volumes of data and complex data relationships. This choice is the best one because it fits the needs of the scenario as it is presented.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. This option suggests setting a strict deadline for dimension updates and discarding any updates that arrive after that time. While it might keep the batch window consistent, it disregards the significance of processing all available data. Important data may be lost if late-arriving dimensions are disregarded, which could result in erroneous and incomplete results. As a result, the scenario does not lend itself to this option.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. To accommodate the inclusion of late-arriving dimensions, this option suggests extending the batch processing window. Extending the processing window ensures that all data is considered, but it might not be possible in situations with strict time constraints. It may affect the need for real-time analytics and postpone the release of processed data. Furthermore, rather than handling late-arriving dimensions specifically, the app roach simply extends the batch window. As a result, this option is not the best one for the circumstances.  
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. This option recommends using an incremental processing strategy to handle late-arriving dimensions separately and merge them with the main batch job. Effectively addressing the problem of late-arriving dimensions. Data accuracy and consistency can be preserved by processing them separately before merging them with the main batch job. It enables effective management of large volumes of data and complex data relationships. This choice is the best one because it fits the needs of the scenario as it is presented.  
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. This option suggests capturing late-arriving updates and retrieving the most recent versions of dimension tables during processing by using Databricks Delta Lake's time travel capabilities. The handling of late-arriving dimensions is not specifically addressed by Delta Lake's time travel feature, despite the ability to access earlier iterations of tables. It might make the solution more complicated and possibly add extra overhead. As a result, this option is not the best course of action in the given situation.  
 
 
-**Question 39: Data Processing A large healthcare organization's data engineering team is tasked with using Databricks to construct incrementally processed ETL pipelines. Massive amounts of healthcare data from various sources must be transformed and loaded into a centralized data lake through pipelines. The team must overcome several obstacles, including poor data quality, rising data volumes, changing data schema, and constrained processing windows. The data must be processed in small steps to guarantee effectiveness and timeliness. The team also needs to handle situations where the source data changes or new data is added, as well as guarantee data consistency. Given this situation, which option should the data engineering team choose to build the incrementally processed ETL pipelines effectively?** 
+**Question 39: A large healthcare organization's data engineering team is tasked with using Databricks to construct incrementally processed ETL pipelines. Massive amounts of healthcare data from various sources must be transformed and loaded into a centralized data lake through pipelines. The team must overcome several obstacles, including poor data quality, rising data volumes, changing data schema, and constrained processing windows. The data must be processed in small steps to guarantee effectiveness and timeliness. The team also needs to handle situations where the source data changes or new data is added, as well as guarantee data consistency. Given this situation, which option should the data engineering team choose to build the incrementally processed ETL pipelines effectively?** 
 
 Options:
 
@@ -998,11 +1079,13 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. In some use cases, it can be advantageous to use a streaming approach that continuously ingests and processes the incoming data in real time. It might not, however, be the best option in the circumstances. Streaming approaches are frequently preferable when real-time or nearly real-time processing is required. In this situation, where processing windows are constrained and incremental updates are necessary, a streaming approach might not be appropriate. Furthermore, using a streaming approach adds complexity and infrastructure requirements that might not be required for the task at hand.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Although it may seem straightforward to implement a complete refresh strategy, where the entire dataset is processed from scratch during each pipeline run, it can be very time-consuming and inefficient. Even when no significant changes exist, processing the entire dataset repeatedly wastes resources and extends processing time. It can cause delays in the availability of data because it does not address the need for incremental updates. Additionally, this approach may be impractical and impede prompt processing in scenarios where the data volume is high.  
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is correct. Using change data capture techniques to capture and track changes in the source data is the most appropriate approach for building incrementally processed ETL pipelines in this complex scenario. CD  
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Although it may seem straightforward to implement a complete refresh strategy, where the entire dataset is processed from scratch during each pipeline run, it can be very time-consuming and inefficient. Even when no significant changes exist, processing the entire dataset repeatedly wastes resources and extends processing time. It can cause delays in the availability of data because it does not address the need for incremental updates. Additionally, this approach may be impractical and impede prompt processing in scenarios where the data volume is high.  
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. In some use cases, it can be advantageous to use a streaming approach that continuously ingests and processes the incoming data in real time. It might not, however, be the best option in the circumstances. Streaming approaches are frequently preferable when real-time or nearly real-time processing is required. In this situation, where processing windows are constrained and incremental updates are necessary, a streaming approach might not be appropriate. Furthermore, using a streaming approach adds complexity and infrastructure requirements that might not be required for the task at hand.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.might be more appropriate in situations requiring precise control and targeted processing based on particular events.  
 
@@ -1021,14 +1104,16 @@ Options:
 
 
 Solutions:
-
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Databricks Delta Lake is a storage layer that enhances the reliability and performance of data lakes. The tiered storage approach involves moving less frequently accessed data to more affordable storage tiers while keeping frequently accessed and critical data in high-performance storage tiers. This tactic can reduce storage expenses while also improving query performance. The challenges of workload optimization and query performance in the healthcare environment may not be directly addressed by tiered storage despite the fact that it addresses storage optimization. This option places more emphasis on data storage than workload optimization.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D.or date, and creating the necessary indexes to facilitate quicker data retrieval. The team can reduce the amount of data that needs to be scanned during queries by partitioning the data and building indexes, which will improve performance and use fewer resources. This method specifically addresses the difficulties associated with maximizing workloads and query performance in the healthcare industry, where there are significant amounts of data and intricate data relationships.  
+  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. Databricks Auto Loader feature automates the process of ingesting and loading data from different sources. It has built-in data validation capabilities and is scalable. Auto Loader cannot directly address the difficulties of maximizing workloads and query performance in the healthcare environment, even though it can be useful for automating data ingestion. This option puts more emphasis on data ingestion than workload optimization.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Data processing in small, continuous batches is known as micro-batching. Databricks offers the streaming processing framework known as Structured Streaming. This method allows for almost real-time analytics and offers fault tolerance in the event of errors. Although micro-batching can support near real-time analytics, it might not be the best solution for streamlining workloads and query performance in the medical setting. When compared to other options, processing data in small batches can increase resource consumption and latency, especially when dealing with large volumes of data.  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. Databricks Delta Lake is a storage layer that enhances the reliability and performance of data lakes. The tiered storage approach involves moving less frequently accessed data to more affordable storage tiers while keeping frequently accessed and critical data in high-performance storage tiers. This tactic can reduce storage expenses while also improving query performance. The challenges of workload optimization and query performance in the healthcare environment may not be directly addressed by tiered storage despite the fact that it addresses storage optimization. This option places more emphasis on data storage than workload optimization.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. Is correct . Creating the necessary indexes to facilitate quicker data retrieval. The team can reduce the amount of data that needs to be scanned during queries by partitioning the data and building indexes, which will improve performance and use fewer resources. This method specifically addresses the difficulties associated with maximizing workloads and query performance in the healthcare industry, where there are significant amounts of data and intricate data relationships.
 
 
 **Question 41: Data Processing In a highly complex and time-sensitive streaming data processing scenario, a data engineering team at a major financial institution is tasked with using Databricks to analyze a sizable amount of real-time financial market data. Data such as stock prices, trade orders, and market indicators must be processed almost instantly to support trading decisions. The team must manage data spikes during active trading hours, ensure low-latency processing, and maintain data accuracy, among other challenges. They must come up with a workable plan to streamline the pipeline for processing streaming data. To successfully optimize their streaming data processing, which of the following options should the data engineering team choose?** 
