@@ -303,4 +303,34 @@ D
 &nbsp;&nbsp;&nbsp;&nbsp;E. Databricks Jobs
 
 Solution
-E
+A
+
+Which of the following describes what challenges a data organization would likely face when migrating from a data warehouse to a data lake? Select two responses.
+
+&nbsp;&nbsp;&nbsp;&nbsp;A.There are increased cloud storage costs in a data lake.
+
+&nbsp;&nbsp;&nbsp;&nbsp;B.There are increased security and privacy concerns in a data lake.
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.There are increased data reliability issues in a data lake.
+
+&nbsp;&nbsp;&nbsp;&nbsp;D.There are increased data quality guarantees in a data lake
+
+&nbsp;&nbsp;&nbsp;&nbsp;E.There are increased performance speeds in a data lake.
+
+
+Solution
+B, C
+
+
+**Which of the following Databricks Lakehouse Platform services or capabilities provides a data warehousing experience to its users? Select one response.**
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Machine Learning
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. Delta Lake
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. Data Science and Engineering Workspace
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks SQL
+
+&nbsp;&nbsp;&nbsp;&nbsp;E. Unity Catalog
