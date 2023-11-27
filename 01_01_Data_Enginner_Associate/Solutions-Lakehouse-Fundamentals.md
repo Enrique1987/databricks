@@ -42,7 +42,7 @@ B, C, E
 
 &nbsp;&nbsp;&nbsp;&nbsp;C.Lack of ACID transaction support
 
-&nbsp;&nbsp;&nbsp;&nbsp;D.Too many samll files
+&nbsp;&nbsp;&nbsp;&nbsp;D.Too many small files
 
 &nbsp;&nbsp;&nbsp;&nbsp;E.Lack of cloud service integrations
 
@@ -302,7 +302,7 @@ D
 
 &nbsp;&nbsp;&nbsp;&nbsp;E. Databricks Jobs
 
-Solution
+*Solution*
 A
 
 Which of the following describes what challenges a data organization would likely face when migrating from a data warehouse to a data lake? Select two responses.
@@ -318,7 +318,7 @@ Which of the following describes what challenges a data organization would likel
 &nbsp;&nbsp;&nbsp;&nbsp;E.There are increased performance speeds in a data lake.
 
 
-Solution
+*Solution*
 B, C
 
 
@@ -334,3 +334,77 @@ B, C
 &nbsp;&nbsp;&nbsp;&nbsp;D. Databricks SQL
 
 &nbsp;&nbsp;&nbsp;&nbsp;E. Unity Catalog
+
+Solution
+D
+
+
+**Which of the following do Databricks SQL users experience when using serverless Databricks SQL warehouses rather than classic Databricks SQL warehouses? Select one response.**
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. Availability of Photon
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. Availability of automatic scaling
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. Increased total cost of use
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. Expedited environment startup
+
+&nbsp;&nbsp;&nbsp;&nbsp;E. Performance degradation on long-running queries
+
+Solution
+D
+
+**Data sharing has traditionally been performed by proprietary vendor solutions, SSH File Transfer Protocol (SFTP), or cloud-specific solutions. However, each of these sharing tools and solutions comes with its own set of limitations. As a result, Databricks helped to develop the solution, Delta Sharing.
+Which of the following describes Delta Sharing as a solution for data sharing? Select one response.**
+
+ 
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. Delta Sharing is a multicloud, proprietary solution for efficiently copying and transferring data from the lakehouse to any external system.
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. Delta Sharing is a multicloud, open-source solution for distributing data across a number of compute resources for efficient data shuffling.
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. Delta Sharing is a multicloud, proprietary solution to securely and efficiently share data while maintaining control of the source data.
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. Delta Sharing is a multicloud, open-source solution to securely and efficiently share live data from the lakehouse to any external system.
+
+&nbsp;&nbsp;&nbsp;&nbsp;E. Delta Sharing is a multicloud, open-source solution to share data between Databricks workspaces within a single Databricks account.
+
+Solution
+D
+
+**Which of the following is a benefit of using Databricks Workflows for orchestration purposes? Select two responses.**
+
+ 
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. Databricks Workflows supports tasks for data ingestion, data engineering, machine learning, and business intelligence (BI)Databricks 
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. Workflows supports automating workloads as long as they are not in notebooksDatabricks Workflows provides multiple-task workflow functionality only for Delta Live Tables workloadsDatabricks 
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. Workflows provides Git-backed version control capabilities to notebooks
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. Databricks Workflows supports workloads across multiple cloud service providers and tools
+
+
+Solution
+A, C
+
+
+**Unity Catalog offers improved Lakehouse data object governance and organization capabilities for data segregation.
+Which of the following is a consequence of using Unity Catalog to manage, organize and segregate data objects? Select one response.**
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;A. Catalogs exist within schemas (databases)
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. Data in tables and views must be stored in external storage locations
+
+&nbsp;&nbsp;&nbsp;&nbsp;C. Views are made available outside of their schemas (databases)
+
+&nbsp;&nbsp;&nbsp;&nbsp;D. Complete data object referencing requires three levels
+
+&nbsp;&nbsp;&nbsp;&nbsp;E. Table metadata is required
+
+
+*Solution*
+D
