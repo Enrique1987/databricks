@@ -15,7 +15,7 @@ Which of the following DataFrame statements is the best course of action in this
 Solutions: 
 
 &nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect. For streaming data, which is not the case in this scenario, use the df.writeStream method. 
-Micro-batches rather than real-time processing of the data are used. `writeStream` its certanly use in streaming scenarios but it doesnt´t offer same leverl of control or customization for batch-wise processing as `foreachBatch`.
+Micro-batches rather than real-time processing of the data are used. `writeStream` its certanly use in streaming scenarios but it doesntÂ´t offer same leverl of control or customization for batch-wise processing as `foreachBatch`.
 It is more suitable for direct streamming writes withou complex per-batch logic
 
 &nbsp;&nbsp;&nbsp;&nbsp;B. is correct. The df.foreachBatch method offers fine-grained control over the data writing process.
@@ -25,7 +25,7 @@ It enables data to be written to the target database in micro-batches, making it
 
 &nbsp;&nbsp;&nbsp;&nbsp;D. is incorrect. In this situation, it is unnecessary to use the df.window method, which is used to create sliding windows of data. Micro-batches rather than real-time processing of the data are used. 
 
-*Lesson learned* micro-batching is indeed a form of real-time processing, though it´s a bit different from what is traditionally considere "pure" real-time processing. In 
+*Lesson learned* micro-batching is indeed a form of real-time processing, though itÂ´s a bit different from what is traditionally considere "pure" real-time processing. In 
 micro-batching, datais collected and processend in small, discrete batches, or "micro-batches" that are processed sequentially and typically very quickly, often within seconds and miliseconds.
 This approach allows systems to handle streaming data in near-real-time while mainteining some of the efficiencies of batch processing.
 
@@ -626,7 +626,7 @@ Solutions:
 
 &nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect.
 
-&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It advises applying Z-Ordering to each of the three columns—transaction date, customer ID, and product ID—separately. Although this method takes into account all three columns, applying Z-Ordering to each column separately does not benefit from the combined order of these columns. The data can be arranged to maximize filtering based on multiple columns at once by taking into account the combined order.  
+&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It advises applying Z-Ordering to each of the three columnsâ€”transaction date, customer ID, and product IDâ€”separately. Although this method takes into account all three columns, applying Z-Ordering to each column separately does not benefit from the combined order of these columns. The data can be arranged to maximize filtering based on multiple columns at once by taking into account the combined order.  
 
 
 **Question 24: Data Processing A senior data engineer is engaged in a streaming project that calls for performing a stream join operation between streams X and Y while taking event time into account and handling late-arriving events with watermarking. To get accurate results, she wants to make sure the join type she selects is compatible with watermarking. Which of the following join types will inform the data engineer whether Spark Structured Streaming is compatible with watermarking?** 
@@ -815,7 +815,7 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. The writeStream.foreachBatch API is used to address the deduplication requirement effectively. As a result, it is possible to process the data in small batches, use Spark SQL operations to find and eliminate duplicate records based on chosen columns, and then write the deduplicated data to the silver table. Within the Databricks Delta Lake framework, this method guarantees data integrity, avoids duplication, and offers a simple deduplication solution.    
+&nbsp;&nbsp;&nbsp;&nbsp;A.is correct. TheÂ writeStream.foreachBatch API is used to address the deduplication requirement effectively. As a result, it is possible to process the data in small batches, use Spark SQL operations to find and eliminate duplicate records based on chosen columns, and then write the deduplicated data to the silver table. Within the Databricks Delta Lake framework, this method guarantees data integrity, avoids duplication, and offers a simple deduplication solution.    
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Its suggest creting a readChangeFeed and keeeping track of changes in the bronze table using the changeDataFeed API.  
 
@@ -1090,7 +1090,7 @@ Solutions:
 &nbsp;&nbsp;&nbsp;&nbsp;D.might be more appropriate in situations requiring precise control and targeted processing based on particular events.  
 
 
-**Question 40: Data Processing In a highly regulated healthcare environment, a data engineering team optimizes workloads to process and analyze large volumes of patient data using Databricks. The team faces numerous challenges, including strict privacy and security requirements, complex data relationships, and the need for real-time analytics. They must find the most efficient approach to process the data while ensuring compliance, minimizing resource utilization, and maximizing query performance. Additionally, the team needs to handle frequent data updates and provide near real-time insights to support critical decision-making. Which option should the data engineering team choose to optimize their workloads successfully?** 
+**Question 40: Data Processing In a highly regulated healthcare environment, a data engineering team optimizes workloads to process and analyze large volumes of patient data using Databricks. The team faces numerous challenges, including strict privacy and security requirements, complex data relationships, and the need for real-time analytics. They must find the most efficient approach to process the data while ensuring compliance, minimizing resource utilization, and maximizing query performance. Additionally, the team needs to handle frequent data updates and provide near real-time insights to support critical decision-making. Which optionÂ should the data engineering team choose to optimize their workloads successfully?** 
 
 Options:
 
@@ -1155,7 +1155,7 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. It recommends connecting Databricks to a business intelligence (BI) tool like Tableau or Power BI. The data engineer can use the BI tool's drag-and-drop interface and wealth of visualization options to create visually stunning dashboards by connecting Databricks as a data source. This strategy makes use of Databricks' scalable data processing capabilities and enables the real-time data updates needed in the dashboards. This option offers a complete solution for developing interactive dashboards that satisfy the scenario's requirements by combining the strength of Databricks and BI tools.  
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. It recommends connecting Databricks to a business intelligence (BI) toolÂ like Tableau or Power BI. The data engineer can use the BI tool's drag-and-drop interface and wealth of visualization options to create visually stunning dashboards by connecting Databricks as a data source. This strategy makes use of Databricks' scalable data processing capabilities and enables the real-time data updates needed in the dashboards. This option offers a complete solution for developing interactive dashboards that satisfy the scenario's requirements by combining the strength of Databricks and BI tools.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. It suggests utilizing the transactional capabilities and schema enforcement of Databricks Delta Lake to store and manage the sales and inventory data. Although the time travel function in Delta Lake enables historical analysis, it does not directly address the need for developing interactive dashboards. In contrast to dashboard visualization, Delta Lake places a greater emphasis on data management and reliability.  
 
@@ -1235,7 +1235,7 @@ Solutions:
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Similar to  C, it uses spark.read.format("cloudfiles") to specify the format, which is incorrect for the AutoLoader feature. The proper format is "autoloader". The rest of the syntax and transformations are accurate, but this option is incorrect due to the incorrect format choice.  
 
 
-**Question 46: Data Modeling A data engineer is working on a real-time data analytics project where she needs to ingest streaming data from multiple sources into Databricks using Kafka. To perform real-time analysis to identify popular products based on the number of views within a sliding window of 10 minutes, the data includes user activity logs from an e-commerce platform. Additionally, she also needs to store the outcomes in a different Kafka topic for later processing. Which of the following code snippets correctly implements the required functionality?** 
+**Question 46: Data Modeling A data engineer is working on a real-time data analytics project where she needs to ingest streaming data from multiple sources into Databricks using Kafka. To perform real-time analysis to identify popular products based on the number of views within a sliding window of 10 minutes, the data includes user activity logs from an e-commerce platform. Additionally, she alsoÂ needs to store the outcomes in a different Kafka topic for later processing. Which of the following code snippets correctly implements the required functionality?** 
 
 Options:
 
@@ -1307,7 +1307,7 @@ Solutions:
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. When store-level analysis and store-specific data filtering are required, partitioning the data by the "store_id" column can be beneficial. Similar to the earlier choices, this partitioning strategy does not directly address the demand for a practical time-based analysis. For time-based queries, it might not lead to the best query performance and most effective data retrieval.  
 
 
-**Question 49: Data Modeling A team of data scientists using Spark DataFrames is working on a challenging situation involving cloning operations as part of a complex data engineering project using Databricks. The team must choose the right clone strategy to ensure effective memory usage, top performance, and precise results when working with large datasets. The team must carefully weigh the benefits and drawbacks of each clone strategy to navigate this complex situation. Given the circumstances, which of the following clone strategies is the best option for the team?** 
+**Question 49: Data Modeling A team of data scientists using Spark DataFrames is working on a challenging situation involvingÂ cloningÂ operations as part of a complex data engineering project using Databricks. The team must choose the right clone strategy to ensure effective memory usage, top performance, and precise results when working with large datasets. The team must carefully weigh the benefits and drawbacks of each clone strategy to navigate this complex situation. Given the circumstances, which of the following clone strategies is the best option for the team?** 
 
 Options:
 
@@ -1376,7 +1376,7 @@ Solutions:
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.wise strategy to reduce downtime is to create a temporary table and make changes to it while keeping the original table unaltered. However, if not done properly, switching the tables using an atomic operation can still pose risks and result in possible data inconsistencies. Ensuring a seamless transition between the temporary and original tables complicates the process and might involve extra work.  
 
-&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Before rolling out changes to all users, the gradual rollout strategy enables testing and feedback gathering. Although this method guarantees thorough validation, it might not be appropriate in circumstances involving short deadlines and the need for urgent changes. Multiple versions of the customer-facing table must be carefully monitored and managed to avoid complexity and potential inconsistencies. References: https://www.databricks.com/glossary/acid-transactions https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html Prev Mark for review Next Review Attempt 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 Did you like this Question? Switch to Fullscreen mode © Copyright 2023. Whizlabs Software Pvt. Ltd. All Right Reserved. """  
+&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Before rolling out changes to all users, the gradual rollout strategy enables testing and feedback gathering. Although this method guarantees thorough validation, it might not be appropriate in circumstances involving short deadlines and the need for urgent changes. Multiple versions of the customer-facing table must be carefully monitored and managed to avoid complexity and potential inconsistencies. References: https://www.databricks.com/glossary/acid-transactions https://www.databricks.com/blog/2019/09/24/diving-into-delta-lake-schema-enforcement-evolution.html Prev Mark for review Next Review Attempt 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 Did you like this Question? Switch to Fullscreen mode Â© Copyright 2023. Whizlabs Software Pvt. Ltd. All Right Reserved. """  
 
 
 **Question 52: Security and Governance Building a production pipeline for handling sensitive financial data is necessary for a financial organization, and it must also ensure that the data is securely deleted as per GDPR and CCPA regulations. The lead data engineer must create a safe and effective pipeline that complies with compliance standards after deciding to use Databricks for this purpose. Which of the following strategies should the data engineer employ to guarantee that data is securely deleted?** 
@@ -1451,7 +1451,7 @@ Solutions:
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. The Data Analyst and Data Scientist roles receive excessive permissions under this option. It goes beyond the requirements to grant SELECT, INSERT, UPDATE, and DELETE permissions on the patient demographics and patient health records tables. Although the permissions granted to the Data Manager role are correct, this option does not follow the rule of least privilege for the other roles.  
 
 
-**Question 55: Monitoring and Logging A Spark application running on a cluster is experiencing performance issues and is not meeting its SLA. A data engineer suspects that the issue is related to data skew. Which Spark UI feature can help the data engineer diagnose this problem?**
+**Question 55: A Spark application running on a cluster is experiencing performance issues and is not meeting its SLA. A data engineer suspects that the issue is related to data skew. Which Spark UI feature can help the data engineer diagnose this problem?**
 
 Options:
 
@@ -1475,11 +1475,9 @@ Solutions:
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. Applications that use Spark SQL to query and process data should use the "SQL" tab in the Spark UI. It shows query metrics, the execution plan for SQL queries, and other SQL-related data. While this tab can offer information about query performance and optimization, it might not be the best tool for identifying data skew problems.  
 
 
-**Question 56: Monitoring and Logging Which one of the following is the correct approach to implement a robust monitoring and logging system to track job execution and gather valuable insights from the job run history for a databricks-driven project?**
+**Question 56: Which one of the following is the correct approach to implement a robust monitoring and logging system to track job execution and gather valuable insights from the job run history for a databricks-driven project?**
 
-Options:
-
-&nbsp;&nbsp;&nbsp;&nbsp;T.e aim is to leverage Databricks' capabilities to ensure efficient job monitoring, error detection, and performance optimization.  
+Options:  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.Configure the Databricks job to collect detailed logs during execution by enabling verbose logging. Implement a custom log aggregation mechanism that retrieves logs from the Databricks API and stores them in a separate logging database for analysis. Use log parsing techniques to extract key metrics and insights from the logs, such as job duration, task completion status, and error messages. Develop custom dashboards or visualizations to display these metrics and facilitate real-time monitoring.  
 
@@ -1490,18 +1488,18 @@ Options:
 &nbsp;&nbsp;&nbsp;&nbsp;D.Develop a custom monitoring and logging solution using Databricks Notebooks. Design a notebook that runs periodically to fetch job run history data from the Databricks API and store it in a dedicated database or data lake. Implement data transformation and aggregation processes within the notebook to derive meaningful insights, such as average job duration, task success rates, and resource utilization. Leverage Databricks visualization libraries to create interactive and customizable dashboards for monitoring and analysis.  
 
 
-Solutions:
-
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. It suggests integrating Databricks with third-party logging and monitoring programs like Prometheus and Grafana. By using the Databricks API and custom connectors to export job run metrics and logs to these systems, it is possible to take advantage of the sophisticated querying and visualization features provided by these systems. This choice offers complete monitoring dashboards, notifications, and anomaly detection tools. The ability of external systems to handle large amounts of log data and offer real-time insights is also highlighted. The integration with well-known monitoring systems ensures the compatibility and access to a robust ecosystem of features and community support.  
+Solutions:  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. This option suggests implementing a custom log aggregation mechanism and configuring the Databricks job to gather thorough logs while running. The process of obtaining logs from the Databricks API and storing them in a separate logging database adds complexity, even though enabling verbose logging can provide more in-depth information. It necessitates the creation of unique dashboards for monitoring and custom log parsing methods. In comparison to other options, this one may demand more manual labor and upkeep.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. The focus here is on utilizing the built-in Databricks job run history feature and Databricks Delta Lake for storing the log data. It recommends generating reports for monitoring and analysis using Databricks SQL. Although this option effectively uses Databricks' capabilities, it is only compatible with the platform's built-in features. In comparison to external monitoring and logging systems, it might not offer the same degree of flexibility or sophisticated querying and visualization capabilities. 
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. It suggests integrating Databricks with third-party logging and monitoring programs like Prometheus and Grafana. By using the Databricks API and custom connectors to export job run metrics and logs to these systems, it is possible to take advantage of the sophisticated querying and visualization features provided by these systems. This choice offers complete monitoring dashboards, notifications, and anomaly detection tools. The ability of external systems to handle large amounts of log data and offer real-time insights is also highlighted. The integration with well-known monitoring systems ensures the compatibility and access to a robust ecosystem of features and community support.
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. This option suggests using Databricks Notebooks to create a personalized monitoring and logging system. The implementation of the monitoring solution might involve more manual work even though it permits retrieving job run history data from the Databricks API and performing data transformation and aggregation within the notebook. It depends on creating unique dashboards with Databricks visualization libraries, which might not provide the same level of adaptability and customization as specialized visualization tools. Though it might not offer the same level of sophistication as external monitoring and logging systems, this option may be appropriate for particular use cases where a custom solution is required. 
 
 
-**Question 57: Monitoring and Logging A data engineering team is responsible for managing a large-scale data processing environment using Databricks. One day, they notice a sudden drop in the performance of their data processing jobs, and they suspect that a specific issue might be causing this problem. They opt to use Ganglia metrics to look into and find the source of the problem. Which of the following Ganglia metrics would be most helpful in detecting and diagnosing this specific issue?** 
+**Question 57: A data engineering team is responsible for managing a large-scale data processing environment using Databricks. One day, they notice a sudden drop in the performance of their data processing jobs, and they suspect that a specific issue might be causing this problem. They opt to use Ganglia metrics to look into and find the source of the problem. Which of the following Ganglia metrics would be most helpful in detecting and diagnosing this specific issue?** 
 
 Options:
 
@@ -1516,16 +1514,19 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. The quantity of input/output operations carried out on disk drives is measured by disk I/O utilization. Even though it's a crucial metric for keeping track of disk-related activities, a sudden decline in performance isn't always the result of disk I/O problems. Performance can also suffer from other factors like network congestion, memory leaks, or ineffective code execution.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;B.is correct.    
-
-&nbsp;&nbsp;&nbsp;&nbsp;A.decrease in performance, however, might not necessarily be related to JVM heap memory usage. Although memory-related problems can affect performance, other factors might also affect the specific problem under investigation.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect.  
 
 
-**Question 58: Testing and Deployment To ensure the accuracy and dependability of the PySpark code, a data engineer who works for a financial institution that heavily relies on PySpark and Databricks notebooks for data processing and analysis, wants to emphasize robust testing practices. The data engineer's job includes creating unit tests for the PySpark code found in Databricks notebooks. She must create a unit test for a PySpark function that processes data transformations on a sizable dataset of financial transactions. The function determines aggregated metrics for various categories, including transaction volume, average transaction value, and maximum transaction value. The goal is to develop a unit test that examines key facets of the function and verifies its accuracy and effectiveness. Which of the following approaches should the data engineer use to yield the required results?** 
+&nbsp;&nbsp;&nbsp;&nbsp;A. is incorrect  In this situation, the Databricks cluster status metric will not be feasible. While keeping an eye on the Databricks cluster's general health and status is crucial, the cluster status metric might not offer sufficient detail to identify the precise problem causing the performance drop. Instead of locating the source of performance problems, it focuses more on the availability of different services and components within the cluster.
+
+&nbsp;&nbsp;&nbsp;&nbsp;B. is correct.  A useful Ganglia metric for identifying performance problems is network throughput. The amount of network traffic passing through each cluster node is measured as network throughput. A sudden drop in network throughput may be an indication of issues with connectivity, network congestion, or inadequate network configurations. The data engineering team can identify the precise problem affecting the effectiveness of their data processing jobs by tracking network throughput.   
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect.  The quantity of input/output operations carried out on disk drives is measured by disk I/O utilization. Even though it's a crucial metric for keeping track of disk-related activities, a sudden decline in performance isn't always the result of disk I/O problems. Performance can also suffer from other factors like network congestion, memory leaks, or ineffective code execution. 
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect.   A crucial metric for tracking memory usage inside the Java Virtual Machine is JVM heap memory usage. A decrease in performance, however, might not necessarily be related to JVM heap memory usage. Although memory-related problems can affect performance, other factors might also affect the specific problem under investigation.
+
+
+**Question 58: To ensure the accuracy and dependability of the PySpark code, a data engineer who works for a financial institution that heavily relies on PySpark and Databricks notebooks for data processing and analysis, wants to emphasize robust testing practices. The data engineer's job includes creating unit tests for the PySpark code found in Databricks notebooks. She must create a unit test for a PySpark function that processes data transformations on a sizable dataset of financial transactions. The function determines aggregated metrics for various categories, including transaction volume, average transaction value, and maximum transaction value. The goal is to develop a unit test that examines key facets of the function and verifies its accuracy and effectiveness. Which of the following approaches should the data engineer use to yield the required results?** 
 
 Options:
 
@@ -1540,16 +1541,17 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. The PyTest framework, which is specifically made for unit testing and provides a wide range of testing capabilities, is advised in this option. The data engineer can create unit tests with comprehensive test cases covering various transaction scenarios and input variations by integrating PyTest with the Databricks notebook environment. Utilizing PyTest assertions, you can confirm the accuracy and dependability of the code by comparing the output of the PySpark function to what was anticipated. The effectiveness and coverage of the unit tests are improved by PyTest's use of fixtures and parametrization.    
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. This option recommends using PySpark's DataFrame API to create synthetic test data and conduct unit tests, but PyTest's comprehensive testing framework is not included. The degree of flexibility and sophisticated testing features offered by PyTest may be greater than those of the DataFrame API alone. Furthermore, evaluating the function's correctness does not necessarily depend on how long it takes to execute. The accuracy of the calculated metrics should be the main concern, and PyTest's assertions can help with this.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. This choice depends on visual examination and manual validation through the display feature. While it might give you a quick way to look at the output, it is not a scalable or reliable method for performing exhaustive unit testing. Human error can occur during manual verification, and automated testing is more systematic. Additionally, without a structured testing framework, it may be difficult to identify the root cause of any issues when discrepancies are recorded for further investigation.  
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is correct. The PyTest framework, which is specifically made for unit testing and provides a wide range of testing capabilities, is advised in this option. The data engineer can create unit tests with comprehensive test cases covering various transaction scenarios and input variations by integrating PyTest with the Databricks notebook environment. Utilizing PyTest assertions, you can confirm the accuracy and dependability of the code by comparing the output of the PySpark function to what was anticipated. The effectiveness and coverage of the unit tests are improved by PyTest's use of fixtures and parametrization.    
+
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. The Databricks dbutils module offers practical utilities, but it is made more for administrative work and notebook integration than for specialized unit testing. In comparison to a focused testing framework like PyTest, it might only provide a limited set of capabilities for inspecting and confirming the calculated metrics. Additionally, thorough unit testing may not be possible with just the capture and analysis of execution logs.  
 
 
-**Question 59: Testing and Deployment A senior data engineer working in a large e-commerce company is responsible for managing data processing tasks in Databricks. The company's data pipelines involve intricate transformations and aggregations that call for the completion of numerous tasks in a particular order. The data engineer chooses to use Databricks Jobs with the Multiple Task CLI feature to speed up the completion of these tasks. Using this feature, he can define and manage multiple tasks within a single job, resulting in effective task execution and dependency management. Which of the following plans would give the data engineer the best potential to handle the problems mentioned?** 
+**Question 59: A senior data engineer working in a large e-commerce company is responsible for managing data processing tasks in Databricks. The company's data pipelines involve intricate transformations and aggregations that call for the completion of numerous tasks in a particular order. The data engineer chooses to use Databricks Jobs with the Multiple Task CLI feature to speed up the completion of these tasks. Using this feature, he can define and manage multiple tasks within a single job, resulting in effective task execution and dependency management. Which of the following plans would give the data engineer the best potential to handle the problems mentioned?** 
 
 Options:
 
@@ -1564,16 +1566,18 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. This option includes using the Databricks CLI command databricks jobs create and suggests configuring tasks with dependencies, implementing error handling, and monitoring job execution logs. However, it lacks the fault-tolerant architecture, checkpointing, and state management mechanisms mentioned in the problem description. It may not provide the best potential for handling complex data processing tasks in a reliable and resilient manner.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;D.is correct. This option suggests designing the job configuration with fault-tolerant architecture, utilizing databricks jobs created to define tasks with dependencies, and implementing a retry mechanism. It also mentions checkpointing and state management mechanisms for job resiliency. Furthermore, it suggests integrating Databricks with external workflow management systems like Apache Airflow to enhance job monitoring, error handling, and automatic retries. This option aligns with the requirements of handling intricate data processing tasks effectively.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;A.is incorrect. This option suggests using the Databricks CLI command databricks jobs create to configure the job and define tasks with their dependencies. It also mentions implementing error-handling mechanisms and monitoring job execution logs. However, it lacks the fault-tolerant architecture and external workflow management integration mentioned in the problem description. Therefore, it may not provide the best potential for handling complex data processing tasks.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. This option also utilizes the Databricks CLI command databricks jobs create and suggests implementing custom error-handling logic, manual intervention, and monitoring the job execution status. However, it lacks the comprehensive error handling, retry mechanism, and external workflow management integration mentioned in the problem description. It may not be the most effective solution for handling intricate data processing tasks.  
 
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. This option includes using the Databricks CLI command databricks jobs create and suggests configuring tasks with dependencies, implementing error handling, and monitoring job execution logs. However, it lacks the fault-tolerant architecture, checkpointing, and state management mechanisms mentioned in the problem description. It may not provide the best potential for handling complex data processing tasks in a reliable and resilient manner.  
 
-**Question 60: Testing and Deployment A data engineer works in a fast-paced software development company that utilizes Databricks for its data analytics and machine learning projects. The company places a strong emphasis on collaboration and version control to guarantee code reproducibility and speed up deployment procedures. She must choose the Databricks Version Control (Repos) features that will support code/notebook versioning and deployment as the data engineer. Which of the following Databricks Version Control (Repos) features would offer the best option for code/notebook versioning and deployment, taking into account the needs of the organization?** 
+&nbsp;&nbsp;&nbsp;&nbsp;D.is correct. This option suggests designing the job configuration with fault-tolerant architecture, utilizing databricks jobs created to define tasks with dependencies, and implementing a retry mechanism. It also mentions checkpointing and state management mechanisms for job resiliency. Furthermore, it suggests integrating Databricks with external workflow management systems like Apache Airflow to enhance job monitoring, error handling, and automatic retries. This option aligns with the requirements of handling intricate data processing tasks effectively.  
+
+
+
+**Question 60: A data engineer worksÂ in a fast-paced software development company that utilizes Databricks for its data analytics and machine learning projects. The company places a strong emphasis on collaboration and version control to guarantee code reproducibility and speed up deployment procedures. She must choose the Databricks Version Control (Repos) features that will support code/notebook versioning and deployment as the data engineer. Which of the following Databricks Version Control (Repos) features would offer the best option for code/notebook versioning and deployment, taking into account the needs of the organization?** 
 
 Options:
 
@@ -1588,10 +1592,12 @@ Options:
 
 Solutions:
 
-&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It recommends using the CI/C  
-
 &nbsp;&nbsp;&nbsp;&nbsp;A.is correct. It suggests using Databricks Repos' branching and merging features to control multiple development streams and separate code changes. Teams can work on different branches using this method, merging changes into the main branch when it's time for deployment. This is the correct response because it supports collaboration and reduces conflicts during development while aligning with the organization's requirements for code/notebook versioning and deployment.  
 
 &nbsp;&nbsp;&nbsp;&nbsp;B.is incorrect. Although implementing a pull request workflow is a standard practice in software development, Databricks Repos are not the only place it can be done. Pull requests are frequently related to version control tools like Git, where programmers can propose changes, get feedback, and check the quality of their code before merging it into the main branch. The features of Databricks Repos for code/notebook versioning and deployment are not directly addressed by this workflow, even though it encourages collaboration and upholds code integrity.  
+
+
+&nbsp;&nbsp;&nbsp;&nbsp;C.is incorrect. It recommends using the CI/CD
+
 
 &nbsp;&nbsp;&nbsp;&nbsp;D.is incorrect. It suggests using Databricks Repos version tagging to identify significant milestones or releases in the codebase. Teams can use version tagging to assign tags to particular commits or branches, making it simpler to track and refer to particular versions for auditing and reproducibility needs. Although it is a useful feature, version tagging does not provide a comprehensive approach to code/notebook versioning and deployment. It cannot manage different development streams, isolate code changes, or accelerate the deployment process essential issues dealt with by  A.  
