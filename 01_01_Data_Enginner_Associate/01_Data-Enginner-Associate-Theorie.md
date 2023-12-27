@@ -101,12 +101,10 @@ OPTIONS (
   header = "true",
   delimiter = ";"
 )
-LOCATION "${dataset.bookstore}/books-csv"
-
+LOCATION "${dataset_path}/books-csv"
 ```
 
-**Python**
-```
+```python
 spark.sql(f"""
 CREATE TABLE IF NOT EXISTS sales_csv
   (order_id LONG, email STRING, transactions_timestamp LONG, total_item_quantity INTEGER, purchase_revenue_in_usd DOUBLE, unique_items INTEGER, items STRING)
@@ -117,13 +115,11 @@ OPTIONS (
 )
 LOCATION "{sales_csv_path}"
 """)
-
-
 ```
 
 - Convert a external location in a DELTA table.
 
-```
+```sql
 CREATE TABLE my_delta_table
 USING DELTA
 LOCATION '/my_path/'
@@ -138,7 +134,7 @@ LOCATION '/my_path/'
 
 ### Extracting Data FROM SQL Databases
 
-```
+```sql
 CREATE TABLE
 USING JDBC
 OPTIONS (
@@ -152,7 +148,7 @@ OPTIONS (
 
 ### Testing
 
-```
+```python
 assert spark.table("events_json"), "Table named `events_json` does not exist"
 assert spark.table("events_json").columns == ['key', 'offset', 'partition', 'timestamp', 'topic', 'value'], "Please name the columns in the order provided above"
 
@@ -167,7 +163,7 @@ assert total == 2252, f"Expected 2252 records, found {total}"
 
 `INSERT OVERWRITE`: Overwrite the actual data for the given one.
 
-```
+```sql
 INSERT OVERWRITE orders
 SELECT * FROM parquet.`${dataset.bookstore}/orders`
 ```
@@ -176,7 +172,7 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders`
 
 `MERGE INTO`: It is used when we want to insert data and at the same time we do not want to have repeated data.
 
-```
+```python
 MERGE INTO books b
 USING books_updates u
 ON b.book_id = u.book_id AND b.title = u.title
@@ -186,7 +182,7 @@ WHEN NOT MATCHED AND u.category = 'Computer Science' THEN
 
 ### Cleaning Data
 
-```
+```python
 FROM pyspark.sql import functions as F
 
 
@@ -202,9 +198,8 @@ df = spark.createDataFrame(data=[(None, None, None, None), (None, None, None, No
       .saveAsTable("users_dirty"))
 ```
 
-```
+```python
 FROM pyspark.sql.functions import col
-
 
 usersDF = spark.read.table("users_dirty")
 usersDF.SELECTExpr("count_if(email IS NULL)")
@@ -212,7 +207,7 @@ usersDF.where(col("email").isNull()).count()
 userDF.distinct().count()	  
 ```
 
-```
+```python
 FROM pyspark.sql.functions import max
 
 # remember  usersDF = spark.read.table("users_dirty")
@@ -231,16 +226,15 @@ dedupedDF.count()
 
 The result should be True or False
 
-**SQL**
-```
+
+```sql
 SELECT max(row_count) <= 1 no_duplicate_ids FROM (
   SELECT user_id, count(*) AS row_count
   FROM deduped_users
   GROUP BY user_id)
 ``` 
 
-**Python**
-```
+```python
 FROM pyspark.sql.functions import count
 
 display(dedupedDF
@@ -251,9 +245,7 @@ display(dedupedDF
 
 **Date Format and Regex**
 
-**SQL**
-
-```
+```sql
 SELECT 
   --*, 
   date_format(first_touch, "MMM d, yyyy") AS first_touch_date,
@@ -265,9 +257,8 @@ FROM (
   FROM deduped_users
 )
 ```
-**Python**
 
-```
+```python
 FROM pyspark.sql.functions import date_format, regexp_extract
 
 display(dedupedDF
@@ -282,7 +273,7 @@ display(dedupedDF
 
 ### Advanced Transformations
 
-```
+```python
 # function to make shallow clone table.
 
 def clone_source_table(table_name, source_path, source_name=None):
@@ -297,12 +288,12 @@ def clone_source_table(table_name, source_path, source_name=None):
         """)
 ```
 
-```		
+```python
 data_path_2_5 = "dbfs:/mnt/my_path/"	
 clone_source_table("sales", f"{data_path_2_5}/ecommerce/delta", "sales_hist")
 ```
 
-```
+```python
 df = spark.table("events_raw")
 for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
