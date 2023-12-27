@@ -312,8 +312,7 @@ Let's use the JSON string example above to derive the schema, then parse the ent
 
 
 
-**SQL**
-```
+```sql
 CREATE OR REPLACE TEMP VIEW parsed_customers AS
   SELECT customer_id, FROM_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris",
                                                           "country":"France"}}')) AS profile_struct
@@ -322,8 +321,7 @@ CREATE OR REPLACE TEMP VIEW parsed_customers AS
 SELECT * FROM parsed_customers
 ```
 	
-**Python**
-```
+```python
 FROM pyspark.sql.functions import FROM_json, schema_of_json
 
 json_string = """
@@ -342,15 +340,14 @@ display(parsed_eventsDF)
 ```
 
 **Use of `:` SQL**
-
-**SQL**   
-```
+  
+```sql
 SELECT * FROM events_strings WHERE value:event_name = "finalize" ORDER BY key LIMIT 1
 ```
 
 **Use of `:` Python**  
 
-```
+```python
 display(events_stringsDF
     .where("value:event_name = 'finalize'")
     .orderBy("key")
@@ -365,8 +362,7 @@ display(events_stringsDF
 `size()` provides a count for the number of elements in an array for each row.  
 
 
-**SQL**
-```
+```sql
 CREATE OR REPLACE TEMP VIEW exploded_events AS
 SELECT *, explode(items) AS item
 FROM parsed_events;
@@ -375,8 +371,7 @@ SELECT * FROM exploded_events WHERE size(items) > 2
 ```
 
 
-**Python**
-```
+```python
 FROM pyspark.sql.functions import explode, size
 
 exploded_eventsDF = (parsed_eventsDF
@@ -390,8 +385,8 @@ display(exploded_eventsDF.where(size("items") > 2))
 `flatten()` combines multiple arrays into a single array.  
 `array_distinct()` removes duplicate elements FROM an array.  
 
-**SQL** 
-```
+
+```sql
 SELECT user_id,
   collect_set(event_name) AS event_history,
   array_distinct(flatten(collect_set(items.item_id))) AS cart_history
@@ -399,11 +394,7 @@ FROM exploded_events
 GROUP BY user_id
 ```
 
-
-
-**python**
-
-```
+```python
 FROM pyspark.sql.functions import array_distinct, collect_set, flatten
 
 display(exploded_eventsDF
@@ -415,9 +406,7 @@ display(exploded_eventsDF
 
 **Join Tables**
 
-**SQL**
-
-```
+```sql
 CREATE OR REPLACE TEMP VIEW item_purchases AS
 
 SELECT * 
@@ -429,8 +418,7 @@ SELECT * FROM item_purchases
 ```
 
 
-**Python**
-```
+```python
 exploded_salesDF = (spark
     .table("sales")
     .withColumn("item", explode("items"))
