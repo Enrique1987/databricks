@@ -1,5 +1,5 @@
 
-# Databricks Theorie for Data Engineer Associate.
+## Databricks Theorie for Data Engineer Associate.
 
 The theory consists of both theoretical concepts and the corresponding code. Both will be ask in the Exam.
 
@@ -12,22 +12,22 @@ This hybrid approach aims to support a wide range of use cases, FROM big data pr
 
 **Challenges in the Data Lakehouse:** 
 
-- Large scale ETL is complex and brittle
+- Large scale ETL is complex and brittle.  
 
-**complex pipeline development:** 
+**Complex pipeline development:** 
  
-- Hard to build and maintain table depencencies´  
-- Difficult to switch between `batch` and `stream`    
+- Hard to build and maintain table depencencies´.  
+- Difficult to switch between `batch` and `stream`.     
 	 
 **Data quality and governance**   
 
-- Difficult to monitor and enfornce `data quality`  
-- Impossible to trace data lineage  
+- Difficult to monitor and enfornce `data quality`.   
+- Impossible to trace data lineage.  
 
 **Difficult pipeline operations** 
   
-- Poor ´observability´ at granual data levels  
-- Error handling and `recovery is laborious`  
+- Poor ´observability´ at granual data levels.  
+- Error handling and `recovery is laborious`.    
 	
 
 
@@ -35,16 +35,15 @@ This hybrid approach aims to support a wide range of use cases, FROM big data pr
 
 ### External Table
 
-- Location need to be added
-- We cannot expect the performance guarantees associated with Delta Lake, example with DT you always guery the most recent version of your source data but it
+- Location need to be added.
+- We cannot expect the performance guarantees associated with Delta Lake, example with DT you always guery the most recent version of your source data but
 it could not be the case with external tables.
 
 
 ### External Tables: Querying Files Directly
 
-**Python**
 
-```
+```python
 events_kafka = "dbfs:/mnt/path/"
 files = dbutils.fs.ls(events_kafka)
 display(files)
@@ -66,7 +65,7 @@ display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 
 
 
-```
+```sql
 CREATE OR REPLACE VIEW event_view
 AS SELECT * FROM json.`dbfs:/mnt/my_path/`
 
@@ -82,7 +81,7 @@ SELECT * FROM csv.`dbfs:/mnt/my_path/`
 ```
 **3 different ways to query FROM a Directory**
 
-```
+```sql
 SELECT * FROM json.`${dataset.bookstore}/customers-json/export_001.json` 
 UNION ALL
 SELECT * FROM json.`${dataset.bookstore}/customers-json/export_*.json` 
@@ -92,8 +91,7 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/`
 
 ### External Tables - Providing Options for External Sources
 
-**SQL**
-```
+```sql
 DROP TABLE IF EXISTS books_csv;
 
 CREATE TABLE  if not exists books_csv
