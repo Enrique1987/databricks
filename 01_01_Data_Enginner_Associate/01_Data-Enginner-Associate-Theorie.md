@@ -64,7 +64,6 @@ display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 `json` `text` `binaryFile` `csv`
 
 
-
 ```sql
 CREATE OR REPLACE VIEW event_view
 AS SELECT * FROM json.`dbfs:/mnt/my_path/`
@@ -90,6 +89,7 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/`
 ```
 
 ### External Tables - Providing Options for External Sources
+A table is classified as external based on whether you define a storage LOCATION for it, regardless of whether that location is inside DBFS or in other cloud storage services.
 
 ```sql
 DROP TABLE IF EXISTS books_csv;
@@ -117,7 +117,7 @@ LOCATION "{sales_csv_path}"
 """)
 ```
 
-- Convert a external location in a DELTA table.
+- Convert a external location in a DELTA table. --> Its a Delta Table but still a external Table.
 
 ```sql
 CREATE TABLE my_delta_table
@@ -149,7 +149,8 @@ OPTIONS (
 ### Testing
 
 ```python
-assert spark.table("events_json"), "Table named `events_json` does not exist"
+assert spark.table("events_json"), "Table named `events_json` does not exist" 
+
 assert spark.table("events_json").columns == ['key', 'offset', 'partition', 'timestamp', 'topic', 'value'], "Please name the columns in the order provided above"
 
 assert spark.table("events_json").dtypes == [('key', 'binary'), ('offset', 'bigint'), ('partition', 'int'), ('timestamp', 'bigint'), ('topic', 'string'), ('value', 'binary')], "Please make sure the column types are identical to those provided above"
@@ -161,18 +162,21 @@ assert total == 2252, f"Expected 2252 records, found {total}"
 
 ### Writing to Tables
 
-`INSERT OVERWRITE`: Overwrite the actual data for the given one.
+`INSERT OVERWRITE`, `INSERT INTO`, `MERGE INTO`
+
+
+`INSERT OVERWRITE`: Overwrite the actual data for the given one.  
+`INSERT INTO`: Append the give data to the Table. May incur duplication of data.  
+`MERGE INTO`: It is used when we want to insert data and at the same time we do not want to have repeated data.  
 
 ```sql
 INSERT OVERWRITE orders
-SELECT * FROM parquet.`${dataset.bookstore}/orders`
+SELECT * FROM parquet.`${path}/orders`
 ```
 
-`INSERT INTO`: Append the give data to the Table. May incur duplication of data.
 
-`MERGE INTO`: It is used when we want to insert data and at the same time we do not want to have repeated data.
 
-```python
+```sql
 MERGE INTO books b
 USING books_updates u
 ON b.book_id = u.book_id AND b.title = u.title
@@ -184,6 +188,7 @@ WHEN NOT MATCHED AND u.category = 'Computer Science' THEN
 
 ```python
 FROM pyspark.sql import functions as F
+FROM pyspark.sql.functions import col
 
 
 data_path_24 = "dbfs:/mnt/my_path/"
@@ -196,21 +201,14 @@ df = spark.createDataFrame(data=[(None, None, None, None), (None, None, None, No
       .write
       .mode("overwrite")
       .saveAsTable("users_dirty"))
-```
 
-```python
-FROM pyspark.sql.functions import col
+
 
 usersDF = spark.read.table("users_dirty")
 usersDF.SELECTExpr("count_if(email IS NULL)")
 usersDF.where(col("email").isNull()).count()  
 userDF.distinct().count()	  
-```
 
-```python
-FROM pyspark.sql.functions import max
-
-# remember  usersDF = spark.read.table("users_dirty")
 
 dedupedDF = (usersDF
     .where(col("user_id").isNotNull())
@@ -274,10 +272,8 @@ display(dedupedDF
 ### Advanced Transformations
 
 ```python
-# function to make shallow clone table.
-
 def clone_source_table(table_name, source_path, source_name=None):
-    
+    "Make shallow clone table"   
 
     source_name = table_name if source_name is None else source_name
     print(f"Cloning the \"{table_name}\" table FROM \"{source_path}/{source_name}\".", end="...")
@@ -299,7 +295,7 @@ for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
 ```
 
-**Work with Nested Data**   
+### Work with Nested Data
 
 **Note**: Spark SQL has a built-in functionality to directly interact with nested data stored as JSON string or struct types
 
