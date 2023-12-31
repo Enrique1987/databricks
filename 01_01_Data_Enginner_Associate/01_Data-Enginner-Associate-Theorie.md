@@ -306,8 +306,6 @@ Use `.` syntax in queries to access subfiesl in struct types
 
 Let's use the JSON string example above to derive the schema, then parse the entire JSON column into struct types.
 
-
-
 ```sql
 CREATE OR REPLACE TEMP VIEW parsed_customers AS
   SELECT customer_id, FROM_json(profile, schema_of_json('{"first_name":"Thomas","last_name":"Lane","gender":"Male","address":{"street":"06 Boulevard Victor Hugo","city":"Paris",
@@ -335,13 +333,11 @@ display(parsed_eventsDF)
 
 ```
 
-**Use of `:` SQL**
+Use of `:` 
   
 ```sql
 SELECT * FROM events_strings WHERE value:event_name = "finalize" ORDER BY key LIMIT 1
 ```
-
-**Use of `:` Python**  
 
 ```python
 display(events_stringsDF
@@ -399,7 +395,6 @@ display(exploded_eventsDF
             array_distinct(flatten(collect_set("items.item_id"))).alias("cart_history"))		
 ```
 
-
 **Join Tables**
 
 ```sql
@@ -431,9 +426,7 @@ display(item_purchasesDF)
 
 **Pivot**
 
-**SQL**
-
-```
+```sql
 SELECT *
 FROM (SELECT item_id, name, count(item_id) as count_item FROM table_name_item group by item_id, name order by item_id desc) purchases_curated
 PIVOT (sum(count_item) for item_id in ("P_FOAM_S", "M_STAN_T"));
@@ -458,10 +451,7 @@ PIVOT (
 )
 ```
 
-
-**python**
-
-```
+```python
 transactionsDF = (item_purchasesDF
     .groupBy("order_id", 
         "email",
@@ -490,8 +480,8 @@ display(transactionsDF)
  - We can use **DESCRIBE FUNCTION**to see where a function was registerd and basic information about expected inputs and what is returned   
 
 
-**SQL - CASE WHEN**
-```
+**CASE WHEN**
+```sql
 CREATE OR REPLACE FUNCTION item_preference(name STRING, price INT)
 RETURNS STRING
 RETURN CASE 
@@ -1332,7 +1322,7 @@ VALUES (3 INT, 2 INT, 1 INT);
 View will be st as Table but Temp View not.
 
 
-````
+```sql
 CREATE VIEW view_apple_phones
 AS  SELECT * 
     FROM smartphones 
@@ -1362,7 +1352,7 @@ DROP VIEW global_temp.global_temp_view_latest_phones;
 
 ## ETL With Spark and Python
 
-```
+```python
 dataset_bookstore = 'dbfs:/mnt/demo-datasets/bookstore'
 spark.conf.set(f"dataset.bookstore", dataset_bookstore)
 files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
@@ -1370,9 +1360,7 @@ files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
 
 
 
-```
-
-%sql
+```sql
 -- input_file_name and time_s
  SELECT email,
     input_file_name() source_file,
