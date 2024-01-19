@@ -1,13 +1,13 @@
 
 ## Databricks Theorie for Data Engineer Associate.
 
-The theory consists of both theoretical concepts and the corresponding code. Both will be ask in the Exam.
+The theory consists of both theoretical concepts and the corresponding code. Both will be ask in the Exam.  
 
 ## Data Lakehouse
 
 A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. If offers the vast storage capabilities and flexibility of a data lakehause
 to handle large volumes of raw, detailed data, alongside the strutured querying and performance optimizationof a data warehouse.
-This hybrid approach aims to support a wide range of use cases, FROM big data processing and machine learning to business intelligence and analytics, all within a single platform.
+This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
 
 
 **Challenges in the Data Lakehouse:** 
@@ -26,7 +26,7 @@ This hybrid approach aims to support a wide range of use cases, FROM big data pr
 
 **Difficult pipeline operations** 
   
-- Poor ´observability´ at granual data levels.  
+- Poor `observability`at granual data levels.  
 - Error handling and `recovery is laborious`.    
 	
 
@@ -61,7 +61,7 @@ display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 
 ### External Tables: Querying different types of data
 
-`json` `text` `binaryFile` `csv`
+`json`, `text`, `binaryFile`, `csv`
 
 
 ```sql
@@ -89,7 +89,7 @@ SELECT * FROM json.`${dataset.bookstore}/customers-json/`
 ```
 
 ### External Tables - Providing Options for External Sources
-A table is classified as external based on whether you define a storage LOCATION for it, regardless of whether that location is inside DBFS or in other cloud storage services.
+A table is classified as external based on whether you define a storage `LOCATION` for it, regardless of whether that location is inside DBFS or in other cloud storage services.
 
 ```sql
 DROP TABLE IF EXISTS books_csv;
