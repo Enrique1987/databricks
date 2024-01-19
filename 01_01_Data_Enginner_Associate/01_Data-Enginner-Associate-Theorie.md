@@ -116,9 +116,7 @@ OPTIONS (
 LOCATION "{sales_csv_path}"
 """)
 ```
-
-- Convert a external location in a DELTA table. --> Its a Delta Table but still a external Table.
-
+We can use Delta in `USING DELTA` and a Delta table will be generate but aslong as it have location its always a external table.
 ```sql
 CREATE TABLE my_delta_table
 USING DELTA
@@ -348,7 +346,7 @@ display(events_stringsDF
 
 ```
 
-**Manipulate Arrays
+**Manipulate Arrays**  
 
 `explode()` separates the elements of an array into multiple rows; this creates a new row  for each elemnt.  
 `size()` provides a count for the number of elements in an array for each row.  
@@ -475,7 +473,7 @@ display(transactionsDF)
 **SQL user-defined functions:**    
  - Persist between execution environments  
  - Exist as objects in the metastore and are governed by the same Table ACLs as databases, tables or views.  
- - Require **USAGE**and **SELECT**permision to use the SQL UDF  
+ - Require **USAGE** and **SELECT** permision to use the SQL UDF  
  - These functions are registered natively in SQL and maintain all of the optimizations of Spark when applying custom logic to large datasets.  
  - We can use **DESCRIBE FUNCTION**to see where a function was registerd and basic information about expected inputs and what is returned   
 
@@ -492,22 +490,21 @@ RETURN CASE
 END;
 
 SELECT *, item_preference(name, price) FROM item_lookup
-
 ```
 
 ### Python User-Defined Fuinctions
 
 **UDF**  
 User Defined Functions allow users to define their own transformations on Spark DataFrames
-- Can´t be optimized by Catalyst Optimizer  
-- Function is serialized ans sent to executors  
+- Can´t be optimized by Catalyst Optimizer.   
+- Function is serialized and sent to executors.    
 - Row data is deserializd FROM Spark´s native binary format to pass to the UDF, and the results are serialized back into Spark´s native format.  
 - For Python UDF´s additional interprocess communication overhead between the executor and a Python interpreter running on each worked node.  
 
 
 **Python-functions**
 
-```
+```python
 def first_letter_function(email):
     return email[0]
 
@@ -517,12 +514,14 @@ first_letter_function("annagray@kaufman.com")
 Create apply UDF, register the function as a UDF. This serializes the function and sends it to executors to be able to transofrm DataFrame records.
 
 
-`first_letter_udf = udf(first_letter_function)`
+```python
+first_letter_udf = udf(first_letter_function)
+```
 
 So once you create a UDF functions you would pass FROM a Python function to a Pyspark function
 
 
-```
+```python
 FROM pyspark.sql.functions import col
 display(sales_df.SELECT(first_letter_udf(col("email"))))
 ```
