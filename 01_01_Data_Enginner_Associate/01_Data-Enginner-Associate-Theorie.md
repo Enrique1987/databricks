@@ -531,7 +531,7 @@ display(sales_df.SELECT(first_letter_udf(col("email"))))
 Using `spark.udf.register`
 
 
-```
+```python
 sales_df.createOrReplaceTempView("sales")
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 display(sales_df.SELECT(first_letter_udf(col("email"))))
@@ -539,21 +539,21 @@ display(sales_df.SELECT(first_letter_udf(col("email"))))
 
 **UDF with decoratos**
 
-```
+```python
 @udf("string")
 def first_letter_udf_decorator(email: str) -> str:
     return email[0]
 ```
 **Pandas UDF**  
-Are special types of UDFs that use the power of the `pandas` library withing a Spark DataFrame operation, Here are the advantages of using `pandas UDFs` over normal UDFs:
+Are special types of UDFs that use the power of the `pandas` library withing a Spark DataFrame operation. Here are the advantages of using `pandas UDFs` over normal UDFs:
 
 +  **Performance:** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
 
 +  **Memory management:** Allow for more efficient memory usage because they use `Arrow` for data serialization
 
-+ Uses **Apache Arrow:**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serializationcosts
++ Uses **Apache Arrow:**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serialization costs
 
-```
+```python
 import pandas as pd
 FROM pyspark.sql.functions import pandas_udf
 
@@ -570,7 +570,7 @@ We can alsro register Pandas UDF to the SQL namespaces
 
 ### Higher Oder Functions in Spark SQL -- SparkSQL Built-in Functions
 
-They use indeed use the "optimizer Catalyst" unlike UDF functions.
+They use indeed use the `optimizer Catalyst` unlike UDF functions.
 
 - `FILTER()` filters an array using the given lambda function.  
 - `EXIST()` tests whether a statement is true for one or more elements in an array.  
@@ -578,14 +578,14 @@ They use indeed use the "optimizer Catalyst" unlike UDF functions.
 - `REDUCE()` takes two lambda functions to reduce the elements of an array to a single value by merging the elements into a buffer, and the apply a finishing function on the final buffer.  
 
 
-```
+```sql
 SELECT
     items,
     FILTER (items, i -> i.item_id LIKE "%K") AS king_items
 FROM sales
 ````
 
-```
+```sql
 SELECT items,
   TRANSFORM (
     items, i -> CAST(i.item_revenue_in_usd * 100 AS INT)
