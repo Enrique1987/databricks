@@ -15,6 +15,38 @@
 #### Spark Structure Data
 ![Description of Image](img/01_Spark_Structure_Data.PNG)
 
+
+### Delta Lake Review  
+
+- Open-source Storage Layer.
+- ACID Transactions.  
+- Time Travel.  
+- Schema enforcement and evolution.(validation schema + allow schema evolotuion over time.).  
+- Parquet fromat.  
+- Compatible with Apache Spark API.  
+
+### Machine Learning Engineer
+
+- What is machine learning ? Learn patterns and relationships in your data without explicitly programming them.  
+
+
+#### Machine Learning Workflow
+
+- 1. Define Business Use Case.  
+- 2. Define Success, Constraints and infrastructure.  
+- 3. Data Collation.  
+- 4. Feature Engineering.  
+- 5. Modeling.  
+- 6. Deployment.  
+
+(Loop)
+
+#### Importance of Data Visualization
+
+![importance of Visualization](img/02_Importance_Visualization.PNG)
+
+
+
 ## AutoML
 AutoML, or Automated Machine Learning, is a process that automates the end-to-end tasks of applying machine learning to real-world problems.
 It simplifies the model selection, preprocessing, feature engineering, and hyperparameter tuning steps, making machine learning more accessible and efficient, particularly for non-experts.
