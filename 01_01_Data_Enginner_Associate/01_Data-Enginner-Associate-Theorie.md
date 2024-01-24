@@ -511,14 +511,14 @@ def first_letter_function(email):
 first_letter_function("annagray@kaufman.com")
 ```
 
-Create apply UDF, register the function as a UDF. This serializes the function and sends it to executors to be able to transofrm DataFrame records.
+Create apply UDF, register the function as a UDF. This serializes the function and sends it to executors to be able to transform DataFrame records.
 
 
 ```python
 first_letter_udf = udf(first_letter_function)
 ```
 
-So once you create a UDF functions you would pass FROM a Python function to a Pyspark function
+So once you create a UDF functions you would pass FROM a Python function to a Pyspark function.
 
 
 ```python
@@ -531,7 +531,7 @@ display(sales_df.SELECT(first_letter_udf(col("email"))))
 Using `spark.udf.register`
 
 
-```python
+```
 sales_df.createOrReplaceTempView("sales")
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 display(sales_df.SELECT(first_letter_udf(col("email"))))
@@ -539,21 +539,21 @@ display(sales_df.SELECT(first_letter_udf(col("email"))))
 
 **UDF with decoratos**
 
-```python
+```
 @udf("string")
 def first_letter_udf_decorator(email: str) -> str:
     return email[0]
 ```
 **Pandas UDF**  
-Are special types of UDFs that use the power of the `pandas` library withing a Spark DataFrame operation. Here are the advantages of using `pandas UDFs` over normal UDFs:
+Are special types of UDFs that use the power of the `pandas` library withing a Spark DataFrame operation, Here are the advantages of using `pandas UDFs` over normal UDFs:
 
 +  **Performance:** Traditional UDFs operate row-by-row, in contrast pandas UDFs work on batches of rows and ulithe the perfomrance optimization inherent to pandas operatiosn which are oftern implemente in C underneath.
 
 +  **Memory management:** Allow for more efficient memory usage because they use `Arrow` for data serialization
 
-+ Uses **Apache Arrow:**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serialization costs
++ Uses **Apache Arrow:**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serializationcosts
 
-```python
+```
 import pandas as pd
 FROM pyspark.sql.functions import pandas_udf
 
@@ -570,7 +570,7 @@ We can alsro register Pandas UDF to the SQL namespaces
 
 ### Higher Oder Functions in Spark SQL -- SparkSQL Built-in Functions
 
-They use indeed use the `optimizer Catalyst` unlike UDF functions.
+They use indeed use the "optimizer Catalyst" unlike UDF functions.
 
 - `FILTER()` filters an array using the given lambda function.  
 - `EXIST()` tests whether a statement is true for one or more elements in an array.  
@@ -593,7 +593,7 @@ SELECT items,
 FROM sales limit 3
 ```
 
-```
+```sql
 SELECT 
     items,
     EXISTS(SELECT 1 WHERE regexp_replace(CAST(items.item_name as STRING), '\\[|\\]', '') LIKE '%Mattress') AS mattress,
@@ -607,21 +607,14 @@ LIMIT 3;
 - **SparkSQL Built-in Functions:** They are natively integrated into Spark´s Catalyst optimizer, that will optimize the execution plan for these operations,
 ensuring efficient processing. This is one reason why using built-in functions is often faster thatn using custom UDF´s.
 
-- **User Defined Functions(UDFs):** When you create a UDF, Spark´s Catalyst optimizer doesnt´t have visibility into the logic of the function, meaning it can´t optimize it as
- effectively as built-in functions.
+- **User Defined Functions(UDFs):** When you create a UDF, Spark´s Catalyst optimizer doesnt´t have visibility into the logic of the function, meaning it can´t optimize it as effectively as built-in functions.
  
-- **pandas UDFs:** As an intermediary step, pandas UDFs(or vectorized UDFs) allow for more efficient processing than tradicitonal UDFs since they operate on batches of data using
-pandas which is inherently more optimized thatn row-by-row operations.
+- **pandas UDFs:** As an intermediary step, pandas UDFs(or vectorized UDFs) allow for more efficient processing than tradicitonal UDFs since they operate on batches of data using pandas which is inherently more optimized thatn row-by-row operations.
 
 So whenever possible, it´s recommended to utilize SparkSQL´s built-in functions to benefit FROM the full optimization capabilities of the Catalyst engine.
 
 
-
-
-
-
-
-```
+```python
 OPTIMIZE students
 ZORDER BY id
 
@@ -630,7 +623,7 @@ DESCRIBE HISTORY students
 
 **Roll Back and Versions**
 
-```
+```sql
 SELECT * FROM students c WHERE c.id not in (SELECT a.id 
 FROM (SELECT * FROM students  VERSION AS OF 3) a
 INNER JOIN (SELECT * FROM students VERSION as OF 7) b
@@ -643,7 +636,7 @@ RESTORE TABLE students TO VERSION AS OF 8
 The Idea here is that when we have a error in a SQL command there is not a way to just continue as we can do in Python, so my Idea is 
 take the advantages of "try", "except" of Python and combine it with the SQL code that I wanted to insert.
 
-```
+```python
 # that would fail --> cause drop doesnt admit Rollback
 queries_fail1 = [
     "DROP TABLE students;",
@@ -668,7 +661,7 @@ for query in queries_fail1:
 Its essentially a way to preview the effects of the VACUUM operation
 
 
-```
+```sql
 SET spark.databricks.delta.retentionDurationCheck.enabled = false;
 SET spark.databricks.delta.vacuum.logging.enabled = true;
 
@@ -681,7 +674,7 @@ VACUUM beans RETAIN 0 HOURS DRY RUN
 
 statements create and populate Delta tables using data retrieved FROM an input query.
 
-```
+```sql
 CREATE OR REPLACE TABLE purchases AS
 SELECT order_id AS id, transactions_timestamp, purchase_revenue_in_usd AS price
 -- FROM sales
@@ -693,7 +686,7 @@ SELECT * FROM purchases limit 2;
 **DATE GENERATED ALWAYS**   
 Indicates the Column will be a "generated column" (we cannot specify a computation within a table definition without indicating it´s a generated column)
 
-```
+```sql
 CREATE OR REPLACE TABLE purchase_dates (
   id STRING, 
   transactions_timestamp STRING, 
@@ -707,7 +700,7 @@ SELECT * FROM purchase_dates;
 
 **CONSTRAINTS**: A rule applied to a column or sets of columns in a table that restrics the type of data taht can be inserted, ensuring the accuracy and reliability of the data.
 
-```
+```sql
 ALTER TABLE purchase_dates ADD CONSTRAINT valid_date CHECK (date > '2020-01-01');
 DESCRIBE EXTENDED purchase_dates; -- show in TBLPROPERTIES
 ```
@@ -715,8 +708,8 @@ DESCRIBE EXTENDED purchase_dates; -- show in TBLPROPERTIES
 
 
 **Enrich Tables wit Additiona Info**    
-- Using **current_timestamp()**    
-- **Input_file_name()**    
+- Using `current_timestamp()`  
+- Using `Input_file_name()`  
 
 
 ```
