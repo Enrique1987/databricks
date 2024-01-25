@@ -712,7 +712,7 @@ DESCRIBE EXTENDED purchase_dates; -- show in TBLPROPERTIES
 - Using `Input_file_name()`  
 
 
-```
+```sql
 CREATE OR REPLACE TABLE users_pii
 COMMENT "Contains PII"
 LOCATION "dbfs:/mnt/dbacademy-datasets/temp/users_pii"
@@ -731,33 +731,32 @@ SELECT * FROM users_pii limit 2;
 **Deep Clone** Full metadata and data copie FROM source table.  
 **Shallow clone** Create a copy of table quickly to test out applying changes without the risk of modifying the current table.  
 
-```
+```sql
 CREATE OR REPLACE TABLE purchases_clone
 DEEP CLONE purchases
 ```
-
-
-
 
 
 ## Incremental Data Processing.
 
 **Introduction** 
 
-In previous chapters we have about ELT operations, ETL is more for DWH
-ELT for Data Lake, but both have a sense of Batch processing.
-To process streaming data (close to real time) we need some new structures  
+In previous chapters we talk about Batch processing, ELT and ETL operations.
+- ETL for the tipical DWH.    
+- ELT for Data Lake, but both have a sense of Batch processing.  
+
+To process streaming data (close to real time) we need some new structures: `DLT`, `Stream DLT`, `DT`
 
 ### 
 
 **DLT vs Stream DLT vs DT**
 
-`DLT`: are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
+`DLT`: Are specifically designed for scnearios where pipeles are continuosly running and data is constanly being ingested, transformed and validated.  
 `DT`: Less frequent batch updates.  
-`Stream DLT`: enables real-time.
+`Stream DLT`: Enables real-time.
 
-**DLT and Notebook** When you query a DLT in y notebook that is not attached toa DLT pipeline you are querying the table as its is at that moment, no the live 
-streaming version. DLT is not intended for interactive execution ina notebook.
+**DLT and Notebook** When you query a DLT in y notebook that is not attached to a DLT pipeline you are querying the table as its is at that moment,
+ no the live  streaming version. DLT is not intended for interactive execution in a notebook.  
 
 **How much time could preserve the data the DLT ?**
 Delta Lake allows for multiple versions of data to co-exist. Every time you modify a dataset, Delta Lake retains a new version of that dataset. This is how Time travel works by keeping multiple version.
@@ -766,10 +765,10 @@ Thats why Delta Lake allows you to set a retention prediod for how long to keep 
 
 
 
-**Auto Loader**
+**Auto Loader**  
 - When you have data landing in cloud storage continuously or in upredictable intervals. Instead of scheduling periodic scans of the entiredirectofy,
 Auto Loader will automatically pick up an process just the new data as it arrives, making the ingestion process more timely and cost-effective.  
--Auto Loader incrementally ingests new data files in batches. 
+- Auto Loader incrementally ingests new data files in batches.   
 - Intern use Spark Structrued Streaming.  
 - The inclusion of format("cloudFiles") enables the use of Auto Loader.
 
