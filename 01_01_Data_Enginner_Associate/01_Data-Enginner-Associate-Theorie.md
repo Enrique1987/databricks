@@ -772,13 +772,13 @@ Auto Loader will automatically pick up an process just the new data as it arrive
 - Intern use Spark Structrued Streaming.  
 - The inclusion of format("cloudFiles") enables the use of Auto Loader.
 
-```
+```python
 (streaming_df = spark.readStream.format("cloudFiles")
 .option("cloudFiles.format", "json")
 .option("cloudFiles.schemaLocation", schemaLocation)
 .load(sourcePath))
 ```
-´´´
+```python
 spark.readStream
         .format("cloudFiles")
         .option("cloudFiles.format", "parquet")
@@ -787,8 +787,7 @@ spark.readStream
       .writeStream
         .option("checkpointLocation", "dbfs:/mnt/demo/orders_checkpoint")
         .table("orders_updates")
-)
-´´´
+```
 
 **COPY INTO** Provides SQL engineers and idempotent option to incrementally ingest data form external systems.  
 
@@ -799,6 +798,8 @@ spark.readStream
 
 ### Tiggers
 
+Lets know the types of trigger we have.
+
 **Fixed Interval Micro-batches**
 
 `(.trigger(Trigger.ProcessingTime(interval)))`
@@ -807,7 +808,7 @@ spark.readStream
 - Interval could be a string like "1 minute" or a duration in milliseconds.  
 - Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.  
 
-```
+```python
 FROM pyspark.sql.streaming import Trigger
 
 (spark.table("your_table")
