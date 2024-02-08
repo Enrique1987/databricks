@@ -800,24 +800,20 @@ spark.readStream
 
 Lets know the types of trigger we have.
 
-**Fixed Interval Micro-batches**
+**Available Now (using trigger(availableNow=True))**
 
-`(.trigger(Trigger.ProcessingTime(interval)))`
-
-- This option allows you to process the data at fixed time intervals, regardless of when the data arrived.  
-- Interval could be a string like "1 minute" or a duration in milliseconds.  
-- Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.  
+This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.
+Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.
 
 ```python
-FROM pyspark.sql.streaming import Trigger
-
 (spark.table("your_table")
 .writeStream
 .format("delta")
 ... # other configurations
-.trigger(Trigger.ProcessingTime("1 minute"))
+.trigger(availableNow=True)
 .table("output_table"))
 ```
+
 
 **Once Trigger**
 
@@ -834,6 +830,26 @@ FROM pyspark.sql.streaming import Trigger
 .format("delta")
 ... # other configurations
 .trigger(Trigger.Once())
+.table("output_table"))
+```
+
+
+**Fixed Interval Micro-batches**
+
+`(.trigger(Trigger.ProcessingTime(interval)))`
+
+- This option allows you to process the data at fixed time intervals, regardless of when the data arrived.  
+- Interval could be a string like "1 minute" or a duration in milliseconds.  
+- Use Case: When you want regular, predictable processing intervals, like processing every 10 minutes.  
+
+```python
+FROM pyspark.sql.streaming import Trigger
+
+(spark.table("your_table")
+.writeStream
+.format("delta")
+... # other configurations
+.trigger(Trigger.ProcessingTime("1 minute"))
 .table("output_table"))
 ```
 
@@ -858,27 +874,20 @@ FROM pyspark.sql.streaming import Trigger
 .table("output_table"))
 ```
 
-**Available Now (using trigger(availableNow=True))**
+**Trigger summary:**
 
-This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.
-Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.
-
-```python
-(spark.table("your_table")
-.writeStream
-.format("delta")
-... # other configurations
-.trigger(availableNow=True)
-.table("output_table"))
-```
-
-Trigger summary:
 `Trigger.availableNow`: If your intention is just run that Trigger and process all files but you are not interested in have a rutine of run your job periodically.
 
 `Trigger.Once`: Batch processing for example files come at night and morning you process all files there, if a file come during running will be not processed.
 
-`Trigger.Continuous("1 second")`
+`Trigger.ProcessingTime(interval))`: For micro-batches.
 
+`Trigger.Continuous("1 second")`: For low latency, near real time.
+
+
+The order of frequency from least to most would be as follows.
+
+availableNow < Once < ProcessingTime < Continuos
 
 
 
@@ -897,7 +906,7 @@ or data reshaped into a specific format ideal for BI tools or final consumption.
 "live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches FROM the Silver layer, rather than as a continuous stream.
 It provides a snapshot that is updated less frequently, which might be preferable for some reporting or analysis tasks.
 
-```
+```SQL
 CREATE OR REFRESH STREAMING LIVE TABLE bronze_table
 AS SELECT * FROM cloud_files(some_path)
 							 
