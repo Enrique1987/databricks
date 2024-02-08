@@ -826,7 +826,7 @@ FROM pyspark.sql.streaming import Trigger
 - Processes the available data in the stream just once and then stops the query.  
 - Use Case: When you have a backlog of data and you want to process it once to bring your output table up to date.  
 
-```
+```python
 FROM pyspark.sql.streaming import Trigger
 
 (spark.table("your_table")
@@ -847,7 +847,7 @@ FROM pyspark.sql.streaming import Trigger
 - Note: Continuous processing is an experimental feature and has some limitations.
 - Use Case: When low-latency is more important than throughput and you need near real-time processing.
 
-```
+```python
 FROM pyspark.sql.streaming import Trigger
 
 (spark.table("your_table")
@@ -863,7 +863,7 @@ FROM pyspark.sql.streaming import Trigger
 This is a Databricks-specific trigger. When set to True, it will only process the data that's available right now and will not wait for new data.
 Use Case: When you want to clear the existing backlog of data without waiting for new data to arrive.
 
-```
+```python
 (spark.table("your_table")
 .writeStream
 .format("delta")
@@ -871,6 +871,17 @@ Use Case: When you want to clear the existing backlog of data without waiting fo
 .trigger(availableNow=True)
 .table("output_table"))
 ```
+
+Trigger summary:
+`Trigger.availableNow`: If your intention is just run that Trigger and process all files but you are not interested in have a rutine of run your job periodically.
+
+`Trigger.Once`: Batch processing for example files come at night and morning you process all files there, if a file come during running will be not processed.
+
+`Trigger.Continuous("1 second")`
+
+
+
+
 ### Medallon Architecture
 
 **Medallon Architecture**   `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
