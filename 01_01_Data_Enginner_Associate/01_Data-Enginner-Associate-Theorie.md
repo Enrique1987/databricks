@@ -929,7 +929,7 @@ AS
 
 **Why does the gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)"?**  
 
-This aligns with the above explanation. The "Gold" layer doesn't necessarily operate on a real-time stream FROM the "Silver" layer.
+The "Gold" layer doesn't necessarily operate on a real-time stream FROM the "Silver" layer.
 Instead, it might operate on periodic batches or snapshots FROM the "Silver" layer. By reading FROM "LIVE.silver_table", 
 it's essentially working with the current state of the "Silver" table. On the other hand, using "STREAM(LIVE.silver_table)"
 would imply real-time, continuous processing of the data FROM the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
@@ -946,16 +946,15 @@ The underlying data is stored in Delta format, and you can query it like any oth
 The STREAM(LIVE.<table_name>)  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
 So:
 
-- When you declare a table using CREATE OR REFRESH STREAMING LIVE TABLE, it sets up a continuous ingestion process to keep updating that table with new data.
-- When you query this table using SELECT ... FROM LIVE.<table_name>, you're querying its current state, getting a snapshot of the table as it is at the time of the query.
+- When you declare a table using `CREATE OR REFRESH STREAMING LIVE TABLE`, it sets up a continuous ingestion process to keep updating that table with new data.
+- When you query this table using `SELECT ... FROM LIVE.<table_name>`, you're querying its current state, getting a snapshot of the table as it is at the time of the query.
 
-When you use the table in another streaming context with STREAM(LIVE.<table_name>), you're setting up another streaming operation on top of the continuously updating table.
+When you use the table in another streaming context with `STREAM(LIVE.<table_name>)`, you're setting up another streaming operation on top of the continuously updating table.y
+
 Therefore, even if a table is created as a STREAMING LIVE TABLE, you can indeed query it just like a LIVE table.
 
 
-
 **Scenario of Live Table and Stream Live Table**
-
 
 
 **STREAM Real-time Fraud Detection:**
@@ -1016,9 +1015,9 @@ Production mode:
 - Cuts costs by turning off clusters as soon as they are done  
 - Escalating retries, including cluster restarts `ensure reliability`  
 
-**What is Automated Data Management ?
+**What is Automated Data Management ?**
 
-refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
+Refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
 
 **Best Practices**DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`  
 **Physical Data**DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize   
@@ -1026,8 +1025,8 @@ refers to the ability of DLTs to automatically optimizes data for performance & 
 
 
 **Metastore** 
-Metastore keeps track of all the table metadata, like the schema and the location of the data. When you create a table in Delta Lake or DAtabricks, the details bout the table,
-including where its data is stored, are saved in the metastored.
+Metastore keeps track of all the table metadata, like the schema and the location of the data.  
+When you create a table in Delta Lake or DAtabricks, the details bout the table, including where its data is stored, are saved in the metastored.
 
 **Table directory** 
 In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
@@ -1069,36 +1068,35 @@ Python transformations, or other code snippets. For example, seeing a sequence o
 
   
 
-**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those FROM DLT pipelines.
+**Job Runs Page**: Provide a detailed overview of all the jobs executed, including those FROM DLT pipelines.  
 Clicking on individual tables or task within a job run will providespecifics bout that task.
 
-**Databricks Tables**Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like 
-parquet, Avro, CSV, JSON, etc...  
+**Databricks Tables**Allows you to create tables which are essentially metadata definitions on top of your data. These tables can point to data stored in various formats like `parquet`, `Avro`, `CSV`, `JSON`, etc...  
 
 **Storage Systems**Databricks can be integrated with different distributed storage systems like Azure Blob Storage, Azure Data Lake, AWS S3 and more.
 
-**Delta Live Tables come to action
+**Delta Live Tables come to action**
 
-**Agility**: Build batch and streaming data pipelines.
-**Trust your data**Quality controls with expectations and actions to take
-**Scale with reliability**Easy scale.
+**Agility**: Build batch and streaming data pipelines.  
+**Trust your data**Quality controls with expectations and actions to take.  
+**Scale with reliability**Easy scale.  
 
 
 ### Delta Live Tables
 
-**DAG
-- execution flow is graphed
-- The results are reported in the **Data Quality**section
+**DAG**
+- Execution flow is graphed.    
+- The results are reported in the **Data Quality** section.  
 - With each triggered update, all newly arriving data will be processed through your pipeline. Metrics will always be reported for current run.
 
-```
+```python
 @dlt.table(comment = "Python comment",table_properties = {"quality": "silver"})
 
 COMMENT "SQL comment" TBLPROPERTIES ("quality" = "silver")
 ```
 
 
-** Exploring the Results of a DLT Pipeline
+**Exploring the Results of a DLT Pipeline**
 
 
 DLT uses Delta Lake to store all tables, each witme a query is executed, we will always return the most recent version of the table. But queries outside of DLT.  
@@ -1109,7 +1107,7 @@ But queries outside of DLT will return snapshot results FROM DLT tables, regardl
 
 - See Latest Update ID: In many cases, you may wish to gain updates about the latest update to your pipeline.
 
-```
+```python
 latest_update_id = spark.sql("""
     SELECT origin.update_id
     FROM event_log_raw
@@ -1123,13 +1121,13 @@ spark.conf.set('latest_update.id', latest_update_id)
 
 ```
 
-**Examine Lineage
+**Examine Lineage**
 
 - DLT provides built-in lineage information for how data flows through your table.
 
 While the query below only indicates the direct predecessors for each table, this information can easily be combined to trace data in any table back to the point it entered the lakehouse
 
-```
+```sql
 SELECT details:flow_definition.output_dataset, details:flow_definition.input_datasets 
 FROM event_log_raw 
 WHERE event_type = 'flow_definition' AND 
@@ -1137,10 +1135,9 @@ WHERE event_type = 'flow_definition' AND
 ```
 
 
-**Examine Data Quality Metrics
+**Examine Data Quality Metrics**
 
-```
-%sql
+```sql
 SELECT row_expectations.dataset as dataset,
        row_expectations.name as expectation,
        SUM(row_expectations.passed_records) as passing_records,
