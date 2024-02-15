@@ -895,15 +895,14 @@ availableNow < Once < ProcessingTime < Continuos
 
 **Medallon Architecture**   `raw`----->`Bronze`-->`Silver`-->`Gold`--> Consume/Dashboard
 
-`Bronze:` This is often the raw, unrefined layer. Data lands in the bronze layer as it arrives. It's the most granular form of the data and is often not suitable for direct
-querying due to inconsistencies, missing values, or its verbose nature. The "streaming live" designation means data is continuously streamed into this layer in real-time.
+`Bronze:` This is often the raw, unrefined layer. Data lands in the bronze layer as it arrives. 
+It's the most granular form of the data and is often not suitable for direct querying due to inconsistencies, missing values, or its verbose nature. 
 
 `Silver:` This is the cleaned and enriched version of the bronze layer. It may undergo operations like filtering, formatting, joining with other datasets,
 or even some aggregations. Again, the "streaming live" designation means data FROM the bronze layer is being continuously processed and streamed into the silver layer in real-time.
 
 `Gold:` This layer is optimized for consumption, often by business users. It might contain aggregated data, pre-joined datasets, 
-or data reshaped into a specific format ideal for BI tools or final consumption. The data in this layer may not need to be updated in real-time, which is why it's a
-"live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches FROM the Silver layer, rather than as a continuous stream.
+or data reshaped into a specific format ideal for BI tools or final consumption. The data in this layer may not need to be updated in real-time, which is why it's a "live" table without the streaming aspect. This could mean the Gold layer is built in periodic batches FROM the Silver layer, rather than as a continuous stream.
 It provides a snapshot that is updated less frequently, which might be preferable for some reporting or analysis tasks.
 
 ```SQL
@@ -943,15 +942,14 @@ and the associated processing cadence.
 Yes, once a STREAMING LIVE TABLE is created in Databricks, it acts like a Delta table with a continuously updating view of the data.
 The underlying data is stored in Delta format, and you can query it like any other table in Databricks using the LIVE keyword.
 
-The STREAM(LIVE.<table_name>)  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
-So:
+The `STREAM(LIVE.<table_name>)`  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
 
 - When you declare a table using `CREATE OR REFRESH STREAMING LIVE TABLE`, it sets up a continuous ingestion process to keep updating that table with new data.
 - When you query this table using `SELECT ... FROM LIVE.<table_name>`, you're querying its current state, getting a snapshot of the table as it is at the time of the query.
 
-When you use the table in another streaming context with `STREAM(LIVE.<table_name>)`, you're setting up another streaming operation on top of the continuously updating table.y
+When you use the table in another streaming context with `STREAM(LIVE.<table_name>)`, you're setting up another streaming operation on top of the continuously updating table.
 
-Therefore, even if a table is created as a STREAMING LIVE TABLE, you can indeed query it just like a LIVE table.
+Therefore, even if a table is created as a `STREAMING LIVE TABLE`, you can indeed query it just like a LIVE table.
 
 
 **Scenario of Live Table and Stream Live Table**
@@ -1084,10 +1082,10 @@ Clicking on individual tables or task within a job run will providespecifics bou
 
 ### Delta Live Tables
 
-**DAG**
-- Execution flow is graphed.    
-- The results are reported in the **Data Quality** section.  
-- With each triggered update, all newly arriving data will be processed through your pipeline. Metrics will always be reported for current run.
+DLT uses Delta Lake to store all tables, each time a query is executed, we will always return the most recent version of the table. But queries outside of DLT. But queries outside of DLT will return snapshot results FROM DLT tables, regardless of how they were defined.
+
+
+**Exploring the Results of a DLT Pipeline**
 
 ```python
 @dlt.table(comment = "Python comment",table_properties = {"quality": "silver"})
@@ -1096,11 +1094,6 @@ COMMENT "SQL comment" TBLPROPERTIES ("quality" = "silver")
 ```
 
 
-**Exploring the Results of a DLT Pipeline**
-
-
-DLT uses Delta Lake to store all tables, each witme a query is executed, we will always return the most recent version of the table. But queries outside of DLT.  
-But queries outside of DLT will return snapshot results FROM DLT tables, regardless of how they were defined.
 
 
 ### Pipeline Event Logs
