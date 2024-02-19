@@ -926,11 +926,11 @@ AS
   FROM LIVE.silver_table
 ```
 
-**Why does the gold table read FROM "LIVE.silver_table" and not FROM "STREAM(LIVE.silver_table)"?**  
+**Why does the gold table read `FROM LIVE.silver_table` and not `FROM STREAM(LIVE.silver_table)`?**  
 
-The "Gold" layer doesn't necessarily operate on a real-time stream FROM the "Silver" layer.
-Instead, it might operate on periodic batches or snapshots FROM the "Silver" layer. By reading FROM "LIVE.silver_table", 
-it's essentially working with the current state of the "Silver" table. On the other hand, using "STREAM(LIVE.silver_table)"
+The "Gold" layer doesn't necessarily operate on a real-time stream `FROM` the "Silver" layer.
+Instead, it might operate on periodic batches or snapshots FROM the "Silver" layer. By reading `FROM "LIVE.silver_table"`, 
+it's essentially working with the current state of the "Silver" table. On the other hand, using `STREAM(LIVE.silver_table)`
 would imply real-time, continuous processing of the data FROM the "Silver" layer, which might not be the intention for the "Gold" layer in your architecture.
 
 In summary, the distinction between "streaming live" and "live" and the choice of reading methods represents different stages of data refinement
@@ -939,7 +939,7 @@ and the associated processing cadence.
 
 **Can a table that have been create as `CREATE OR REFRESH STREAMING LIVE TABLE silver_table` be later reference as LIVE.silver_table ?**
 
-Yes, once a STREAMING LIVE TABLE is created in Databricks, it acts like a Delta table with a continuously updating view of the data.
+Yes, once a `STREAMING LIVE TABLE` is created in Databricks, it acts like a Delta table with a continuously updating view of the data.
 The underlying data is stored in Delta format, and you can query it like any other table in Databricks using the LIVE keyword.
 
 The `STREAM(LIVE.<table_name>)`  syntax is used when you want to treat the table as a streaming source and operate on it in a streaming fashion.
@@ -1017,14 +1017,14 @@ Production mode:
 
 Refers to the ability of DLTs to automatically optimizes data for performance & ease-of-use
 
-**Best Practices**DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`  
-**Physical Data**DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize   
-**Schema Evolution**Schema evolution is handle for owner  
+**Best Practices** DLT encodes Delta best practices automatically when creating DLT: `optimizerWrite`, `AutoCompact`, `tuneFileSizesForRewrites`.  
+**Physical Data** DLT automatically manages your physical data to minimice cost and optimize performance --> runs vacuum, run optimize.  
+**Schema Evolution** Schema evolution is handle for owner.  
 
 
 **Metastore** 
 Metastore keeps track of all the table metadata, like the schema and the location of the data.  
-When you create a table in Delta Lake or DAtabricks, the details bout the table, including where its data is stored, are saved in the metastored.
+When you create a table in Delta Lake or Databricks, the details bout the table, including where its data is stored, are saved in the metastored.
 
 **Table directory** 
 In a concern of distributed file storage systems, a table directory typically refers to the underlying location in the distributed storage
@@ -1032,11 +1032,12 @@ where the data is stored. Referring to: Location, Physical Files, Metadata and L
 The table directory could be a path like `abfss://my-data-lake-container@mydatalakeaccount.dfs.core.windows.net/my-delta-table/` whithn this directory, you´d find 
 multiple Parquet Files and Transaction Logs. `_delta_log`  
 
-**Event Log**
+**Event Log**  
 Event log is about logging events or changes. In context of Delta Lake, the Event Log keeps track of transactions but doesn´t serve as a direct way to
 view the contents of the table directory. Are desing to capure various acxtivities.
 
-**Checkpointing directory**Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
+**Checkpointing directory**  
+Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
 
 **What DAG primarily does?**
 DAG visualizes the sequence and dependencies of taks. There you can go to the Pipeline Details page and click on the individual tables.  
