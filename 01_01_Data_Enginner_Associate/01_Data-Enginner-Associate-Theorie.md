@@ -1034,7 +1034,7 @@ multiple Parquet Files and Transaction Logs. `_delta_log`
 
 **Event Log**  
 Event log is about logging events or changes. In context of Delta Lake, the Event Log keeps track of transactions but doesn´t serve as a direct way to
-view the contents of the table directory. Are desing to capure various acxtivities.
+view the contents of the table directory. Are design to capure varius acxtivities.
 
 **Checkpointing directory**  
 Checkpointing typically refers to a mechanism that saves the state of a stream at regular intervals, ensuring fault-tolerance for streamimg operations.
@@ -1048,14 +1048,12 @@ DAG visualizes the sequence and dependencies of taks. There you can go to the Pi
 Task orchestration = Workflow  
 Data transofrmation and movement (pipeline)
 
-**Flow Definition** 
-In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL.
-In visual tools like Azure Data Factory, Apache NiFi, or Talend, the flow definition might be represented visually as a flowchart or diagram where you can see
-how different data sources, transformations, and destinations (sinks) are connected. By examining this visual representation, 
-you can understand how data is flowing and being transformed.
+**Flow Definition**  
+In a ETL concept Flow definition is how our data is beeing transformated by the following steps we are using for the ETL
+In visual tools like Azure Data Factory, Apache NiFi, or Talend, the flow definition might be represented visually
+as a flowchart or diagram where you can see how different data sources, transformations, and destinations (sinks) are connected. By examining this visual representation, you can understand how data is flowing and being transformed.
 
-In a more code-based environment, or if you're using something like Databricks notebooks, the flow definition might be best understood by examining the sequence of SQL queries,
-Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data FROM Table A, transform it, and then insert it into Table B.
+In a more code-based environment, or if you're using something like Databricks notebooks, the flow definition might be best understood by examining the sequence of SQL queries, Python transformations, or other code snippets. For example, seeing a sequence of SQL queries that extract data FROM Table A, transform it, and then insert it into Table B.
 
 **Workflow orchestration patterns.**
 
@@ -1162,9 +1160,9 @@ This can be handy in many use cases.
 * Establishing sandboxes containing temporary datasets for internal use
 
 
-**Create and use Catalog
+**Create and use Catalog**
 
-```
+```SQL
 CREATE CATALOG IF NOT EXISTS ${DA.my_new_catalog}
 
 USE CATALOG ${DA.my_new_catalog}
@@ -1172,18 +1170,17 @@ USE CATALOG ${DA.my_new_catalog}
 
 CREATE SCHEMA IF NOT EXISTS example;
 USE SCHEMA example
-
 ```
 
-**Grant access to datga objects
+**Grant access to datga objects**
 
-```
+```SQL
 GRANT USAGE ON CATALOG ${DA.my_new_catalog} TO analysts;
 GRANT USAGE ON SCHEMA example TO analysts;
 GRANT SELECT ON VIEW agg_heartrate to analysts
 ```
 
-**Dynamic Views
+**Dynamic Views**
 
 + Provide the ability to do fine-grained access control
 
@@ -1194,8 +1191,7 @@ Governing Data techniques
 - Restric rows
 - Data masking
 
-```
-
+```SQL
 CREATE OR REPLACE VIEW agg_heartrate AS
 SELECT
   CASE WHEN
@@ -1214,13 +1210,11 @@ WHERE
 
 -- Re-issue the grant --
 GRANT SELECT ON VIEW agg_heartrate to analysts
-
-
 ```
 
-**Explore objects
+**Explore objects**
 
-```
+```SQL
 SHOW TABLES
 SHOW VIEWS
 SHOW SCHEMAS
@@ -1228,11 +1222,10 @@ SHOW CATALOGS
 ```
 
 
-**Explore permisions
+**Explore permisions**
 
 
-```
-
+```SQL
 SHOW GRANTS ON VIEW
 
 SHOW GRANTS ON TABLE
@@ -1244,7 +1237,7 @@ SHOW GRANTS ON CATALOG
 ```
 
 
-**Revoke Access
+**Revoke Access**
 
 `REVOKE EXECUTION ON FUNCTION mask FROM analysts`
 
@@ -1252,7 +1245,7 @@ SHOW GRANTS ON CATALOG
 
 **Code**
 
-```
+```SQL
 CREATE SCHEMA IF NOT EXISTS Juanito;
 
 USE Juanito;
@@ -1299,8 +1292,7 @@ DROP TABLE external_default;
 
 External Tables will need to use `LOCATION`
 
-```
-
+```SQL
 USE new_default;
 
 CREATE TABLE managed_new_default
@@ -1376,7 +1368,7 @@ files = dbutils.fs.ls(f"{dataset_bookstore}/customers-json")
 
 Reading FROM Binaty, CSV, text
 
-```
+```SQL
 SELECT * FROM text.`${dataset.bookstore}/customers-json` limit 3
 
 SELECT * FROM binaryFile.`${dataset.bookstore}/customers-json`
@@ -1388,7 +1380,7 @@ SELECT * FROM parquet.`${dataset.bookstore}/orders`
 ```
 
 
-```
+```SQL
 DROP TABLE IF EXISTS books_csv;
 
 CREATE TABLE  if not exists books_csv
@@ -1401,9 +1393,8 @@ OPTIONS (
 LOCATION "${dataset.bookstore}/books-csv";
 
 SELECT count(*) FROM books_csv;
-
-
-%python
+```
+```python
 (spark.read
         .table("books_csv")
         .write
@@ -1412,15 +1403,17 @@ SELECT count(*) FROM books_csv;
         .option('header', 'true')
         .option('delimiter', ';')
         .save(f"{dataset_bookstore}/books-csv")
-		
+```
+
+```SQL		
 SELECT count(*) FROM books_csv; -- the same as previous
 
 
 REFRESH TABLE books_csv;
 SELECT COUNT(*) FROM books_csv;  --> retrun the actual status, External data will need to be refreshed, that does not happend with Delta Tables.
-``
-
 ```
+
+```SQL
 CREATE OR REPLACE FUNCTION get_url(email STRING)
 RETURNS STRING
 RETURN concat("https://www.", split(email, "@")[1]);
@@ -1431,25 +1424,7 @@ FROM customers
 
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Unity Catalog
-
 
 
 ### Data Governance models
