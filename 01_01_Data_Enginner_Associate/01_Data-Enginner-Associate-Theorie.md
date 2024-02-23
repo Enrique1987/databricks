@@ -1239,7 +1239,9 @@ SHOW GRANTS ON CATALOG
 
 **Revoke Access**
 
-`REVOKE EXECUTION ON FUNCTION mask FROM analysts`
+```sql
+REVOKE EXECUTION ON FUNCTION mask FROM analysts
+```
 
 ## Data Engineer Associate Udemy
 
