@@ -79,6 +79,28 @@ reproducible runs, and model packaging. It simplifies the process of tracking ex
 `MLflow used for`: USed to manage the ML lifecycle from initial model development through deployment and beyond tho sunsetting.
 
 
+## EDA and Feature Engineering
+
+
+### EDA should include:
+
+- Display the first few rows of the dataset.  
+- Determine the dimensions.  
+- Summary of a DataFrame.  
+- Number of non-null values in each column.  
+- Retrieve the column names.  
+- Examine the data types of each column.  
+- Compute the pairwise correlation of columns.    
+- Remove duplicate rows.  
+- Summary statistics of numerical columns.  
+- Check for missing values.  
+- Visualize the Data.  
+	- Correlation matrix and Heatmap.  
+	- Scatter plot of two numercial variables.  
+- Pandas profiling.  
+
+
+
 
 
 
