@@ -5,14 +5,21 @@ The theory consists of both theoretical concepts and the corresponding code. Bot
 
 I have divided the theory into two sections, which correspond to the way I have studied it. 
 
-- 01 Udemy
+## Index
 
-- 02 Databricks
+- [01 Udemy](#udemy)
+- [02 Databricks](#databricks)
 
 
+## Databricks Theory for Data Engineer Associate
 
-## Udemy 
+The theory consists of both theoretical concepts and the corresponding code. Both will be asked in the Exam.
 
+I have divided the theory into two sections, which correspond to the way I have studied it.
+
+## Udemy
+
+*Content related to Udemy courses and preparation for the exam goes here...*
 
 ### Data Lakehouse
 
@@ -1569,7 +1576,7 @@ Granting Privileges by Role
 **Delta Sharing**Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
 
 
-
+## Databricks
 
 
 
