@@ -3,7 +3,18 @@
 
 The theory consists of both theoretical concepts and the corresponding code. Both will be ask in the Exam.  
 
-## Data Lakehouse
+I have divided the theory into two sections, which correspond to the way I have studied it. 
+
+- 01 Udemy
+
+- 02 Databricks
+
+
+
+## Udemy 
+
+
+### Data Lakehouse
 
 A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. If offers the vast storage capabilities and flexibility of a data lakehause
 to handle large volumes of raw, detailed data, alongside the strutured querying and performance optimizationof a data warehouse.
@@ -1553,7 +1564,7 @@ Granting Privileges by Role
 
 ![](img/Credentials_External_Locations.PNG)
 
-**Identity Federation**Typically means integrating an exernal identitiy provider to allow for a single source of truth for user identities and a more streamline authentication process.
+**Identity Federation**  Typically means integrating an exernal identitiy provider to allow for a single source of truth for user identities and a more streamline authentication process.
 
 **Delta Sharing**Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
 
