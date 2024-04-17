@@ -11,20 +11,21 @@ I have divided the theory into two sections, which correspond to the way I have 
 - [02 Databricks](#databricks)
 
 
-## Databricks Theory for Data Engineer Associate
+## 01 Udemy
 
-The theory consists of both theoretical concepts and the corresponding code. Both will be asked in the Exam.
+### Udemy Sub-Index
 
-I have divided the theory into two sections, which correspond to the way I have studied it.
+- [Module 1: Databricks Lakehouse Platform](#module-1-databricks-lakehouse-platform)
+- [Module 2: ELT with Spark SQL and Python](#module-2-elt-with-spark-sql-and-python)
+- [Module 3: Incremental Data Processing](#module-3-incremental-data-processing)
+- [Module 4: Production Pipelines](#module-4-production-pipelines)
+- [Module 5: Data Governance](#module-5-data-governance)
 
-## Udemy
+### Module 1: Databricks Lakehouse Platform
 
-*Content related to Udemy courses and preparation for the exam goes here...*
-
-### Data Lakehouse
-
-A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. If offers the vast storage capabilities and flexibility of a data lakehause
-to handle large volumes of raw, detailed data, alongside the strutured querying and performance optimizationof a data warehouse.
+A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. 
+If offers the vast storage capabilities and flexibility of a data lakehause to handle large volumes of raw, detailed data, alongside the strutured querying
+and performance optimizationof a data warehouse.
 This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
 
 
@@ -49,16 +50,16 @@ This hybrid approach aims to support a wide range of use cases, from big data pr
 	
 
 
-## ETL with Spark SQL and Python
+### Module 2: ELT with Spark SQL and Python
 
-### External Table
+#### External Table
 
 - Location need to be added.
 - We cannot expect the performance guarantees associated with Delta Lake, example with DT you always guery the most recent version of your source data but
 it could not be the case with external tables.
 
 
-### External Tables: Querying Files Directly
+#### External Tables: Querying Files Directly
 
 
 ```python
@@ -74,7 +75,6 @@ display(data_json)
 
 sales_csv_path = "dbfs:/mnt/my_path/"
 display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
-
 ```
 
 ### External Tables: Querying different types of data
@@ -1553,6 +1553,11 @@ Granting Privileges by Role
 **Security Model** 
 ![](img/Security_Model.PNG)  
 
+
+
+#### Module 2: Advanced Topics
+
+*More detailed and advanced content related to Udemy courses goes here...*
 
 **Cluter Security Model** 
 ![](img/Cluster_Security_Model.PNG)  
