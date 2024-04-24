@@ -39,6 +39,42 @@ Generative AI:
 	
 	**Fine-tuning** The process of further training a pre-trained model on a specific task or datast to adapt it for a particular application or domain.
 	
+- Fundation Model: Large ML model trained on vast amount of data fine-tuned for more specific language understanding and generation task.
 	
 ## 02 Databricks Generative AI and NLP.
+
+Some useful NLP definitions
+
+`Token`: Basic building block.   
+`Sequence`: Sequential list of tokents.  
+`Vocabulary`: Complete list of tokents.  
+
+#### Word Embeddings
+
+The goal of word embedding is to try and conserve teh context that particula token ahst in this vocabulary.
+
+Langue Model can be spliting in two cathegories: 
+- Generate content.
+- Classify.
+
+#### What is a Large Language Model 
+
+Language Model - Tranformer: NN architecture that processes sequence of variable lenght using a self-attention mechanism. 2017-Present.
+
+#### How Do LLMs Work?
+A simplified version of LLM training process.
+
+1)encoding(input-tokenize-embeddings)
+2)Pre-Trained-Transormer-Model.
+3)DecodingOutput Text
+
+![llm](img/01_LLM_Work.PNG))
+
+
+
+
+
+
+
+
 
