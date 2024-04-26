@@ -1,4 +1,4 @@
-# GenerativeAI cuse test
+# GenerativeAI curse test
 
 ### Databricks Generative AI and NLP
 Here's the cleaned-up version of the exam you provided, formatted into a clear question-and-answer format followed by a table of correct answers.
