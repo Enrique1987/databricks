@@ -93,9 +93,21 @@ Your data, will be your competitive advantage.
 	TF-IDF, short for Term Frequency-Inverse Document Frequency, is a numerical statistic used in natural language processing to reflect the importance of a word
 	to a document in a collection or corpus. It increases proportionally with the number of times a word appears in a document but is offset by the frequency
 	of the word in the corpus, helping to adjust for the fact that some words appear more frequently in general.  
+
 **Bag of words**
 	
+The Bag of Words model is a simplifying representation used in natural language processing where text (such as a sentence or a document) is represented as the bag (multiset) of its words, disregarding grammar and even word order but keeping multiplicity.
+Consider the sentence: "The cat chased the mouse."
+In the Bag of Words model, this sentence would be represented as a set of word occurrences. The model doesn't care about the order of words, just their presence.
+If we create a simple count for each word, the representation might look like this:
 
+- The: 2
+- cat: 1
+- chased: 1
+- mouse: 1
+
+This count indicates the frequency of each word in the sentence. 
+The words "the", "cat", "chased", and "mouse" are the individual tokens, and their respective counts reflect how many times they appear in the sentence.
 
 
 
