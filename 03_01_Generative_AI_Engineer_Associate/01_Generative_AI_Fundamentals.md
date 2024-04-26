@@ -71,7 +71,30 @@ A simplified version of LLM training process.
 ![llm](img/01_LLM_Work.PNG))
 
 
+Your data, will be your competitive advantage.
 
+#### Summary
+
+- Common LL; business use cases are; contentcretion, process automation, personalization, code generation.  
+- LLMs generate outputs for NLP task such as summarization, classificatin, question anwering, content creation, etc.  
+- Databricks Lakehouse AI is a data-centrig Genrative AI platform.  
+- With Databricks + MosaicML customers can build their own custom models in a secure enviorment using their own data.
+- NLP
+	- Is a field of methods to process text.
+	- Is useful summarization, tanslation, classificationm, etc.
+	- Tokens are the smalles builidng blocks to convert text to numerical vectors, aka N-dimensional embeddings.
+	- Language models (LMs) predict words by looking at word probabilities.  
+	- LLMs are just LMs with transormer architecutres, but bigger.  
+	
+	
+#### Language Modeling
+
+**TF-IDF**
+	TF-IDF, short for Term Frequency-Inverse Document Frequency, is a numerical statistic used in natural language processing to reflect the importance of a word
+	to a document in a collection or corpus. It increases proportionally with the number of times a word appears in a document but is offset by the frequency
+	of the word in the corpus, helping to adjust for the fact that some words appear more frequently in general.  
+**Bag of words**
+	
 
 
 
