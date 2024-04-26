@@ -109,7 +109,26 @@ If we create a simple count for each word, the representation might look like th
 This count indicates the frequency of each word in the sentence. 
 The words "the", "cat", "chased", and "mouse" are the individual tokens, and their respective counts reflect how many times they appear in the sentence.
 
+**LSTMs**
 
+#### Word Embeddings
+
+**Word2vect**  
+
+**Tensorflow Page on Embeddings**
+
+#### Tokenization
+
+**Byte-Pair Encoding**
+
+**SentencesPiece**
+
+**WordPiece**
+
+**Tokenization Schema**
+
+A tokenization schema defines how text is split into meaningful elements, called tokens, which are the basic units used in text processing and analysis. 
+For example, in the sentence "I'm learning NLP!", a simple tokenization might split the sentence into the tokens: ["I'm", "learning", "NLP!"].
 
 
 
