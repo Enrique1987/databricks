@@ -113,6 +113,10 @@ The words "the", "cat", "chased", and "mouse" are the individual tokens, and the
 
 #### Word Embeddings
 
+Word embeddings are a type of representation where words from a vocabulay are mapped to vectors of real numbers in a low-dimensional space, relative to the vocabulary size.
+This technique captures the semantic meaning, relationships, and context of words, enabling algorithms to undestand language similarly to humans.
+
+
 **Word2vect**  
 
 **Tensorflow Page on Embeddings**
@@ -130,5 +134,5 @@ The words "the", "cat", "chased", and "mouse" are the individual tokens, and the
 A tokenization schema defines how text is split into meaningful elements, called tokens, which are the basic units used in text processing and analysis. 
 For example, in the sentence "I'm learning NLP!", a simple tokenization might split the sentence into the tokens: ["I'm", "learning", "NLP!"].
 
-
+## 03 Common Applications with LLM
 
