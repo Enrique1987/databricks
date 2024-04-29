@@ -136,3 +136,11 @@ For example, in the sentence "I'm learning NLP!", a simple tokenization might sp
 
 ## 03 Common Applications with LLM
 
+
+**Tokenizers**
+Tokenizers are tools used to convert text into tokens, which are smaller components such as words or subwords, facilitating easier an d more effetive processing by machine learning models.
+
+**Task: Sentiment analysis.**
+Stock market analysis: I need to monitor the stock market, and I want to use Twitter commentary as a early indicator of trends.  
+
+**Task: Translation**  
