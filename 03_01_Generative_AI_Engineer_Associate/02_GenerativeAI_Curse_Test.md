@@ -1,11 +1,8 @@
 # GenerativeAI curse test
 
-### Databricks Generative AI and NLP
-Here's the cleaned-up version of the exam you provided, formatted into a clear question-and-answer format followed by a table of correct answers.
-
 ---
 
-### Exam Questions
+### Exam Questions - Chapter: databricsk, Generative AI and NLP
 
 **1) Choose two improvements Generative AI are likely to bring to businesses?**
 - A: Advanced language processing capabilities
@@ -85,3 +82,89 @@ Here's the cleaned-up version of the exam you provided, formatted into a clear q
 | 10              | B                 |
 
 ---
+
+
+
+
+
+### Exam Questions: Chapter Common Applications with LLMs
+
+**1. What is the primary function of a tokenizer when working with Large Language Models (LLMs)?**
+- A: To convert text into smaller units called tokens for model input
+- B: To organize and classify customer feedback
+- C: Faster financial analysis
+- D: To download and interact with pre-trained models
+
+**2. Suppose you need a model for translating between two languages. What common NLP tasks might be relevant? Select two**
+- A: Translation
+- B: Summarization
+- C: Text Generation
+- D: Zero-Shot Classification
+
+**3. Which key library can be used to download datasets from the Hugging Face Hub?**
+- A: Evaluate
+- B: Transformers
+- C: Pip
+- D: Datasets
+
+**4. Which of the following is NOT a common NLP task?**
+- A: Sentiment analysis
+- B: Translation
+- C: Image recognition
+- D: Summarization
+
+**5. What is the primary goal of sentiment analysis?**
+- A: Classify text into predefined categories
+- B: Evaluate the emotional tone in a piece of text
+- C: Generate new text
+- D: Summarize large documents
+
+**6. How can zero-shot classification be utilized?**
+- A: Only for summarization tasks
+- B: To classify text with a custom set of topic labels
+- C: To generate new text
+- D: To evaluate the emotional tone in a piece of text
+
+**7. What is the role of prompts in the context of Large Language Models (LLMs)?**
+- A: Only to download datasets
+- B: Only to organize and classify customer feedback
+- C: To guide the model to generate desired outputs
+- D: To host demos and code
+
+**8. What is the purpose of Hugging Face Pipelines inside the context of Generative AI?**
+- A: To work with pipelines for natural language processing, computer vision, audio, and multi-modal applications
+- B: To evaluate the emotional tone in a piece of text
+- C: Only to host demos and code
+- D: Only to download datasets
+
+**9. Which is a true statement about prompts?**
+- A: Every LLM requires carefully phrased prompts in order to produce a good answer.
+- B: Prompts can include human language, programming languages, emojis, and other arbitrary text.
+- C: A well-engineered prompt which produces good results for one LLM can be reused successfully with almost any other LLM.
+- D: By choosing the model with the most downloads
+
+**10. In the example task of stock market analysis, what is the goal of monitoring Twitter commentary?**
+- A: To evaluate the emotional tone in a piece of text
+- B: To generate new text
+- C: To summarize large document
+- D: To use twitter commentary as an early indicator of trends
+
+### Answer Key
+
+| Question Number | Correct Answer(s) |
+|-----------------|-------------------|
+| 1               | A                 |
+| 2               | A, C              |
+| 3               | D                 |
+| 4               | C                 |
+| 5               | B                 |
+| 6               | B                 |
+| 7               | C                 |
+| 8               | A                 |
+| 9               | B                 |
+| 10              | D                 |
+
+This format clearly separates the questions and answers for easy reference and documentation. Let me know if there's anything else you'd like to adjust!	
+
+
+
