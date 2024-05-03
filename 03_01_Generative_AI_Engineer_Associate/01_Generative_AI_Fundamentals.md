@@ -5,7 +5,7 @@
 ## Index
 
 - [01 Generative AI Basics](#basics)
-- [02 Databricks Generative AI and NLP.](#databricks)
+- [02 Databricks Generative AI and NLP](#databricks)
 - [03 Common Applications with LLM](#commonApplicaiton)
 - [04 RAG with Vector Search and Storage](#RAG)
 - [05 Multi-stage Reasoning with LLM Chains](#multi-stage)
@@ -15,7 +15,7 @@
 - [06 LLMs Operations](#LLM-Operations)
 
 
-## Generative AI Basics
+## 01 Generative AI Basics
 
 AI --> ML --> DL --> Generative AI:
 
@@ -41,7 +41,7 @@ Generative AI:
 	
 - Fundation Model: Large ML model trained on vast amount of data fine-tuned for more specific language understanding and generation task.
 	
-## 02 Databricks Generative AI and NLP.
+## 02 Databricks Generative AI and NLP
 
 Some useful NLP definitions
 
@@ -140,7 +140,32 @@ For example, in the sentence "I'm learning NLP!", a simple tokenization might sp
 **Tokenizers**
 Tokenizers are tools used to convert text into tokens, which are smaller components such as words or subwords, facilitating easier an d more effetive processing by machine learning models.
 
-**Task: Sentiment analysis.**
-Stock market analysis: I need to monitor the stock market, and I want to use Twitter commentary as a early indicator of trends.  
+**Tasks**
 
-**Task: Translation**  
+- Task: Sentiment analysis.Stock market analysis: I need to monitor the stock market, and I want to use Twitter commentary as a early indicator of trends.  
+- Translation.  
+- Zero-shot classification: Categorize articles with a custom set of topic labels, using an existing LLM.  
+- Few-shot learning: show a model what you want.  Instead of fine-tuning a model for a task, provide a few examples of that task.  **Powerfull Technie** !!
+
+**Prompt engineering**
+
+A good prompt usually consists of:
+- Instruction   
+- Context  
+- Input/question  
+- Output type/format  
+
+Describe the high-level taks with clear commands
+
+- Use specific keywords:"Classify", "Translate", "Summarize", "Extract",...
+- Include detailed instructions,  
+
+Test different variations of the promt across different samples  
+
+- Which promt does a better job on average ?
+
+**Hacking prompts**
+- Injection: Adding maliciouse content.  
+- leaking: Extract sensitive information.  
+- Jailbreaking: Byapas moderation rule.
+
