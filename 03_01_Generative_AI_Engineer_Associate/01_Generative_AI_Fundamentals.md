@@ -170,3 +170,32 @@ Test different variations of the promt across different samples
 - leaking: Extract sensitive information.  
 - Jailbreaking: Byapas moderation rule.
 
+## 04 RAG with Vector Search and Storage
+
+- Explain vector seach strategies and how to evaluate search results.  
+- Define the utility of vector databases.  
+- Differentiate between vector databases, vector libaries, and vector plugins.  
+- Discuss best practices for when to use vector stores and how to improve search-retrieval perfomance.  
+
+
+**How do language models leanr knowledge ?**
+
+Through `model training` or `fine-tuning`
+ is usually better-suied to teach a model specialized tasks.
+ 
+Through model inputs.
+	- Insert knowledge or **context** into the input-tokenize-embeddings.  
+	- Ask the LM to incorpate the context in its output.  
+	
+	
+#### Passing conext to LMs heps factual recall.
+
+Analogy: Take an exam with **open notes**
+Downside:
+	Context length limitation
+		- OpenAI gpt-3.5 accepts a maximum of 4000 tokens as context.
+		- Commom mitigation method: pass document summaries instead.
+		- Anthropic´s Claude: 100k token limit
+	
+
+![llm](img/04_RAG.PNG))
