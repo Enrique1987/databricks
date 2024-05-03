@@ -4,15 +4,16 @@
 
 ## Index
 
-- [01 Generative AI Basics](#basics)
-- [02 Databricks Generative AI and NLP](#databricks)
-- [03 Common Applications with LLM](#commonApplicaiton)
-- [04 RAG with Vector Search and Storage](#RAG)
-- [05 Multi-stage Reasoning with LLM Chains](#multi-stage)
-- [06 Fine-Tuning LLMs](#Fine-Tuning)
-- [06 Evaluating LLMs](#Evaluating)
-- [06 Society and LLMs](#Society)
-- [06 LLMs Operations](#LLM-Operations)
+- [01 Generative AI Basics](#01-generative-ai-basics)
+- [02 Databricks Generative AI and NLP](#02-databricks-generative-ai-and-nlp)
+- [03 Common Applications with LLM](#03-common-applications-with-llm)
+- [04 RAG with Vector Search and Storage](#04-rag-with-vector-search-and-storage)
+- [05 Multi-stage Reasoning with LLM Chains](#05-multi-stage-reasoning-with-llm-chains)
+- [06 Fine-Tuning LLMs](#06-fine-tuning-llms)
+- [07 Evaluating LLMs](#07-evaluating-llms)
+- [08 Society and LLMs](#08-society-and-llms)
+- [09 LLMs Operations](#09-llms-operations)
+
 
 
 ## 01 Generative AI Basics
