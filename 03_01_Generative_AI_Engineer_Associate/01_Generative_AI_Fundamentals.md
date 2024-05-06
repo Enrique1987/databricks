@@ -233,7 +233,7 @@ Vector search strategies.
   - No data replication.  
 
 - **Plugins**  
- - Relational database or search systems may offer vector search plugings.  
- - Less rich features.  
-   - Fewer ANN choices.  
- - Less user-freindly APIs.  
+  - Relational database or search systems may offer vector search plugings.  
+  - Less rich features.  
+    - Fewer ANN choices.  
+  - Less user-freindly APIs.  
