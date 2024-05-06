@@ -188,7 +188,7 @@ Through model inputs.
 	- Ask the LM to incorpate the context in its output.  
 	
 	
-#### Passing conext to LMs heps factual recall.
+### Passing conext to LMs heps factual recall.
 
 Analogy: Take an exam with **open notes**
 Downside:
@@ -199,3 +199,22 @@ Downside:
 	
 
 ![llm](img/04_RAG.PNG))
+
+
+### Vector Search
+
+Vector search strategies.
+
+- k-nearest neighbors(KNN)  
+- Approximate nearest neighbors(ANN)  
+ - Trade accuracy for speed gains.  
+ 
+### How to measure if 2 vectors are similar ?
+
+![](img/06_Vector_Similar.PNG)
+![](img/07_AI_Similarity_Search.PNG)
+
+
+### Filtering
+
+![](img/08_Filtering.PNG.PNG)
