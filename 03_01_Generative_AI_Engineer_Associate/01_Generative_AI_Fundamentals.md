@@ -218,3 +218,22 @@ Vector search strategies.
 ### Filtering
 
 ![](img/08_Filtering.PNG.PNG)
+
+### Vector Stores
+
+![](img/09_Vector_Database.PNG)
+
+**Vector libraries or plugings**
+
+- **Libraries**  
+  - ANN.  
+  - Suficient for small, static data.  
+  - Do not have CRUD.   
+  - Stored in-memory.    
+  - No data replication.  
+
+- **Plugins**  
+ - Relational database or search systems may offer vector search plugings.  
+ - Less rich features.  
+   - Fewer ANN choices.  
+ - Less user-freindly APIs.  
