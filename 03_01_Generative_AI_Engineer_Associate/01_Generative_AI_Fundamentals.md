@@ -217,7 +217,7 @@ Vector search strategies.
 
 ### Filtering
 
-![](img/08_Filtering.PNG.PNG)
+![](img/08_Filtering.PNG)
 
 ### Vector Stores
 
@@ -226,6 +226,12 @@ Vector search strategies.
 **Sparse Vectors vs Dense Vectors**
 `Sparse`: Most of the elements are zero or default values.  
 `Dense`: Those where most of the elements are non-zero or meaningufl values.
+
+**What is the primary difference between K-nearest neighbors (KNN) and Approximate nearest neighbors (ANN) in vector search?**
+
+KNN provides exact results with higher computational cost, whereas ANN provides approximate results much faster
+
+**What is the purpose of indexing algorithms in vector search?**
 
 **Vector libraries or plugings**
 
