@@ -223,6 +223,10 @@ Vector search strategies.
 
 ![](img/09_Vector_Database.PNG)
 
+**Sparse Vectors vs Dense Vectors**
+`Sparse`: Most of the elements are zero or default values.  
+`Dense`: Those where most of the elements are non-zero or meaningufl values.
+
 **Vector libraries or plugings**
 
 - **Libraries**  
@@ -237,3 +241,68 @@ Vector search strategies.
   - Less rich features.  
     - Fewer ANN choices.  
   - Less user-freindly APIs.  
+  
+**Do I need a Vector Database**
+
+Pros
+  - Scalability: Mil/billions records.  
+  - Speed.  
+  - Full-fledge database properties.  
+
+Consider
+  - Cons.  
+  - Added Costs.  
+  
+### Best Practices.   
+ 
+![](img/10_Always_Need_Vector_Store.PNG)
+
+
+**How to improve retrieval performance ?**
+This means user get better responses.
+
+- Embedding model selection.  
+  - Do I have the right embedding model for my data ?  
+  - Do my embeddings capture BOTH my documents and queries ?  
+ 
+- Document Storage strategy
+ - Should I store the whole document as one ? or split it up into chunks ?  
+ 
+ 
+**Tips**
+1)Choose your embedding model wisely. The embedding model should represent BOTH your queries and documents.  
+2) Ensure embedding space is the same for both queries and docuemnts.  
+
+Use the same embedding model for indexing and querying.  
+  Or if you use different embedding models, make sure they are trained on similiar data.  
+  
+**Chunking strategy: Should I split my docs ?**
+
+- Chunking straty determines:
+  - How relevant is the context to the prompt ?  
+  - Ho much context/chunks can I fit within the model´s **tokent limit** ?
+ 
+Chunkings trategy is use-case specific.
+
+- How long are our documents ?
+  - 1 sentences ?
+  - N sentences ?
+  
+if 1 chunk = 1 sentence, embedding focus on specific meanining
+
+if 1 chung = multiple paragraphs, embedding caputre boather theme. Splitting by headers ?
+
+Do we know user behaviour ? how long are the queries ?
+
+- Long queries may have embeddings more aligned with the chunks returned.  
+- Short queries can be more precise.  
+
+**Implement prevention strategies**
+Prevent silent failure and udesired performance.
+
+Software engineers:
+ - Add failover logi.
+   - if distance-x exceeds threshold y, sho canned responce, rathern thatn showing noting.
+   -  Add basi toxicity classification model on top.
+     - Prevent user from submitting offensive inputs.
+	 - Discard offensive content to avoid training or saving to VDB
