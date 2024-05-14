@@ -85,8 +85,6 @@
 
 
 
-
-
 ### Exam Questions: Chapter Common Applications with LLMs
 
 **1. What is the primary function of a tokenizer when working with Large Language Models (LLMs)?**
@@ -167,4 +165,82 @@
 This format clearly separates the questions and answers for easy reference and documentation. Let me know if there's anything else you'd like to adjust!	
 
 
+### Exam Questions
 
+**1. Which of the following are a vector distance similarity measure? Select two.**
+- A: L2 regularization
+- B: L2 Euclidean
+- C: L1 regularization
+- D: Cosine similarity
+
+**2. Which of the following is true about the Facebook AI Similarity Search (FAISS) algorithm?**
+- A: It implements cosine distance and forms clusters of dense vectors
+- B: It implements L2 distance and forms clusters of sparse vectors
+- C: It implements L2 distance and forms clusters of sparse vectors
+- D: It implements L2 distance and forms clusters of dense vectors
+
+**3. When might you choose to store vectors in a vector database, as opposed to using only a vector library? Select three.**
+- A: You have a large volume of frequently changing data
+- B: You have a relatively less stringent latency requirement
+- C: You want to persist the embedding vectors in long-term storage
+- D: You want to have Create-Read-Update-Delete (CRUD) support to edit or update the vectors, without recomputing the entire vector index
+
+**4. What is the primary difference between K-nearest neighbors (KNN) and Approximate nearest neighbors (ANN) in vector search?**
+- A: ANN involves a brute force method for finding the nearest neighbors.
+- B: KNN involves a brute force method, while ANN prioritizes speed.
+- C: KNN prioritizes speed over exactness.
+- D: KNN yields less accurate nearest neighbors compared to ANN.
+
+**5. What is the purpose of indexing algorithms in vector search?**
+- A: To prioritize exactness over speed.
+- B: To perform brute force searches.
+- C: To round off vector values.
+- D: To create a data structure called a vector index for efficient searches.
+
+**6. In what scenario might you choose to use a vector library instead of a vector database?**
+- A: When you prefer out-of-the-box search capabilities.
+- B: When you want specialized databases for unstructured data.
+- C: When you need context augmentation.
+- D: When you need Create-Read-Update-Delete (CRUD) support.
+
+**7. Describe the process of in-query filtering in vector search and its impact on search efficiency.**
+- A: In-query filtering prioritizes brute force methods.
+- B: In-query filtering involves applying filter conditions after obtaining search results, leading to slower searches.
+- C: In-query filtering is not relevant in vector search.
+- D: In-query filtering loads both vector data and scalar data for attribute filtering, enhancing search efficiency.
+
+**8. In vector search, how does post-query filtering contribute to the overall search process?**
+- A: Post-query filtering helps in brute force searches.
+- B: Post-query filtering identifies the top-K nearest neighbors first and then applies the filter, offering fast approximate nearest-neighbor (ANN) searches.
+- C: Post-query filtering applies filter conditions before obtaining search results.
+- D: Post-query filtering is irrelevant in vector search.
+
+**9. What is a recommended best practice when applying vector compression methods in vector search?**
+- A: Prioritizing brute force searches over compression.
+- B: Rounding off vector values for compression.
+- C: Ignoring the size of the dataset.
+- D: Considering the task at hand and the nature of the data.
+
+**10. How does pre-query filtering impact the scope of similarity search in vector databases?**
+- A: Pre-query filtering prioritizes brute force methods in similarity search.
+- B: Pre-query filtering applies filter conditions to the vector data and returns a list of results, narrowing the scope of similarity search to eligible vectors that satisfy the filter conditions. Therefore, similarity search is conducted within a specific scope, optimizing efficiency and relevance.
+- C: Pre-query filtering prioritizes brute force methods in similarity search.
+- D: Pre-query filtering has no impact on similarity search.
+- E: Pre-query filtering applies filter conditions after obtaining search results.
+
+### Answer Key
+
+| Question Number | Correct Answer(s)                         |
+|-----------------|-------------------------------------------|
+| 1               | B, D                                      |
+| 2               | D                                         |
+| 3               | A, C, D                                   |
+| 4               | B                                         |
+| 5               | D                                         |
+| 6               | A, B, C, D                                |
+| 7               | D                                         |
+| 8               | B                                         |
+| 9               | D                                         |
+| 10              | B, C, D, E                                |
+
+This new format should meet your specifications. If there's anything you'd like to change or improve, feel free to let me know!
