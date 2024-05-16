@@ -1,4 +1,3 @@
-
 ## Databricks Theorie for Data Engineer Associate.
 
 The theory consists of both theoretical concepts and the corresponding code. Both will be ask in the Exam.  
@@ -23,30 +22,27 @@ I have divided the theory into two sections, which correspond to the way I have 
 
 ### Module 1: Databricks Lakehouse Platform
 
-A Data Lakehouse is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. 
+A `Data Lakehouse` is a unified data platform that combines the bes features of `data lakes` and `data warehouse`. 
 If offers the vast storage capabilities and flexibility of a data lakehause to handle large volumes of raw, detailed data, alongside the strutured querying
 and performance optimizationof a data warehouse.
 This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
 
 
-**Challenges in the Data Lakehouse:** 
+**Challenges in the Data Lakehouse** 
 
-- Large scale ETL is complex and brittle.  
+  - Large scale ETL is complex and brittle.  
 
-**Complex pipeline development:** 
- 
-- Hard to build and maintain table depencencies´.  
-- Difficult to switch between `batch` and `stream`.     
-	 
-**Data quality and governance**   
+  - Complex pipeline development   
+    - Hard to build and maintain table depencencies´.  
+    - Difficult to switch between `batch` and `stream`.     
 
-- Difficult to monitor and enfornce `data quality`.   
-- Impossible to trace data lineage.  
+  - Data quality and governance  
+    - Difficult to monitor and enfornce `data quality`.   
+    - Impossible to trace data lineage.  
 
-**Difficult pipeline operations** 
-  
-- Poor `observability`at granual data levels.  
-- Error handling and `recovery is laborious`.    
+  - Difficult pipeline operations 
+   - Poor `observability`at granual data levels.  
+   - Error handling and `recovery is laborious`.    
 	
 
 
