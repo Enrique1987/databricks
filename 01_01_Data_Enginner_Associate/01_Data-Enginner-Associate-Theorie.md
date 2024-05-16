@@ -73,7 +73,7 @@ sales_csv_path = "dbfs:/mnt/my_path/"
 display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 ```
 
-### External Tables: Querying different types of data
+#### External Tables: Querying different types of data
 
 `json`, `text`, `binaryFile`, `csv`
 
@@ -102,7 +102,7 @@ UNION ALL
 SELECT * FROM json.`${dataset.bookstore}/customers-json/` 
 ```
 
-### External Tables - Providing Options for External Sources
+#### External Tables - Providing Options for External Sources
 A table is classified as external based on whether you define a storage `LOCATION` for it, regardless of whether that location is inside DBFS or in other cloud storage services.
 
 ```sql
@@ -118,7 +118,7 @@ OPTIONS (
 LOCATION "${dataset_path}/books-csv"
 ```
 
-```python
+```sql
 spark.sql(f"""
 CREATE TABLE IF NOT EXISTS sales_csv
   (order_id LONG, email STRING, transactions_timestamp LONG, total_item_quantity INTEGER, purchase_revenue_in_usd DOUBLE, unique_items INTEGER, items STRING)
@@ -144,7 +144,7 @@ LOCATION '/my_path/'
 
 
 
-### Extracting Data FROM SQL Databases
+#### Extracting Data FROM SQL Databases
 
 ```sql
 CREATE TABLE
@@ -158,7 +158,7 @@ OPTIONS (
 ```
 
 
-### Testing
+#### Testing 
 
 ```python
 assert spark.table("events_json"), "Table named `events_json` does not exist" 
@@ -169,10 +169,31 @@ assert spark.table("events_json").dtypes == [('key', 'binary'), ('offset', 'bigi
 
 total = spark.table("events_json").count()
 assert total == 2252, f"Expected 2252 records, found {total}"
-
 ```
 
-### Writing to Tables
+**Validate Datasets**
+
+The result should be True or False
+
+
+```sql
+SELECT max(row_count) <= 1 no_duplicate_ids FROM (
+  SELECT user_id, count(*) AS row_count
+  FROM deduped_users
+  GROUP BY user_id)
+``` 
+
+```python
+FROM pyspark.sql.functions import count
+
+display(dedupedDF
+    .groupby("user_id")
+    .agg(count("*").alias("row_count"))
+    .SELECT((max("row_count") <= 1).alias("no_duplicate_ids"))) # true or false 
+```
+
+
+#### Writing to Tables
 
 `INSERT OVERWRITE`, `INSERT INTO`, `MERGE INTO`
 
@@ -186,8 +207,6 @@ INSERT OVERWRITE orders
 SELECT * FROM parquet.`${path}/orders`
 ```
 
-
-
 ```sql
 MERGE INTO books b
 USING books_updates u
@@ -196,7 +215,7 @@ WHEN NOT MATCHED AND u.category = 'Computer Science' THEN
   INSERT *
 ```
 
-### Cleaning Data
+#### Cleaning Data
 
 ```python
 FROM pyspark.sql import functions as F
@@ -229,28 +248,6 @@ dedupedDF = (usersDF
          max("updated").alias("updated"))
     )
 dedupedDF.count()
-```
-
-
-**Validate Datasets**
-
-The result should be True or False
-
-
-```sql
-SELECT max(row_count) <= 1 no_duplicate_ids FROM (
-  SELECT user_id, count(*) AS row_count
-  FROM deduped_users
-  GROUP BY user_id)
-``` 
-
-```python
-FROM pyspark.sql.functions import count
-
-display(dedupedDF
-    .groupby("user_id")
-    .agg(count("*").alias("row_count"))
-    .SELECT((max("row_count") <= 1).alias("no_duplicate_ids"))) # true or false 
 ```
 
 **Date Format and Regex**
