@@ -214,6 +214,7 @@ ON b.book_id = u.book_id AND b.title = u.title
 WHEN NOT MATCHED AND u.category = 'Computer Science' THEN 
   INSERT *
 ```
+### Module 3: Incremental Data Processing
 
 #### Cleaning Data
 
