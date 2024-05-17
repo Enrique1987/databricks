@@ -312,3 +312,21 @@ Software engineers:
    -  Add basi toxicity classification model on top.
      - Prevent user from submitting offensive inputs.
 	 - Discard offensive content to avoid training or saving to VDB
+	 
+## 05 Multi-stage Reasoning with LLM Chain
+Multi-Stage Reasoning with LLMs (Large Language Models) Chains involves breaking down complex problems into sequential stages,
+where each stage's output feeds into the next, leveraging the model's ability to handle tasks step-by-step. This approach enhances the model's problem-solving
+capabilities by ensuring intermediate steps are correctly processed before moving forward, thereby reducing errors and improving accuracy.
+It is particularly useful for tasks requiring structured thinking, such as logical reasoning, multi-hop question answering, and complex decision-making.
+
+- Describe the flow of LLM pipelines with tools like LangChain.  
+- Apply LangChain to leverage multiple LLM providers such as OpenAI and Hugging Face.  
+- Create complex logic flow with agents in LangChain to pass prompts and use logical reasoning to complete tasks.  
+
+[](.img/12_LLM_Multi_Stage.PNG)
+
+### LLM Agent
+
+An LLM agent uses a LLM model as a centralized reasoning unit and attaches tools and other components so that we can ask it to solve some very complicated task almost
+automatically.
+[](img/13_LLM_Agents.PNG))
