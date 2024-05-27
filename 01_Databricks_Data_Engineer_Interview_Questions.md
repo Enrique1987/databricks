@@ -28,9 +28,9 @@ we need to change 2 things
 
 We can made it in python or SQl, that would be the pseudo-code.
 
-	- Select all table you are intereseted, 
-	- Change data type 
-	- Overwritte your df with already corrected values in the path where the delta table is.
+- Select all table you are intereseted, 
+- Change data type 
+- Overwritte your df with already corrected values in the path where the delta table is.
 	
 	
 ```python
@@ -51,14 +51,14 @@ transformed_df.write.format("delta").mode("overwrite").save(delta_table_path)
 
 `sql`
   ```sql
-		-- Step 1: Create a temporary view with the date transformations
-		CREATE OR REPLACE TEMP VIEW transformed_my_table AS
-		SELECT
-			* EXCEPT(valid_from), 
-			to_date(valid_from) AS valid_from
-		FROM delta.`my_path`;
+-- Step 1: Create a temporary view with the date transformations
+CREATE OR REPLACE TEMP VIEW transformed_my_table AS
+    SELECT
+	* EXCEPT(valid_from), 
+	  to_date(valid_from) AS valid_from
+	FROM delta.`my_path`;
 
-		-- Step 2: Overwrite the existing Delta table with the transformed data
-		CREATE OR REPLACE TABLE delta.`my_path` AS
-		SELECT * FROM transformed_my_table;
+-- Step 2: Overwrite the existing Delta table with the transformed data
+	CREATE OR REPLACE TABLE delta.`my_path` AS
+	SELECT * FROM transformed_my_table;
   ```
