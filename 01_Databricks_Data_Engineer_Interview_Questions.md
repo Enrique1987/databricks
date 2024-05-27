@@ -24,18 +24,16 @@ we need to change 2 things
 #### Question 2
 **Related with question 1, so how would do change the data type already existing in a table ?**
 
-*Answer
+*Answer*
 
-2 ways:
+We can made it in python or SQl, that would be the pseudo-code.
 
- `python`:
 	- Select all table you are intereseted, 
 	- Change data type 
 	- Overwritte your df with already corrected values in the path where the delta table is.
 	
-	```python
 	
-
+```python
 # Define the path to the Delta table
 delta_table_path = "my_path"
 
@@ -51,7 +49,7 @@ transformed_df = df.selectExpr("* EXCEPT(valid_from)", "valid_from") \
 transformed_df.write.format("delta").mode("overwrite").save(delta_table_path)
 ```
 
-  `sql`
+`sql`
   ```sql
 		-- Step 1: Create a temporary view with the date transformations
 		CREATE OR REPLACE TEMP VIEW transformed_my_table AS
