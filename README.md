@@ -4,6 +4,7 @@ This repository contains both the exam questions example and the theory related 
 
 - Databricks Data Engineer Associate.  
 - Databricks Data Engineer Professional.  
+  - [Databricks Data Engineer Technical Questions](\)
 - Databricks ML Engineer Associate.  
 
 
