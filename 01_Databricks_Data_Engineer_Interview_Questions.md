@@ -8,8 +8,9 @@ It is a created column and the process that creates it is as follows**
 
 `insert_values["valid_from"] = date_sub(current_timestamp(), 1)`
 
-*Answer: 
-we need to change 2 things
+*Answer:*
+we need to change 2 things  
+
 - 1) The function that generates this column and modify the code to convert that column to date.
 `insert_values["valid_from"] = to_date(date_sub(current_timestamp(), 1))`
 
@@ -18,7 +19,7 @@ we need to change 2 things
  This only needs to be done once as it would be part of a script that would only be launched once on the system.
  - To finish the process we should simply check that the change has been made correctly.
  - Add a dummy data and check that it has been inserted correctly with the desired data type.
- - Delete the test dummy data.*
+ - Delete the test dummy data.
 
 #### Question 2
 **Related with question 1, so how would do change the data type already existing in a table ?**
