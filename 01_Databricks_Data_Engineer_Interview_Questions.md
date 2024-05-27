@@ -14,12 +14,12 @@ we need to change 2 things
 - 1) The function that generates this column and modify the code to convert that column to date.
 `insert_values["valid_from"] = to_date(date_sub(current_timestamp(), 1))`
 
-- 2) change the existing data in this column to Date type, otherwise the next time this data is generated,
+- 2) Change the existing data in this column to Date type, otherwise the next time this data is generated,
  an inconsistency will be created, as the incoming data is date type and the existing data is timestap type.
  This only needs to be done once as it would be part of a script that would only be launched once on the system.
- - To finish the process we should simply check that the change has been made correctly.
- - Add a dummy data and check that it has been inserted correctly with the desired data type.
- - Delete the test dummy data.
+  - To finish the process we should simply check that the change has been made correctly.
+  - Add a dummy data and check that it has been inserted correctly with the desired data type.
+  - Delete the test dummy data.
 
 #### Question 2
 **Related with question 1, so how would do change the data type already existing in a table ?**
