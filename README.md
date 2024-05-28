@@ -1,5 +1,6 @@
 # Databricks  Associate and Professional Preparation 
 
+
 This repository contains both the exam questions example and the theory related to:
 
 - Databricks Data Engineer Associate.  
@@ -9,3 +10,4 @@ This repository contains both the exam questions example and the theory related 
 
 
 
+Is based on my experience performing the tests and obtaining [these certifications](https://credentials.databricks.com/profile/enriquebenitocasado950856/wallet)
