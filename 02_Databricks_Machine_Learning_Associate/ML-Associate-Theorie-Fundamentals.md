@@ -2,28 +2,20 @@
 
 ## Databricks
 
-# Databricks Course Index
 
-## Course Introduction and Materials
-- [ ] [Course Introduction and Materials](#course-introduction-and-materials)
-
-## Data Preparation for Machine Learning
 - [ ] [Data Preparation for Machine Learning](#data-preparation-for-machine-learning)
 	- [ ] [Introduction to Data Preparation for Machine Learning](#introduction-to-data-preparation-for-machine-learning)
 	- [ ] [Managing and Exploring Data](#managing-and-exploring-data)
 	- [ ] [Data Preparation and Feature Engineering](#data-preparation-and-feature-engineering)
 	- [ ] [Feature Store](#feature-store)
 
-## Machine Learning Model Development
+
 - [ ] [Machine Learning Model Development](#machine-learning-model-development)
 
-## Machine Learning Model Deployment
 - [ ] [Machine Learning Model Deployment](#machine-learning-model-deployment)
 
-## Machine Learning Module Operations
 - [ ] [Machine Learning Module Operations](#machine-learning-module-operations)
 
-## Course Summary and Next Steps
 - [ ] [Course Summary and Next Steps](#course-summary-and-next-steps)
 
 
