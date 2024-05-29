@@ -1581,7 +1581,7 @@ Granting Privileges by Role
 
 1. [Data Objects Privileges](#data-objects-privileges)
 2. [Managing Permissions (Hands On)](#managing-permissions-hands-on)
-3. [Unity Catalog](#unity-catalog)
+3. [Unity Catalog (Udemy View)](#unity-catalog)
 
 ---
 
@@ -1591,6 +1591,10 @@ Content for Data Objects Privileges...
 #### Managing Permissions (Hands On)
 Content for Managing Permissions (Hands On)...
 
-#### Unity Catalog
-Content for Unity Catalog...
+#### Unity Catalog (Udemy View)
 
+Is the new governance solution of Databricks
+
+  - What is Unity Catalog.  
+  - 3-level namespace.  
+  - Security model for governing data objects.  
