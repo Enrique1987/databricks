@@ -1549,7 +1549,7 @@ Granting Privileges by Role
 
 
 
-#### Module 2: Advanced Topics
+### Module 2: Advanced Topics
 
 *More detailed and advanced content related to Udemy courses goes here...*
 
@@ -1574,8 +1574,8 @@ Granting Privileges by Role
 
 **Delta Sharing**Open protocol for sharing data across organizations in a secure and governed manner, regardless of which platform they are using.
 
-
-## Databricks
-
+### Module 3: Incremental Data Processing](#module-3-incremental-data-processing)
+### Module 4: Production Pipelines](#module-4-production-pipelines)
+### Module 5: Data Governance](#module-5-data-governance)
 
 
