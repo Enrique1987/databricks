@@ -1579,3 +1579,18 @@ Granting Privileges by Role
 ### Module 5: Data Governance
 
 
+1. [Data Objects Privileges](#data-objects-privileges)
+2. [Managing Permissions (Hands On)](#managing-permissions-hands-on)
+3. [Unity Catalog](#unity-catalog)
+
+---
+
+#### Data Objects Privileges
+Content for Data Objects Privileges...
+
+#### Managing Permissions (Hands On)
+Content for Managing Permissions (Hands On)...
+
+#### Unity Catalog
+Content for Unity Catalog...
+
