@@ -1578,13 +1578,17 @@ and individuals based on their roles and project involvement. Ensuring data priv
 
 **Business Need**:
 
-*Data Privacy*: Sensitive information should only be accessible to authorized users. For example, financial data for a project should only be visible to the finance team.  
-*Compliance*: Adhering to regulations such as GDPR or HIPAA, which mandate strict controls over who can access personal or sensitive data.  
-*Operational Efficiency*: Streamline data access processes by automatically enforcing access policies, reducing the need for manual data segregation and permissions management.  
-Specific Example Use Case
+- **Data Privacy**: Sensitive information should only be accessible to authorized users. For example, financial data for a project should only be visible to the finance team.  
+- **Compliance**: Adhering to regulations such as GDPR or HIPAA, which mandate strict controls over who can access personal or sensitive data.  
+- **Operational Efficiency**: Streamline data access processes by automatically enforcing access policies, reducing the need for manual data segregation and permissions management.  
+
+
+**Specific Example Use Case**
+
 *Organization*: A multinational engineering firm with multiple ongoing projects, each managed by different teams.  
 
-Lookup table
+*Lookup table*
+
 lookup_projekt_users Table:
 
 Columns: projekt_id (project number), email_array (array of emails of users associated with the project).
@@ -1595,8 +1599,8 @@ we want users to have access only to their own project information.
 
 The tables with projekt_id we want to 
 
-Columns: projekt_id (project id), and other project-related data.
-Purpose: Stores detailed information about each project.
+*Columns*: projekt_id (project id), and other project-related data.  
+*Purpose*: Stores detailed information about each project.  
 Implementation
 Define the RLS Function:
 
