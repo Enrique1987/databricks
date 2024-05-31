@@ -1525,7 +1525,7 @@ Both tools are complementary in a Databricks environment. Ganglia provides insig
 
 
 
-## 03 Actual Use Cases
+## Actual Use Cases
 
 ### Metadata Table for Inserting in a Data Lakehouse.
 
