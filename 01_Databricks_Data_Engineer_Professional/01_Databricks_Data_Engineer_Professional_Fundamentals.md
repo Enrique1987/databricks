@@ -1585,14 +1585,13 @@ and individuals based on their roles and project involvement. Ensuring data priv
 
 **Specific Example Use Case**
 
-*Organization*: A multinational engineering firm with multiple ongoing projects, each managed by different teams.  
+- *Organization*: A multinational engineering firm with multiple ongoing projects, each managed by different teams.  
 
-*Lookup table*
+- *Lookup table*: lookup_projekt_users Table:
 
-lookup_projekt_users Table:
+- *Columns*: projekt_id (project number), email_array (array of emails of users associated with the project).  
 
-Columns: projekt_id (project number), email_array (array of emails of users associated with the project).
-Purpose: Maps project numbers to the users who have access to these projects.
+- *Purpose: Maps project numbers to the users who have access to these projects.
 
 *How das it works ?*
 we want users to have access only to their own project information.
