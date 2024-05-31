@@ -1591,21 +1591,23 @@ and individuals based on their roles and project involvement. Ensuring data priv
 
 - *Columns*: projekt_id (project number), email_array (array of emails of users associated with the project).  
 
-- *Purpose: Maps project numbers to the users who have access to these projects.
+- *Purpose*: Maps project numbers to the users who have access to these projects.
 
-*How das it works ?*
+**How das it works ?**
 we want users to have access only to their own project information.
 
 The tables with projekt_id we want to 
 
 *Columns*: projekt_id (project id), and other project-related data.  
 *Purpose*: Stores detailed information about each project.  
-Implementation
+
+**Implementation**
+
 Define the RLS Function:
 
 A function user_row_filter that checks if the current user is either a member of a specific group or associated with the project.
-```sql
 
+```sql
 CREATE OR REPLACE FUNCTION schema.user_row_filter(project_id STRING)
 RETURN
 is_account_group_member('MEMBER_WITH_ACCESS') OR
@@ -1675,3 +1677,32 @@ SELECT * FROM catalog.schema.my_table_with_restrictic_access;
 -- |------------|-----------------|
 -- | 101        | ...             |
 
+
+**mermaid code**
+
+```mermaid
+graph TD;
+    subgraph Lookup Table: lookup_projekt_users
+        A[projekt_id: STRING]
+        B[email_array: ARRAY<STRING>]
+    end
+
+    subgraph Target Tables: my_table_with_restrictic_access
+        C[projekt_id: STRING]
+        D[other_columns: ...]
+    end
+
+    subgraph Function: user_row_filter
+        E[Checks group membership]
+        F[Subquery for project association]
+    end
+
+    A -->|projekt_id| F
+    B -->|email_array| F
+    C -->|projekt_id| F
+    F --> E
+    F -->|returns TRUE| C
+    E -->|returns TRUE| C
+```
+
+(./img/01_RLS_mermaid.PNG)
