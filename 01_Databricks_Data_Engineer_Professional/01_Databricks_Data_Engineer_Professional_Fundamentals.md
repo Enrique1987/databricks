@@ -1704,5 +1704,3 @@ graph TD;
     F -->|returns TRUE| C
     E -->|returns TRUE| C
 ```
-
-(./img/01_RLS_mermaid.PNG)
