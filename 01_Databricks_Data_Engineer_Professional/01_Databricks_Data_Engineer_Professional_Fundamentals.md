@@ -1619,7 +1619,7 @@ Applying the function to enforce RLS on the my_table_with_restrictic_access tabl
 ```sql
 ALTER TABLE catalog.schema.my_table_with_restrictic_access 
 SET ROW FILTER catalog.schema.my_table_with_restrictic_access ON (projekt_id);
-
+```
 
 Benefits of Implementing RLS in Databricks:
 
