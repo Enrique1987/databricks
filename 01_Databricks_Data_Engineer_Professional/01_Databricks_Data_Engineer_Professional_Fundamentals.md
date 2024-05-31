@@ -1637,9 +1637,9 @@ The firm has numerous ongoing projects worldwide. Each project involves multiple
 
 The lookup_projekt_users table lists users associated with each project. For example:
 
-````sql
+```sql
 SELECT * FROM map_project_users;
-``
+```
 
 -- Example Data:
 -- | projekt_id | email_array                                    |
