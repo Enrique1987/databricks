@@ -130,7 +130,7 @@ OPTIONS (
 LOCATION "{sales_csv_path}"
 """)
 ```
-As external data source are allow: `CSV`, `PARQUET`, `JSON`, `TEXT`, `DELTA`.
+**As external data source are allow**: `CSV`, `PARQUET`, `JSON`, `TEXT`, `DELTA`.
 
 For example:
 
@@ -141,7 +141,7 @@ LOCATION '/my_path/'
 ```
 
 
-USING DELTA vs USING {other_data_type}
+**USING DELTA vs USING {other_data_type}**
 
 The biggest difference between USING DELTA and using other data formats is that Delta Lake supports ACID transactions, schema enforcement, and versioning, providing robust data management and reliability features that other formats like CSV, Parquet,
 and JSON typically do not offer.
