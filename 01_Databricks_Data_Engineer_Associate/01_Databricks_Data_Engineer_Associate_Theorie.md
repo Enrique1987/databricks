@@ -554,7 +554,7 @@ display(sales_df.SELECT(first_letter_udf(col("email"))))
 Using `spark.udf.register`
 
 
-```
+```python
 sales_df.createOrReplaceTempView("sales")
 first_letter_udf = spark.udf.register("sql_udf", first_letter_function)
 display(sales_df.SELECT(first_letter_udf(col("email"))))
@@ -562,7 +562,7 @@ display(sales_df.SELECT(first_letter_udf(col("email"))))
 
 **UDF with decoratos**
 
-```
+```python
 @udf("string")
 def first_letter_udf_decorator(email: str) -> str:
     return email[0]
@@ -576,7 +576,7 @@ Are special types of UDFs that use the power of the `pandas` library withing a S
 
 + Uses **Apache Arrow:**, an in-memory columnar data format that is used in Spark to efficiently transfer data between JVM and Python processes with near-zero (de)serializationcosts
 
-```
+```python
 import pandas as pd
 FROM pyspark.sql.functions import pandas_udf
 
