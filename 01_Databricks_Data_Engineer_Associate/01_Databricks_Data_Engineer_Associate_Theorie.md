@@ -130,12 +130,23 @@ OPTIONS (
 LOCATION "{sales_csv_path}"
 """)
 ```
-We can use Delta in `USING DELTA` and a Delta table will be generate but aslong as it have location its always a external table.
+As external data source are allow: `CSV`, `PARQUET`, `JSON`, `TEXT`, `DELTA`.
+
+For example:
+
 ```sql
 CREATE TABLE my_delta_table
 USING DELTA
 LOCATION '/my_path/'
 ```
+
+
+USING DELTA vs USING {other_data_type}
+
+The biggest difference between USING DELTA and using other data formats is that Delta Lake supports ACID transactions, schema enforcement, and versioning, providing robust data management and reliability features that other formats like CSV, Parquet,
+and JSON typically do not offer.
+
+
 **Describe Extended vs detail vs history**
 
 - `DESCRIBE EXTENDED` for Data types  
