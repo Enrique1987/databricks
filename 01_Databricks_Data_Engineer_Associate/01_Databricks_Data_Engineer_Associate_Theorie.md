@@ -6,8 +6,8 @@ I have divided the theory into two sections, which correspond to the way I have 
 
 ## Index
 
-- [01 Udemy](#udemy)
-- [02 Databricks](#databricks)
+- [01 Udemy](#01-udemy)
+- [02 Databricks](#02-databricks)
 
 
 ## 01 Udemy
@@ -1581,7 +1581,7 @@ Granting Privileges by Role
 
 1. [Data Objects Privileges](#data-objects-privileges)
 2. [Managing Permissions (Hands On)](#managing-permissions-hands-on)
-3. [Unity Catalog (Udemy View)](#unity-catalog)
+3. [Unity Catalog (Udemy View)](#unity-catalog-udemy-view)
 
 ---
 
@@ -1598,3 +1598,9 @@ Is the new governance solution of Databricks
   - What is Unity Catalog.  
   - 3-level namespace.  
   - Security model for governing data objects.  
+
+#### Unity Catalog
+  - Centralized governance solution across all your workspace on any cloud.  
+  - Unify governance for all data and AI assets.  
+    - files, tables, machine learning models and dashboards.
+	- based on SQL
