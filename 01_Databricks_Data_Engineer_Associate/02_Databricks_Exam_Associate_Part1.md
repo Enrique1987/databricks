@@ -440,9 +440,7 @@ SELECT * FROM csv.`${path}`;
 - A. The query converts a directory of files into CSV format.
 - B. The query displays the underlying file contents of a directory of CSV files.
 - C. The query displays the metadata of a directory of CSV files.
-- D. The query streams data
-
- from a directory of CSV files into a table.
+- D. The query streams data from a directory of CSV files into a table.
 - E. The query loads the contents of a directory of CSV files from a source table to a target table.
 
 ## Solutions
