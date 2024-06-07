@@ -139,14 +139,14 @@ For example, in the sentence "I'm learning NLP!", a simple tokenization might sp
 
 
 **Tokenizers**
-Tokenizers are tools used to convert text into tokens, which are smaller components such as words or subwords, facilitating easier an d more effetive processing by machine learning models.
+Tokenizers are tools used to convert text into tokens, which are smaller components such as words or subwords, facilitating easier and more effetive processing by machine learning models.
 
 **Tasks**
 
-- Task: Sentiment analysis.Stock market analysis: I need to monitor the stock market, and I want to use Twitter commentary as a early indicator of trends.  
-- Translation.  
-- Zero-shot classification: Categorize articles with a custom set of topic labels, using an existing LLM.  
-- Few-shot learning: show a model what you want.  Instead of fine-tuning a model for a task, provide a few examples of that task.  **Powerfull Technie** !!
+- `Sentiment analysis` Stock market analysis: I need to monitor the stock market, and I want to use Twitter commentary as a early indicator of trends.  
+- `Translation`.  
+- `Zero-shot classification`: Categorize articles with a custom set of topic labels, using an existing LLM.  
+- `Few-shot learning`: show a model what you want.  Instead of fine-tuning a model for a task, provide a few examples of that task.  **Powerfull Technie** !!
 
 **Prompt engineering**
 
