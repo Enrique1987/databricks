@@ -166,9 +166,9 @@ Test different variations of the promt across different samples
 - Which promt does a better job on average ?
 
 **Hacking prompts**
-- Injection: Adding maliciouse content.  
-- leaking: Extract sensitive information.  
-- Jailbreaking: Byapas moderation rule.
+- `Injection`: Adding maliciouse content.  
+- `leaking`: Extract sensitive information.  
+- `Jailbreaking`: Byapas moderation rule.
 
 ## 04 RAG with Vector Search and Storage
 
