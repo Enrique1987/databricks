@@ -8,7 +8,7 @@
 - [02 Databricks Generative AI and NLP](#02-databricks-generative-ai-and-nlp)
 - [03 Common Applications with LLM](#03-common-applications-with-llm)
 - [04 RAG with Vector Search and Storage](#04-rag-with-vector-search-and-storage)
-- [05 Multi-stage Reasoning with LLM Chains](#05-multi-stage-reasoning-with-llm-chains)
+- [05 Multi stage Reasoning with LLM Chains](#05-multi-stage-reasoning-with-llm-chains)
 - [06 Fine-Tuning LLMs](#06-fine-tuning-llms)
 - [07 Evaluating LLMs](#07-evaluating-llms)
 - [08 Society and LLMs](#08-society-and-llms)
@@ -311,7 +311,7 @@ Software engineers:
      - Prevent user from submitting offensive inputs.
 	 - Discard offensive content to avoid training or saving to VDB
 	 
-## 05 Multi-stage Reasoning with LLM Chain
+## 05 Multi stage Reasoning with LLM Chains
 Multi-Stage Reasoning with LLMs (Large Language Models) Chains involves breaking down complex problems into sequential stages,
 where each stage's output feeds into the next, leveraging the model's ability to handle tasks step-by-step. This approach enhances the model's problem-solving
 capabilities by ensuring intermediate steps are correctly processed before moving forward, thereby reducing errors and improving accuracy.
