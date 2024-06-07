@@ -189,12 +189,11 @@ Test different variations of the promt across different samples
 	
 ### Passing conext to LMs heps factual recall.
 
-*Analogy*: Take an exam with **open notes**
-Downside:
-	Context length limitation
-		- OpenAI gpt-3.5 accepts a maximum of 4000 tokens as context.  
-		- Commom mitigation method: pass document summaries instead.  
-		- Anthropic´s Claude: 100k token limit  
+*Analogy*: Take an exam with **open notes**  
+Downside:Context length limitation  
+  - OpenAI gpt-3.5 accepts a maximum of 4000 tokens as context.  
+  - Commom mitigation method: pass document summaries instead.  
+  - Anthropic´s Claude: 100k token limit  
 	
 
 ![llm](img/04_RAG.PNG))
