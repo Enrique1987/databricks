@@ -81,6 +81,13 @@ There are possible cases taht could explain this.
 - If the table that had a steable version is less than 30 dayas old, what could have happend is that a VACUU; has been applied to his table and the retention has been reduced.
 
 #### Quesiton 5
+**Can you tell us about your experience in reducing costs on a project?**
 
+I examine the work team and find that there are 4 Data Engineers working on the project.
+They have a cluster that seems to be fine, but when I dig a little deeper, I realize that not all the Data Engineers are working on the cluster.
+One is more dedicated to the topic of Data Protection and requesting access to the data, another Data Engineer is working on the concept and modeling,
+another Data Engineer is in charge of everything related to infrastructure and job orchestration.
+Finally, I discover that there is only one engineer who really uses the cluster.
+So, I decide to lower the power of the cluster and increase it only if necessary, realizing that starting with such a high power was a mistake.
 
 
