@@ -28,7 +28,7 @@ and performance optimizationof a data warehouse.
 This hybrid approach aims to support a wide range of use cases, from big data processing and machine learning to business intelligence and analytics, all within a single platform.
 
 
-**Challenges in the Data Lakehouse** 
+**Challenges in the Data Lake and what Data Lahouse aims to provide a solution.** 
 
   - Large scale ETL is complex and brittle.  
 
@@ -48,14 +48,14 @@ This hybrid approach aims to support a wide range of use cases, from big data pr
 
 ### Module 2: ELT with Spark SQL and Python
 
-#### External Table
+**External Table**
 
 - Location need to be added.
 - We cannot expect the performance guarantees associated with Delta Lake, example with DT you always guery the most recent version of your source data but
 it could not be the case with external tables.
 
 
-#### External Tables: Querying Files Directly
+#### 2.1 Querying Files Directly
 
 
 ```python
@@ -73,7 +73,7 @@ sales_csv_path = "dbfs:/mnt/my_path/"
 display(spark.sql(f"SELECT * FROM csv.`{sales_csv_path}`"))
 ```
 
-#### External Tables: Querying different types of data
+#### Querying different types of data
 
 `json`, `text`, `binaryFile`, `csv`
 
@@ -102,7 +102,8 @@ UNION ALL
 SELECT * FROM json.`${dataset.bookstore}/customers-json/` 
 ```
 
-#### External Tables - Providing Options for External Sources
+#### 2.2 Providing Options for External Sources
+
 A table is classified as external based on whether you define a storage `LOCATION` for it, regardless of whether that location is inside DBFS or in other cloud storage services.
 
 ```sql
@@ -155,8 +156,6 @@ and JSON typically do not offer.
 
 
 
-#### Extracting Data FROM SQL Databases
-
 ```sql
 CREATE TABLE
 USING JDBC
@@ -204,7 +203,7 @@ display(dedupedDF
 ```
 
 
-#### Writing to Tables
+#### Writing to tables.
 
 `INSERT OVERWRITE`, `INSERT INTO`, `MERGE INTO`
 
@@ -225,9 +224,9 @@ ON b.book_id = u.book_id AND b.title = u.title
 WHEN NOT MATCHED AND u.category = 'Computer Science' THEN 
   INSERT *
 ```
-### Module 3: Incremental Data Processing
 
-#### Cleaning Data
+
+#### 2.4 Cleaning Data
 
 ```python
 FROM pyspark.sql import functions as F
@@ -290,7 +289,7 @@ display(dedupedDF
 
 ```
 
-### Advanced Transformations
+#### 2.5 Comples Transformations
 
 ```python
 def clone_source_table(table_name, source_path, source_name=None):
@@ -316,7 +315,7 @@ for col, dtype in df.dtypes:
     print(f"{col}: {dtype}")
 ```
 
-### Work with Nested Data
+**Work with Nested Data**
 
 **Note**: Spark SQL has a built-in functionality to directly interact with nested data stored as JSON string or struct types
 
@@ -491,7 +490,7 @@ display(transactionsDF)
 
 ```
 
-### SQL Functions and Control Flow 
+#### 2.7 SQL UDFs, SQL Functions and Control Flow 
 
 **SQL user-defined functions:**    
  - Persist between execution environments  
@@ -515,7 +514,7 @@ END;
 SELECT *, item_preference(name, price) FROM item_lookup
 ```
 
-### Python User-Defined Fuinctions
+#### 2.7 B Python User-Defined Fuinctions
 
 **UDF**  
 User Defined Functions allow users to define their own transformations on Spark DataFrames
