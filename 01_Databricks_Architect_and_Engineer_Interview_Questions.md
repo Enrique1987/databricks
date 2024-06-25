@@ -91,3 +91,14 @@ Finally, I discover that there is only one engineer who really uses the cluster.
 So, I decide to lower the power of the cluster and increase it only if necessary, realizing that starting with such a high power was a mistake.
 
 
+#### Question 6
+
+**Managed vs External tables, what can you tell me about them, when to use some and when to use others ?** 
+
+- `External Tables` are tables that are mounted on top of a stroage location, and herefore need to use "location" when they are created. 
+Need a location outside databricks wherethe data is located. if these tables are deleted the data remain.  
+
+- `Managed Tables` are the ones where teh data is inside databricks, if tables are dopred the dat is deleted.  
+
+In my personal opinion it makes sense to use managed tables in small projects where no external storage is available, i.e. only databricks are available for the project. For large projects like a Data Lakehouse it makes more sense to always have external tables pointing to our data.
+
