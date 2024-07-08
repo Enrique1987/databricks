@@ -102,3 +102,19 @@ Need a location outside databricks wherethe data is located. if these tables are
 
 In my personal opinion it makes sense to use managed tables in small projects where no external storage is available, i.e. only databricks are available for the project. For large projects like a Data Lakehouse it makes more sense to always have external tables pointing to our data.
 
+#### Question 7
+**What is Photon in Databricks ?**
+
+**Photon** is a compute engine from Databricks, get up to 12x faster in vectorials operatinons.
+
+#### Question 8
+**What do you mean with Vectorial operations ?**
+
+Vectorial operations are those that can be executed all at once, the operatios i executed on the entire vector array at once. 
+
+check the example of vectorial operations here
+
+
+#### Question
+photon appears as an option to enable or disable, can you tell us when to enable it and when not to enable it?
+
