@@ -32,10 +32,11 @@
 
 #### 01.01 Retrieval-Augmented Generation (RAG)
 
-- Leaning Objetives: RAG, prompt engineering, fine-tuning, and pre-training.  
-- Identify use cases where RAG can be used to improve the quality,realiability and accuracy of LLM completions.  
-- Describe the core components of the RAG architecture.  
-- Connect Databricks capabilities with the various components of RAG.  
+- **Leaning Objetives**: 
+  - RAG, prompt engineering, fine-tuning, and pre-training.  
+  - Identify use cases where RAG can be used to improve the quality,realiability and accuracy of LLM completions.  
+  - Describe the core components of the RAG architecture.  
+  - Connect Databricks capabilities with the various components of RAG.  
 
 ##### How do Language Models Learng Knowledge ?
 
