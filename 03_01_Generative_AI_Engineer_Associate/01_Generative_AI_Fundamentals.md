@@ -73,7 +73,7 @@ Passing Context to LMs Helps Factual Recall
 - Its done by retriving data/documents relevant to a query.  
 
 ![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/RAG_02.PNG)
-![Description of the image 2](.img/RAG_02.PNG)
+![Description of the image 2](img/RAG_02.PNG)
 
 - The main problem that RAG solve is the `knowledge bag` --> so imagine that you want to ask someting to your model wich information was relase afther the model training..
 
