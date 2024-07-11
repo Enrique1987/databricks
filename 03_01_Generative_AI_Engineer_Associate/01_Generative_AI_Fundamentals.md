@@ -54,3 +54,22 @@
   - How do we use vectors to search and provide relevant context to LLMs?    
 
 
+Passing Context to LMs Helps Factual Recall
+--
+
+- Analogy: take a exam with open notes.  
+- LLM are evolving to accept a large/infinite input token.  
+
+**Downside of long context**
+- Hihgh API cost.  
+- Lost in the middle. 
+- Longer completion interface.  
+
+##### What is RAG ?
+
+**R**etrival **A**ugmented **G**eneration
+
+- Its a pattern that can improve the efficacy of LLMs applications.   
+- Its done by retriving data/documents relevant to a query.  
+
+[rag](.img/RAG_02.PNG)
