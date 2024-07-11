@@ -72,4 +72,5 @@ Passing Context to LMs Helps Factual Recall
 - Its a pattern that can improve the efficacy of LLMs applications.   
 - Its done by retriving data/documents relevant to a query.  
 
-[rag](.img/RAG_02.PNG)
+(.img/RAG_02.PNG)
+
