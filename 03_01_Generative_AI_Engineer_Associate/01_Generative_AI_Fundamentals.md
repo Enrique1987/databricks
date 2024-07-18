@@ -84,3 +84,16 @@ Passing Context to LMs Helps Factual Recall
 - Content creation and Summarization.  
   Facilitate high quality development.    
   
+#### 01.02 Preparing Data for RAG Solutions
+
+- List potential consequences of improperly prepared data for RAG solutions.  
+  - Poor qulity of the modle.  
+  - loose in the middle: long documents tend to overlook.    
+- Important of chunk strategy.  
+  - 
+- Strategies for preparing RAG solutions.  
+- Delta Lake and Unity Catalog support RAG patterns.  
+- Map databricks products for structured and unstructured data preparations.  
+
+
+
