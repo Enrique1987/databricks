@@ -1596,7 +1596,20 @@ Granting Privileges by Role
 ---
 
 #### Data Objects Privileges
-Content for Data Objects Privileges...
+
+Data governance model.  
+-  Programatically grant, deny, and revoke access to data objects.  
+
+```sql
+
+GRANT [priviledge] ON [object]<object-name> to <user-group>
+```
+
+- **Priviledges**: SELECT, MODIFY, CREATE, READ_METADATA, USAGE, ALL Priviledges  
+- **object**: CATALOG, SCHEMA, TABLE, VIEW, FUNCTION, ANY FILE.  
+- **Roles**: Databrics Administrator > Catalog owner > Database owner > Table owner.  
+
+
 
 #### Managing Permissions (Hands On)
 Content for Managing Permissions (Hands On)...
