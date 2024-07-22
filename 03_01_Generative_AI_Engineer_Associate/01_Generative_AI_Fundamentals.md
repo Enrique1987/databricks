@@ -90,10 +90,10 @@ Passing Context to LMs Helps Factual Recall
   - Poor qulity of the modle.  
   - loose in the middle: long documents tend to overlook.    
 - Important of chunk strategy.  
-  - 
 - Strategies for preparing RAG solutions.  
 - Delta Lake and Unity Catalog support RAG patterns.  
 - Map databricks products for structured and unstructured data preparations.  
 
 
 
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/14_Data_Preparation.PNG)
