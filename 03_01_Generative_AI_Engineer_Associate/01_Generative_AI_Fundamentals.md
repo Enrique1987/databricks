@@ -88,12 +88,25 @@ Passing Context to LMs Helps Factual Recall
 
 - List potential consequences of improperly prepared data for RAG solutions.  
   - Poor qulity of the modle.  
-  - loose in the middle: long documents tend to overlook.    
+  - lost in the middle: long documents tend to overlook.    
+  - Inneficient retrieval.  
+  - Exposing data.  
+  - wrong embedding model.  
 - Important of chunk strategy.  
 - Strategies for preparing RAG solutions.  
 - Delta Lake and Unity Catalog support RAG patterns.  
 - Map databricks products for structured and unstructured data preparations.  
 
 
-
+**Data Pre processing Overview**
 ![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/14_Data_Preparation.PNG)
+
+**Recap Data Lake and uc**  
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/15_recap_data_lake_and_uc.PNG)
+
+**Chunk strategies**
+
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/16_Chunking_Strategies.PNG)
+
+
+**Data Store and Governance**  
