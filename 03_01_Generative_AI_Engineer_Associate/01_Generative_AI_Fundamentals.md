@@ -1,5 +1,6 @@
-# Generative AI Engineer Associate: Theorie 80-20%
+Sure, I'll help you correct the grammatical errors without changing the markdown configuration. Here's the revised document:
 
+# Generative AI Engineer Associate: Theory 80-20%
 
 ## Index
 
@@ -32,70 +33,69 @@
 
 #### 01.01 Retrieval-Augmented Generation (RAG)
 
-- **Leaning Objetives**: 
+- **Learning Objectives**: 
   - RAG, prompt engineering, fine-tuning, and pre-training.  
-  - Identify use cases where RAG can be used to improve the quality,realiability and accuracy of LLM completions.  
+  - Identify use cases where RAG can be used to improve the quality, reliability, and accuracy of LLM completions.  
   - Describe the core components of the RAG architecture.  
   - Connect Databricks capabilities with the various components of RAG.  
 
-##### How do Language Models Learng Knowledge ?
+##### How do Language Models Learn Knowledge?
 
 - Model Pre-Training
   - Training an LLM from scratch.  
-  - Requires large datasts (billions to trillions of tokens).  
+  - Requires large datasets (billions to trillions of tokens).  
   
-- Model Fine Tuning  
+- Model Fine-Tuning  
   - Adapting a pre-trained LLM to specific data sets or domains.  
-  - Requires thousand of domain-specific or instruction examples.   
+  - Requires thousands of domain-specific or instruction examples.   
 
 - Passing Contextual Information
   - Combining an LLM with external knowledge retrieval.  
-  - Requires external knowledge base.    
+  - Requires an external knowledge base.    
   - How do we use vectors to search and provide relevant context to LLMs?    
-
 
 Passing Context to LMs Helps Factual Recall
 --
 
-- Analogy: take a exam with open notes.  
-- LLM are evolving to accept a large/infinite input token.  
+- Analogy: taking an exam with open notes.  
+- LLMs are evolving to accept a large/infinite input token.  
 
 **Downside of long context**
-- Hihgh API cost.  
+- High API cost.  
 - Lost in the middle. 
 - Longer completion interface.  
 
-##### What is RAG ?
+##### What is RAG?
 
-**R**etrival **A**ugmented **G**eneration
+**R**etrieval **A**ugmented **G**eneration
 
-- Its a pattern that can improve the efficacy of LLMs applications.   
-- Its done by retriving data/documents relevant to a query.  
+- It's a pattern that can improve the efficacy of LLM applications.   
+- It's done by retrieving data/documents relevant to a query.  
 
 ![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/RAG_02.PNG)
 
-- The main problem that RAG solve is the `knowledge bag` --> so imagine that you want to ask someting to your model wich information was relase afther the model training..
+- The main problem that RAG solves is the `knowledge bag` --> so imagine that you want to ask something to your model whose information was released after the model training.
 
-**RAG Uses Cases**
+**RAG Use Cases**
 - Q&A chatbots
   - With more accurate information  
 - Search Augmentation  
   - Incorporate LLMs with search engines.  
 - Content creation and Summarization.  
-  Facilitate high quality development.    
+  Facilitate high-quality development.    
   
 #### 01.02 Preparing Data for RAG Solutions
 
 - List potential consequences of improperly prepared data for RAG solutions.  
-  - Poor qulity of the modle.  
-  - lost in the middle: long documents tend to overlook.    
-  - Inneficient retrieval.  
+  - Poor quality of the model.  
+  - Lost in the middle: long documents tend to be overlooked.    
+  - Inefficient retrieval.  
   - Exposing data.  
-  - wrong embedding model.  
-- Important of chunk strategy.  
+  - Wrong embedding model.  
+- Importance of chunk strategy.  
 - Strategies for preparing RAG solutions.  
 - Delta Lake and Unity Catalog support RAG patterns.  
-- Map databricks products for structured and unstructured data preparations.  
+- Map Databricks products for structured and unstructured data preparations.  
 
 
 **Data Pre processing Overview**
