@@ -1,5 +1,3 @@
-Sure, I'll help you correct the grammatical errors without changing the markdown configuration. Here's the revised document:
-
 # Generative AI Engineer Associate: Theory 80-20%
 
 ## Index
