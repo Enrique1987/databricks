@@ -106,5 +106,60 @@ Passing Context to LMs Helps Factual Recall
 
 ![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/16_Chunking_Strategies.PNG)
 
+**Advance Chunking Strategies**
 
-**Data Store and Governance**  
+- Sumarization with metadata.
+
+**Challenges on summarization**
+
+- Text mixted with image.  
+- Irregular placement of the text.  
+- Color.  
+- Chart with hierchical information.  
+- Multi column text.  
+- Imagines with important information.  
+
+
+**Embedding Model**
+- Tip 1: Choose Your Embedding Model Wisely
+  - The embedding model should represent BOTH queries and documents
+  - Is your current embedding model trained on similar data as yours?
+    - Yes -> Yay! You can keep using that model
+	- No -> Choose another pre-trained embedding model or Train or fine-tune your own embeddings based on your data
+
+
+- Tip 2: Ensure similar Embedding Space for both Queries and Documents
+
+ - Use the same embedding model for indexing and querying
+ - OR, if you use different embedding models, make sure they are trained on similar data (therefore produce the same embedding space!) This will give you bad results!!
+
+Movie data -> Language Model -> Vector Database (or index) -> Language Model -> User submits query about medical literature.
+
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/18_Tipps_Embedding.PNG) 
+
+**Data preparation inside Databricks**
+
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/19_Unstructured_Data_Prep.PNG)
+
+#### 01.03 Vector Search
+
+**Characteristics**  
+Vector search involves retrieving information based on numerical vectors,
+enabling similarity search rather than exact matches. It leverages high-dimensional vectors to capture the semantic meaning of data.
+
+**Use cases**  
+Vector search is used in recommendation systems, semantic search, image and video retrieval, and natural language processing tasks.
+ It's particularly useful in applications where context and meaning are more important than exact keywords. **context > exact words**
+
+**How Vector Search supports GenAI**  
+Vector search enhances Generative AI by enabling efficient retrieval of semantically similar data,
+which can be used to generate contextually relevant responses. It allows GenAI models to access and utilize vast amounts of information more effectively,
+improving their performance.
+
+**Process of executing a search using a Vector Database**  
+The process involves converting the search query and data into high-dimensional vectors using embeddings.
+The vector database then compares these vectors to find the closest matches based on similarity metrics.
+
+**Benefits of Mosaic AI Vector Search**  
+Mosaic AI Vector Search offers scalable, high-performance search capabilities that are optimized for handling large datasets.
+It provides advanced features such as real-time updates and integration with AI models, enhancing the overall efficiency and accuracy of information retrieval.
