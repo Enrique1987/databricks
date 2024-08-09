@@ -178,3 +178,26 @@ Common Use Cases for VD
 - Similarity Search.  
 
 
+
+**Do I need a Vector Database ?**
+
+Pros
+  - Scalability - Mil/millions
+  - Speed
+  - Full-fledged database properties: CRUD, ACL, Persistence & Storage Layer.  
+Cons
+  - One more system to learn and integrate.  
+  - Added costs.  
+ 
+**Proximity Sgtrategies** 
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/21_Proximity_Strategies.PNG)
+
+
+**What about vector libraries or pluggins?**  
+Could work for small projects.  
+
+
+**Reranking**
+A method of prioritizing documents most relevant to users query
+
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/22_Reranking.PNG)
