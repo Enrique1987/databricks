@@ -163,3 +163,18 @@ The vector database then compares these vectors to find the closest matches base
 **Benefits of Mosaic AI Vector Search**  
 Mosaic AI Vector Search offers scalable, high-performance search capabilities that are optimized for handling large datasets.
 It provides advanced features such as real-time updates and integration with AI models, enhancing the overall efficiency and accuracy of information retrieval.
+
+
+**Vector Databases**
+- databae optimed to store and retrieve high-dimensional vectors such as embeddings.  
+- Rag architecture, contextual informaiton is stored in vectors.  
+- Reieves vectos most similar toa specified query vector.  
+
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/20_Vector_Databases_1.PNG)
+
+Common Use Cases for VD  
+- RAG.    
+- Recommendation Engines.  
+- Similarity Search.  
+
+
