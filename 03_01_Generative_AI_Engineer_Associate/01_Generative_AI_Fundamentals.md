@@ -201,3 +201,10 @@ Could work for small projects.
 A method of prioritizing documents most relevant to users query
 
 ![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/22_Reranking.PNG)
+
+**Vector Database**
+
+- Create a Vector Search Endpoint.  
+- Create a Model Serving Endpoint.  
+- Create a Vector Search Index.  
+
