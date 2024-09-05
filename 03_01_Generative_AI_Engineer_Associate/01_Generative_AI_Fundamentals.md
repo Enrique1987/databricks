@@ -208,3 +208,35 @@ A method of prioritizing documents most relevant to users query
 - Create a Model Serving Endpoint.  
 - Create a Vector Search Index.  
 
+
+#### 01.04 Assembling and Evaluating a RAG Application
+
+![Description of the image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/24_Assembling_and_Evaluation_a_RAG.PNG) 
+
+
+### 02 Generative AI Application Development  
+#### 02.01 Fundations of Conpound AI Systems  
+
+**Goals**
+- Explain the shift from models to compound AI Systems.  
+- Describe various types and components of compound AI systems.  
+- Define main concepts such as intent, task and pipeline.  
+- Discusss intent classification and chain-building steps.  
+- Describe the intent behind each prompt in a chain.  
+- Distinguish between an LLM task and an LLM-base chain.  
+
+**Compound AI Systems**
+
+| Type of system            | Components                                                                 |
+|---------------------------|-----------------------------------------------------------------------------|
+| Prompt engineering         | - Prompt generation logic<br> - LLM                                          |
+| Unstructured docs RAG      | - LLM<br> - Retrieval system                                                 |
+| Structured data RAG        | - LLM<br> - Data API (e.g., Databricks Online Table)<br> - Text-to-SQL engine (e.g., Genie — more complicated in reality) |
+| Agent-based Chain          | - Function-calling capable LLM<br> - RAG chain<br> - Orchestration chain     |
+| Orchestration Chain        | - Function-calling capable LLM<br> - API services                            |
+
+
+#### 02.02 Building Multi-stage REasoning Chains  
+#### 02.03 Agents and Cognitive Architectures  
+
+
