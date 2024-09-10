@@ -236,7 +236,24 @@ A method of prioritizing documents most relevant to users query
 | Orchestration Chain        | - Function-calling capable LLM<br> - API services                            |
 
 
+![image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/29_Conpunt_AI_Systems.PNG) 
+
+**Summarize:** Devide and conquer.  
+
+
+![image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/30_Design_Compound_AI_Systems.PNG)
+
+
 #### 02.02 Building Multi-stage REasoning Chains  
+
+What we should learn:
+  - Main concepts of multi-stage reasoning systems.  
+  - LongChain and main components.  
+  - Databricks Products and features for building multi-stage reasoning systems.  
+  - Benefits of using composition frameworks in AI system development.  
+  - Explain how multi-stage reasoning is a more accurate representation of how the human mind handles problems.  
+  
+
 #### 02.03 Agents and Cognitive Architectures  
 
 
