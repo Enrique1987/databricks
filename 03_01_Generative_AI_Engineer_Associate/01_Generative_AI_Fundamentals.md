@@ -253,6 +253,14 @@ What we should learn:
   - Benefits of using composition frameworks in AI system development.  
   - Explain how multi-stage reasoning is a more accurate representation of how the human mind handles problems.  
   
+`LangChain main components`: 
+  - Prompt: structure text to comunicate a specific task to the llm.  
+  - Chain: sequence of automated actions or comopnents.  
+  - Retriever: Interface that return revelvant documents of information based
+  - Tool: functionality or resource that an agent can activate.
+
+
+  
 
 #### 02.03 Agents and Cognitive Architectures  
 
