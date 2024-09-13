@@ -115,6 +115,12 @@ Vectorial operations are those that can be executed all at once, the operatios i
 check the example of vectorial operations here
 
 
-#### Question
-photon appears as an option to enable or disable, can you tell us when to enable it and when not to enable it?
+#### Question 9, 
+**I as you say, Photon is a capacity that can increase the speed of computation, why is it not always activated and why does it appear as an option to be activated ?**  
+
+The activation of Photon also leads to an increase in DBUs consumption and therefore an increase in costs, each team must decide whether the improvement of their process by activating phton 
+is worth the increase in costs.
+
+
+
 
