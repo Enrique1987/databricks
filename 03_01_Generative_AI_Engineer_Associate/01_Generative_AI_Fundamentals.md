@@ -248,7 +248,7 @@ A method of prioritizing documents most relevant to users query
 
 What we should learn:
   - Main concepts of multi-stage reasoning systems.  
-  - LongChain and main components.  
+  - LangChain and main components.  
   - Databricks Products and features for building multi-stage reasoning systems.  
   - Benefits of using composition frameworks in AI system development.  
   - Explain how multi-stage reasoning is a more accurate representation of how the human mind handles problems.  
@@ -261,6 +261,17 @@ What we should learn:
 
 
   
+`multi-stage reasoning systems`: Decompose complex problems into sequencial steps(lowering the complexity)  
+`LangChain`: Is a framework for building applications base on LLM models, components: Promt, Chain, Retriever, Tool 
+`databricks products and features for building multi-stage reasoning systems`  DBRX Instruct, DBRX Base (pretrained model), Vector Search
+
+**Choosing a Library** 
+ - Library Features  
+ - Performance and Scalability  
+ - Stability anc Complexity  
+ 
+
+
 
 #### 02.03 Agents and Cognitive Architectures  
 
