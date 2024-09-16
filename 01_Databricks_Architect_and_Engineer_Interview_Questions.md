@@ -121,6 +121,17 @@ check the example of vectorial operations here
 The activation of Photon also leads to an increase in DBUs consumption and therefore an increase in costs, each team must decide whether the improvement of their process by activating phton 
 is worth the increase in costs.
 
+#### Question 10.
+**You arrives as a solution architec at a Data Lakehouse your aim is to improive the project, take control of it etc.. One of the task you are concerned with is monioring if any of the pipelines beak in production,
+Indee you see that the pipelines all have sucess status, would this be enough to be sure that everything is ok ?**
+
+it is definitelly something really positve but not enought, we have to take a look at the code to see what is being aunched.  
+
+**base on your experience can you tell us more abou it ?**
+
+I arrived to a project where everything was running smoothly but the results sometines in the gold layer were not as expected, when I check the code I reallice that was 
+complete encapsulate in try: Exception and therefore all possible errors were avoid without break the pipeline, but still no working propertly, lession learn is that we have to take care abut your try: Exception 
+where you put them as they may be covering up a problem that needs to be solved.  
 
 
 
