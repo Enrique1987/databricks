@@ -273,6 +273,22 @@ What we should learn:
 
 
 
-#### 02.03 Agents and Cognitive Architectures  
+#### 02.03 Agents and Cognitive Architectures
+
+
+#### 02.04 DBC
+
+#### 03.01 The Importance of Evaluating GenAI Applications
+#### 03.02 Securing and Governing GenAI Applications
+#### 03.03 Gen AI Evaluation Techniques
+#### 03.04 End-to-end App. Evaluation
+#### 03.05 DBC
+
+#### 04.01 Model Deployment Fundamentals
+#### 04.02 Batch Deployment
+#### 04.03 Real-time Deployment
+#### 04.04 AI System Monitoring
+#### 04.05 LLMOps Concepts
+#### 04.06 DBC
 
 
