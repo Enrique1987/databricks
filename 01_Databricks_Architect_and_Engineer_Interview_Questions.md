@@ -133,5 +133,89 @@ I arrived to a project where everything was running smoothly but the results som
 complete encapsulate in try: Exception and therefore all possible errors were avoid without break the pipeline, but still no working propertly, lession learn is that we have to take care abut your try: Exception 
 where you put them as they may be covering up a problem that needs to be solved.  
 
+#### Question 11
+**What is RLS in Databricks ?**
+
+Its a Data governance feature that allows you to control access to individual rows within your dataset based on the attributes of the user querying the data. This fine-grained access control ensures taht users can only view the data 
+they are authorized to see enhancing data privacy and compliance.  
+
+
+#### Question 12
+**A data engineer jnr calls you because 1 hour ago he has joined two life tables and the result table is still loading, hes is not sure if he did it right, you examine the code and oyu see this**
+
+```python
+# Read from the first streaming table
+stream_df1 = spark.readStream.format("delta").table("bronze_table1")
+
+# Read from the second streaming table
+stream_df2 = spark.readStream.format("delta").table("bronze_table2")
+
+# Perform the join without any time constraints
+joined_stream = stream_df1.join(
+    stream_df2,
+    on="key",  # Assuming 'key' is the column to join on
+    how="inner"
+)
+
+# Write the joined stream to a sink (e.g., a Delta table)
+joined_stream.writeStream \
+    .format("delta") \
+    .outputMode("append") \
+    .option("checkpointLocation", "/path/to/checkpoint/dir") \
+    .table("silver_table")
+```
+That code is not correct: When you join two streaming tables without specifying time-based windowing and watermarking, 
+Spark's Structured Streaming doesn't have sufficient information to manage the streaming state efficiently.
+This can lead to the query appearing to "load" indefinitely because it's waiting for potential matching records that may arrive in the future.
+
+
+correct 
+
+```python
+from pyspark.sql.functions import expr, col
+
+# Read from the first streaming table
+stream_df1 = spark.readStream.format("delta").table("bronze_table1")
+
+# Read from the second streaming table
+stream_df2 = spark.readStream.format("delta").table("bronze_table2")
+
+# Ensure both DataFrames have a proper timestamp column
+# If not, you may need to parse or add it
+# For illustration, let's assume both have a 'timestamp' column of TimestampType
+
+# Apply watermarking to manage state and handle late data
+stream_df1_watermarked = stream_df1.withWatermark("timestamp", "10 minutes")
+stream_df2_watermarked = stream_df2.withWatermark("timestamp", "10 minutes")
+
+# Perform the join with time constraints
+joined_stream = stream_df1_watermarked.join(
+    stream_df2_watermarked,
+    expr("""
+        stream_df1_watermarked.key = stream_df2_watermarked.key AND
+        stream_df1_watermarked.timestamp BETWEEN stream_df2_watermarked.timestamp AND stream_df2_watermarked.timestamp + INTERVAL 10 MINUTES
+    """),
+    "inner"
+)
+
+# Write the joined stream to a sink (e.g., a Delta table)
+joined_stream.writeStream \
+    .format("delta") \
+    .outputMode("append") \
+    .option("checkpointLocation", "/path/to/checkpoint/dir") \
+    .table("silver_table")
+```
+
+Certainly! Here's the table formatted in Markdown:
+
+### **Summary of the Differences**
+
+| **Aspect**                 | **Incorrect Approach**                       | **Corrected Approach**                         |
+|----------------------------|----------------------------------------------|------------------------------------------------|
+| **Watermarking**           | Not applied                                  | Applied (`withWatermark`)                      |
+| **Time-Based Constraints** | Absent                                       | Present (time-based join condition)            |
+| **State Accumulation**     | Unbounded (can grow indefinitely)            | Bounded (limited by watermark duration)        |
+| **Output Timeliness**      | Delayed or no output                         | Timely output within the defined window        |
+| **Resource Usage**         | High memory consumption, potential failure   | Efficient memory usage, stable operation       |
 
 
