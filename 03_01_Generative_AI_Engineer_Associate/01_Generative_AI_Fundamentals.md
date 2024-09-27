@@ -275,9 +275,13 @@ What we should learn:
 
 #### 02.03 Agents and Cognitive Architectures  
 
+*Agents and Cognitive Architecutures refer to AI models and frameworks designed to simulated human-like cognition and reasoning, anabling autonomous
+agents to perceive, learn, and act within complex environments*
+<small> this is samll.</small>
+
 - Describe agents as major component of more advanced GenAI applications  
 - LLM agent as centralized reasoning unit to solver complicated task using other tools.  
-- Multi-agnet and multi-model agents.  
+- Multi-agents and multi-model agents.  
 - Components of an LLM agent: task assigned, LLM for reasoning, and a set of tools that it can use.  
 - Explain the architecture of a common agent-based LLM workflow for self-monitoring/autonomous Generative AI application.  
 - Identify LLM agent plugling as tools that can simplify this process.  
