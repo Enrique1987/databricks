@@ -277,7 +277,6 @@ What we should learn:
 
 *Agents and Cognitive Architecutures refer to AI models and frameworks designed to simulated human-like cognition and reasoning, anabling autonomous
 agents to perceive, learn, and act within complex environments*
-<small> this is samll.</small>
 
 - Describe agents as major component of more advanced GenAI applications  
 - LLM agent as centralized reasoning unit to solver complicated task using other tools.  
