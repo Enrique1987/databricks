@@ -285,6 +285,19 @@ agents to perceive, learn, and act within complex environments*
 - Explain the architecture of a common agent-based LLM workflow for self-monitoring/autonomous Generative AI application.  
 - Identify LLM agent plugling as tools that can simplify this process.  
 
+`Agent:` Application that can execute complex task by using a language model to define a sequence of actions to take.  
+
+![image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/31_What_is_an_Agent.PNG)
+
+![image](https://github.com/Enrique1987/databricks/raw/main/03_01_Generative_AI_Engineer_Associate/img/32_Multi_Agent_Pattern.PNG)
+
+**How does an agent decide what actions to take ?**
+Theare are patterns for agent reasoning
+
+- ReAct  
+- Tool Use  
+- Planning  
+- Muilti-agent Collaboration  
 
 
 #### 02.04 DBC
