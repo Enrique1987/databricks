@@ -302,7 +302,35 @@ Theare are patterns for agent reasoning
 
 #### 02.04 DBC
 
-#### 03.01 The Importance of Evaluating GenAI Applications
+#### 03.01 The Importance of Evaluating GenAI Applications,
+
+- Compare and contrast LLM evaluation and traditional ML evaluation.   
+- Relationship between LLM evaluation and evaluation of entire AI systems.  
+- Generic LLM evaluation metrics like accuracy, perplexity and toxicity.  
+- More-specific LLM evaluations related to task and needs.  
+- Task-Specific evaluation metrics like BLEU and ROUGE.  
+- Describe LLM as a judge for evaluation.  
+
+**Why Evaluate ?**
+
+- System behaving as expected ?  
+- Users happy with the results ?  
+- Is or LLM solution efective ?  
+- Is there bias or other ethical concern ?  
+- What does it coest ?  
+|                        | Contextual Data                                              | LLM Training                                                               | Input/Output                                                            |
+|------------------------|--------------------------------------------------------------|----------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| **Quality**            | - Implement quality controls on contextual data              | - Select LLMs with high-quality training data                              | - Collect and review input/output data                                  |
+|                        | - Monitor changes in contextual data statistics              | - Select LLMs with published evaluation benchmarks specific to your task   | - Monitor changes in input/output statistics                            |
+|                        |                                                              |   (code gen, Q&A, etc.)                                                    | - Monitor user feedback                                                 |
+|                        |                                                              |                                                                            | - Use LLM-as-a-judge metrics to assess quality                          |
+| **Bias/Ethics**        | - Review contextual data for bias or unethical information   | - Model training data could contain sensitive/private information and/or   | - Input queries can be reviewed for harmful user behavior               |
+|                        | - Confirm legality of the data used                          |   bias                                                                     | - Output queries can be reviewed for harmful system responses           |
+|                        | - Consult with legal team to determine license requirements  | - We can’t change the data used to train the LLM but can implement         |                                                                         |
+|------------------------|--------------------------------------------------------------|----------------------------------------------------------------------------|-------------------------------------------------------------------------|                                                             
+
+
+
 #### 03.02 Securing and Governing GenAI Applications
 #### 03.03 Gen AI Evaluation Techniques
 #### 03.04 End-to-end App. Evaluation
