@@ -39,47 +39,47 @@
 
 ---
 
-## 1. Databricks Intelligence Platform
-### 1.1 Delta Lake
+### 1. Databricks Intelligence Platform
+#### 1.1 Delta Lake
 **Transaction Log** Ensure ACID Properties, you will never read dirty data.
-### 1.2 Understanding Delta Tables (Hands On)
-### 1.3 Advanced Delta Lake Features
-### 1.4 Apply Advanced Delta Features (Hands On)
-### 1.5 Relational Entities
-### 1.6 Databases and Tables on Databricks (Hands On)
-### 1.7 Set Up Delta Tables
-### 1.8 Views
-### 1.9 Working with Views (Hands On)
+#### 1.2 Understanding Delta Tables (Hands On)
+#### 1.3 Advanced Delta Lake Features
+#### 1.4 Apply Advanced Delta Features (Hands On)
+#### 1.5 Relational Entities
+#### 1.6 Databases and Tables on Databricks (Hands On)
+#### 1.7 Set Up Delta Tables
+#### 1.8 Views
+#### 1.9 Working with Views (Hands On)
 
 ---
 
-## 2. Data Processing & Transformations
-### 2.1 Querying Files
-### 2.2 Querying Files (Hands On)
-### 2.3 Writing to Tables (Hands On)
-### 2.4 Advanced Transformations (Hands On)
-### 2.5 Higher Order Functions and SQL UDFs (Hands On)
+### 2. Data Processing & Transformations
+#### 2.1 Querying Files
+#### 2.2 Querying Files (Hands On)
+#### 2.3 Writing to Tables (Hands On)
+#### 2.4 Advanced Transformations (Hands On)
+#### 2.5 Higher Order Functions and SQL UDFs (Hands On)
 
 ---
 
-## 3. Incremental Data Processing
-### 3.1 Structured Streaming
-### 3.2 Structured Streaming (Hands On)
-### 3.3 Incremental Data Ingestion
-### 3.4 Auto Loader (Hands On)
+### 3. Incremental Data Processing
+#### 3.1 Structured Streaming
+#### 3.2 Structured Streaming (Hands On)
+#### 3.3 Incremental Data Ingestion
+#### 3.4 Auto Loader (Hands On)
 
 ---
 
-## 4. Production Pipelines
-### 4.1 Multi-hop Architecture
-### 4.2 Delta Live Tables (Hands On)
-### 4.3 Change Data Capture
-### 4.4 Processing CDC Feed with DLT (Hands On)
-### 4.5 Jobs (Hands On)
+### 4. Production Pipelines
+#### 4.1 Multi-hop Architecture
+#### 4.2 Delta Live Tables (Hands On)
+#### 4.3 Change Data Capture
+#### 4.4 Processing CDC Feed with DLT (Hands On)
+#### 4.5 Jobs (Hands On)
 
 ---
 
-## 5. Data Governance & Security
-### 5.1 Databricks SQL
-### 5.2 Data Objects Privileges
-### 5.3 Managing Permissions (Hands On)
+### 5. Data Governance & Security
+#### 5.1 Databricks SQL
+#### 5.2 Data Objects Privileges
+#### 5.3 Managing Permissions (Hands On)
