@@ -70,6 +70,11 @@ This section explains two important concepts — **deterministic** and **idempot
 - **Projects-as-code** for Databricks workspace assets: Jobs, Lakeflow/DLT pipelines, SQL warehouses/queries, permissions, variables, and environment “targets.”  
 - Lives alongside your repo; a single definition drives **repeatable, idempotent** deployment and execution across workspaces.
 
+**Purpose**
+Deploy same project consistently across enviroments.
+
+**Scope
+
 **Why it matters**  
 - **Deterministic & reviewable** changes (PRs, code review, artifact history).  
 - **Drift resistance**: declarative updates keep dev/test/prod aligned.  
@@ -82,27 +87,31 @@ This section explains two important concepts — **deterministic** and **idempot
 - Reference secrets via scopes/Key Vault; apply permissions in the spec.  
 - Complements **Terraform** (infra, networking, UC metastore/workspaces, policies). DAB = app/workspace assets; Terraform = platform.
 
-**Minimal example**
-```yaml
-bundle:
-  name: sales_etl
+## Databricks Auto Loader ⚡
 
-targets:
-  dev:
-    default: true
-  prod: {}
+### 👶 Kid — New toys bin
+- Every day, new toys appear in a big box.
+- Instead of emptying the whole box, you only pick up **the new toys** since yesterday.
+- If a toy shape you’ve never seen shows up, you learn its shape and keep going.
+**Takeaway:** Auto Loader grabs **only the new stuff** and learns new shapes as they appear.
 
-resources:
-  jobs:
-    etl_daily:
-      name: "ETL Daily"
-      tasks:
-        - task_key: ingest
-          notebook_task:
-            notebook_path: /Repos/sales/etl/01_ingest
-          job_cluster_key: small
-      job_clusters:
-        - job_cluster_key: small
-          new_cluster:
-            spark_version: auto
-            num_workers: 2
+### 🧑‍🎓 Teen — Daily photo dump
+- Your friends keep dropping photos into a shared folder.
+- You set your phone to **auto-import only the photos you don’t have yet**.
+- If someone starts adding **HEIC** instead of **JPG**, your phone adapts and still imports.
+**Takeaway:** It’s a smart “import-new-only” that **adapts to changes** without breaking.
+
+### 👨‍💻 Tech Lead — Ingesting cloud files into a lakehouse
+- **Scenario:** Partners land files (CSV/JSON/Parquet) into S3/ADLS/GCS. You need **incremental, schema-evolving** ingestion into Bronze/Delta with strong scaling and idempotency.
+- **Definition:** Auto Loader is Databricks’ **incremental file source** (`format("cloudFiles")`) for streaming/batch-like ingestion from cloud object storage. It tracks what’s been processed, supports **schema inference/evolution**, and scales directory discovery (or uses cloud notifications) to handle large folders reliably.
+
+- **When to use:**
+  - Landing zone ingestion from object storage where files arrive continuously.
+  - You need **“exactly-once”-like** ingestion semantics for files and automatic tracking.
+  - Schemas evolve over time (new columns/fields) and you want minimal manual ops.
+  - You want Bronze → Silver pipelines with **Structured Streaming** or **DLT**.
+
+- **Pros / Cons:**
+  - **Pros:** Incremental (no reprocessing), scalable discovery, schema inference & evolution, checkpointing, rescued data column for dirty records, integrates with Delta/Unity Catalog.
+  - **Cons:** File-based latency (seconds–minutes, not sub-second), requires cloud IAM/paths & checkpoints, schema evolution beyond additive changes still needs planning, very “wide” directories can still be operationally tricky if poorly partitioned.
+
