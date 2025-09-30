@@ -40,11 +40,21 @@
 ---
 
 ### 1. Databricks Intelligence Platform
-#### 1.1 Delta Lake
-**Transaction Log** Ensure ACID Properties, you will never read dirty data.
-#### 1.2 Understanding Delta Tables (Hands On)
-#### 1.3 Advanced Delta Lake Features
-#### 1.4 Apply Advanced Delta Features (Hands On)
+
+**RDBMS**  
+Database → Schema → Table  
+**Databricks**  
+Catalog → Schema → Table   
+
+**metastore**: service that manages all catalogs.   
+**hive_metastore** is the **default catalog** its often use for testing.  
+
+
+#### 1.1 Delta Lake, Delta Tables, Advance Features
+
+- Transaction Log Ensure ACID Properties, you will never read dirty data.
+- 
+
 #### 1.5 Relational Entities
 #### 1.6 Databases and Tables on Databricks (Hands On)
 #### 1.7 Set Up Delta Tables
