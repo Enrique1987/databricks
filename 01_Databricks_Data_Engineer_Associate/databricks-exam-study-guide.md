@@ -52,8 +52,25 @@ Catalog → Schema → Table
 
 #### 1.1 Delta Lake, Delta Tables, Advance Features
 
-- Transaction Log Ensure ACID Properties, you will never read dirty data.
-- 
+- Transaction Log Ensure ACID Properties, you will never read dirty data.  
+- Advance Features.  
+| Advance Feature | use-case |
+|---|---|
+| `VACUUMM` | remove old and not used files, decrease latence |
+| `Time Travel` | restore old status of table, help to come back to desired status | 
+| `compacting small files` |  help to faster queries, in case you have lot of small files|
+
+- Data File Layout: Optimiation would helps leveragin data-skipping algorithms
+
+| Technique                                  | What it is                                                                                         | When to use (2025–2026)                                                                                                                                                             | Good for                                                                               | Avoid / notes                                                                                                                                                             |
+| ------------------------------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Liquid Clustering**                      | Adaptive data layout that continuously clusters files by chosen keys without rewrites of old data. | **Default for new Delta tables.** Pick 1–3 selective keys you frequently filter/join on (e.g., `org_urn`, `date`, `customer_id`). Works with Streaming Tables & Materialized Views. | Large (& growing) tables, mixed read/write, evolving query patterns, redefinable keys. | **Don’t mix with Z-ORDER.** Supersedes legacy partitioning & Z-ORDER. Generally available for Delta; recommended for new tables. ([Databricks Dokumentation][1])          |
+| **Partitioning (legacy Delta partitions)** | Physically separates data by a column (e.g., folders like `dt=2025-10-17`).                        | Use **sparingly** for coarse operational needs: lifecycle/retention by date, very large append-only logs, governance/SLA boundaries. Most tables **< ~1 TB don’t need it**.         | Pruning big time-range scans; easy deletes by partition (retention).                   | Over-partitioning hurts (many tiny files, skew). Prefer Liquid for performance-driven layout; this guidance excludes “liquid partitions.” ([Databricks Dokumentation][2]) |
+| **Z-ORDER (legacy)**                       | Reorders data files to colocate values of selected columns to improve data skipping.               | Only on **non-Liquid** legacy tables with stable access patterns where Liquid isn’t available.                                                                                      | Speeding up filters/joins on a few columns when stuck on legacy layout.                | **Incompatible with Liquid.** Long-term guidance is to move to Liquid; use Z-ORDER as a stopgap. ([Databricks Dokumentation][3])                                          |
+
+`Liquid Clustering is the new Databricks optimization technique that replaces traditional partitioning and Z-ORDER
+ — it automatically manages data layout, adapts over time, and supports both batch and streaming workloads.`
+
 
 #### 1.5 Relational Entities
 #### 1.6 Databases and Tables on Databricks (Hands On)
