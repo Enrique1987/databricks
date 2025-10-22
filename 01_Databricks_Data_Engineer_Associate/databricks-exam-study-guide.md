@@ -1,6 +1,6 @@
 # Databricks Certified Data Engineer Associate — Clickable Index (Introduction skipped)
 
-## Table of Contents
+## General Table of Contents
 1. [Databricks Intelligence Platform](#1-databricks-intelligence-platform)
    - [1.1 Delta Lake](#11-delta-lake)
    - [1.2 Understanding Delta Tables (Hands On)](#12-understanding-delta-tables-hands-on)
@@ -36,6 +36,15 @@
    - [5.1 Databricks SQL](#51-databricks-sql)
    - [5.2 Data Objects Privileges](#52-data-objects-privileges)
    - [5.3 Managing Permissions (Hands On)](#53-managing-permissions-hands-on)
+   
+6. [What Changed Since 2023](#6-what-changed--since-2023)
+	- [6.1 Unity Catalog Evolution](#61-unity-catalog-evolution)
+	- [6.2 SQL, Analytics & BI Updates](#62-sql-analytics--bi-updates)
+	- [6.3 Delta Live Tables (DLT) & Pipeline Enhancements](#63-delta-live-tables-dlt--pipeline-enhancements)
+	- [6.4 Runtime, Notebooks & Developer Experience](#64-runtime-notebooks--developer-experience)
+	- [6.5 Generative AI, ML & Agent Workflows](#65-generative-ai-ml--agent-workflows)
+	- [6.6 Platform & Collaboration Features](#66-platform--collaboration-features)
+	- [6.7 Key Skills to Refresh for 2025](#67-key-skills-to-refresh-for-2025)   
 
 ---
 
@@ -77,7 +86,7 @@ Catalog → Schema → Table
 | Concept                 | **RDBMS (e.g. SQL Server, PostgreSQL, Oracle)**                        | **Databricks (Unity Catalog)**                                                        | Comment                                                                                                              |
 | ----------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
 | **Top level**           | **Database** → logical container for schemas and tables                | **Catalog** → top-level container for schemas and tables                              | The **Catalog** in Databricks plays the same role as a **Database** in traditional RDBMS.                            |
-| **Middle level**        | **Schema** → groups related tables, views, functions within a database | **Schema** → groups related objects within a catalog In Databricks SQL, “database” and “schema” are synonyms — both create a logical container for tables, views, and functions inside a catalog.                                 | Same concept and naming in both systems.                                                                             |
+| **Middle level**        | **Schema** → groups related tables, views, functions within a database | **Schema** → groups related objects within a catalog In Databricks SQL, “database” and “schema” are synonyms.                                 | Same concept and naming in both systems.                                                                             |
 | **Bottom level**        | **Table** → physical/logical data structure containing rows            | **Table** → Delta Lake table stored in Unity Catalog                                  | Identical concept; in Databricks, stored in Delta format with metadata managed by Unity Catalog.                     |
 | **Full path reference** | `database.schema.table`                                                | `catalog.schema.table`                                                                | Equivalent structure; Unity Catalog simply adds one more layer of governance above the traditional “database.”       |
 | **Extra notes**         | Database = storage and security boundary                               | Catalog = *governance + data-sharing* boundary (permissions, lineage, data discovery) | Databricks uses the Catalog for cross-workspace governance, lineage, and access control (not just logical grouping). |
