@@ -61,15 +61,20 @@ Catalog → Schema → Table
 
 #### 1.1 Delta Lake, Delta Tables, Advance Features
 
-- Transaction Log Ensure ACID Properties, you will never read dirty data.  
-- Advance Features.  
-| Advance Feature | use-case |
-|---|---|
-| `VACUUMM` | remove old and not used files, decrease latence |
-| `Time Travel` | restore old status of table, help to come back to desired status | 
-| `compacting small files` |  help to faster queries, in case you have lot of small files|
+1.1 Delta Lake, Delta Tables, Advanced Features
 
-- Data File Layout: Optimiation would helps leveragin data-skipping algorithms
+- **Transaction Log:** Ensure ACID Properties, you will never read dirty data.
+  
+- **Advanced Features:**
+
+| Advanced Feature           | Use Case                                                                 |
+|----------------------------|--------------------------------------------------------------------------|
+| `VACUUM`                   | Removes old and unused files, helping to reduce latency and free up space. |
+| `Time Travel`              | Allows restoring a previous state of a table, enabling recovery to a desired point in time. |
+| `Compacting Small Files`   | Improves query performance by merging small files into larger ones, especially useful when dealing with many small files. |
+
+- **Data File Layout:** Optimization helps leverage data-skipping algorithms.
+
 
 | Technique                                  | What it is                                                                                         | When to use (2025–2026)                                                                                                                                                             | Good for                                                                               | Avoid / notes                                                                                                                                                             |
 | ------------------------------------------ | -------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
