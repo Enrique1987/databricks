@@ -97,7 +97,9 @@ Catalog → Schema → Table
 | **Extra notes**         | Database = storage and security boundary                               | Catalog = *governance + data-sharing* boundary (permissions, lineage, data discovery) | Databricks uses the Catalog for cross-workspace governance, lineage, and access control (not just logical grouping). |
 
 
-#### 1.6 Databases and Tables on Databricks (Hands On)
+#### 1.2 Databases and Tables on Databricks (Hands On)
+[database_and_tables](code/01_database_and_tables.md)
+
 #### 1.7 Set Up Delta Tables
 #### 1.8 Views
 #### 1.9 Working with Views (Hands On)
