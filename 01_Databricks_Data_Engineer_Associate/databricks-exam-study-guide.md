@@ -437,6 +437,49 @@ WHERE salary_eur >= 70000;
 ---
 
 ### 2. Data Processing & Transformations
+
+
+**Can you create a table inside databricks that is not a delta table ?**  
+
+Short answer: **yes**, but with limits.
+
+# What you can do
+
+* **Managed tables (Unity Catalog):** always **Delta**. You **cannot** make a managed non-Delta table.
+* **External tables:** you *can* create non-Delta tables over files (Parquet/CSV/JSON/ORC/Avro) by pointing at a path.
+
+```sql
+-- External PARQUET table (non-Delta)
+CREATE EXTERNAL TABLE main.analytics.events_parquet (
+  id BIGINT,
+  name STRING,
+  ts TIMESTAMP
+)
+USING PARQUET
+LOCATION 'abfss://data@acct.dfs.core.windows.net/raw/events/';
+
+-- External JSON table
+CREATE EXTERNAL TABLE main.analytics.events_json
+USING JSON
+LOCATION 'abfss://data@acct.dfs.core.windows.net/raw/events_json/';
+```
+
+You can also do CTAS in those formats:
+
+```sql
+CREATE EXTERNAL TABLE main.analytics.some_parquet
+USING PARQUET
+LOCATION 'abfss://data@acct.dfs.core.windows.net/out/some_parquet/'
+AS SELECT * FROM main.analytics.source;
+```
+
+# Trade-offs vs Delta
+
+* No ACID transactions, time travel, `MERGE`, `OPTIMIZE`, `ZORDER`, schema evolution, or generated columns.
+* Governance/features in UC (lineage, constraints, etc.) are more limited.
+* Good for **read-only** or **interop** with systems expecting raw files; use Delta for anything you update, merge, or serve to BI.
+
+
 #### 2.1 Querying Files
 #### 2.2 Querying Files (Hands On)
 #### 2.3 Writing to Tables (Hands On)
