@@ -251,8 +251,6 @@ GRANT SELECT ON TABLE main.demo.employees_deep TO `data-analyst-role`;
 ---
 
 
-```
-
 #### 1.8 Views
 
 Databricks supports several kinds of **views** you can use to abstract queries, control access, and speed up reads.
