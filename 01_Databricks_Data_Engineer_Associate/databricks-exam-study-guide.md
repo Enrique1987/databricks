@@ -1,4 +1,4 @@
-# Databricks Certified Data Engineer Associate — Clickable Index (Introduction skipped)
+# Databricks Certified Data Engineer Associate
 
 ## General Table of Contents
 1. [Databricks Intelligence Platform](#1-databricks-intelligence-platform)
