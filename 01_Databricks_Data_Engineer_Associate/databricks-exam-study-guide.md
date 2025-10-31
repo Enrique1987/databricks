@@ -928,6 +928,21 @@ FROM t;
 ---
 
 ### 3. Incremental Data Processing
+**Data Stream**
+- Ana data source that grows over time.
+- New Fileslanding in cloud storage.
+- Updates to a database captured in a CDC feed.
+- Events queued in a pub/sub messaging feed.
+**Processing Data Stream**
+  1) Reprocess the entire source dataset each time.
+  2) Only process those new data added since last update
+     - Structured Streaming
+**Unsupported Operations**
+  1) Sorting  
+  2) Deduplication
+**Advanced methos**
+  1)  Windowing.  
+  2)  Watermarking.       
 #### 3.1 Structured Streaming
 #### 3.2 Structured Streaming (Hands On)
 #### 3.3 Incremental Data Ingestion
