@@ -940,7 +940,7 @@ FROM t;
 **Unsupported Operations**
   1) Sorting  
   2) Deduplication
-**Advanced methos**
+**Advanced methods**
   1)  Windowing.  
   2)  Watermarking.       
 #### 3.1 Structured Streaming
