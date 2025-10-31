@@ -497,11 +497,283 @@ AS SELECT * FROM main.analytics.source;
 * Governance/features in UC (lineage, constraints, etc.) are more limited.
 * Good for **read-only** or **interop** with systems expecting raw files; use Delta for anything you update, merge, or serve to BI.
 
+#### 2.1 Querying Files (ad-hoc over storage)
 
-#### 2.1 Querying Files
-#### 2.2 Querying Files (Hands On)
-#### 2.3 Writing to Tables (Hands On)
-#### 2.4 Advanced Transformations (Hands On)
+**Databricks SQL — read files directly (no table)**
+
+```sql
+-- JSON
+SELECT * 
+FROM json.`abfss://data@acct.dfs.core.windows.net/raw/events/2025/10/31/*.json`;
+
+-- Parquet
+SELECT id, name, ts
+FROM parquet.`abfss://data@acct.dfs.core.windows.net/raw/events/*.parquet`;
+
+-- Delta by path
+SELECT *
+FROM delta.`abfss://data@acct.dfs.core.windows.net/curated/events_delta/`;
+```
+
+**PySpark — explicit schema + options (recommended for CSV/JSON)**
+
+```python
+from pyspark.sql.types import StructType, StructField, LongType, StringType, TimestampType
+
+schema = StructType([
+    StructField("id", LongType()),
+    StructField("name", StringType()),
+    StructField("ts", TimestampType()),
+])
+
+df = (spark.read
+      .schema(schema)
+      .option("header", True)        # for CSV
+      .option("multiLine", True)     # for JSON with newlines
+      .json("abfss://data@acct.dfs.core.windows.net/raw/events/*.json"))
+
+df.select("id","name","ts").where("ts >= '2025-10-01'").show()
+```
+
+> **Exam tips:** Querying files by path is **schema-on-read** (no ACID). Use it for exploration and quick filters. For governance/ACID/time travel, load into **Delta tables**.
+
+---
+
+## 2.3 Writing to Tables (Hands-On)
+
+**A) SQL CTAS → managed Delta table (snapshot copy)**
+
+```sql
+CREATE TABLE main.analytics.events_delta
+USING DELTA
+AS
+SELECT id, name, ts
+FROM parquet.`abfss://data@acct.dfs.core.windows.net/raw/events/*.parquet`;
+```
+
+**B) SQL INSERT INTO an existing Delta table**
+
+```sql
+-- Table must exist (managed or external Delta)
+INSERT INTO main.analytics.events_delta (id, name, ts)
+SELECT id, name, ts
+FROM json.`abfss://data@acct.dfs.core.windows.net/raw/events/2025/10/*.json`;
+```
+
+**C) PySpark DataFrameWriter → save as Delta table**
+
+```python
+from pyspark.sql.functions import to_date
+
+df2 = df.withColumn("event_date", to_date("ts"))
+
+(df2.write
+    .format("delta")
+    .mode("append")                  # overwrite | append | errorifexists
+    .option("mergeSchema", "true")   # allow new columns on write
+    .partitionBy("event_date")       # optional but useful for pruning
+    .saveAsTable("main.analytics.events_delta"))
+```
+
+**D) Create an *external* Delta table (control the path)**
+
+```sql
+CREATE TABLE main.analytics.events_ext
+USING DELTA
+LOCATION 'abfss://data@acct.dfs.core.windows.net/curated/events_delta/';
+
+-- then load data into it
+INSERT INTO main.analytics.events_ext
+SELECT * FROM main.analytics.events_delta;
+```
+
+> **Exam tips:**
+>
+> * CTAS without `LOCATION` → **managed Delta** (data copied to managed storage).
+> * `USING DELTA LOCATION '...'` → **external Delta** (you control the path).
+> * Use `mergeSchema`, `partitionBy`, `OPTIMIZE`, `VACUUM` with **Delta**—not available for raw CSV/JSON/Parquet tables.
+
+
+
+##### `from_json` — Parse JSON strings into structs/arrays
+
+**When useful:** ingesting logs/APIs that land as raw JSON strings; making nested fields queryable & typed.
+
+**Input (table):**
+
+| id | payload                        |
+| -- | ------------------------------ |
+| 1  | `{"k":1,"tags":["a","b","a"]}` |
+| 2  | `{"k":2,"tags":["b","c"]}`     |
+
+**SQL**
+
+```sql
+WITH input AS (
+  SELECT * FROM VALUES
+    (1, '{"k":1,"tags":["a","b","a"]}'),
+    (2, '{"k":2,"tags":["b","c"]}')
+  AS input(id, payload)
+)
+SELECT
+  id,
+  from_json(payload, 'STRUCT<k INT, tags ARRAY<STRING>>') AS obj,
+  from_json(payload, 'STRUCT<k INT, tags ARRAY<STRING>>').k    AS k,
+  from_json(payload, 'STRUCT<k INT, tags ARRAY<STRING>>').tags AS tags
+FROM input;
+```
+
+**Output (selected columns):**
+
+| id | k | tags            |
+| -- | - | --------------- |
+| 1  | 1 | `["a","b","a"]` |
+| 2  | 2 | `["b","c"]`     |
+
+---
+
+##### `collect_set` — Aggregate unique values per group
+
+**When useful:** build de-duplicated tag lists, feature sets, or distinct device types per user/session.
+
+**Input (events):**
+
+| user_id | tag |
+| ------- | --- |
+| 1       | a   |
+| 1       | b   |
+| 1       | a   |
+| 2       | b   |
+
+**SQL**
+
+```sql
+WITH events AS (
+  SELECT * FROM VALUES
+    (1,'a'),(1,'b'),(1,'a'),(2,'b')
+  AS events(user_id, tag)
+)
+SELECT user_id, collect_set(tag) AS unique_tags
+FROM events
+GROUP BY user_id;
+```
+
+**Output:**
+
+| user_id | unique_tags |
+| ------- | ----------- |
+| 1       | `["a","b"]` |
+| 2       | `["b"]`     |
+
+> Tip: `collect_list` keeps duplicates; `collect_set` removes them. Array order is not guaranteed.
+
+---
+
+##### `array_distinct` — Remove duplicates inside a single array
+
+**When useful:** clean up arrays after merges/joins; normalize tags/ids.
+
+**Input:**
+
+| id | tags            |
+| -- | --------------- |
+| 1  | `["a","b","a"]` |
+
+**SQL**
+
+```sql
+SELECT id, array_distinct(tags) AS tags_dedup
+FROM (SELECT 1 AS id, array('a','b','a') AS tags);
+```
+
+**Output:**
+
+| id | tags_dedup  |
+| -- | ----------- |
+| 1  | `["a","b"]` |
+
+---
+
+##### `flatten` — Collapse array<array<T>> → array<T>
+
+**When useful:** you grouped arrays (e.g., `collect_list(tags)`) and need one flat list.
+
+**Input (per event):**
+
+| user_id | tags        |
+| ------- | ----------- |
+| 1       | `["a","b"]` |
+| 1       | `["b","c"]` |
+
+**SQL (unique tags per user):**
+
+```sql
+WITH per_event AS (
+  SELECT * FROM VALUES
+    (1, array('a','b')),
+    (1, array('b','c'))
+  AS per_event(user_id, tags)
+)
+SELECT
+  user_id,
+  array_distinct( flatten( collect_list(tags) ) ) AS unique_tags
+FROM per_event
+GROUP BY user_id;
+```
+
+**Output:**
+
+| user_id | unique_tags     |
+| ------- | --------------- |
+| 1       | `["a","b","c"]` |
+
+---
+
+##### `explode` — Turn array elements into multiple rows
+
+**When useful:** normalize arrays to rows for joins, counts, deduping, or downstream modeling.
+
+**Input:**
+
+| id | tags            |
+| -- | --------------- |
+| 10 | `["a","b","a"]` |
+
+**SQL**
+
+```sql
+WITH t AS (SELECT 10 AS id, array('a','b','a') AS tags)
+SELECT id, explode(tags) AS tag
+FROM t;
+```
+
+**Output:**
+
+| id | tag |
+| -- | --- |
+| 10 | a   |
+| 10 | b   |
+| 10 | a   |
+
+> Variants: `posexplode` (keeps index), `explode_outer` (keeps rows when array is null).
+
+---
+
+**Summary Table**
+
+| Function         | Purpose                                 | Typical Input → Output                                       | Common Pattern                                     | Gotchas                                                       |
+| ---------------- | --------------------------------------- | ------------------------------------------------------------ | -------------------------------------------------- | ------------------------------------------------------------- |
+| `from_json`      | Parse JSON string to typed struct/array | `"{"k":1,"tags":["a","b"]}"` → `STRUCT{k:1, tags:["a","b"]}` | `from_json(col, 'STRUCT<...>')` then select fields | Must provide schema (string literal) or use `schema_of_json`. |
+| `collect_set`    | Aggregate **unique** values per group   | rows `(user_id, tag)` → `(user_id, ["a","b"])`               | `GROUP BY user_id` + `collect_set(tag)`            | Order not guaranteed; arrays can grow large.                  |
+| `array_distinct` | Remove duplicates inside array          | `["a","b","a"]` → `["a","b"]`                                | `array_distinct(tags)`                             | Only de-dupes, doesn’t sort.                                  |
+| `flatten`        | Collapse nested arrays                  | `[ ["a","b"], ["b","c"] ]` → `["a","b","c"]`                 | `array_distinct(flatten(collect_list(tags)))`      | Works on `array<array<T>>` only.                              |
+| `explode`        | Array → multiple rows                   | `["a","b","a"]` → 3 rows                                     | `SELECT explode(tags) AS tag`                      | Duplicates rows; consider `distinct` afterwards.              |
+
+> **Exam-friendly combo:**
+> Unique tags per user from per-event arrays → `array_distinct(flatten(collect_list(tags)))`.
+> Parse JSON log lines → `from_json` → `explode` nested arrays → aggregate with `collect_set`.
+
+
 #### 2.5 Higher Order Functions and SQL UDFs (Hands On)
 
 ---
