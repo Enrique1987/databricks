@@ -539,7 +539,7 @@ df.select("id","name","ts").where("ts >= '2025-10-01'").show()
 
 ---
 
-## 2.3 Writing to Tables (Hands-On)
+#### 2.3 Writing to Tables (Hands-On)
 
 **A) SQL CTAS → managed Delta table (snapshot copy)**
 
@@ -775,6 +775,155 @@ FROM t;
 
 
 #### 2.5 Higher Order Functions and SQL UDFs (Hands On)
+
+
+> Focused on **array higher-order functions** and **SQL UDFs** you’ll see on the Associate exam.
+
+---
+
+## `filter` — Keep only elements that match a predicate
+
+**When useful:** clean arrays (drop nulls, keep evens/tags with a prefix), pre-normalize before `explode`.
+
+**Input**
+
+| id | nums              |
+| -: | ----------------- |
+|  1 | `[1,2,3,4]`       |
+|  2 | `[10,11,null,12]` |
+
+**SQL**
+
+```sql
+WITH t AS (
+  SELECT * FROM VALUES
+    (1, array(1,2,3,4)),
+    (2, array(10,11,NULL,12))
+  AS t(id, nums)
+)
+SELECT
+  id,
+  filter(nums, x -> x IS NOT NULL AND x % 2 = 0) AS even_nums
+FROM t;
+```
+
+**Output**
+
+| id | even_nums |
+| -: | --------- |
+|  1 | `[2,4]`   |
+|  2 | `[10,12]` |
+
+---
+
+##### `size` — Count elements in arrays / entries in maps
+
+**When useful:** quick array length, QA checks after `filter`/`array_distinct`.
+
+**Input**
+
+| id | tags            |
+| -: | --------------- |
+|  1 | `["a","b","a"]` |
+|  2 | `[]`            |
+
+**SQL**
+
+```sql
+WITH t AS (
+  SELECT * FROM VALUES
+    (1, array('a','b','a')),
+    (2, array())
+  AS t(id, tags)
+)
+SELECT id, size(tags) AS tag_count FROM t;
+```
+
+**Output**
+
+| id | tag_count |
+| -: | --------- |
+|  1 | 3         |
+|  2 | 0         |
+
+---
+
+##### `transform` — Map each array element to a new value
+
+**When useful:** normalize strings, compute scores, safe math with `CASE` inside the lambda.
+
+**Input**
+
+| id | tags                |
+| -: | ------------------- |
+|  1 | `[" A ","b "," C"]` |
+
+**SQL**
+
+```sql
+WITH t AS (
+  SELECT 1 AS id, array(' A ','b ',' C') AS tags
+)
+SELECT
+  id,
+  transform(tags, x -> lower(trim(x))) AS tags_norm
+FROM t;
+```
+
+**Output**
+
+| id | tags_norm       |
+| -: | --------------- |
+|  1 | `["a","b","c"]` |
+
+> Combo pattern: `array_distinct(transform(...))` to **normalize + dedupe**.
+
+---
+
+#### SQL UDF — Reusable logic as a function (pure SQL)
+
+**When useful:** avoid repeating expressions, standardize business rules in SQL.
+
+**Create a scalar SQL UDF (Unity Catalog schema recommended):**
+
+```sql
+-- In UC: create it inside a catalog & schema you own
+CREATE OR REPLACE FUNCTION main.analytics.normalize_tag(s STRING)
+RETURNS STRING
+RETURN lower(trim(s));
+```
+
+**Use it (alone and inside `transform`):**
+
+```sql
+WITH t AS (SELECT 1 AS id, array('  Foo','BAR  ','  bar') AS tags)
+SELECT
+  id,
+  transform(tags, x -> normalize_tag(x))                             AS tags_norm,
+  array_distinct(transform(tags, x -> normalize_tag(x)))             AS tags_norm_unique
+FROM t;
+```
+
+**Output**
+
+| id | tags_norm             | tags_norm_unique |
+| -: | --------------------- | ---------------- |
+|  1 | `["foo","bar","bar"]` | `["foo","bar"]`  |
+
+> Note: Databricks also supports **Python SQL UDFs** (`LANGUAGE PYTHON`) in UC, but for the Associate level a **pure SQL UDF** like above is enough.
+
+---
+
+##### Summary Table
+
+| Feature                     | Purpose                   | Typical Input → Output             | Common Pattern                             | Gotchas                                                       |
+| --------------------------- | ------------------------- | ---------------------------------- | ------------------------------------------ | ------------------------------------------------------------- |
+| `filter(arr, x -> pred)`    | Keep only wanted elements | `[1,2,3,4]` → `[2,4]`              | `filter(arr, x -> x IS NOT NULL AND cond)` | Use `IS NOT NULL` inside predicate to drop nulls.             |
+| `size(arr/map)`             | Count items               | `["a","b","a"]` → `3`              | `size(arr)`                                | For maps: counts key/value pairs.                             |
+| `transform(arr, x -> expr)` | Element-wise transform    | `[" A ","b "]` → `["a","b"]`       | `transform(arr, x -> lower(trim(x)))`      | Combine with `array_distinct` to dedupe.                      |
+| **SQL UDF**                 | Reusable SQL expression   | `normalize_tag(' Foo ')` → `'foo'` | `CREATE FUNCTION … RETURN <expr>`          | Define in UC schema; mind permissions and name qualification. |
+
+> Exam tip: Higher-order functions (`filter`, `transform`, etc.) **never leave arrays** unless you later `explode`. Chain them to clean data before `explode` and downstream joins.
 
 ---
 
