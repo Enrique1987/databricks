@@ -781,7 +781,7 @@ FROM t;
 
 ---
 
-## `filter` — Keep only elements that match a predicate
+##### `filter` — Keep only elements that match a predicate
 
 **When useful:** clean arrays (drop nulls, keep evens/tags with a prefix), pre-normalize before `explode`.
 
