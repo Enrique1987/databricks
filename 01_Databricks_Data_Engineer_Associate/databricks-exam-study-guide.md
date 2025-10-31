@@ -443,8 +443,6 @@ WHERE salary_eur >= 70000;
 
 Short answer: **yes**, but with limits.
 
-# What you can do
-
 * **Managed tables (Unity Catalog):** always **Delta**. You **cannot** make a managed non-Delta table.
 * **External tables:** you *can* create non-Delta tables over files (Parquet/CSV/JSON/ORC/Avro) by pointing at a path.
 
@@ -472,8 +470,28 @@ USING PARQUET
 LOCATION 'abfss://data@acct.dfs.core.windows.net/out/some_parquet/'
 AS SELECT * FROM main.analytics.source;
 ```
+| Capability                | **Delta Table** (`USING DELTA`)                                                                 | **External Data-Source Table** (`USING CSV/JSON/PARQUET ...`)                                                          |
+| ------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| Storage & metadata        | Delta files + **_delta_log** transaction log                                                    | Plain files only; **no transaction log**                                                                               |
+| ACID transactions         | **Yes** (optimistic concurrency)                                                                | **No**                                                                                                                 |
+| DML (UPDATE/DELETE/MERGE) | **Supported** and transactional                                                                 | Generally **not supported** (append-only; some formats allow inserts but not ACID)                                     |
+| Time Travel               | **Yes** (`VERSION AS OF` / `TIMESTAMP AS OF`)                                                   | **No**                                                                                                                 |
+| Change Data Feed (CDC)    | **Yes** (`TBLPROPERTIES (delta.enableChangeDataFeed=true)`)                                     | **No**                                                                                                                 |
+| Constraints               | **NOT NULL**, **CHECK**, generated columns enforced                                             | Limited/none; schema is “best-effort” on read; no constraint enforcement                                               |
+| Schema enforcement        | **Strict** (types enforced on write)                                                            | **Loose** (CSV/JSON inferred; Parquet typed but not enforced at write)                                                 |
+| Schema evolution          | **Yes** (`mergeSchema`, `ALTER TABLE … ADD COLUMN`)                                             | **Manual/limited**; may require redefining table/refreshing metadata                                                   |
+| Performance features      | **OPTIMIZE** (compaction), **Z-ORDER**/data skipping, stats                                     | None of the Delta optimizations                                                                                        |
+| Small-files handling      | Auto Optimize / OPTIMIZE                                                                        | None; you manage files yourself                                                                                        |
+| VACUUM (file retention)   | **Yes**                                                                                         | **No**                                                                                                                 |
+| Cloning                   | **Shallow/Deep clone**                                                                          | **No**                                                                                                                 |
+| Streaming semantics       | Exactly-once supported as a sink                                                                | At-least-once behaviors; no transactional guarantees                                                                   |
+| Concurrency & reliability | **High** (conflict detection via log)                                                           | Risk of **corruption** with concurrent writers                                                                         |
+| Partition management      | Delta manages partition metadata                                                                | Hive-style partition discovery; may need `MSCK REPAIR TABLE`                                                           |
+| Refresh behavior          | New commits are visible via the Delta log; Spark caches can be invalidated with `REFRESH TABLE` | Engine lists files each query; **partitions** often need `MSCK REPAIR TABLE`; cached metadata may need `REFRESH TABLE` |
+| Governance (UC)           | Best integration (lineage, constraints, privileges)                                             | Basic table object; several advanced features unavailable                                                              |
+| Typical use               | Gold/Silver tables, BI, reliable pipelines                                                      | Quick reads over raw files, ad-hoc exploration                                                                         |
 
-# Trade-offs vs Delta
+##### Trade-offs vs Delta
 
 * No ACID transactions, time travel, `MERGE`, `OPTIMIZE`, `ZORDER`, schema evolution, or generated columns.
 * Governance/features in UC (lineage, constraints, etc.) are more limited.
