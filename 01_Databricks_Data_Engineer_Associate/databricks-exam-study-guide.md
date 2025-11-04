@@ -1269,11 +1269,133 @@ raw = (spark.readStream.format("cloudFiles")
 * Enable schema evolution for upserts:
   `spark.conf.set("spark.databricks.delta.schema.autoMerge.enabled","true")`.
 
+**Auto Loader Options**  
+
+
+##### Auto Loader options — 80/20 table with one-sentence descriptions
+
+| Option (where)                                  | Why you care                      | Typical value                       | One-sentence description                                                                                                                  |
+| ----------------------------------------------- | --------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `cloudFiles.format` *(readStream)*              | File type                         | `json` | `csv` | `parquet`          | Chooses the source reader and performance profile (Parquet fastest; JSON/CSV often need schemas or inference).                            |
+| `cloudFiles.schemaLocation` *(readStream)*      | Stores inferred schema & file log | `dbfs:/mnt/_schemas/<stream>`       | Directory where Auto Loader persists schema and discovery state so the stream can resume and evolve safely.                               |
+| `includeExistingFiles` *(readStream)*           | Load backlog on first run         | `true` (default)                    | On the very first start, also ingests files that were already in the folder; ignored on later restarts unless you reset state.            |
+| `pathGlobFilter` *(readStream)*                 | Keep only matching files          | e.g. `*.json`                       | Filters files by glob pattern before ingestion; pair with `cloudFiles.useStrictGlobber=true` for predictable matches.                     |
+| `cloudFiles.useStrictGlobber` *(readStream)*    | Make globbing predictable         | `true` with `pathGlobFilter`        | Enforces strict Spark-style globbing so only paths that truly match your pattern are considered.                                          |
+| `cloudFiles.inferColumnTypes` *(readStream)*    | Non-string types for JSON/CSV     | `true` (if no explicit schema)      | Upgrades JSON/CSV fields from STRING to concrete types (int, timestamp, etc.) at the cost of extra inference work.                        |
+| `cloudFiles.schemaEvolutionMode` *(readStream)* | Handle new columns                | `rescue` (safe) or `addNewColumns`* | Choose **`rescue`** to dump unexpected fields into `_rescued_data`, or **`addNewColumns`** to automatically add new columns when allowed. |
+| `rescuedDataColumn` *(readStream)*              | Capture unexpected fields         | `_rescued_data` (default)           | Name of the semi-structured column where unparsed or extra fields are stored for later auditing/repair.                                   |
+| `cloudFiles.maxFilesPerTrigger` *(readStream)*  | Pace work per micro-batch         | Start `500–2000`                    | Caps the number of files per micro-batch to smooth throughput and control cost/latency.                                                   |
+| `cloudFiles.maxBytesPerTrigger` *(readStream)*  | Cap data per batch                | e.g. `"2g"`                         | Limits total input bytes per micro-batch to prevent spikes from very large files.                                                         |
+| `cloudFiles.useNotifications` *(readStream)*    | Lower-latency discovery at scale  | `true` when supported               | Uses cloud file events instead of directory listing for faster, more scalable new-file detection.                                         |
+| `checkpointLocation` *(writeStream)*            | Exactly-once / progress           | `dbfs:/mnt/_chk/<stream>`           | Path where Structured Streaming stores offsets/state to guarantee exactly-once writes and reliable recovery.                              |
+
+* `addNewColumns` is typically available when you haven’t provided a strict schema; with explicit schemas, prefer schema hints and evolve deliberately.
+
 ---
 
 ### 4. Production Pipelines
-#### 4.1 Multi-hop Architecture
-#### 4.2 Delta Live Tables (Hands On)
+
+#### 4.2 Delta Live Tables
+
+
+##### Delta Live Tables (DLT) — what it is
+
+**What:** DLT is Databricks’ **managed pipeline framework** that lets you define tables **declaratively** (SQL/Python) and the service handles **ordering, checkpoints, retries, expectations (data quality), schema changes, lineage, and autoscaling**.
+
+**Why useful (typical scenarios):**
+
+* Continuous **files → Bronze** with Auto Loader (`cloud_files`) and quality checks.
+* **CDC → Type 1/2** dimensions using `APPLY CHANGES INTO`.
+* **Incremental aggregates** (streaming tables) and **batch materializations** (materialized views).
+* **Operations built-in:** event log, system tables, SLA/alerts, one-click backfills.
+
+**Tiny DLT SQL sketch**
+
+```sql
+CREATE STREAMING LIVE TABLE bronze_events
+AS SELECT * FROM cloud_files('dbfs:/mnt/landing/events', 'json',
+  map('cloudFiles.inferColumnTypes','true'));
+
+CREATE LIVE TABLE silver_events
+AS SELECT * FROM LIVE.bronze_events WHERE is_valid = true;
+
+APPLY CHANGES INTO LIVE.dim_customers
+FROM STREAM(LIVE.customers_cdc)
+KEYS (customer_id)
+SEQUENCE BY event_ts
+STORED AS SCD TYPE 2;
+```
+
+---
+
+### “Why can’t I just create them as normal tables?”
+
+*(Is this about cost control, or is there a technical reason?)*
+
+**Short answer:**
+
+* The **physical objects** DLT creates **are normal Delta tables** (in your UC catalog/schema).
+* What you **can’t** do outside a DLT pipeline is use the **`LIVE`/`STREAMING LIVE` syntax** and the managed semantics—because those are **compiled and orchestrated by the DLT service**, not by regular Spark SQL.
+
+**Technical reasons (the real blockers):**
+
+* **Different compiler/executor:** `CREATE [STREAMING] LIVE TABLE` and `APPLY CHANGES INTO` are **DLT directives**; only the DLT pipeline engine understands them, builds the DAG, wires checkpoints/state, and enforces expectations.
+* **Managed lifecycle:** DLT owns **ordering, retries, backfills, schema tracking**, and writes an **event log/system tables**; ad-hoc `CREATE TABLE AS SELECT` can’t attach to that lifecycle.
+* **State & quality coupling:** DLT ties **quality rules**, **expectations**, **SCD maintenance**, and **autoscaling** to each table; those guarantees require the pipeline runtime.
+* **Reproducibility:** Pipeline configs (target catalog/schema, storage location, cluster policy) make tables **rebuildable** and auditable; ad-hoc creation breaks lineage & observability.
+
+**Governance/cost angle (secondary, not the main reason):**
+
+* Yes, DLT has its **own pricing/editions** on top of compute, so the platform naturally encourages using it when you need its guarantees—not for every one-off table.
+* But the **restriction isn’t to prevent “forgotten tables”**; it’s because **DLT tables are a product of a pipeline**, not a standalone SQL statement.
+
+**Practical takeaway:**
+
+* You **query DLT outputs like any normal Delta table** (`SELECT * FROM catalog.schema.table`).
+* To **create/maintain** them with DLT semantics, define them **inside a DLT pipeline**;
+  if you instead `CREATE TABLE ... AS SELECT` in a notebook/job, you’ll just get a **regular Delta table** (no DLT expectations/event log/automanagement).
+
+If you want, share your Bronze→Silver→Gold needs and we’ll map which ones merit DLT (managed) vs simple jobs (plain Delta).
+
+##### `CREATE STREAMING LIVE TABLE bronze_events` vs `CREATE LIVE TABLE silver_events` (DLT)#
+DLT support batching and streaming therefore one is for streaming `STREAMING LIVE TABLE` and the other declaration `CREATE LIVE TABLE` is for Batching.
+
+**Quick idea:** use a **streaming live table** for *ingest/append* (Bronze) and a **live table** for *transform/serve* (Silver) unless you explicitly need streaming semantics in Silver.
+
+| Aspect                | `CREATE STREAMING LIVE TABLE bronze_events`                                                                 | `CREATE LIVE TABLE silver_events`                                                                             | Notes                                                                                     |
+| --------------------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Primary purpose       | **Streaming ingest** of new data (files/Kafka/CDC) into a Delta table.                                      | **Batch/materialized view** style transform over upstream tables.                                             | DLT manages orchestration, retries, expectations for both. ([docs.azure.cn][1])           |
+| Execution model       | **Streaming**: processes only data added since last update; maintains offsets/state.                        | **Batch**: recomputes the result each update (or reads a streaming source explicitly).                        | Streaming tables are incremental by design. ([Stack Overflow][2])                         |
+| Typical layer         | **Bronze** (raw append-only)                                                                                | **Silver** (cleansed, conformed)                                                                              | Common pattern in lakehouse pipelines.                                                    |
+| Source functions      | Often `cloud_files(...)`, `read_files(...)`, or `STREAM(...)` from another dataset.                         | Usually reads `LIVE.bronze_*`; can opt into streaming read with `STREAM(LIVE.bronze_*)`.                      | Use `STREAM(...)` to get streaming semantics from a source. ([Microsoft Learn][3])        |
+| State & checkpoints   | **Yes** (DLT handles streaming checkpoints/state under the hood).                                           | **No** by default; becomes streaming-only if you read via `STREAM(...)`.                                      | Streaming tables are stateful; batch tables are not. ([Stack Overflow][2])                |
+| Latency               | **Low** latency (micro-batch); governed by pipeline schedule/trigger.                                       | **Update cadence** per pipeline run (typically higher latency).                                               | Both can be scheduled/triggered by the pipeline. ([docs.databricks.com][4])               |
+| Allowed patterns      | Append ingest, windowing/watermarks, dedup, CDC into downstream.                                            | Cleansing, joins, enrichments; can do CDC via `APPLY CHANGES`/`AUTO CDC`.                                     | Use CDC APIs for SCD1/2 in Silver. ([Microsoft Learn][5])                                 |
+| Reprocessing behavior | Processes **only new data** since the last successful version.                                              | By default **recomputes** result for the run from sources (not incremental) unless reading via `STREAM(...)`. | “Streaming live table” ≈ incremental; “live table” ≈ batch. ([Stack Overflow][2])         |
+| Output mode           | Usually **append** (ingest facts).                                                                          | Often **overwrite/materialize** transform; or **upsert** when using CDC.                                      | Pick per business need.                                                                   |
+| Consuming upstream    | Downstream tables refer to it as `LIVE.bronze_events` (or `STREAM(LIVE.bronze_events)` for streaming read). | Typically defined as `CREATE LIVE TABLE silver AS SELECT ... FROM LIVE.bronze ...`.                           | `LIVE` is a DLT namespace for dependencies. ([Stack Overflow][2])                         |
+| Quality rules         | Supports **EXPECT** constraints (fail, drop, warn).                                                         | Same.                                                                                                         | Expectations apply to both. ([Databricks][6])                                             |
+| When to choose        | You ingest **growing sources** and need **exactly-once** incremental processing.                            | You transform to **curated** tables and don’t require streaming semantics in the step.                        | Promote to streaming read in Silver only if it’s truly needed. ([docs.databricks.com][4]) |
+
+**Tiny sketches**
+
+```sql
+-- Bronze (streaming ingest)
+CREATE STREAMING LIVE TABLE bronze_events
+AS SELECT * FROM cloud_files('dbfs:/mnt/landing/events','json',
+  map('cloudFiles.inferColumnTypes','true'));
+```
+
+```sql
+-- Silver (batch transform of Bronze)
+CREATE LIVE TABLE silver_events
+AS SELECT * FROM LIVE.bronze_events WHERE is_valid = true;
+-- If you need streaming semantics here, read as:
+-- SELECT ... FROM STREAM(LIVE.bronze_events)
+```
+
+**TL;DR:** Use **`STREAMING LIVE TABLE`** for incremental ingest; use **`LIVE TABLE`** for downstream transforms unless you explicitly need **`STREAM(...)`** semantics in Silver (for true end-to-end streaming). 
+
 #### 4.3 Change Data Capture
 #### 4.4 Processing CDC Feed with DLT (Hands On)
 #### 4.5 Jobs (Hands On)
