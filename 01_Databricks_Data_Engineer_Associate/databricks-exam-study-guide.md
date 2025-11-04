@@ -929,7 +929,7 @@ FROM t;
 
 ### 3. Incremental Data Processing
 **Data Stream**
-- Ana data source that grows over time.
+- Any data source that grows over time.
 - New Fileslanding in cloud storage.
 - Updates to a database captured in a CDC feed.
 - Events queued in a pub/sub messaging feed.
@@ -942,11 +942,332 @@ FROM t;
   2) Deduplication
 **Advanced methods**
   1)  Windowing.  
-  2)  Watermarking.       
+  2)  Watermarking.
+ 
 #### 3.1 Structured Streaming
-#### 3.2 Structured Streaming (Hands On)
-#### 3.3 Incremental Data Ingestion
-#### 3.4 Auto Loader (Hands On)
+
+#### 3.0 Bronze Ingestion
+
+##### Bronze ingestion on Databricks — first things first
+
+**Goal of Bronze:** land **raw, append-only** data in Delta with minimal transforms (schema enforcement, optional dedup).
+There are **two fundamental modes** to load Bronze—**Batch** and **Streaming**—plus **DLT** to manage either.
+
+---
+
+##### Quick decision (what to pick)
+
+| Source                    | Low frequency / backfills -->BATCH      | Continuous / low-latency  -->  STREAMING                       |
+| ------------------------- | --------------------------------------- | -------------------------------------------------------------- |
+| Files in cloud storage    | **`COPY INTO`** or batch **`df.write`** | **Auto Loader** (`readStream cloudFiles` → `writeStream`)      |
+| Database tables           | Batch **JDBC** extract → Delta          | CDC landed to files/Delta → **`readStream` + MERGE** / **CDF** |
+| Event streams (Kafka, EH) | —                                       | **`readStream.format("kafka")` → Delta**                       |
+| Prefer managed pipeline   | **DLT batch**                           | **DLT streaming** (`APPLY CHANGES`, expectations)              |
+
+---
+
+##### 1) Batch loading (on-demand or scheduled)
+
+**When useful:** simple daily/hourly jobs, backfills, first loads.
+
+**a) `COPY INTO` (idempotent file loads)**
+
+```sql
+COPY INTO main.bronze.events_raw
+FROM 'dbfs:/mnt/landing/events/'
+FILEFORMAT = JSON
+FORMAT_OPTIONS ('inferSchema'='true')
+COPY_OPTIONS ('mergeSchema'='true');  -- loads only new files
+```
+
+**b) JDBC → Delta (tables in RDBMS)**
+
+```python
+df = (spark.read.format("jdbc")
+  .option("url", "jdbc:postgresql://host/db")
+  .option("dbtable", "public.orders")
+  .option("user", "<user>").option("password", "<pwd>")
+  .load())
+
+(df.write.format("delta").mode("append")
+  .saveAsTable("main.bronze.orders_raw"))
+```
+
+**c) Batch “catch-up” using streaming once**
+
+```python
+(spark.readStream.table("main.bronze.events_raw")
+ .writeStream.format("delta")
+ .trigger(availableNow=True)  # process all available data, then stop
+ .option("checkpointLocation", "dbfs:/mnt/_chk/bronze/reload")
+ .toTable("main.bronze.events_full"))
+```
+
+---
+
+##### 2) Streaming loading (continuous)
+
+**When useful:** new files/events arrive constantly; you want near-real-time tables.
+
+**a) Auto Loader (files → only-new)**
+
+```python
+raw = (spark.readStream.format("cloudFiles")
+  .option("cloudFiles.format", "json")
+  .option("cloudFiles.schemaLocation", "dbfs:/mnt/_schemas/bronze/events")
+  .load("dbfs:/mnt/bronze/raw/events/"))
+
+(raw.writeStream.format("delta")
+  .option("checkpointLocation","dbfs:/mnt/_chk/bronze/events")
+  .toTable("main.bronze.events_raw"))
+```
+
+**b) Kafka/Event Hubs → Delta**
+
+```python
+from pyspark.sql.functions import from_json, col
+schema = "user_id STRING, ts TIMESTAMP, url STRING"
+
+src = (spark.readStream.format("kafka")
+  .option("kafka.bootstrap.servers","broker:9092")
+  .option("subscribe","pageviews").load())
+
+parsed = (src.selectExpr("CAST(value AS STRING) AS json")
+  .select(from_json("json", schema).alias("r")).select("r.*"))
+
+(parsed.writeStream.format("delta")
+  .option("checkpointLocation","dbfs:/mnt/_chk/bronze/pageviews")
+  .toTable("main.bronze.pageviews"))
+```
+
+**c) Delta CDF (row-level changes as a stream)**
+
+```python
+changes = (spark.readStream.format("delta")
+  .option("readChangeFeed","true")
+  .option("startingVersion","0")
+  .table("main.staging.customers_cdc"))
+
+(changes.writeStream.format("delta")
+  .option("checkpointLocation","dbfs:/mnt/_chk/bronze/customers_cdf")
+  .toTable("main.bronze.customers_cdf"))
+```
+
+---
+
+#####  Delta Live Tables (DLT) — managed batch or streaming
+
+**When useful:** governance, data quality, retries, lineage, CDC (`APPLY CHANGES`).
+
+```sql
+CREATE STREAMING LIVE TABLE bronze_events
+AS SELECT * FROM cloud_files("dbfs:/mnt/bronze/raw/events","json",
+  map("cloudFiles.inferColumnTypes","true"));
+```
+
+---
+
+##### Choosing wisely (rules of thumb)
+
+* **Files & simplicity:** `COPY INTO` (batch). Need continuous? **Auto Loader**.
+* **Databases:** small → **JDBC batch**; CDC → land changes, then **stream with MERGE/CDF**.
+* **Events:** always **streaming** (Kafka/Event Hubs).
+* **Operational rigor:** prefer **DLT** (same code style, managed infra).
+
+**Bronze best practices:** append-only, unique **checkpoint per stream**, enforce schema, avoid tiny files (Auto Loader helps), and keep transformations minimal (push heavy logic to Silver).
+
+##### 3.1 `readStream` & `writeStream` — the core of Structured Streaming on Databricks
+
+
+* `readStream` creates a **streaming DataFrame** that *incrementally* reads from a growing source (files, Kafka, Delta table).
+* `writeStream` defines a **streaming sink** that continuously writes results to Delta, memory, console, etc., using a **checkpoint** for exactly-once semantics.
+
+> They do **not** “auto-sync Table A → Table B” by themselves. You build the logic (append, upsert, aggregates), run it as a job, and the job keeps B updated while it’s running.
+
+---
+
+##### `readStream` — read new data as it arrives
+
+**When useful:** consuming new files from cloud storage, Kafka events, or appends/changes from a Delta table.
+
+```python
+# Files (Auto Loader → only new files)
+src = (spark.readStream
+  .format("cloudFiles")
+  .option("cloudFiles.format", "json")
+  .option("cloudFiles.schemaLocation", "dbfs:/mnt/_schemas/bronze/events")
+  .load("dbfs:/mnt/bronze/raw/events/"))
+
+# OR: Delta table as a stream (append-only changes)
+src_delta = spark.readStream.table("main.bronze.events_raw")
+```
+
+**Notes**
+
+* `readStream` is **declarative**—no checkpoint here; it becomes stateful when you `writeStream`.
+* For Delta with updates/deletes, pair with **CDF** (`option("readChangeFeed","true")`) to get row-level changes.
+
+  #### `readStream` — what it is, how it relates to Auto Loader, and where the data “lives”
+
+**When useful:** continuously read only-new data from files (Auto Loader), Kafka/Event Hubs, or Delta/CDF to build Bronze → Silver pipelines.
+
+---
+
+
+##### 3) Where does the data live? Does the DF “grow” over time?
+
+* `readStream` returns a **streaming DataFrame** = a **lazy logical plan** plus source offsets, not a materialized dataset.
+* Nothing is stored permanently by `readStream` itself. Data is processed **micro-batch by micro-batch** only when you attach a **`writeStream`**.
+* The **DataFrame object does not accumulate rows**. Each micro-batch:
+
+  * reads the next slice (new files/offsets),
+  * processes it on executors (RAM + spill if needed),
+  * **writes to your sink** (typically a Delta table),
+  * then frees executor memory.
+* What **persists** is:
+  * **Sink**: your **Delta table** (e.g., `main.bronze.events_raw`) grows over time.
+  * **Checkpoint** (set on `writeStream`): progress/state for exactly-once (`dbfs:/…/_chk/...`).
+  * **Auto Loader schema/file log**: at `cloudFiles.schemaLocation` (tracks seen files + schema evolution).
+
+```
+dbfs:/mnt/_chk/bronze/events/         ← writeStream checkpoint (progress/state)
+dbfs:/mnt/_schemas/bronze/events/     ← Auto Loader schema & file discovery log
+```
+
+> Only **stateful** ops (aggregations, dedup, sessions) keep **state** between micro-batches; that state is **sharded on disk under the checkpoint**, not kept unbounded in RAM. Use **`withWatermark`** to bound it.
+
+---
+
+```python
+# 1) Source: streaming DF (Auto Loader)
+src = (spark.readStream.format("cloudFiles")
+  .option("cloudFiles.format", "json")
+  .option("cloudFiles.schemaLocation", "dbfs:/mnt/_schemas/bronze/events")
+  .load("dbfs:/mnt/bronze/raw/events/"))
+
+# 2) Sink: persist increments to Delta with exactly-once semantics
+(src.writeStream
+  .format("delta")
+  .option("checkpointLocation", "dbfs:/mnt/_chk/bronze/events")
+  .toTable("main.bronze.events_raw"))
+```
+
+---
+
+##### Quick tips / gotchas
+
+* **No global cache/collect** on streaming DFs; persist to Delta, then query in batch/SQL.
+* **One unique checkpoint per sink**; don’t reuse paths.
+* For CDC/row updates: use **Delta CDF** with `option("readChangeFeed","true")` and upsert in the sink.
+* Bound state with **watermarks** for dedup/windowed aggregates.
+
+
+---
+
+##### `writeStream` — continuously write results with exactly-once Delta
+
+**When useful:** appending to Bronze, upserting to Silver, producing Gold aggregates, or feeding dashboards.
+
+```python
+# 1) Append-only copy (Table A -> Table B) — simple “sync” for inserts
+(spark.readStream.table("main.bronze.events_raw")
+  .writeStream
+  .format("delta")
+  .outputMode("append")
+  .option("checkpointLocation","dbfs:/mnt/_chk/silver/events_raw")
+  .toTable("main.silver.events_raw"))
+```
+
+```python
+# 2) Upsert (keep B in sync with A when keys update) — idempotent MERGE
+src = spark.readStream.table("main.bronze.events_raw")
+
+def upsert_to_b(microbatch_df, _):
+    microbatch_df.createOrReplaceTempView("a")
+    microbatch_df.sparkSession.sql("""
+      MERGE INTO main.silver.events AS b
+      USING (
+        SELECT * FROM a                     -- add dedup/window logic if needed
+      ) s
+      ON b.id = s.id
+      WHEN MATCHED THEN UPDATE SET *
+      WHEN NOT MATCHED THEN INSERT *;
+    """)
+
+(src.writeStream
+  .option("checkpointLocation","dbfs:/mnt/_chk/silver/events_merge")
+  .foreachBatch(upsert_to_b)
+  .start())
+```
+
+**Notes**
+
+* **Checkpoint is required** (unique per sink) to achieve exactly-once with Delta.
+* Choose an **output mode**: `append` (most common), `update`, or `complete` (aggregates).
+* Control cadence with `trigger(availableNow=True)` (catch-up then stop) or fixed intervals.
+
+---
+
+##### `readStream` + Auto Loader to ADLS → Delta (Bronze): do they “sync” A → B?
+
+**Short answer:** Auto Loader + `writeStream` keeps **Table B** (Delta) **incrementally up to date** with new files from **ADLS A**, but it’s **not a real-time mirror**. It runs in **micro-batches**, so B will always lag by **discovery + trigger interval + processing time**. You don’t *have* to set a trigger—without one it runs **as fast as possible**.
+
+---
+
+### How it works
+
+* **Source (A = ADLS path):** `readStream.format("cloudFiles")` (Auto Loader) discovers **only-new** files and reads them once.
+* **Sink (B = Delta table):** `writeStream` appends rows (or upserts if you implement `foreachBatch + MERGE`) and maintains a **checkpoint**.
+* **Job lifecycle:** Your streaming job must be **running**. If it stops, ingestion pauses—no background sync.
+
+---
+
+### Triggers (cadence of micro-batches)
+
+| Trigger                      | What it does                                         | When to use                |
+| ---------------------------- | ---------------------------------------------------- | -------------------------- |
+| *(default)*                  | Run micro-batches **back-to-back** (lowest latency). | Most pipelines.            |
+| `processingTime='2 minutes'` | Run a batch **every 2 min**.                         | SLA pacing / cost control. |
+| `availableNow=True`          | Process all backlog **then stop**.                   | Backfills / catch-ups.     |
+
+```python
+raw = (spark.readStream.format("cloudFiles")
+  .option("cloudFiles.format", "json")
+  .option("cloudFiles.schemaLocation", "dbfs:/mnt/_schemas/bronze/events")
+  .load("abfss://landing@acct.dfs.core.windows.net/events/"))
+
+(raw.writeStream
+  .format("delta")
+  # .trigger(processingTime="2 minutes")    # optional — default = as fast as possible
+  # .trigger(availableNow=True)             # one-time catch-up
+  .option("checkpointLocation","dbfs:/mnt/_chk/bronze/events")
+  .toTable("main.bronze.events_raw"))
+```
+
+---
+
+##### Latency levers (ADLS + Auto Loader)
+
+* **Discovery:** enable notifications for ADLS (`cloudFiles.useNotifications = true`) to reduce listing delays.
+* **Batch size:** `cloudFiles.maxFilesPerTrigger` / `minRowsPerTrigger` to control work per batch.
+* **Processing:** Photon runtimes + simple transforms in Bronze; push heavy logic to Silver.
+
+---
+
+##### “Synchronized” caveats
+
+* **Files only:** if a file in A is **overwritten**, Auto Loader won’t reload it by default (already marked processed).
+* **Deletes/updates:** A isn’t a table—file deletions don’t auto-delete from B. Handle such semantics in **Silver** with CDC or rules.
+* **Exactly-once:** guaranteed at the **sink** (B) thanks to Delta + checkpointing; still **eventual** w.r.t. A.
+
+---
+
+##### Quick tips
+
+* Use **Auto Loader** for files; **Kafka** for events; **Delta CDF** for row-level changes.
+* Add **watermarks + dropDuplicates** when deduplicating streams.
+* Enable schema evolution for upserts:
+  `spark.conf.set("spark.databricks.delta.schema.autoMerge.enabled","true")`.
 
 ---
 
