@@ -1394,9 +1394,145 @@ AS SELECT * FROM LIVE.bronze_events WHERE is_valid = true;
 -- SELECT ... FROM STREAM(LIVE.bronze_events)
 ```
 
-**TL;DR:** Use **`STREAMING LIVE TABLE`** for incremental ingest; use **`LIVE TABLE`** for downstream transforms unless you explicitly need **`STREAM(...)`** semantics in Silver (for true end-to-end streaming). 
+Use **`STREAMING LIVE TABLE`** for incremental ingest; use **`LIVE TABLE`** for downstream transforms unless you explicitly need **`STREAM(...)`** semantics in Silver (for true end-to-end streaming). 
 
-#### 4.3 Change Data Capture
+#### 4.3 Change Data Capture  
+
+##### CDC on Databricks — concept vs features
+
+**Short answer:**
+
+* **CDC (Change Data Capture)** is a **design pattern** (a way of working): process only changed rows instead of full reloads.
+* On **Databricks**, you implement CDC using **platform features/tools** like **Delta Lake MERGE**, **Delta Change Data Feed (CDF)**, **Auto Loader**, **Structured Streaming**, and **Delta Live Tables (DLT)**.
+* So: CDC is the *model*, while CDF/DLT/MERGE/etc. are the *technical knobs* you use to realize it.
+
+---
+
+##### What you “turn on” (technical pieces)
+
+1. **Delta Change Data Feed (CDF)** — *publish row changes from a Delta table*
+   Enable on a table to let downstream readers consume `insert / update_preimage / update_postimage / delete`.
+
+```sql
+ALTER TABLE main.sales.orders
+SET TBLPROPERTIES (
+  delta.enableChangeDataFeed = true,
+  delta.changeDataFeed.minRetentionDuration = '30 days'
+);
+```
+
+Read changes:
+
+```sql
+SELECT *
+FROM table_changes('main.sales.orders', 100, 120)
+WHERE _change_type IN ('insert','update_postimage','delete');
+```
+
+2. **MERGE INTO** — *perform upserts/deletes on a target Delta table*
+   You use `MERGE` to apply incoming changes (whether they came from files, Kafka, or CDF).
+
+```sql
+MERGE INTO main.silver.orders_current t
+USING main.bronze.orders_cdc s        -- your change set
+ON t.id = s.id
+WHEN MATCHED AND s.op = 'delete' THEN DELETE
+WHEN MATCHED THEN UPDATE SET *
+WHEN NOT MATCHED THEN INSERT *;
+```
+
+3. **Auto Loader + Structured Streaming** — *ingest incremental files reliably*
+   You don’t “turn on CDC” here; you **build a streaming job** that reads new files and applies `MERGE` in `foreachBatch`.
+
+```python
+stream = (spark.readStream
+  .format("cloudFiles").option("cloudFiles.format","json")
+  .load("dbfs:/mnt/bronze/orders_cdc"))
+
+# foreachBatch → MERGE logic (Type 1)
+```
+
+4. **Delta Live Tables (DLT)** — *declarative CDC in pipelines*
+   You declare CDC semantics; DLT does the heavy lifting.
+
+```sql
+APPLY CHANGES INTO LIVE.orders_current
+FROM STREAM(LIVE.orders_cdc_raw)
+  KEYS (id)
+  SEQUENCE BY updated_at
+  APPLY AS DELETE WHEN op = 'delete';
+```
+
+---
+
+##### How to think about it
+
+* **CDC (pattern)** answers: *What is a “change”? How do we sequence/dedupe? What is the target state (Type 1 vs SCD2)?*
+* **Databricks features** answer: *How do we implement that pattern reliably and at scale?*
+
+**When useful:**
+
+* Source systems emit change logs (Debezium/Fivetran/Attunity) → you upsert into Delta.
+* You want downstream tables to subscribe to **changes** of an upstream Delta table → enable **CDF**.
+* You prefer **declarative pipelines** with retries, expectations, and lineage → use **DLT + APPLY CHANGES INTO**.
+
+---
+
+#### Quick mapping (pattern → tool)
+
+| Need (pattern)                       | Databricks feature(s)                                 |
+| ------------------------------------ | ----------------------------------------------------- |
+| Upsert/delete into a “current” table | `MERGE INTO` (Photon), Z-Order by keys                |
+| Publish/consume row-level changes    | **Delta CDF** (`table_changes`, `readChangeFeed`)     |
+| Ingest new files continuously        | **Auto Loader** + Structured Streaming                |
+| Declarative CDC pipeline             | **DLT `APPLY CHANGES INTO`**                          |
+| Build SCD2 history (valid_from/to)   | MERGE two-step or DLT SCD2 pattern                    |
+| Ordering, dedupe, idempotency        | Use sequence columns (`lsn/scn/ts`), `dropDuplicates` |
+
+---
+
+#### Gotchas / tips
+
+* **CDC ≠ CDF**: CDC is the *concept*; **CDF** is a *Delta feature* that exposes changes.
+* Always define a **sequence column** (e.g., `updated_at`, `lsn`) for correct ordering in `MERGE`/DLT.
+* Set **CDF retention** long enough for your slowest consumer/backfill.
+* For performance, run on **Photon** and **Z-Order** by join keys used in `MERGE`.
+
+---
+
+Szenario
+
+#### Delta **Change Data Feed (CDF)** — “publish/subscribe” between Delta tables
+
+ **CDF does not “auto-bind” tables.** CDF is a Publisher/Subscribes mode.
+
+* A **source Delta table** (Table A) **publishes** row-level changes when CDF is enabled.
+* One or more **consumer jobs** (SQL or PySpark, DLT, Jobs) **read those changes** and **apply** them to downstream Delta tables (Table B, C, …).
+* So changes **flow when you run a pipeline** (MERGE/INSERT), not automatically.
+
+---
+
+**Mental model**
+Between two tables A and B. <-->  
+* **Publisher:** Table A with `delta.enableChangeDataFeed = true` keeps a change log (by commit version/timestamp).
+* **Subscribers:** Your code reads `table_changes('A', …)` (SQL) or `.option("readChangeFeed","true")` (PySpark) and **MERGEs** into B.
+* **You track progress** by remembering the **last applied version**; next run starts at `last_version + 1`.
+* **Many subscribers** can consume the same CDF independently.
+
+---
+
+**Notes / gotchas**
+
+* **Not push-based:** CDF is **pull/read**; you schedule the consumer.
+* **Retention matters:** keep `delta.changeDataFeed.minRetentionDuration` long enough for your slowest consumer/backfill.
+* **Use post-image for Type 1:** prefer `insert` + `update_postimage` + `delete`; use `update_preimage` only for diffs/audits.
+* **Permissions (UC):** consumers need `SELECT` on the source **table** and its **catalog/schema**.
+* **Schema drift:** if A adds columns, B must evolve (e.g., `ALTER TABLE … ADD COLUMN` or `MERGE` with compatible schema).
+* **Ordering:** consume by **version** (or timestamp) to keep deterministic application.
+
+CDF lets Table A *publish* changes; Table B receives them **when your job reads those changes and applies them**.
+
+
 #### 4.4 Processing CDC Feed with DLT (Hands On)
 #### 4.5 Jobs (Hands On)
 
