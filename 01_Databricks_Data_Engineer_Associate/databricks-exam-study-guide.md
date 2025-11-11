@@ -1403,9 +1403,9 @@ Use **`STREAMING LIVE TABLE`** for incremental ingest; use **`LIVE TABLE`** for 
 **Short answer:**
 
 * **CDC (Change Data Capture)** is a **design pattern** (a way of working): process only changed rows instead of full reloads.
-* On **Databricks**, you implement CDC using **platform features/tools** like **Delta Lake MERGE**, **Delta Change Data Feed (CDF)**, **Auto Loader**, **Structured Streaming**, and **Delta Live Tables (DLT)**.
-* So: CDC is the *model*, while CDF/DLT/MERGE/etc. are the *technical knobs* you use to realize it.
-
+* On **Databricks**, you implement CDC using **platform features/tools** like **Delta Lake MERGE**, **Delta Change Data Feed (CDF)**, **Auto Loader**, **Structured Streaming**, and **Delta Live Tables (DLT)**.  
+* So: CDC is the *model*, while CDF/DLT/MERGE/etc. are the *technical knobs* you use to realize it.  
+**CDC**: Insert, delete, update (that are the changes)   
 ---
 
 ##### What you “turn on” (technical pieces)
@@ -1533,7 +1533,8 @@ Between two tables A and B. <-->
 CDF lets Table A *publish* changes; Table B receives them **when your job reads those changes and applies them**.
 
 
-#### 4.4 Processing CDC Feed with DLT (Hands On)
+#### 4.4 Processing CDC Feed with DLT 
+CDC with DLT use code `Apply Changes Into`  
 #### 4.5 Jobs (Hands On)
 
 ---
