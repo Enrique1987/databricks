@@ -1644,6 +1644,184 @@ CDC with DLT use code `Apply Changes Into`
 ✅ **Use it when:** You want fast, reliable **Type 1 CDC** (“latest state”) pipelines with minimal code and strong governance.
 ⚠️ **Avoid it when:** You need very custom logic (SCD2, cross-table merges) or fine-grained operational control.
 
+
+#### 4.5 Databricks Asset Bundles.  
+## Databricks Asset Bundles (DABs) — Dev → QA → Prod with YAML
+
+**Goal:** keep one repo with your notebooks / code and declarative job definitions, then promote the *same commit* through **dev**, **qa**, and **prod** using targets in `databricks.yml` and CI/CD.
+
+At a glance:
+
+* One required root file: **`databricks.yml`** (+ optional included resource files). ([learn.microsoft.com][1])
+* **Targets** model your environments and can run in **development** or **production** mode. ([docs.databricks.com][2])
+* Deploy/Run with the **Databricks CLI**: `bundle validate | plan | deploy | run | destroy | deployment bind`. ([docs.databricks.com][3])
+
+---
+
+### 1) Repo layout (minimal, modular)
+
+```
+.
+├── databricks.yml
+├── resources/
+│   └── jobs/
+│       └── etl_job.yml
+├── notebooks/
+│   └── 01_load.ipynb
+└── src/
+    └── main.py
+```
+
+> DAB supports **splitting config**: put jobs/pipelines/etc. under `resources/*.yml` and include them from `databricks.yml`. ([learn.microsoft.com][1])
+
+---
+
+### 2) `databricks.yml` — targets & environment overrides
+
+```yaml
+# databricks.yml
+bundle:
+  name: my_project
+  # Optional: pin CLI version so dev/CI match
+  databricks_cli_version: '>= 0.218.0'  # example
+  git:
+    branch: main  # prod can validate you're on main
+workspace:
+  # Where files land in the workspace; keeps bundle identity stable
+  root_path: /Shared/bundles/${bundle.name}/${bundle.target}
+
+include:
+  - resources/**/*.yml
+
+# Common variables you override per target
+variables:
+  some variables
+
+# Environments
+targets:
+  dev:
+    some values as mode, workspace variables, presets..
+  qa:
+    some values, mode: production
+  prod:
+    some values mode: production
+
+```
+
+**Why this works**
+
+* **Development mode** pauses schedules, allows concurrent job runs, and lets you override compute for fast iteration. **Production mode** adds safety checks (e.g., branch validation) and blocks ad-hoc compute overrides. ([docs.databricks.com][2])
+* Setting `workspace.host` per target + a **stable `root_path`** gives a consistent bundle identity and prevents collisions across users/targets. (Identity ties to name/target and workspace; `root_path` is used to track state.) ([docs.databricks.com][3])
+* Prefer `workspace.host` (match via your local/CI profile) instead of embedding a profile name inside YAML to keep configs portable. ([learn.microsoft.com][4])
+
+> Secrets: don’t hardcode them in YAML. Use **variables** + `BUNDLE_VAR_*` env vars or CI secrets; define secret scopes as resources if needed. ([docs.databricks.com][5])
+
+---
+
+### 3) A small job (in `resources/jobs/etl_job.yml`)
+
+```yaml
+# resources/jobs/etl_job.yml
+resources:
+  jobs:
+    etl_job:
+  other values as task, schedule..
+```
+
+> See examples for serverless jobs, parameters, and schedules in the official DAB samples. ([docs.databricks.com][6])
+
+---
+
+### 4) Local workflow (developer loop)
+
+```bash
+# 1) Validate and preview what will change
+databricks bundle validate -t dev
+databricks bundle plan -t dev
+
+# 2) Deploy to dev (development mode)
+databricks bundle deploy -t dev
+
+# 3) Run the job from the bundle
+databricks bundle run etl_job -t dev -- --param1=foo
+
+# 4) Promote the same commit to QA/Prod
+databricks bundle deploy -t qa
+databricks bundle deploy -t prod
+```
+
+> Command reference: `deploy`, `run`, `plan`, `validate`, `destroy`, and `deployment bind` (to adopt an existing workspace resource into your bundle). ([docs.databricks.com][3])
+
+---
+
+### 5) CI/CD (GitHub Actions example)
+
+Use the official action to install the CLI, inject secrets (`DATABRICKS_HOST`, OAuth or PAT), then validate/deploy per target.
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy DABs
+on:
+  push:
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+  qa:
+    needs: dev
+
+  prod:
+    needs: qa
+
+```
+
+> The docs include end-to-end GitHub Actions examples for dev/prod bundle deployments and show how to wire secrets. ([docs.databricks.com][7])
+
+---
+
+### 6) Promotion model & keeping QA/Prod “in sync”
+
+* **Promote the same commit/tag**: build/test in dev, then tag `vX.Y.Z` and deploy the **same commit** to QA, then Prod (with approval).
+* **Production mode** validates branch and disallows ad-hoc compute overrides, which enforces repeatability. ([docs.databricks.com][2])
+* Keep **environment deltas** in `targets.*` only (host, catalogs/schemas, cluster policy IDs, run identity). Everything else should be identical.
+* If adopting an existing job/pipeline, **bind** it once so it’s managed by the bundle thereafter. ([docs.databricks.com][3])
+
+---
+
+### 7) Tips / gotchas
+
+* **Only one `databricks.yml`** at the root; use `include:` for additional resource YAMLs. ([learn.microsoft.com][
+* **Use `run_as`** with a **service principal** in prod; it separates deployer from runtime identity. ([learn.microsoft.com][4])
+* **Variables & secrets:** use DAB **variables** and pass values from CI (`BUNDLE_VAR_*` envs), don’t inline secrets in YAML. ([docs.databricks.com][5])
+* **Compute choices:** in **dev mode** you can point runs to a personal/all-purpose cluster (`--cluster-id`), but **prod mode** won’t accept compute overrides. ([docs.databricks.com][2])
+* **Preview changes** with `bundle plan` before deploying; `bundle summary` gives deep links to deployed resources; `bundle destroy` cleans up. ([docs.databricks.com][3])
+
+---
+
+### 8) A tiny end-to-end test
+
+```bash
+# (Once per workspace) Login & create a profile
+databricks auth login --host https://<dev-workspace>
+# Validate & deploy to dev
+databricks bundle validate -t dev
+databricks bundle deploy   -t dev
+# Run the job
+databricks bundle run etl_job -t dev -- --param1=example
+# Promote to QA (same commit)
+databricks bundle deploy -t qa
+```
+
+> For first-time setup and profiles, see the DAB job tutorial & auth notes. ([docs.databricks.com][8])
+
+---
+
+Summarize
+
+* **`databricks.yml`**: define `bundle`, `include`, `variables`, and **`targets: dev|qa|prod`** with `mode: development|production`, `workspace.host`, optional `presets`, and `run_as` for prod.  
+* **`resources/jobs/*.yml`**: declarative job(s) with notebook/script tasks and schedules. ([docs.databricks.com][6])
+* **CLI** (`validate/plan/deploy/run`) locally and from **CI** (GitHub Actions + `databricks/setup-cli`). ([docs.databricks.com][3])
+
+
 ---
 
 ### 5. Data Governance & Security
