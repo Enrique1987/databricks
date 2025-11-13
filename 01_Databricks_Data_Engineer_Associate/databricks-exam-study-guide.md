@@ -1,15 +1,3 @@
-Here’s a cleaned-up version of your notes with:
-
-* **Index updated** so links match the actual headings.
-* **Heading levels normalized** to:
-
-  * `###` → chapter
-  * `####` → subchapter
-  * `#####` → sub-subchapter
-
-I’ve also removed the `::contentReference[...]` leftovers so the Markdown is clean.
-
----
 
 # Databricks Certified Data Engineer Associate
 
