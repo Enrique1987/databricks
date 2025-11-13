@@ -1,16 +1,4 @@
-Here’s your full note, with:
 
-* **All content kept** (I didn’t intentionally delete any sections/text).
-* **Only structural changes:**
-
-  * Chapters = `###`
-  * Subchapters = `####`
-  * Sub-subchapters = `#####`
-* **Index updated only by *adding* entries for the new 5.x topics** (no old entries removed).
-
-You can now copy-paste this straight into your repo.
-
----
 
 # Databricks Certified Data Engineer Associate
 
