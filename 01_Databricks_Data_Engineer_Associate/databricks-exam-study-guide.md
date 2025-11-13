@@ -1824,7 +1824,274 @@ Summarize
 
 ---
 
-### 5. Data Governance & Security
-#### 5.1 Databricks SQL
-#### 5.2 Data Objects Privileges
-#### 5.3 Managing Permissions (Hands On)
+#### 5. Data Governance & Security
+##### 5.1 Databricks SQL
+Self-explanatory, i´s SQL within the tables, you have. It fall under Data Governance beccause we can check oru data. Befor this solution existed, we had to create our talbe as a temp table and query it whin a notebook to check the results.  
+##### 5.2 Data Objects Privileges  and Managing Permissions.  
+
+##### Data object privileges (Unity Catalog) — Quick study notes
+
+**When useful:** grounding yourself on what you can secure in Databricks, which privileges exist, who can grant them, and the minimal SQL you’ll actually run. 
+
+---
+
+##### 1) Governance model — what can be protected
+
+| Object       | Scope you control                   |
+| ------------ | ----------------------------------- |
+| **CATALOG**  | Access to the entire catalog        |
+| **SCHEMA**   | Access to a database (schema)       |
+| **TABLE**    | Access to a managed/external table  |
+| **VIEW**     | Access to a SQL view                |
+| **FUNCTION** | Access to a named function          |
+| **ANY FILE** | Access to the underlying filesystem |
+
+> Privileges are granted with `GRANT <privilege> ON <object> TO <principal>`. 
+
+---
+
+##### 2) Privileges — what they allow
+
+| Privilege          | Ability (summary)                                           |
+| ------------------ | ----------------------------------------------------------- |
+| **SELECT**         | Read rows                                                   |
+| **MODIFY**         | Insert, update, delete data                                 |
+| **CREATE**         | Create child objects                                        |
+| **READ_METADATA**  | See object & metadata (e.g., list, describe)                |
+| **USAGE**          | Required prerequisite to act on objects (no read by itself) |
+| **ALL PRIVILEGES** | All applicable privileges on the object                     |
+
+> Typical pattern: `USAGE` on catalog/schema + `SELECT`/`MODIFY` on table/view. 
+
+---
+
+### 3) Who can grant what (ownership rules)
+
+| Granting role                  | Can grant over…                     |
+| ------------------------------ | ----------------------------------- |
+| **Databricks administrator**   | All catalog objects + underlying FS |
+| **Catalog owner**              | All objects in the catalog          |
+| **Database/Schema owner**      | All objects in the schema           |
+| **Object owner (e.g., table)** | Only that specific object           |
+
+> Grant authority follows **ownership** or admin privileges. 
+
+---
+
+##### 4) Access control operations
+
+* **GRANT** — give privileges
+* **DENY** — explicitly deny (when supported)
+* **REVOKE** — remove previously granted privileges
+* **SHOW GRANTS** — inspect active permissions
+
+
+---
+
+##### 5) Minimal examples (Databricks SQL)
+
+```sql
+-- Visibility: let a user reach the catalog and schema
+GRANT USAGE ON CATALOG main TO `user_1@company.com`;
+GRANT USAGE ON SCHEMA main.analytics TO `user_1@company.com`;
+
+-- Read access to a table
+GRANT SELECT ON TABLE main.analytics.my_table TO `user_1@company.com`;
+
+-- Writers group: data modifications
+GRANT MODIFY ON TABLE main.analytics.my_table TO `data_writers`;
+
+-- Remove write access if needed
+REVOKE MODIFY ON TABLE main.analytics.my_table FROM `data_writers`;
+
+-- Quick audit
+SHOW GRANTS ON TABLE main.analytics.my_table;
+```
+
+> `USAGE` alone doesn’t read data—pair it with `SELECT` (and with `MODIFY` for writes). 
+
+---
+
+##### 6) Notes / gotchas
+
+* Keep object **owners** clear; owners (or admins) are the ones who can grant.
+* Prefer granting to **groups** (e.g., `data_readers`, `data_writers`) instead of individuals.
+* Use Unity Catalog names (`catalog.schema.table`) for unambiguous statements. 
+
+---
+Nice, you’re asking exactly the right “but why?” questions. Let’s make this really concrete.
+
+---
+
+## 1. Answer to your direct question
+
+> **If I give `USE CATALOG` to User A, can that user see Catalog A but not the schemas?**
+
+**Roughly: yes.**
+
+With **only** `USE CATALOG` on a catalog:
+
+* ✅ The user **can see that catalog** exists and can set it as current (`USE CATALOG my_catalog`). ([Azure-Dokumentation][1])
+* ❌ The user **cannot do anything inside it**:
+
+  * cannot access schemas or tables (needs `USE SCHEMA` and object privileges). ([Azure-Dokumentation][2])
+  * cannot easily browse schemas/tables in Catalog Explorer unless they also have **`BROWSE`** on the catalog or schemas. ([Databricks Dokumentation][3])
+
+So:
+
+* `USE CATALOG` = “I’m allowed to work *somewhere* in this catalog if I also have more rights.”
+* **It does *not* automatically mean** “I can see all schemas and tables.”
+
+“See what exists” is more about **`BROWSE`**. ([Microsoft Learn][4])
+
+---
+
+## 2. Core Unity Catalog privileges (cheat sheet)
+
+Let’s focus on the main ones you actually care about for catalogs/schemas/tables.
+
+Assume we are in UC with:
+`catalog = main`, `schema = analytics`, `table = sales`.
+
+### 2.1 Privileges overview
+
+| Privilege          | Applies to                    | What it allows (short)                                                                                                              | What it does **not** allow by itself                                                         |
+| ------------------ | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| **BROWSE**         | Catalog, schema, table        | See **metadata** in Catalog Explorer / search / lineage / `information_schema`. No data. ([Microsoft Learn][4])                     | Does **not** let you read rows or modify data.                                               |
+| **USE CATALOG**    | Catalog                       | Be allowed to **access** a catalog and its data *if* you also have other privileges. ([Databricks Dokumentation][5])                | Does not give `SELECT` / `MODIFY`. Does not automatically show all schemas.                  |
+| **USE SCHEMA**     | Schema                        | Be allowed to **access objects in a schema** when combined with object privileges. ([Databricks Dokumentation][5])                  | Does not read or write any table.                                                            |
+| **SELECT**         | Table / view                  | Read rows from a table/view (queries). ([Databricks Dokumentation][6])                                                              | Needs `USE CATALOG` + `USE SCHEMA` on parents to actually work. ([Azure-Dokumentation][2])   |
+| **MODIFY**         | Table (or via schema/catalog) | `INSERT`, `UPDATE`, `DELETE` rows; full DML on the table (requires `SELECT` + `USE*`). ([Microsoft Learn][7])                       | Doesn’t itself give read access if `SELECT` is missing.                                      |
+| **CREATE TABLE**   | Schema (or catalog)           | Create tables/views in that schema (or in any schema in the catalog if granted at catalog level). ([Microsoft Learn][7])            | Needs `USE CATALOG` + `USE SCHEMA` too; doesn’t grant read or write to existing tables.      |
+| **MANAGE**         | Any UC object                 | Manage **privileges on that object** (grant/revoke); manage some properties. ([Databricks Dokumentation][8])                        | You still need `USE CATALOG` + `USE SCHEMA` and it does not grant data read/write by itself. |
+| **ALL PRIVILEGES** | Catalog/schema/table          | Shortcut meaning “all applicable privileges on this object” (e.g. SELECT+MODIFY+MANAGE on a table). ([Databricks Dokumentation][9]) | Still respects the hierarchy: you also need `USE CATALOG`/`USE SCHEMA` at parents.           |
+
+Key rule from docs:
+
+> For **any operation inside a catalog/schema**, you need **`USE CATALOG` and `USE SCHEMA`** on the parents *plus* the object privilege (e.g. `SELECT`, `MODIFY`, `MANAGE`). ([Azure-Dokumentation][2])
+
+---
+
+## 3. “User exercise” with different privilege sets
+
+Let’s redo the exercise with **clear privilege combos** for each user on `main.analytics.sales`.
+
+### 3.1 Users and grants
+
+#### User A — *Metadata-only browser*
+
+```sql
+GRANT BROWSE ON CATALOG main TO user_a;
+```
+
+* ✅ Can see **that the catalog exists** in Catalog Explorer.
+* ✅ Can see some metadata (depending how far you grant BROWSE down). ([Microsoft Learn][4])
+* ❌ Cannot `USE CATALOG`, `USE SCHEMA`, or read rows.
+* ❌ Cannot run `SELECT * FROM main.analytics.sales`.
+
+---
+
+#### User B — *Catalog gate only*
+
+```sql
+GRANT USE CATALOG ON CATALOG main TO user_b;
+```
+
+* ✅ Can **see and use** the catalog `main` (e.g. `USE CATALOG main`). ([Azure-Dokumentation][1])
+* ❌ Cannot see schemas/tables nicely in UI unless they also have `BROWSE`.
+* ❌ Cannot read or write any table (no `USE SCHEMA`, no `SELECT`/`MODIFY`).
+
+Think of B as: “is allowed in the building, but has no floor/room access yet.”
+
+---
+
+#### User C — *Can reach schema, but no data rights*
+
+```sql
+GRANT USE CATALOG ON CATALOG main TO user_c;
+GRANT USE SCHEMA  ON SCHEMA  main.analytics TO user_c;
+```
+
+* ✅ Can `USE CATALOG main; USE SCHEMA main.analytics;`
+* ✅ Can **reference objects** inside `main.analytics` (name resolution works).
+* ❌ Cannot run `SELECT` or write — there is no `SELECT`/`MODIFY`.
+* ❌ May or may not see table names in Explorer depending on `BROWSE`.
+
+C is “inside the correct floor”, but still has **no key to any room**.
+
+---
+
+#### User D — *Read-only on one table (this is the common pattern)*
+
+```sql
+GRANT USE CATALOG ON CATALOG main TO user_d;
+GRANT USE SCHEMA  ON SCHEMA  main.analytics TO user_d;
+GRANT SELECT      ON TABLE   main.analytics.sales TO user_d;
+```
+
+* ✅ Can **query**:
+
+  ```sql
+  SELECT * FROM main.analytics.sales;
+  ```
+
+* ✅ Cannot read any **other** table in `main.analytics` (no `SELECT` there).
+
+* ❌ Cannot modify data (no `MODIFY`).
+
+* ❌ Cannot change privileges (no `MANAGE`).
+
+D is a **classic reader**: proper combination of `USE + SELECT`.
+
+---
+
+#### User E — *Full DML (read + write) on one table*
+
+```sql
+GRANT USE CATALOG ON CATALOG main TO user_e;
+GRANT USE SCHEMA  ON SCHEMA  main.analytics TO user_e;
+GRANT SELECT      ON TABLE   main.analytics.sales TO user_e;
+GRANT MODIFY      ON TABLE   main.analytics.sales TO user_e;
+```
+
+* ✅ Can **read rows** (`SELECT`).
+* ✅ Can **write**: `INSERT`, `UPDATE`, `DELETE`, `MERGE` target, `TRUNCATE` (depending on SQL). ([Microsoft Learn][7])
+* ❌ Still cannot touch other tables, unless they have `SELECT`/`MODIFY` there.
+* ❌ Cannot change privileges (no `MANAGE`).
+
+E is a **writer** for that specific table.
+
+---
+
+#### User F — *Permission admin for one table*
+
+```sql
+GRANT USE CATALOG ON CATALOG main TO user_f;
+GRANT USE SCHEMA  ON SCHEMA  main.analytics TO user_f;
+GRANT MANAGE      ON TABLE   main.analytics.sales TO user_f;
+```
+
+* ✅ Can **grant/revoke privileges** on `main.analytics.sales` for other principals. ([Databricks Dokumentation][8])
+* ❌ Doesn’t automatically have `SELECT` / `MODIFY` (unless also granted or owner).
+* ❌ Cannot operate on other tables unless granted there too.
+
+F is the **“ACL admin”** for that table.
+
+---
+
+##### 3.2 Summary table (who can do what in this exercise)
+
+| User  | Privileges (on `main` / `main.analytics` / `sales`)           | Can they read rows? | Can they write rows? | Can they manage grants? | Can they see that catalog exists? |
+| ----- | ------------------------------------------------------------- | ------------------- | -------------------- | ----------------------- | --------------------------------- |
+| **A** | `BROWSE` on catalog                                           | ❌ No                | ❌ No                 | ❌ No                    | ✅ Yes (in Explorer)               |
+| **B** | `USE CATALOG`                                                 | ❌ No                | ❌ No                 | ❌ No                    | ✅ Yes                             |
+| **C** | `USE CATALOG` + `USE SCHEMA`                                  | ❌ No                | ❌ No                 | ❌ No                    | ✅ Yes                             |
+| **D** | `USE CATALOG` + `USE SCHEMA` + `SELECT` on `sales`            | ✅ Yes (on `sales`)  | ❌ No                 | ❌ No                    | ✅ Yes                             |
+| **E** | `USE CATALOG` + `USE SCHEMA` + `SELECT` + `MODIFY` on `sales` | ✅ Yes (on `sales`)  | ✅ Yes (on `sales`)   | ❌ No                    | ✅ Yes                             |
+| **F** | `USE CATALOG` + `USE SCHEMA` + `MANAGE` on `sales`            | ❌ Not automatically | ❌ Not automatically  | ✅ Yes (on `sales`)      | ✅ Yes                             |
+
+---
+
+If you like this structure, we can turn it into a **Markdown cheat sheet** for your Git repo, and then add a section with ready-made `GRANT` / `REVOKE` scripts for roles like `data_readers`, `data_writers`, `data_stewards`.
+
+
