@@ -4,41 +4,31 @@
 
 ## General Table of Contents
 
+
 1. [Databricks Intelligence Platform](#1-databricks-intelligence-platform)
 
-   * [1.1 Delta Lake](#11-delta-lake-delta-tables-advance-features)
-   * [1.2 Understanding Delta Tables (Hands On)](#12-databases-and-tables-on-databricks-hands-on)
-   * [1.3 Advanced Delta Lake Features](#13-ctas-clone-views)
-   * [1.4 Apply Advanced Delta Features (Hands On)](#14-apply-advanced-delta-features-hands-on)
+   * [1.1 Delta Lake, Delta Tables, Advance Features](#11-delta-lake-delta-tables-advance-features)
+   * [1.2 Databases and Tables on Databricks (Hands On)](#12-databases-and-tables-on-databricks-hands-on)
+   * [1.3 CTAs, Clone, Views](#13-ctas-clone-views)
    * [1.5 Relational Entities](#15-relational-entities)
-   * [1.6 Databases and Tables on Databricks (Hands On)](#12-databases-and-tables-on-databricks-hands-on)
-   * [1.7 Set Up Delta Tables](#17-set-up-delta-tables)
    * [1.8 Views](#18-views)
-   * [1.9 Working with Views (Hands On)](#19-working-with-views-hands-on)
 
 2. [Data Processing & Transformations](#2-data-processing--transformations)
 
-   * [2.1 Querying Files](#21-querying-files-ad-hoc-over-storage)
-   * [2.2 Querying Files (Hands On)](#22-querying-files-hands-on)
-   * [2.3 Writing to Tables (Hands On)](#23-writing-to-tables-hands-on)
-   * [2.4 Advanced Transformations (Hands On)](#24-advanced-transformations-hands-on)
-   * [2.5 Higher Order Functions and SQL UDFs (Hands On)](#25-higher-order-functions-and-sql-udfs-hands-on)
+   * [2.1 Querying Files (ad-hoc over storage)](#21-querying-files-ad-hoc-over-storage)
+   * [2.3 Writing to Tables (Hands-On)](#23-writing-to-tables-hands-on)
 
 3. [Incremental Data Processing](#3-incremental-data-processing)
 
    * [3.0 Bronze Ingestion](#30-bronze-ingestion)
    * [3.1 Structured Streaming](#31-structured-streaming)
-   * [3.2 Structured Streaming (Hands On)](#32-structured-streaming-hands-on)
-   * [3.3 Incremental Data Ingestion](#33-incremental-data-ingestion)
-   * [3.4 Auto Loader (Hands On)](#34-auto-loader-hands-on)
 
 4. [Production Pipelines](#4-production-pipelines)
 
-   * [4.1 Multi-hop Architecture](#41-multi-hop-architecture)
-   * [4.2 Delta Live Tables (Hands On)](#42-delta-live-tables)
+   * [4.2 Delta Live Tables](#42-delta-live-tables)
    * [4.3 Change Data Capture](#43-change-data-capture)
-   * [4.4 Processing CDC Feed with DLT (Hands On)](#44-processing-cdc-feed-with-dlt)
-   * [4.5 Jobs (Hands On)](#45-databricks-asset-bundles)
+   * [4.4 Processing CDC Feed with DLT](#44-processing-cdc-feed-with-dlt)
+   * [4.5 Databricks Asset Bundles](#45-databricks-asset-bundles)
 
 5. [Data Governance & Security](#5-data-governance--security)
 
@@ -49,16 +39,6 @@
    * [5.5 Delta Sharing — Quick study notes](#55-delta-sharing--quick-study-notes)
    * [5.6 Lakehouse Federation — Quick study notes](#56-lakehouse-federation--quick-study-notes)
    * [5.7 Cluster Best Practices — Quick study notes](#57-cluster-best-practices--quick-study-notes)
-
-6. [What Changed Since 2023](#6-what-changed--since-2023)
-
-   * [6.1 Unity Catalog Evolution](#61-unity-catalog-evolution)
-   * [6.2 SQL, Analytics & BI Updates](#62-sql-analytics--bi-updates)
-   * [6.3 Delta Live Tables (DLT) & Pipeline Enhancements](#63-delta-live-tables-dlt--pipeline-enhancements)
-   * [6.4 Runtime, Notebooks & Developer Experience](#64-runtime-notebooks--developer-experience)
-   * [6.5 Generative AI, ML & Agent Workflows](#65-generative-ai-ml--agent-workflows)
-   * [6.6 Platform & Collaboration Features](#66-platform--collaboration-features)
-   * [6.7 Key Skills to Refresh for 2025](#67-key-skills-to-refresh-for-2025)
 
 ---
 
