@@ -2094,4 +2094,315 @@ F is the **“ACL admin”** for that table.
 
 If you like this structure, we can turn it into a **Markdown cheat sheet** for your Git repo, and then add a section with ready-made `GRANT` / `REVOKE` scripts for roles like `data_readers`, `data_writers`, `data_stewards`.
 
+#### Unity Catalog — PDF Summary (Study Notes)
+
+> Source: “Unity Catalog” slide deck (Databricks Certified Data Engineer Associate prep). 
+
+---
+
+### 1. What is Unity Catalog?
+
+* **Centralized governance solution** across *all* Databricks workspaces and clouds.
+* Unifies governance for **data & AI assets**:
+
+  * files, tables, ML models, dashboards.
+* **SQL-based** access control: you manage permissions with `GRANT` / `REVOKE`. 
+
+---
+
+### 2. Architecture — Before vs With Unity Catalog
+
+**Before UC (per-workspace Hive Metastore):**
+
+* Each workspace had its own:
+
+  * Hive Metastore
+  * User/group management
+  * Access controls
+  * Compute resources
+
+→ Governance is **isolated per workspace**. 
+
+**With UC:**
+
+* One or more **UC Metastores** at the account level.
+* Central:
+
+  * User / group management
+  * Access controls
+* Workspaces mainly provide **compute resources**, but share the same UC. 
+
+---
+
+### 3. 3-Level Namespace & Hierarchy
+
+**3-level namespace:**
+
+* Old style: `schema.table`
+* UC style: `catalog.schema.table`
+
+Example:
+
+```sql
+SELECT * FROM main.analytics.sales;
+```
+
+* `main`   = catalog
+* `analytics` = schema (database)
+* `sales` = table
+
+
+**Hierarchy of securable objects:**
+
+* **Metastore**
+
+  * **Catalog**
+
+    * **Schema (Database)**
+
+      * **Table**
+      * **View**
+      * **Function**
+
+Extended hierarchy also introduces:
+
+* **Storage Credential**
+* **External Location**
+* **Share & Recipient** (for data sharing). 
+
+---
+
+### 4. Identities & Identity Federation
+
+**Identities:**
+
+* **Users** – identified by email (e.g., `user1@company.com`).
+* **Service principals** – identified by application IDs (used for automation).
+* **Groups** – can contain users and service principals, including **nested groups**. 
+
+**Identity Federation:**
+
+* Identities are managed at the **account** level.
+* The same user identity (e.g., `user1@company.com`) is recognized **across multiple workspaces**. 
+
+---
+
+### 5. Privileges & Usage Privileges
+
+**Main privileges (examples):**
+
+* `CREATE`
+* `SELECT`
+* `MODIFY`
+* `READ FILES`
+* `WRITE FILES`
+* `EXECUTE` 
+
+**Usage-related privileges:**
+
+* On **Catalog** → `USE CATALOG`
+* On **Schema (database)** → `USE SCHEMA`
+* On **Table** → `SELECT`
+
+These form the **“usage path”**:
+
+````text
+Catalog (USE CATALOG) → Schema (USE SCHEMA) → Table (SELECT / MODIFY)
+``` :contentReference[oaicite:9]{index=9}  
+
+---
+
+### 6. Security Model
+
+**Principals (who):**
+
+- Users  
+- Service principals  
+- Groups  
+
+**Securable objects (what):**
+
+- Metastore  
+- Storage Credential  
+- External Location  
+- Catalog  
+- Schema  
+- Table / View / Function  
+- Share / Recipient  
+
+**Privileges (how):**
+
+- `CREATE`, `SELECT`, `MODIFY`, `READ FILES`, `WRITE FILES`, `EXECUTE`, `USE CATALOG`, `USE SCHEMA`, …  
+
+**Grant pattern:**
+
+```sql
+GRANT <privilege>
+ON <securable_object>
+TO <principal>;
+````
+
+Example idea (not in slides but matching the model):
+
+````sql
+GRANT SELECT ON TABLE main.analytics.sales TO data_readers;
+``` :contentReference[oaicite:10]{index=10}  
+
+---
+
+### 7. Accessing Legacy Hive Metastore
+
+- UC can coexist with the **legacy `hive_metastore`**.  
+- Diagram shows:
+  - `UC Metastore`
+  - `hive_metastore` catalog with schemas like `dev`, `prod`.  
+- Unity Catalog sits alongside the older metastore as another catalog. :contentReference[oaicite:11]{index=11}  
+
+---
+
+### 8. Key Features
+
+- **Centralized governance** for data and AI.  
+- **Built-in data search** and **audit logging**.  
+- **Automated lineage** (track where data comes from and where it goes).  
+- **No hard migration required** (you can adopt UC gradually). :contentReference[oaicite:12]{index=12}  
+
+---
+
+### 9. Account Console
+
+To manage the account (metastores, identities, workspaces), you log in as an **account administrator** to the **account console**:
+
+- AWS: `https://accounts.cloud.databricks.com`  
+- Azure: `https://accounts.azuredatabricks.net/`  
+- GCP: `https://accounts.gcp.databricks.com/` :contentReference[oaicite:13]{index=13}  
+
+---
+
+If you want, next step we can turn this into a **1-page exam cheat sheet** (with a small table: “Object → Securable? → Typical privileges”).
+::contentReference[oaicite:14]{index=14}
+````
+Here you go — three short “GitHub note style” summaries in Markdown: **Delta Sharing**, **Lakehouse Federation**, and **Cluster Best Practices**.
+
+---
+
+#### `Delta Sharing` — Quick study notes
+
+**When useful:** share **live Delta tables** with other organizations or platforms **without copying data**. 
+
+**Core idea**
+
+* **Open protocol** for **secure data sharing** of Delta tables.
+* Provider exposes data via a **Delta Sharing server**; recipient can be **any platform** that speaks the protocol (Databricks or not). 
+
+**How it works (under the hood)**
+
+* Data provider has a **Delta table** stored in cloud storage (e.g. S3).
+* Recipient sends a **read request** (e.g. for table `orders`) to the **Delta Sharing server**.
+* Server returns a list of **short-lived pre-signed URLs** for underlying **Parquet files**.
+* Recipient reads the Parquet files **directly from storage**, using the URLs. 
+
+**On Databricks**
+
+* You define a **share** and add tables to it, then grant recipients:
+
+  ```sql
+  CREATE SHARE bookstore;
+  ALTER SHARE bookstore ADD TABLE orders;
+  GRANT SELECT ON SHARE bookstore TO publisher1;
+  ```
+* Two flavors mentioned:
+
+  * **Databricks-to-Databricks sharing** (across workspaces/accounts).
+  * **Open protocol sharing** with **any computing platform**. 
+
+**Costs & limitations**
+
+* **No data replication** is required — data stays where it is.
+* **Egress costs** apply when data crosses **regions or clouds** (within same region: usually no egress).
+* To reduce egress:
+
+  * Clone data to a **local region**, or
+  * Use something like **Cloudflare R2** as edge storage.
+* **Read-only model**: recipients cannot write back.
+* **Format constraint**: only **Delta tables** are shareable. 
+
+---
+
+#### `Lakehouse Federation` — Quick study notes
+
+**When useful:** avoid copying data into the lakehouse; instead **query external systems live** (for ad-hoc, POC, or low-volume lookup scenarios).
+
+**Ingestion challenges (motivation)**
+
+* Ingestion is usually recommended (especially for **high volume**, **low-latency analytics**, or **API limits**).
+* But ingestion creates **duplicate data** that can become **stale**.
+* Alternative: use **Delta Sharing** or **federation** to access live data.
+
+**What Lakehouse Federation is**
+
+* Ability to **run queries across multiple external data sources** (e.g. MySQL, other DBs) **without migrating the data**.
+* Databricks exposes external sources under a **“foreign catalog”** and schemas, so you can query like:
+
+  ```sql
+  SELECT * FROM foreign_catalog.mysql_schema.table1;
+  ```
+
+**How it works (conceptually)**
+
+* You **establish a connection** to external sources.
+* Databricks acts as a **query federation platform**, pushing down reads to the external system where possible.
+
+**Use cases**
+
+* Maintain **live access** to external operational databases.
+* **Ad-hoc reporting** or **proof-of-concept** analytics, without building full ingestion pipelines yet.
+
+**Limitations**
+
+* Complex queries may **not benefit from Databricks’ full engine power**, because execution depends heavily on the external system.
+
+---
+
+#### `Cluster Best Practices` — Quick study notes
+
+**When useful:** choosing the right **compute type**, **instance family**, and **serverless vs classic** strategy for cost/perf on Databricks. 
+
+**Compute types in Databricks**
+
+* **Classic compute**
+
+  * **All-purpose clusters**: interactive notebooks; manually or auto-terminated; **more expensive DBUs**.
+  * **Job clusters**: created by the job scheduler; terminate when job finishes; **cheaper DBUs**. 
+* **SQL Warehouses**
+
+  * Optimized for SQL workloads (ETL, BI, exploration).
+  * **Serverless SQL warehouses** when available; **Pro** when you need custom networking or serverless is not offered. 
+* **Serverless compute** for notebooks, jobs, and pipelines:
+
+  * Fully managed, **fast startup & scaling**, **latest runtime**, **Photon on by default**, supports **Python and SQL only**. 
+
+**Instance family selection (very exam-relevant)**
+
+* **Memory optimized**: heavy shuffle/spill, caching, ML workloads.
+* **Compute optimized**: structured streaming, full scans with no reuse, `OPTIMIZE` and Z-ORDER commands.
+* **Storage optimized**: to leverage **Delta caching**, ad-hoc/intermediate analytics, ML/DL with cached data.
+* **GPU optimized**: ML/DL with very high memory and GPU needs.
+* **General purpose**: default choice, and often used for **VACUUM**. 
+
+**Cost tools**
+
+* **Spot instances**: cheap but can be **preempted** when market price exceeds bid.
+* **Pools**: keep a set of **warm instances** to **reduce startup & autoscaling time**, but cloud charges still apply. 
+
+**Serverless vs classic — key differences**
+
+* **Serverless**
+
+  * No config, automatic instance selection & scaling, very fast startup, Photon on, only Python/SQL.
+* **Classic**
+
+  * Full control (instance type, networking), Photon optional, manual runtime upgrades and autoscaling config, supports Python/SQL/Scala/R/Java. 
+
+If you’d like, next step I can turn these three into a **single exam cheat-sheet page** (one table per topic + 3–4 MCQ-style practice questions).
 
