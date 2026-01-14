@@ -43,8 +43,8 @@ Database → Schema → Table
 **Databricks (Unity Catalog)**  
 Catalog → Schema → Table
 
-**Metastore**: service that manages all catalogs.  
-**`hive_metastore`** is often the default catalog in older workspaces and is commonly used for quick tests.
+**Metastore**: Service that manages all catalogs.  
+**`hive_metastore`** Is often the default catalog in older workspaces and is commonly used for quick tests.
 
 ---
 
@@ -60,9 +60,9 @@ Catalog → Schema → Table
 | `Time Travel`            | Query or restore older versions of a table (`VERSION AS OF`, `TIMESTAMP AS OF`).             |
 | `OPTIMIZE` (compaction)  | Merges small files into larger files to improve read performance.                             |
 | `Change Data Feed (CDF)` | Reads row-level changes (inserts/updates/deletes) between versions (when enabled).           |
-| Constraints              | `NOT NULL`, `CHECK`, generated columns enforcement on write (Delta).                          |
+| `Constraints`              | `NOT NULL`, `CHECK`, generated columns enforcement on write (Delta).                          |
 
-* **Data file layout:** optimization helps leverage data-skipping algorithms.
+* **Optimization** helps leverage data-skipping algorithms.
 
 | Technique                                   | What it is                                                                                         | When to use (practical guidance)                                                                                                                         | Good for                                                                               | Avoid / notes                                                                                                                                          |
 | ------------------------------------------- | -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
