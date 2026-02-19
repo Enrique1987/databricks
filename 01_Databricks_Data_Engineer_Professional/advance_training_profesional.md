@@ -625,3 +625,79 @@ databricks bundle init
 ---
 
 # End of Notes
+
+
+## CDC (Change Data Capture) — Concept and Databricks Mapping
+
+#### CDC — Track and apply data changes over time
+
+**When useful:** you want to process *only changes* (not full reloads) and keep a downstream table synchronized.
+
+### Concept
+
+**CDC** means your source produces **change events** like:
+
+* **INSERT** (new record)
+* **UPDATE** (changed record)
+* **DELETE** (removed record)
+
+Each event typically includes:
+
+* a **primary key** (e.g., `customer_id`)
+* a **sequence/ordering column** (e.g., `event_ts` or `version`)
+* an **operation flag** (e.g., `op = 'I' | 'U' | 'D'`)
+
+---
+
+## Tiny use case
+
+A CRM system emits events:
+
+| customer_id | name   |  op | event_ts            |
+| ----------: | ------ | :-: | ------------------- |
+|           1 | Alice  |  I  | 2026-02-01 10:00:00 |
+|           1 | Alicia |  U  | 2026-02-02 09:00:00 |
+|           1 | (null) |  D  | 2026-02-03 12:00:00 |
+
+Goal: maintain a **Silver** table with the **latest state** (and remove deleted records).
+
+---
+
+## Databricks: CDC in DLT vs “normal tables”
+
+### ✅ If you use **Delta Live Tables (DLT)**
+
+Use **`APPLY CHANGES INTO`** (DLT-native CDC):
+
+```sql
+APPLY CHANGES INTO LIVE.silver_customers
+FROM STREAM(LIVE.bronze_customers_cdc)
+KEYS (customer_id)
+SEQUENCE BY event_ts
+APPLY AS DELETE WHEN op = 'D'
+COLUMNS * EXCEPT (op);
+```
+
+### ✅ If you use **normal Delta tables (no DLT)**
+
+Use **`MERGE INTO`** (Delta Lake CDC pattern):
+
+```sql
+MERGE INTO main.silver_customers t
+USING main.bronze_customers_cdc s
+ON t.customer_id = s.customer_id
+WHEN MATCHED AND s.op = 'D' THEN DELETE
+WHEN MATCHED AND s.op IN ('U','I') THEN UPDATE SET *
+WHEN NOT MATCHED AND s.op IN ('I','U') THEN INSERT *;
+```
+
+---
+
+## Your statement: correct?
+
+✅ **Correct.**
+
+* **CDC** = the general change-event concept/pattern
+* **DLT CDC operator** = `APPLY CHANGES INTO`
+* **Non-DLT / normal Delta tables** = `MERGE INTO` is the usual way to apply CDC
+
