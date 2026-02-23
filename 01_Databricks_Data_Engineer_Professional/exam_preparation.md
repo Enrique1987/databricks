@@ -11,10 +11,10 @@ The data engineer needs to **apply these change events** to keep a target table 
 
 **Which of the following commands can the data engineer use to best solve this problem (in Delta Live Tables)?**
 
-A. `COPY INTO`
-B. `APPLY CHANGES INTO`
-C. `MERGE INTO`
-D. `UPDATE`
+A. `COPY INTO`  
+B. `APPLY CHANGES INTO`  
+C. `MERGE INTO`  
+D. `UPDATE`  
 
 ---
 
