@@ -701,3 +701,134 @@ WHEN NOT MATCHED AND s.op IN ('I','U') THEN INSERT *;
 * **DLT CDC operator** = `APPLY CHANGES INTO`
 * **Non-DLT / normal Delta tables** = `MERGE INTO` is the usual way to apply CDC
 
+
+
+# Databricks – Core Concepts Summary  -- need to re-order
+
+## 1. CDC (Change Data Capture)
+
+CDC is the concept of capturing changes in source data:
+- Inserts
+- Updates
+- Deletes
+
+### In Delta Live Tables:
+Use `APPLY CHANGES INTO`
+
+### In Batch Processing:
+Use `MERGE INTO`
+
+Conceptually:
+
+| Streaming / Live | Batch |
+|------------------|-------|
+| APPLY CHANGES INTO | MERGE INTO |
+
+`APPLY CHANGES INTO` simplifies CDC handling declaratively.
+`MERGE INTO` is the manual equivalent in batch workloads.
+
+---
+
+## 2. Spot Instances
+
+Spot Instances are discounted cloud VMs:
+- Use unused cloud capacity
+- Much cheaper (60–90% savings)
+- Can be interrupted
+
+### Good Use Cases:
+- Batch ETL jobs
+- Nightly processing
+- QA environments
+- ML training
+- Fault-tolerant workloads
+
+### Avoid When:
+- Strict SLA requirements
+- Real-time workloads
+- Mission-critical low-latency systems
+
+Best practice:
+Use spot workers, keep driver on on-demand.
+
+---
+
+## 3. Pre-Warming
+
+Pre-warming means:
+Keeping a cluster already started to avoid startup latency.
+
+When needed:
+- Real-time dashboards
+- Streaming workloads
+- Low-latency analytics
+- Near real-time Bronze → Gold pipelines
+
+If startup delay is acceptable:
+No pre-warming needed.
+
+Serverless compute removes the need to manage this manually.
+
+---
+
+## 4. Serverless vs Job Cluster
+
+### Serverless
+- No cluster management
+- Auto-scales
+- Auto-terminates
+- Ideal for small workloads or simple jobs
+
+### Job Cluster
+- Created for specific job
+- Terminates after execution
+- More control
+- Often used in production
+
+If cluster pre-warming is not required:
+Serverless is often optimal.
+
+---
+
+## 5. Databricks Architecture Components
+
+### Data Plane
+- Where compute runs
+- Inside customer cloud account
+- Executes Spark jobs
+- Stores actual data
+
+### Control Plane
+- Databricks-managed layer
+- Web UI
+- Notebooks
+- Job orchestration
+- Workspace management
+
+Users interact mainly with Control Plane.
+
+### Customer Cloud Account
+- Your Azure / AWS / GCP account
+- Hosts the Data Plane
+- You own the infrastructure
+
+### Databricks Management Cluster
+- Internal Databricks cluster
+- Used for orchestration
+- Not user-accessible
+- Fully managed by Databricks
+
+---
+
+## 6. Delta Live Tables
+
+DLT provides:
+- Declarative pipelines
+- Built-in CDC support
+- Automatic dependency resolution
+- Data quality enforcement
+
+Best suited for:
+- Structured Bronze → Silver → Gold pipelines
+- Continuous processing
+- Standardized transformation frameworks
