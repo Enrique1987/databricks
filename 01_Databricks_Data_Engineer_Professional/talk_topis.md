@@ -77,7 +77,7 @@ Coe Idea, is for developers that love his own local IDE and do not want to use t
 
 #### 5. Auto Loader
 
-### Schema Evolution
+##### Schema Evolution
 
 When new columns appear in source data:
 
@@ -154,22 +154,21 @@ When new columns appear in source data:
 
 #### 8. Delta Live Tables (DLT)
 
-#### Live Table
+##### Live Table
 
 * General concept in DLT
 * Can read from:
-
   * Batch sources
   * Streaming sources
 
-#### Live Streaming Table
+##### Live Streaming Table
 
 * Special case of Live Table
 * Reads from **streaming source only**
 
 ---
 
-### Key Rule
+##### Key Rule
 
 | Table Type           | Input Type Allowed |
 | -------------------- | ------------------ |
@@ -178,26 +177,25 @@ When new columns appear in source data:
 
 ---
 
-### Important Clarification
+##### Important Clarification
 
 * A **Live Streaming Table cannot read from batch**
 * If it reads batch → it is just a **Live Table**
 
 ---
 
-### Design Insight
+#### Design Insight
 
 Even if source is batch:
 
 * You may still use DLT for:
-
   * Automation
   * Dependency management
   * Data quality enforcement
 
 ---
 
-## 9. Streaming vs Live Concepts (Clarification)
+#### 9. Streaming vs Live Concepts (Clarification)
 
 * **Streaming** → data ingestion mode
 * **Live Table** → managed pipeline abstraction
@@ -208,35 +206,4 @@ Even if source is batch:
 * *Streaming = how data arrives*
 * *Live Table = how pipeline is managed*
 
----
-
-# Practical Takeaways (Consulting View)
-
-## Recommended Defaults
-
-* Use **Photon** for most production workloads
-* Use **Auto Loader + schema evolution with rescue**
-* Prefer **availableNow** for controlled ingestion
-* Use **DLT** when:
-
-  * You need governance
-  * You want managed pipelines
-  * You need data quality rules
-
----
-
-## When to Be Careful
-
-* Photon on small datasets → limited benefit
-* Streaming when batch is enough → unnecessary complexity
-* Overusing DLT → operational overhead if not needed
-
----
-
-## Architecture Perspective
-
-* Databricks = control plane
-* Cloud (Azure/AWS/GCP) = data plane (compute + storage)
-* Clusters = ephemeral compute layer
-* Delta = storage + transaction layer
-
+-
