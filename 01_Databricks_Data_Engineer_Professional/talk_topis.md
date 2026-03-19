@@ -240,11 +240,3 @@ Even if source is batch:
 * Clusters = ephemeral compute layer
 * Delta = storage + transaction layer
 
----
-
-If quieres, en el siguiente paso te lo convierto en:
-
-* una slide de presentación para cliente
-* o un ADR (Architecture Decision Record)
-
-más orientado a storytelling de arquitectura.
