@@ -55,21 +55,18 @@ Coe Idea, is for developers that love his own local IDE and do not want to use t
 
 ---
 
-## 4. Delta Sharing & Sharing Identifier
+#### 4. Delta Sharing & Sharing Identifier
 
 * **Delta Sharing** enables secure data sharing across:
-
   * Workspaces
   * Accounts
   * Organizations
 
 * A **sharing identifier** acts like:
-
   * A **resource locator + access reference**
   * Comparable to an API endpoint identifier
 
 * Authentication is handled via:
-
   * Tokens / credentials (not just identifier alone)
 
 👉 Key concept:
@@ -78,7 +75,7 @@ Coe Idea, is for developers that love his own local IDE and do not want to use t
 
 ---
 
-## 5. Auto Loader
+#### 5. Auto Loader
 
 ### Schema Evolution
 
@@ -86,7 +83,6 @@ When new columns appear in source data:
 
 * Without configuration → pipeline may fail
 * With rescue mode:
-
   * New/unexpected fields go into:
 
     ```
@@ -100,11 +96,11 @@ When new columns appear in source data:
 
 ---
 
-## 6. Auto Loader Triggers
+#### 6. Auto Loader Triggers
 
-### Available Trigger Modes
+**Available Trigger Modes**
 
-#### 1. `trigger(once=True)`
+##### 1. `trigger(once=True)`
 
 * Runs **once**
 * Processes all available data
@@ -117,20 +113,18 @@ When new columns appear in source data:
 
 ---
 
-#### 2. `trigger(availableNow=True)`
+##### 2. `trigger(availableNow=True)`
 
 * Processes all currently available data
 * Stops after completion
 * Can be triggered repeatedly
 
 👉 Use case:
-
 * Incremental batch processing
 * Scheduled pipelines
-
 ---
 
-#### 3. Continuous / Micro-batch (default streaming)
+##### 3. Continuous / Micro-batch (default streaming)
 
 * Runs continuously
 * Processes data as it arrives
@@ -138,17 +132,16 @@ When new columns appear in source data:
 👉 Use case:
 
 * Near real-time ingestion
-
 ---
 
-## 7. Constraint Handling (`ON VIOLATION`)
+#### 7. Constraint Handling (`ON VIOLATION`)
 
-### `ON VIOLATION DROP`
+##### `ON VIOLATION DROP`
 
 * Keeps the row
 * Sets invalid column value → `NULL`
 
-### `ON VIOLATION DELETE`
+##### `ON VIOLATION DELETE`
 
 * Removes the entire row
 
@@ -159,9 +152,7 @@ When new columns appear in source data:
 
 ---
 
-## 8. Delta Live Tables (DLT)
-
-### Core Concepts
+#### 8. Delta Live Tables (DLT)
 
 #### Live Table
 
