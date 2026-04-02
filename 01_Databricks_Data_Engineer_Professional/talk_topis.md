@@ -203,6 +203,61 @@ Even if source is batch:
 
 👉 Think:
 
+
+
+## Databricks Exam Notes
+
+### Question 1
+
+**Question**
+
+A data analyst is running a shell script in all the notebooks attached to the cluster. The shell script contains a long set of commands which is taking a lot of time to complete. As a data engineer, which of the following statements will you suggest to the data analyst?
+
+**Correct answer**
+
+- **Use the init script to execute the shell script faster**
+
+**Why this is correct**
+
+In Databricks, long-running shell or environment setup commands should usually be moved to a **cluster init script** instead of being executed repeatedly inside notebooks.
+
+Init scripts run during **cluster startup**, so the environment is prepared before notebook execution begins.
+
+**Why the other options are wrong**
+
+- **Run the script as the Workspace admin**  
+  Permissions do not make the shell script run faster.
+
+- **Use `%md` to run the script faster**  
+  `%md` is for Markdown, not shell execution.
+
+- **Increase the number of worker nodes to speed up the script**  
+  Worker nodes help with distributed Spark workloads, not with notebook-side shell setup.
+
+- **Run the notebook using Databricks API**  
+  This changes how the notebook is triggered, not how fast the shell script executes.
+
+**Exam takeaway**
+
+- **Cluster / OS setup** → use **init scripts**
+- **Notebook shell commands** → use `%sh` only for small ad-hoc tasks
+- **Distributed compute scaling** → helps Spark jobs, not general shell setup
+
+---
+
+### Question 2
+
+**Question**
+
+Which of the following is a valid response to a JSON workload passed to the `2.0/jobs/create` endpoint of the Databricks REST API?
+
+**Correct answer**
+
+```json
+{
+  "job_id": 13746
+}
+
 * *Streaming = how data arrives*
 * *Live Table = how pipeline is managed*
 
