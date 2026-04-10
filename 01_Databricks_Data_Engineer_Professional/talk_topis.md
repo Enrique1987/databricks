@@ -619,7 +619,7 @@ SET spark.databricks.delta.autoCompact = true;
 * Often **enabled by default** (new runtimes)
 * Or via table properties
 
----
+
 
 ### Final Mental Model
 
