@@ -631,6 +631,395 @@ SET spark.databricks.delta.autoCompact = true;
 
 * **Watermark** → controls lateness
 
+
+# 📘 Databricks Professional — Concept Review (Based on Discussion)
+
+This document summarizes key concepts we discussed, including initial intuition, corrections, and final understanding.
+
+---
+
+## 1. Predictive Optimization & Liquid Clustering
+
+#### `Predictive Optimization` — Automatic data layout optimization
+
+**What we thought:**
+
+* Related to cluster autoscaling ❌
+
+**Final understanding:**
+
+* It’s about **data layout optimization**, not compute.
+* Databricks automatically optimizes:
+
+  * file sizes
+  * data distribution
+  * clustering strategy
+
+#### `Liquid Clustering` — Dynamic clustering without static partitions
+
+**When useful:**
+
+* Avoid manual partitioning
+* Optimize queries dynamically
+
+```sql
+CREATE TABLE catalog.schema.sales
+CLUSTER BY AUTO
+AS SELECT * FROM source;
+```
+
+**Key idea:**
+
+* Replaces:
+
+  * manual partitioning
+  * manual `ZORDER`
+* Databricks adapts layout based on query patterns
+
+---
+
+## 2. Deletion Vectors
+
+#### `Deletion Vectors` — Logical row-level deletes without rewriting files
+
+**What we thought:**
+
+* Just deletes data normally ❌
+
+**Final understanding:**
+
+* Rows are **marked as deleted**, not physically removed
+* Stored in **Delta log metadata**
+
+**Why important:**
+
+* Avoids expensive file rewrites
+* Speeds up:
+
+  * `DELETE`
+  * `MERGE`
+
+```sql
+DELETE FROM catalog.schema.table WHERE id = 1;
+```
+
+**Notes:**
+
+* Transparent to users (deleted rows are not visible)
+* Physical cleanup happens later (OPTIMIZE / VACUUM)
+
+---
+
+## 3. Python Function vs UDF vs Pandas UDF
+
+#### `Python function` — Local execution (no Spark)
+
+**When useful:**
+
+* Small data
+* Driver-side logic
+
+---
+
+#### `Python UDF` — Row-by-row execution in Spark
+
+**When useful:**
+
+* Custom logic not available in SQL
+
+```python
+from pyspark.sql.functions import udf
+
+@udf("int")
+def plus_one(x):
+    return x + 1
+```
+
+**Problem:**
+
+* High **serialization overhead** (JVM ↔ Python)
+* Executes **row by row**
+
+---
+
+#### `Pandas UDF` — Vectorized execution using batches
+
+**When useful:**
+
+* Large data + custom logic
+* Better performance than Python UDF
+
+```python
+from pyspark.sql.functions import pandas_udf
+
+@pandas_udf("int")
+def plus_one(s):
+    return s + 1
+```
+
+**Final understanding:**
+
+| Concept           | Meaning                                             |
+| ----------------- | --------------------------------------------------- |
+| **Serialization** | Convert data → bytes (to move between JVM & Python) |
+| **Vectorization** | Process data in batches (not row-by-row)            |
+
+**Key takeaway:**
+
+* Pandas UDF:
+
+  * ✅ minimizes serialization
+  * ✅ uses vectorization
+  * ✅ works on large datasets
+
+---
+
+## 4. Lakeflow (Declarative Pipelines)
+
+#### `Lakeflow Declarative Pipelines` — Managed ETL pipelines (ex-Delta Live Tables)
+
+**What we thought:**
+
+* Just chaining notebooks ❌
+
+**Final understanding:**
+
+* Declarative pipeline system:
+
+  * define **what**, not **how**
+  * Databricks handles:
+
+    * orchestration
+    * retries
+    * dependencies
+
+**When useful:**
+
+* Incremental pipelines
+* SCD Type 2
+* Complex dependencies
+
+**When NOT needed:**
+
+* Simple linear pipelines (A → B → C)
+
+---
+
+### ✅ Practical rule of thumb
+
+Use Lakeflow when:
+
+* SCD2 / history tracking
+* Multiple dependencies (4+ steps)
+* Need partial reprocessing
+* Need observability & control
+
+---
+
+### 🧠 Governance (simple definition)
+
+> **Governance = control + traceability**
+
+In Databricks:
+
+* Who changed what
+* When pipelines ran
+* What data was produced
+
+---
+
+## 5. Data Quality Expectations
+
+#### `Expectations` — Declarative data quality rules
+
+**What we thought:**
+
+* Similar to constraints ❌
+
+**Final understanding:**
+
+| Feature           | Constraint | Expectation |
+| ----------------- | ---------- | ----------- |
+| Enforced strictly | ✅          | Optional    |
+| Blocks data       | ✅          | Optional    |
+| Logs issues       | ❌          | ✅           |
+| Flexible behavior | ❌          | ✅           |
+
+---
+
+### Types of Expectations
+
+* **Warn** → log only
+* **Drop** → remove bad rows
+* **Fail** → stop pipeline
+
+```sql
+CONSTRAINT valid_price EXPECT (price > 0)
+```
+
+**Key idea:**
+
+* More flexible than SQL constraints
+* Native to Databricks pipelines
+
+---
+
+## 6. Auto CDC (Change Data Capture)
+
+#### `Auto CDC` — Automatically track row-level changes
+
+**What we thought:**
+
+* Requires scanning full table ❌
+
+**Final understanding:**
+
+* Uses **Delta log**, not full scans
+* Tracks:
+
+  * inserts
+  * updates
+  * deletes
+
+```sql
+ALTER TABLE catalog.schema.table
+SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
+```
+
+---
+
+### When useful
+
+* Multiple downstream consumers
+* Real-time pipelines
+* Data replication
+
+### When NOT needed
+
+* Simple linear ETL (bronze → silver)
+
+---
+
+## 7. Query Profile
+
+#### `Query Profile` — Execution analysis tool
+
+**What it shows:**
+
+* Execution plan (DAG)
+* Time per stage
+* Bottlenecks
+
+---
+
+### Key insight
+
+Even though Spark optimizes queries:
+
+* ❗ It’s **not magic**
+* Better queries → better plans
+
+---
+
+### Example improvements
+
+* Filter before joins
+* Avoid Python UDFs
+* Use built-in SQL functions
+
+---
+
+## 8. Databricks Asset Bundles
+
+#### `Asset Bundles` — Declarative deployment of Databricks projects
+
+**Before:**
+
+* Move code manually via repos (Azure DevOps)
+
+**Now:**
+
+* Define everything in one bundle:
+
+  * jobs
+  * pipelines
+  * configs
+
+---
+
+### Key difference
+
+| Before       | Bundles      |
+| ------------ | ------------ |
+| Code only    | Code + infra |
+| Manual setup | Declarative  |
+| Error-prone  | Reproducible |
+
+---
+
+## 9. Delta Sharing
+
+#### `Delta Sharing` — Secure data sharing without copying data
+
+**What we thought:**
+
+* Moves data ❌
+
+**Final understanding:**
+
+* Does **NOT move data**
+* Provides **controlled access**
+
+---
+
+### How it works
+
+* Share tables via:
+
+  * secure endpoints
+  * tokens / credentials
+
+---
+
+### Important distinction
+
+| Feature          | Delta Sharing | Power BI  |
+| ---------------- | ------------- | --------- |
+| Data movement    | ❌             | Optional  |
+| External sharing | ✅             | ❌         |
+| Access method    | API-based     | Connector |
+
+---
+
+### Key idea
+
+> Delta Sharing = **data access layer**, not data movement
+
+---
+
+## 🔚 Final Takeaways
+
+* Databricks automates a lot, but:
+
+  * good design still matters
+* Many features aim to:
+
+  * reduce manual work
+  * improve performance
+  * increase governance
+
+---
+
+## 🚀 Mental Model
+
+* **Delta Lake** → storage + ACID
+* **Lakeflow** → pipelines
+* **Expectations** → data quality
+* **CDC** → incremental changes
+* **Bundles** → deployment
+* **Delta Sharing** → data access
+
+
 * **CDF** → enables incremental processing
 
 * **Predictive Optimization** → removes manual tuning
