@@ -1,337 +1,433 @@
+# Databricks Concepts — Organized Study Notes
 
-## Databricks Concepts – Summary Notes
+> Reordered, grouped by topic, and rewritten with **simple clickable anchors** for Markdown files such as GitHub.
 
-#### 1. Databricks Cluster
+## Index
+
+* [Platform and Compute](#platform-and-compute)
+
+  * [Databricks Cluster](#databricks-cluster)
+  * [Photon](#photon)
+  * [Databricks Connect](#databricks-connect)
+  * [Query Profile](#query-profile)
+* [Development and Deployment](#development-and-deployment)
+
+  * [Databricks Asset Bundles](#databricks-asset-bundles)
+  * [Python Function vs UDF vs Pandas UDF](#python-function-vs-udf-vs-pandas-udf)
+* [Streaming Ingestion and Pipeline Management](#streaming-ingestion-and-pipeline-management)
+
+  * [Streaming vs Live Concepts](#streaming-vs-live-concepts)
+  * [Lakeflow Declarative Pipelines and Delta Live Tables](#lakeflow-declarative-pipelines-and-delta-live-tables)
+  * [Auto Loader](#auto-loader)
+  * [Auto Loader Triggers](#auto-loader-triggers)
+  * [Ingestion Patterns Simplex vs Multiplex](#ingestion-patterns-simplex-vs-multiplex)
+  * [withWatermark](#withwatermark)
+  * [Stream Joins](#stream-joins)
+* [Change Processing and Data Quality](#change-processing-and-data-quality)
+
+  * [Delta Change Data Feed](#delta-change-data-feed)
+  * [CDF and CDC](#cdf-and-cdc)
+  * [Auto CDC](#auto-cdc)
+  * [Expectations](#expectations)
+  * [Constraint Handling](#constraint-handling)
+* [Delta Lake Storage Layout and Optimization](#delta-lake-storage-layout-and-optimization)
+
+  * [Partitioning Strategy](#partitioning-strategy)
+  * [ZORDER vs Liquid Clustering](#zorder-vs-liquid-clustering)
+  * [Predictive Optimization](#predictive-optimization)
+  * [Auto Optimize](#auto-optimize)
+  * [Analyze Table](#analyze-table)
+  * [Deletion Vectors](#deletion-vectors)
+* [Governance Sharing and Access](#governance-sharing-and-access)
+
+  * [Delta Sharing](#delta-sharing)
+  * [Sharing Identifier](#sharing-identifier)
+  * [Governance](#governance)
+* [Mental Models and Final Takeaways](#mental-models-and-final-takeaways)
+
+  * [Bronze Silver Gold](#bronze-silver-gold)
+  * [Final Mental Model](#final-mental-model)
+* [Exam Notes](#exam-notes)
+
+  * [Question 1](#question-1)
+  * [Question 2](#question-2)
+
+---
+
+## Platform and Compute
+
+### Databricks Cluster
 
 * A **cluster** is the compute engine used to execute workloads.
-* It is **not physically inside Databricks**, but deployed on cloud infrastructure (e.g. Azure VMs).
+* It is **not physically inside Databricks**, but deployed on cloud infrastructure such as Azure VMs.
 * Databricks acts as an **orchestration and control layer**.
 * You configure:
 
   * VM type
   * Number of nodes
   * Autoscaling
-* **Cost model:**
 
-  * Cloud provider → infrastructure (VMs, storage, networking)
-  * Databricks → DBUs (Databricks Units for runtime & features)
+**Cost model**
+
+* **Cloud provider** → infrastructure cost such as VMs, storage, and networking
+* **Databricks** → DBUs for runtime and platform features
 
 ---
 
-#### 2. Photon
+### Photon
 
-* **Photon** is an optimized execution engine (C++ vectorized engine).
-* Works on top of the same cluster infrastructure.
-* Improves performance mainly for:
+* **Photon** is an optimized execution engine.
+* It is a **C++ vectorized engine** running on the same cluster infrastructure.
+* It improves performance mainly for:
 
   * Large-scale queries
-  * SQL / DataFrame workloads
-* **Important limitation:**
+  * SQL workloads
+  * DataFrame workloads
 
-  * Cannot be enabled/disabled dynamically.
-  * Requires **cluster restart**.
+**Important limitation**
 
-👉 Recommendation:
+* Photon cannot be enabled or disabled dynamically on a running cluster.
+* It requires a **cluster restart**.
 
-* Use Photon by default for production workloads unless proven otherwise.
+**Recommendation**
 
----
-
-#### 3. Databricks Connect:
-
-Coe Idea, is for developers that love his own local IDE and do not want to use the one from Databricks.
-
-* Allows running code from **local IDE (e.g. VS Code, PyCharm)** against a Databricks cluster.
-* Execution happens **remotely**, not locally.
-* Use cases:
-
-  * Developer productivity
-  * Debugging
-  * Avoiding notebook-only workflows
-
-👉 Positioning:
-
-* Best for engineers who prefer **code-first workflows over notebooks**.
+* Use Photon by default for production workloads unless there is a reason not to.
 
 ---
 
-#### 4. Delta Sharing & Sharing Identifier
+### Databricks Connect
 
-* **Delta Sharing** enables secure data sharing across:
-  * Workspaces
-  * Accounts
-  * Organizations
+**Core idea:** this is for developers who prefer working in a local IDE instead of only in notebooks.
 
-* A **sharing identifier** acts like:
-  * A **resource locator + access reference**
-  * Comparable to an API endpoint identifier
+* Lets you run code from **VS Code**, **PyCharm**, or another local IDE against a Databricks cluster.
+* Code execution happens **remotely on the Databricks cluster**, not on your local machine.
 
-* Authentication is handled via:
-  * Tokens / credentials (not just identifier alone)
+**When useful**
 
-👉 Key concept:
-
-* Data is **not copied**, it is accessed remotely.
+* Developer productivity
+* Debugging
+* Code-first workflows
+* Teams that prefer local project structure over notebook-only development
 
 ---
 
-#### 5. Auto Loader
+### Query Profile
 
-##### Schema Evolution
+* **Query Profile** is the execution analysis tool for understanding how a query ran.
+* It helps inspect:
 
-When new columns appear in source data:
-
-* Without configuration → pipeline may fail
-* With rescue mode:
-  * New/unexpected fields go into:
-
-    ```
-    _rescued_data
-    ```
-
-### Behavior with new columns
-
-* Existing data → `NULL`
-* New data → populated values
-
----
-
-#### 6. Auto Loader Triggers
-
-**Available Trigger Modes**
-
-##### 1. `trigger(once=True)`
-
-* Runs **once**
-* Processes all available data
-* Then stops
-
-👉 Use case:
-
-* Batch ingestion
-* Backfills
-
----
-
-##### 2. `trigger(availableNow=True)`
-
-* Processes all currently available data
-* Stops after completion
-* Can be triggered repeatedly
-
-👉 Use case:
-* Incremental batch processing
-* Scheduled pipelines
----
-
-##### 3. Continuous / Micro-batch (default streaming)
-
-* Runs continuously
-* Processes data as it arrives
-
-👉 Use case:
-
-* Near real-time ingestion
----
-
-#### 7. Constraint Handling (`ON VIOLATION`)
-
-##### `ON VIOLATION DROP`
-
-* Keeps the row
-* Sets invalid column value → `NULL`
-
-##### `ON VIOLATION DELETE`
-
-* Removes the entire row
-
-👉 Design implication:
-
-* **DROP → data preservation**
-* **DELETE → strict data quality**
-
----
-
-#### 8. Delta Live Tables (DLT)
-
-##### Live Table
-
-* General concept in DLT
-* Can read from:
-  * Batch sources
-  * Streaming sources
-
-##### Live Streaming Table
-
-* Special case of Live Table
-* Reads from **streaming source only**
-
----
-
-##### Key Rule
-
-| Table Type           | Input Type Allowed |
-| -------------------- | ------------------ |
-| Live Table           | Batch or Streaming |
-| Live Streaming Table | Streaming only     |
-
----
-
-##### Important Clarification
-
-* A **Live Streaming Table cannot read from batch**
-* If it reads batch → it is just a **Live Table**
-
----
-
-#### Design Insight
-
-Even if source is batch:
-
-* You may still use DLT for:
-  * Automation
-  * Dependency management
-  * Data quality enforcement
-
----
-
-#### 9. Streaming vs Live Concepts (Clarification)
-
-* **Streaming** → data ingestion mode
-* **Live Table** → managed pipeline abstraction
-* **Live Streaming Table** → Live Table + streaming input
-
-👉 Think:
-
-
-
-## Databricks Exam Notes
-
-### Question 1
-
-**Question**
-
-A data analyst is running a shell script in all the notebooks attached to the cluster. The shell script contains a long set of commands which is taking a lot of time to complete. As a data engineer, which of the following statements will you suggest to the data analyst?
-
-**Correct answer**
-
-- **Use the init script to execute the shell script faster**
-
-**Why this is correct**
-
-In Databricks, long-running shell or environment setup commands should usually be moved to a **cluster init script** instead of being executed repeatedly inside notebooks.
-
-Init scripts run during **cluster startup**, so the environment is prepared before notebook execution begins.
-
-**Why the other options are wrong**
-
-- **Run the script as the Workspace admin**  
-  Permissions do not make the shell script run faster.
-
-- **Use `%md` to run the script faster**  
-  `%md` is for Markdown, not shell execution.
-
-- **Increase the number of worker nodes to speed up the script**  
-  Worker nodes help with distributed Spark workloads, not with notebook-side shell setup.
-
-- **Run the notebook using Databricks API**  
-  This changes how the notebook is triggered, not how fast the shell script executes.
-
-**Exam takeaway**
-
-- **Cluster / OS setup** → use **init scripts**
-- **Notebook shell commands** → use `%sh` only for small ad-hoc tasks
-- **Distributed compute scaling** → helps Spark jobs, not general shell setup
-
----
-
-### Question 2
-
-**Question**
-
-Which of the following is a valid response to a JSON workload passed to the `2.0/jobs/create` endpoint of the Databricks REST API?
-
-**Correct answer**
-
-```json
-{
-  "job_id": 13746
-}
-
-* *Streaming = how data arrives*
-* *Live Table = how pipeline is managed*
-
-## Databricks — Streaming, Ingestion Patterns & Optimization (Study Notes)
-
-### 1. Ingestion Patterns: `Simplex vs Multiplex`
-
-#### `Simplex` — 1:1 ingestion
-
-**When useful:** clear source → target mapping, batch pipelines, simple lineage.
-
-* One source → one target table
-* Typical in batch ingestion from on-prem / external systems
-* Easy to debug and maintain
-
-#### `Multiplex` — N:1 ingestion
-
-**When useful:** streaming ingestion (e.g., Kafka), shared ingestion layer.
-
-* Multiple sources (e.g., Kafka topics) → one Bronze table
-* Bronze acts as a **raw multi-entity container**
-* Later split into Silver tables
+  * The execution plan
+  * Time spent per stage
+  * Bottlenecks
 
 **Key insight**
 
-* Multiplex is **most useful in streaming**, not batch
-* Batch pipelines usually remain **simplex**
+Even though Spark optimizes queries automatically, it is **not magic**.
+
+Better query design still matters.
+
+**Typical improvements**
+
+* Filter before joins
+* Avoid Python UDFs when built-in functions exist
+* Prefer built-in SQL and PySpark expressions
 
 ---
 
-### 2. Auto Loader — Schema Evolution
+## Development and Deployment
 
-#### `rescuedDataColumn` — Capture unexpected columns
+### Databricks Asset Bundles
 
-**When useful:** schema drift, semi-structured ingestion.
+* **Asset Bundles** are a declarative way to deploy Databricks projects.
 
-* Unknown fields are stored in a special column (e.g., `_rescued_data`)
-* Prevents pipeline failures
+**Before**
+
+* Move code manually through repos or CI pipelines
+* Configure jobs and infrastructure separately
+
+**Now**
+
+* Define everything together in one bundle:
+
+  * Jobs
+  * Pipelines
+  * Configurations
+
+**Key difference**
+
+| Before       | Bundles      |
+| ------------ | ------------ |
+| Code only    | Code + infra |
+| Manual setup | Declarative  |
+| Error-prone  | Reproducible |
+
+---
+
+### Python Function vs UDF vs Pandas UDF
+
+#### Python function
+
+* Runs locally
+* Not distributed by Spark
+
+**When useful**
+
+* Small data
+* Driver-side logic
+* Helper functions outside distributed execution
+
+---
+
+#### Python UDF
+
+* Custom Python logic executed inside Spark
+* Processes data **row by row**
+
+```python
+from pyspark.sql.functions import udf
+
+@udf("int")
+def plus_one(x):
+    return x + 1
+```
+
+**Main downside**
+
+* High **serialization overhead** between JVM and Python
+* Slower than built-in Spark functions
+
+---
+
+#### Pandas UDF
+
+* Uses **vectorized execution**
+* Processes data in batches instead of row by row
+
+```python
+from pyspark.sql.functions import pandas_udf
+
+@pandas_udf("int")
+def plus_one(s):
+    return s + 1
+```
+
+**Important concepts**
+
+| Concept       | Meaning                                                 |
+| ------------- | ------------------------------------------------------- |
+| Serialization | Converting data to bytes to move between JVM and Python |
+| Vectorization | Processing data in batches instead of one row at a time |
+
+**Takeaway**
+
+* First choice → built-in Spark functions
+* If custom Python logic is required:
+
+  * **Pandas UDF** is usually better than **Python UDF**
+  * **Python UDF** is usually more expensive
+
+---
+
+## Streaming Ingestion and Pipeline Management
+
+### Streaming vs Live Concepts
+
+* **Streaming** = how data arrives
+* **Live Table** = how the pipeline is managed
+* **Live Streaming Table** = managed table with streaming input
+
+**Mental model**
+
+* **Streaming** → ingestion mode
+* **Live Table** → pipeline abstraction
+* **Live Streaming Table** → live pipeline + streaming source
+
+---
+
+### Lakeflow Declarative Pipelines and Delta Live Tables
+
+> Lakeflow Declarative Pipelines is the newer framing of what used to be commonly discussed as Delta Live Tables.
+
+#### Live Table
+
+* General concept in managed Databricks pipelines
+* Can read from:
+
+  * Batch sources
+  * Streaming sources
+
+#### Live Streaming Table
+
+* Special case of a Live Table
+* Reads from **streaming source only**
+
+**Key rule**
+
+| Table type           | Input type allowed |
+| -------------------- | ------------------ |
+| Live Table           | Batch or streaming |
+| Live Streaming Table | Streaming only     |
+
+**Clarification**
+
+* A **Live Streaming Table cannot read from batch**
+* If it reads from batch, it is just a **Live Table**
+
+**Design insight**
+
+Even if the source is batch, managed pipelines are still useful for:
+
+* Automation
+* Dependency management
+* Data quality rules
+* Retries
+* Observability
+
+**Rule of thumb**
+
+Use Lakeflow when you need:
+
+* SCD Type 2 or history tracking
+* Multiple dependencies
+* Partial reprocessing
+* Stronger operational control
+
+Not every simple A → B → C pipeline needs it.
+
+---
+
+### Auto Loader
+
+#### Schema evolution
+
+When new columns appear in the source data:
+
+* Without configuration, the pipeline may fail
+* With rescue mode, unexpected fields can be captured safely
+
+```text
+_rescued_data
+```
+
+#### rescuedDataColumn
+
+* Unknown fields are stored in a special column instead of failing the pipeline
 
 ```python
 .option("rescuedDataColumn", "_rescued_data")
 ```
 
-**Pattern**
+**Behavior with new columns**
 
-* Bronze: keep rescued data
-* Silver: explicitly parse / promote fields
+* Existing rows → `NULL` for the new field
+* New rows → populated values where available
 
-**Gotchas**
+**Recommended pattern**
 
-* If you never process `_rescued_data`, you silently lose usability of data
+* **Bronze** → keep rescued data
+* **Silver** → explicitly parse, promote, or clean the rescued fields
+
+**Gotcha**
+
+* If `_rescued_data` is never processed later, the data is technically kept but practically unused.
 
 ---
 
-### 3. `withWatermark` — Late data handling
+### Auto Loader Triggers
 
-#### Concept (non-technical)
+#### trigger once true
 
-Watermark = **“how long am I willing to wait for late events?”**
+* Runs once
+* Processes all currently available data
+* Then stops
 
-* You do **NOT delay results**
-* You define a **maximum allowed lateness**
-* Data arriving later than that → ignored in aggregations
+**When useful**
 
-#### Example (books sales)
+* Batch-style ingestion
+* Backfills
 
-* Sale at `12:10`
+---
+
+#### trigger availableNow true
+
+* Processes all currently available data
+* Stops after completion
+* Can be run again later
+
+**When useful**
+
+* Incremental batch ingestion
+* Scheduled ingestion jobs
+
+---
+
+#### Continuous micro batch mode
+
+* Runs continuously
+* Processes data as it arrives
+
+**When useful**
+
+* Near real-time ingestion
+
+---
+
+### Ingestion Patterns Simplex vs Multiplex
+
+#### Simplex
+
+* **One source to one target**
+* Clear source-to-target mapping
+* Common in batch pipelines
+
+**When useful**
+
+* Simple lineage
+* Easier debugging
+* Easier maintenance
+
+---
+
+#### Multiplex
+
+* **Multiple sources to one target**
+* Common in streaming ingestion
+* Example: multiple Kafka topics into one Bronze table
+
+**When useful**
+
+* Shared ingestion layer
+* Multi-entity Bronze design
+
+**Key insight**
+
+* Multiplex is more common and more useful in **streaming**
+* Batch pipelines usually remain **simplex**
+
+---
+
+### withWatermark
+
+**Concept**
+
+Watermark means:
+
+> How long am I willing to wait for late events?
+
+* It does **not delay results**
+* It defines the **maximum allowed lateness**
+* Events arriving later than that may be ignored in aggregations
+
+**Example**
+
+* Sale event time = `12:10`
 * Watermark = `5 minutes`
 
-| Arrival time | Included? |
-| ------------ | --------- |
-| 12:12        | ✅ Yes     |
-| 12:14        | ✅ Yes     |
-| 12:20        | ❌ No      |
+| Arrival time | Included |
+| ------------ | -------- |
+| 12:12        | Yes      |
+| 12:14        | Yes      |
+| 12:20        | No       |
 
 #### SQL
 
@@ -355,50 +451,54 @@ df \
 
 **Key takeaways**
 
-* Not related to duplicates directly
-* Enables **closing windows in streaming**
-* Trade-off: **freshness vs completeness**
+* It is not mainly about duplicates
+* It is important for **closing windows in streaming**
+* There is always a trade-off between:
+
+  * **Freshness**
+  * **Completeness**
 
 ---
 
-### 4. Stream Joins
+### Stream Joins
 
-#### Stream–Stream join
+#### Stream to stream join
 
-**Reality**
-
-* Not “continuous infinite join”
-* Executed via **state + micro-batches**
+* Not a truly infinite continuous join
+* Implemented through **state + micro-batches**
 
 **Requirements**
 
 * Watermarks on both sides
-* Time constraints to bound state
+* Time constraints to keep state bounded
 
 ---
 
-#### Stream–Static join
+#### Stream to static join
 
-**Behavior**
-
-* Static table changes → **NO immediate effect**
-* Join updates only when **new stream data arrives**
+* Changes in the static table do **not** instantly refresh results
+* The join is re-evaluated only when **new stream data arrives**
 
 **Key insight**
 
-* Stream = **trigger**
+* The **stream is the trigger**
 
 ---
 
-### 5. Delta Change Data Feed (CDF)
+## Change Processing and Data Quality
 
-#### `CDF` — Track row-level changes
+### Delta Change Data Feed
 
-**When useful:**
+* **CDF** tracks row-level changes in a Delta table
+
+**When useful**
 
 * Incremental pipelines
-* Propagating updates downstream
-* Audit / debugging
+* Downstream propagation of changes
+* Auditing
+* Debugging
+
+#### Enable CDF
 
 ```sql
 ALTER TABLE my_table SET TBLPROPERTIES (
@@ -406,46 +506,13 @@ ALTER TABLE my_table SET TBLPROPERTIES (
 );
 ```
 
-#### Reading changes
+#### Read changes
 
 ```sql
 SELECT * FROM table_changes('my_table', 10);
 ```
 
----
-
-#### CDF vs Append-only tables
-
-* Append-only → every row is already “new”
-* CDF shines when:
-
-  * `UPDATE`
-  * `DELETE`
-  * `MERGE`
-
-**Typical Lakehouse use cases**
-
-* Dimension tables (customer updates)
-* Lookup tables
-* GDPR deletes
-* Data corrections
-
----
-
-### 6. CDF vs CDC
-
-| Concept | Meaning                           |
-| ------- | --------------------------------- |
-| CDC     | General concept (capture changes) |
-| CDF     | Delta Lake implementation         |
-
-**Key idea**
-
-* CDF = **CDC inside Delta Lake**
-
----
-
-### 7. Applying CDF (Batch pattern)
+#### Apply changes pattern
 
 ```sql
 MERGE INTO target t
@@ -455,62 +522,160 @@ WHEN MATCHED THEN UPDATE SET *
 WHEN NOT MATCHED THEN INSERT *
 ```
 
-**Pattern**
+**CDF vs append-only tables**
 
-* Source table → CDF enabled
-* Target table → apply changes via `MERGE`
+* Append-only tables already make new rows easy to detect
+* CDF is most useful when the source table has:
+
+  * `UPDATE`
+  * `DELETE`
+  * `MERGE`
+
+**Typical use cases**
+
+* Dimension tables
+* Lookup tables
+* GDPR deletes
+* Data corrections
 
 ---
 
-### 8. Partitioning Strategy
+### CDF and CDC
 
-#### Best practices
+| Concept | Meaning                              |
+| ------- | ------------------------------------ |
+| CDC     | General concept of capturing changes |
+| CDF     | Delta Lake implementation of CDC     |
 
-**When useful:** large tables (>1GB per partition)
+**Key idea**
 
-* Use **low cardinality columns**
-* Target: ~**1GB per partition**
+* **CDF = CDC inside Delta Lake**
+
+---
+
+### Auto CDC
+
+* **Auto CDC** automatically tracks row-level changes
+* It uses the **Delta log**, not a full scan of the source table
+
+**Tracks**
+
+* Inserts
+* Updates
+* Deletes
+
+```sql
+ALTER TABLE catalog.schema.table
+SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
+```
+
+**When useful**
+
+* Multiple downstream consumers
+* Real-time or incremental pipelines
+* Replication patterns
+
+**When not always needed**
+
+* Very simple linear ETL such as bronze to silver only
+
+---
+
+### Expectations
+
+* **Expectations** are declarative data quality rules in managed Databricks pipelines
+
+**Final understanding**
+
+| Feature           | Constraint | Expectation |
+| ----------------- | ---------- | ----------- |
+| Enforced strictly | Yes        | Optional    |
+| Blocks data       | Yes        | Optional    |
+| Logs issues       | No         | Yes         |
+| Flexible behavior | No         | Yes         |
+
+**Common behaviors**
+
+* **Warn** → log only
+* **Drop** → remove bad rows
+* **Fail** → stop pipeline
+
+```sql
+CONSTRAINT valid_price EXPECT (price > 0)
+```
+
+**Key idea**
+
+* Expectations are more flexible than strict SQL constraints
+* They are a natural fit for managed Databricks pipelines
+
+---
+
+### Constraint Handling
+
+#### ON VIOLATION DROP
+
+* Keeps the row
+* Sets the invalid column value to `NULL`
+
+#### ON VIOLATION DELETE
+
+* Removes the entire row
+
+**Design implication**
+
+* **DROP** → preserve as much data as possible
+* **DELETE** → enforce stricter data quality
+
+---
+
+## Delta Lake Storage Layout and Optimization
+
+### Partitioning Strategy
+
+**Best practices**
+
+* Prefer **low-cardinality columns**
+* Best for larger tables
+* Good target is roughly **1 GB per partition**
 
 #### Datetime partitioning
 
-* Valid but:
-
-  * Prefer `date` (day) instead of full timestamp
-  * Avoid too many small partitions
-
----
+* Valid, but usually prefer **date** or day-level partitioning
+* Avoid full timestamps when they create too many tiny partitions
 
 #### Rule of thumb
 
-* ~**5M – 20M rows ≈ 1GB**
-* Depends on row size
-
----
+* Around **5M to 20M rows** can be close to **1 GB**
+* Real size depends on row width and file format
 
 #### Anti-pattern
 
-* ❌ Over-partitioning small tables (<1GB)
+* Over-partitioning small tables, especially tables under roughly 1 GB
 
 ---
 
-### 9. Z-ORDER vs Liquid Clustering
+### ZORDER vs Liquid Clustering
 
-#### `ZORDER`
-
-**When useful:** selective filters
+#### ZORDER
 
 ```sql
 OPTIMIZE table ZORDER BY (user_id, country);
 ```
+
+**When useful**
+
+* Selective filters
+* Manual tuning of data skipping
+
+**Key points**
 
 * Improves data skipping
 * Manual operation
 
 ---
 
-#### `Liquid Clustering`
-
-**When useful:** evolving query patterns
+#### Liquid Clustering
 
 ```sql
 CREATE TABLE t
@@ -523,65 +688,56 @@ or
 CLUSTER BY AUTO
 ```
 
+**When useful**
+
+* Query patterns evolve over time
+* You want more adaptive storage layout
+
+**Key points**
+
 * Dynamic clustering
-* No rigid partitions
+* No rigid partition dependency
+* Reduces the need for manual layout tuning
 
 ---
 
-### 10. Predictive Optimization
+### Predictive Optimization
 
-#### What it is
+* Predictive Optimization is about **data layout optimization**, not compute autoscaling
 
-Databricks automatically:
+**Databricks can automatically handle**
 
-* Runs `OPTIMIZE`
-* Runs `VACUUM`
-* Adjusts clustering
-* Maintains stats
+* `OPTIMIZE`
+* `VACUUM`
+* Clustering adjustments
+* Statistics maintenance
 
-#### Scope
+**Scope**
 
-* Works on **Delta tables (Unity Catalog)**
+* Mainly associated with **Delta tables in Unity Catalog**
 
-#### When useful
+**When useful**
 
 * Large tables
 * Frequent queries
-* High operational overhead
+* High operational overhead from manual maintenance
+
+**Relationship**
+
+| Feature                 | Scope                         |
+| ----------------------- | ----------------------------- |
+| Auto Optimize           | Basic write-time optimization |
+| Liquid Clustering       | Data layout strategy          |
+| Predictive Optimization | Broader automation layer      |
 
 ---
 
-#### Relationship
+### Auto Optimize
 
-| Feature                 | Scope                     |
-| ----------------------- | ------------------------- |
-| Auto Optimize           | Basic (write-time)        |
-| Liquid Clustering       | Data layout               |
-| Predictive Optimization | **Full automation layer** |
+**Features**
 
----
-
-### 11. `ANALYZE` — Statistics collection
-
-#### `ANALYZE TABLE`
-
-**When useful:** query planning optimization
-
-```sql
-ANALYZE TABLE my_table COMPUTE STATISTICS;
-```
-
-* Collects column stats
-* Helps query optimizer (Photon)
-
----
-
-### 12. Auto Optimize
-
-#### Features
-
-* Auto compaction
 * Optimized writes
+* Auto compaction
 
 ```sql
 SET spark.databricks.delta.optimizeWrite = true;
@@ -590,439 +746,221 @@ SET spark.databricks.delta.autoCompact = true;
 
 **Scope**
 
-* Write-time optimization (not full lifecycle)
+* Write-time optimization only
+* Not full table lifecycle maintenance
 
 ---
 
-### 13. Deletion Vectors
+### Analyze Table
 
-#### `Deletion Vectors` — Efficient deletes
-
-**What it does**
-
-* Marks rows as deleted **without rewriting files**
-
-#### Benefits
-
-* Faster `DELETE` / `MERGE`
-* Less file rewriting
-
-#### Behavior
-
-* Applied lazily
-* Cleaned later via `OPTIMIZE`
-
----
-
-#### Activation
-
-* Often **enabled by default** (new runtimes)
-* Or via table properties
-
-
-
-### Final Mental Model
-
-* **Bronze** → ingest (minimal optimization)
-
-* **Silver** → transform + enforce schema
-
-* **Gold** → optimize for queries (ZORDER / clustering)
-
-* **Watermark** → controls lateness
-
-
-# 📘 Databricks Professional — Concept Review (Based on Discussion)
-
-This document summarizes key concepts we discussed, including initial intuition, corrections, and final understanding.
-
----
-
-## 1. Predictive Optimization & Liquid Clustering
-
-#### `Predictive Optimization` — Automatic data layout optimization
-
-**What we thought:**
-
-* Related to cluster autoscaling ❌
-
-**Final understanding:**
-
-* It’s about **data layout optimization**, not compute.
-* Databricks automatically optimizes:
-
-  * file sizes
-  * data distribution
-  * clustering strategy
-
-#### `Liquid Clustering` — Dynamic clustering without static partitions
-
-**When useful:**
-
-* Avoid manual partitioning
-* Optimize queries dynamically
+* Collects table and column statistics
+* Helps the optimizer generate better plans
 
 ```sql
-CREATE TABLE catalog.schema.sales
-CLUSTER BY AUTO
-AS SELECT * FROM source;
+ANALYZE TABLE my_table COMPUTE STATISTICS;
 ```
 
-**Key idea:**
+**When useful**
 
-* Replaces:
-
-  * manual partitioning
-  * manual `ZORDER`
-* Databricks adapts layout based on query patterns
+* Better query planning
+* Better join and scan decisions
 
 ---
 
-## 2. Deletion Vectors
+### Deletion Vectors
 
-#### `Deletion Vectors` — Logical row-level deletes without rewriting files
+* **Deletion Vectors** allow logical row-level deletes without rewriting files immediately
 
-**What we thought:**
+**What happens**
 
-* Just deletes data normally ❌
+* Rows are marked as deleted
+* Files are not fully rewritten at delete time
 
-**Final understanding:**
+**Why it matters**
 
-* Rows are **marked as deleted**, not physically removed
-* Stored in **Delta log metadata**
-
-**Why important:**
-
-* Avoids expensive file rewrites
-* Speeds up:
-
-  * `DELETE`
-  * `MERGE`
+* Faster `DELETE`
+* Faster `MERGE`
+* Less file rewriting
 
 ```sql
 DELETE FROM catalog.schema.table WHERE id = 1;
 ```
 
-**Notes:**
+**Notes**
 
-* Transparent to users (deleted rows are not visible)
-* Physical cleanup happens later (OPTIMIZE / VACUUM)
-
----
-
-## 3. Python Function vs UDF vs Pandas UDF
-
-#### `Python function` — Local execution (no Spark)
-
-**When useful:**
-
-* Small data
-* Driver-side logic
+* Transparent to users
+* Physical cleanup happens later during maintenance such as `OPTIMIZE` and `VACUUM`
+* Often enabled by default in newer runtimes, or controlled through table properties
 
 ---
 
-#### `Python UDF` — Row-by-row execution in Spark
+## Governance Sharing and Access
 
-**When useful:**
+### Delta Sharing
 
-* Custom logic not available in SQL
+* **Delta Sharing** enables secure data sharing across:
 
-```python
-from pyspark.sql.functions import udf
+  * Workspaces
+  * Accounts
+  * Organizations
 
-@udf("int")
-def plus_one(x):
-    return x + 1
-```
+**Key concept**
 
-**Problem:**
+* Data is **not copied**
+* It is **accessed remotely**
 
-* High **serialization overhead** (JVM ↔ Python)
-* Executes **row by row**
+**How it works**
 
----
+* Access is provided through controlled sharing
+* Authentication uses tokens or other credentials
 
-#### `Pandas UDF` — Vectorized execution using batches
+**Important distinction**
 
-**When useful:**
+| Feature          | Delta Sharing | Traditional movement |
+| ---------------- | ------------- | -------------------- |
+| Copies data      | No            | Often yes            |
+| External sharing | Yes           | Depends              |
+| Access method    | API based     | Varies               |
 
-* Large data + custom logic
-* Better performance than Python UDF
+**Key idea**
 
-```python
-from pyspark.sql.functions import pandas_udf
-
-@pandas_udf("int")
-def plus_one(s):
-    return s + 1
-```
-
-**Final understanding:**
-
-| Concept           | Meaning                                             |
-| ----------------- | --------------------------------------------------- |
-| **Serialization** | Convert data → bytes (to move between JVM & Python) |
-| **Vectorization** | Process data in batches (not row-by-row)            |
-
-**Key takeaway:**
-
-* Pandas UDF:
-
-  * ✅ minimizes serialization
-  * ✅ uses vectorization
-  * ✅ works on large datasets
+* Delta Sharing is an **access layer**, not a data movement tool
 
 ---
 
-## 4. Lakeflow (Declarative Pipelines)
+### Sharing Identifier
 
-#### `Lakeflow Declarative Pipelines` — Managed ETL pipelines (ex-Delta Live Tables)
+* A **sharing identifier** acts like:
 
-**What we thought:**
+  * A resource locator
+  * An access reference
+  * Something similar to an API endpoint identifier
 
-* Just chaining notebooks ❌
+**Important note**
 
-**Final understanding:**
-
-* Declarative pipeline system:
-
-  * define **what**, not **how**
-  * Databricks handles:
-
-    * orchestration
-    * retries
-    * dependencies
-
-**When useful:**
-
-* Incremental pipelines
-* SCD Type 2
-* Complex dependencies
-
-**When NOT needed:**
-
-* Simple linear pipelines (A → B → C)
+* The identifier alone is **not enough**
+* Authentication still requires tokens or credentials
 
 ---
 
-### ✅ Practical rule of thumb
+### Governance
 
-Use Lakeflow when:
+> Governance = control + traceability
 
-* SCD2 / history tracking
-* Multiple dependencies (4+ steps)
-* Need partial reprocessing
-* Need observability & control
-
----
-
-### 🧠 Governance (simple definition)
-
-> **Governance = control + traceability**
-
-In Databricks:
+In Databricks, governance usually means:
 
 * Who changed what
 * When pipelines ran
 * What data was produced
+* Better visibility and accountability across data operations
 
 ---
 
-## 5. Data Quality Expectations
+## Mental Models and Final Takeaways
 
-#### `Expectations` — Declarative data quality rules
+### Bronze Silver Gold
 
-**What we thought:**
-
-* Similar to constraints ❌
-
-**Final understanding:**
-
-| Feature           | Constraint | Expectation |
-| ----------------- | ---------- | ----------- |
-| Enforced strictly | ✅          | Optional    |
-| Blocks data       | ✅          | Optional    |
-| Logs issues       | ❌          | ✅           |
-| Flexible behavior | ❌          | ✅           |
+* **Bronze** → raw ingestion with minimal transformation
+* **Silver** → cleaned and transformed data with schema enforcement
+* **Gold** → optimized data for reporting, BI, and serving use cases
 
 ---
 
-### Types of Expectations
-
-* **Warn** → log only
-* **Drop** → remove bad rows
-* **Fail** → stop pipeline
-
-```sql
-CONSTRAINT valid_price EXPECT (price > 0)
-```
-
-**Key idea:**
-
-* More flexible than SQL constraints
-* Native to Databricks pipelines
-
----
-
-## 6. Auto CDC (Change Data Capture)
-
-#### `Auto CDC` — Automatically track row-level changes
-
-**What we thought:**
-
-* Requires scanning full table ❌
-
-**Final understanding:**
-
-* Uses **Delta log**, not full scans
-* Tracks:
-
-  * inserts
-  * updates
-  * deletes
-
-```sql
-ALTER TABLE catalog.schema.table
-SET TBLPROPERTIES (delta.enableChangeDataFeed = true);
-```
-
----
-
-### When useful
-
-* Multiple downstream consumers
-* Real-time pipelines
-* Data replication
-
-### When NOT needed
-
-* Simple linear ETL (bronze → silver)
-
----
-
-## 7. Query Profile
-
-#### `Query Profile` — Execution analysis tool
-
-**What it shows:**
-
-* Execution plan (DAG)
-* Time per stage
-* Bottlenecks
-
----
-
-### Key insight
-
-Even though Spark optimizes queries:
-
-* ❗ It’s **not magic**
-* Better queries → better plans
-
----
-
-### Example improvements
-
-* Filter before joins
-* Avoid Python UDFs
-* Use built-in SQL functions
-
----
-
-## 8. Databricks Asset Bundles
-
-#### `Asset Bundles` — Declarative deployment of Databricks projects
-
-**Before:**
-
-* Move code manually via repos (Azure DevOps)
-
-**Now:**
-
-* Define everything in one bundle:
-
-  * jobs
-  * pipelines
-  * configs
-
----
-
-### Key difference
-
-| Before       | Bundles      |
-| ------------ | ------------ |
-| Code only    | Code + infra |
-| Manual setup | Declarative  |
-| Error-prone  | Reproducible |
-
----
-
-## 9. Delta Sharing
-
-#### `Delta Sharing` — Secure data sharing without copying data
-
-**What we thought:**
-
-* Moves data ❌
-
-**Final understanding:**
-
-* Does **NOT move data**
-* Provides **controlled access**
-
----
-
-### How it works
-
-* Share tables via:
-
-  * secure endpoints
-  * tokens / credentials
-
----
-
-### Important distinction
-
-| Feature          | Delta Sharing | Power BI  |
-| ---------------- | ------------- | --------- |
-| Data movement    | ❌             | Optional  |
-| External sharing | ✅             | ❌         |
-| Access method    | API-based     | Connector |
-
----
-
-### Key idea
-
-> Delta Sharing = **data access layer**, not data movement
-
----
-
-## 🔚 Final Takeaways
-
-* Databricks automates a lot, but:
-
-  * good design still matters
-* Many features aim to:
-
-  * reduce manual work
-  * improve performance
-  * increase governance
-
----
-
-## 🚀 Mental Model
+### Final Mental Model
 
 * **Delta Lake** → storage + ACID
 * **Lakeflow** → pipelines
 * **Expectations** → data quality
-* **CDC** → incremental changes
+* **CDC and CDF** → incremental changes
 * **Bundles** → deployment
 * **Delta Sharing** → data access
+* **Predictive Optimization** → less manual tuning
+* **Watermark** → controls lateness in streaming
 
+**Final takeaway**
 
-* **CDF** → enables incremental processing
+Databricks automates a lot, but good design still matters.
 
-* **Predictive Optimization** → removes manual tuning
+Many features aim to:
 
+* Reduce manual work
+* Improve performance
+* Increase governance
+* Make pipelines more reliable
 
+---
 
+## Exam Notes
+
+### Question 1
+
+**Question**
+
+A data analyst is running a shell script in all the notebooks attached to the cluster. The shell script contains a long set of commands which is taking a lot of time to complete. As a data engineer, which of the following statements will you suggest to the data analyst?
+
+**Correct answer**
+
+* **Use an init script to execute the shell script faster**
+
+**Why this is correct**
+
+In Databricks, long-running shell or environment setup commands should usually be moved to a **cluster init script** instead of being executed repeatedly inside notebooks.
+
+Init scripts run during **cluster startup**, so the environment is prepared before notebook execution begins.
+
+**Why the other options are wrong**
+
+* **Run the script as Workspace admin**
+  Permissions do not make the shell script run faster.
+
+* **Use `%md` to run the script faster**
+  `%md` is for Markdown, not shell execution.
+
+* **Increase the number of worker nodes**
+  Worker nodes help distributed Spark workloads, not notebook-side shell setup.
+
+* **Run the notebook using Databricks API**
+  That changes how the notebook is triggered, not how fast the shell script executes.
+
+**Exam takeaway**
+
+* Cluster or OS setup → use **init scripts**
+* Notebook shell commands → use `%sh` only for small ad hoc tasks
+* Cluster scaling helps Spark jobs, not general shell initialization
+
+---
+
+### Question 2
+
+**Question**
+
+Which of the following is a valid response to a JSON workload passed to the `2.0/jobs/create` endpoint of the Databricks REST API?
+
+**Correct answer**
+
+```json
+{
+  "job_id": 13746
+}
+```
+
+**Exam takeaway**
+
+* The `jobs/create` endpoint returns a **job identifier**
+* That `job_id` is then used for later operations on the job
+
+---
+
+## Notes About Clickable Links
+
+These links should work better in a normal `.md` renderer such as GitHub because the headings use:
+
+* simple text
+* no numbering in the heading itself
+* minimal punctuation
+
+If you want, next I can turn this into an even cleaner **GitHub study guide version** with:
+
+* consistent emoji-free style
+* shorter bullets
+* exam-focused phrasing
