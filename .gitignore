@@ -1,0 +1,61 @@
+# Operating system and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+~$*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# MLflow and generated experiment output
+mlruns/
+mlartifacts/
+outputs/
+artifacts/
+
+# Databricks local state
+.databricks/
+.databricks-connect
+*.dbc
+
+# Local-only and private reference material
+no_sync/
+private/
+local/
+backup/
+* - Kopie.md
+.env
+.env.*
+
+# Local training exports
+02_Databricks_Machine_Learning_Associate/01_Udemy/
+02_Databricks_Machine_Learning_Associate/02_Databricks/
+03_01_Generative_AI_Engineer_Associate/notebooks/
+
+# Course exports, archives, and large binary references
+*.zip
+*.7z
+*.rar
+*.tar
+*.tar.gz
+*.pdf
+*.ppt
+*.pptx
+*.html
+
+# Local datasets
+*.csv
+*.parquet
+*.delta
