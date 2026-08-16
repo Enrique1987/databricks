@@ -18,7 +18,7 @@ Start with the [Community Champion roadmap](docs/roadmap/community-champion-road
 | Platform | [Databricks cheat sheet](docs/reference/cheat-sheet.md) | 2026-08-16 |
 | SQL | [Databricks-specific SQL reference](docs/reference/databricks-specific-sql.md) | 2026-08-16 |
 | Data engineering | [Bronze ingestion patterns](docs/guides/bronze-ingestion-patterns.md) | Review in progress |
-| Architecture | [ADR 001: compute strategy by environment](docs/architecture/adr-001-compute-strategy.md) | Review in progress |
+| Architecture | [ADR 001: compute selection and environment controls](docs/architecture/adr-001-compute-strategy.md) | Reviewed 2026-08-16 |
 
 Only documents explicitly marked **Reviewed** should be treated as current reference material. Older certification and interview notes live under `drafts/` until they are verified, rewritten, or removed.
 
