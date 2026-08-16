@@ -18,3 +18,5 @@ jobs:
           python-version: "3.12"
       - name: Check repository policy
         run: python scripts/check_repository.py
+      - name: Test governed ingestion project
+        run: python -m unittest discover -s projects/governed-ingestion/tests -v
