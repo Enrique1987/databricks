@@ -10,12 +10,9 @@ from unittest.mock import MagicMock, call
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
-from ingest_files import (  # noqa: E402
-    IngestionConfig,
-    config_from_args,
-    find_reserved_columns,
-    run_ingestion,
-)
+from governed_ingestion import IngestionConfig, find_reserved_columns, run_ingestion  # noqa: E402
+from governed_ingestion.cli import config_from_args  # noqa: E402
+from governed_ingestion.pipeline import add_ingestion_metadata  # noqa: E402
 
 
 def valid_config(**overrides: object) -> IngestionConfig:
@@ -29,6 +26,22 @@ def valid_config(**overrides: object) -> IngestionConfig:
     }
     values.update(overrides)
     return IngestionConfig(**values)  # type: ignore[arg-type]
+
+
+class PackageContractTests(unittest.TestCase):
+    def test_wheel_metadata_matches_databricks_task_contract(self) -> None:
+        metadata = (PROJECT_ROOT / "pyproject.toml").read_text(encoding="utf-8")
+        job = (PROJECT_ROOT / "resources" / "ingestion.job.yml").read_text(
+            encoding="utf-8"
+        )
+
+        self.assertIn('name = "governed_ingestion"', metadata)
+        self.assertIn(
+            'main = "governed_ingestion.cli:main"',
+            metadata,
+        )
+        self.assertIn("package_name: governed_ingestion", job)
+        self.assertIn("dependencies:\n              - ../dist/*.whl", job)
 
 
 class IngestionConfigTests(unittest.TestCase):
@@ -98,6 +111,15 @@ class IngestionConfigTests(unittest.TestCase):
             collisions,
             ("_ingestion_recorded_at", "_rescued_data"),
         )
+
+    def test_metadata_projection_rejects_source_collision(self) -> None:
+        frame = MagicMock()
+        frame.columns = ["order_id", "_ingestion_source_file"]
+
+        with self.assertRaisesRegex(ValueError, "reserved ingestion columns"):
+            add_ingestion_metadata(frame, MagicMock())
+
+        frame.select.assert_not_called()
 
     def test_run_uses_bounded_append_with_durable_checkpoint(self) -> None:
         reader = MagicMock()

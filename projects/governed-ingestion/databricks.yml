@@ -5,6 +5,12 @@ bundle:
 include:
   - resources/*.yml
 
+artifacts:
+  default:
+    type: whl
+    path: .
+    build: python -m pip wheel --no-cache-dir --no-build-isolation --no-deps --wheel-dir dist .
+
 variables:
   catalog:
     description: Unity Catalog catalog that owns the target schema and volumes.
@@ -30,6 +36,9 @@ variables:
 sync:
   exclude:
     - .venv/
+    - build/
+    - dist/
+    - "*.egg-info/"
     - tests/
     - __pycache__/
 

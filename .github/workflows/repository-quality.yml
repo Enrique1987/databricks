@@ -20,3 +20,8 @@ jobs:
         run: python scripts/check_repository.py
       - name: Test governed ingestion project
         run: python -m unittest discover -s projects/governed-ingestion/tests -v
+      - name: Build governed ingestion wheel
+        run: >-
+          python -m pip wheel --no-cache-dir --no-deps
+          --wheel-dir projects/governed-ingestion/dist
+          projects/governed-ingestion

@@ -29,6 +29,7 @@ The official guide is an organizing baseline, not the limit of this portfolio. C
 
 ## Navigate the hub
 
+- [Professional engineering block 01: Python, SQL, dependencies, and testing](01-python-sql-and-testing.md) — connects the first exam domain to an installable package, SQL controls, automated tests, and explicit platform gates.
 - [Objectives and evidence matrix](objectives-matrix.md) — maps every official domain to existing and planned portfolio evidence.
 - [Learning and evidence log](learning-log.md) — records reviewed milestones without exposing private exam information.
 - [Source and practice-question policy](source-and-practice-policy.md) — defines what can and cannot move from the private study archive into this public repository.
@@ -39,6 +40,7 @@ The official guide is an organizing baseline, not the limit of this portfolio. C
 
 | Capability | Evidence | What it demonstrates |
 | --- | --- | --- |
+| Python, SQL, dependencies, and testing | [Professional engineering block 01](01-python-sql-and-testing.md) | Modular package design, wheel delivery, safe SQL parameters, dependency boundaries, layered testing, and debugging |
 | Production ingestion design | [Bronze ingestion patterns](../../guides/bronze-ingestion-patterns.md) | Source selection, Auto Loader behavior, schema evolution, replay, quarantine, observability, and cost trade-offs |
 | Compute architecture | [ADR 001: compute selection and environment controls](../../architecture/adr-001-compute-strategy.md) | Requirements, serverless-first decisions, exceptions, isolation, policy, observability, and cost controls |
 | Platform fundamentals | [Databricks cheat sheet](../../reference/cheat-sheet.md) | Reviewed platform concepts and operational references |

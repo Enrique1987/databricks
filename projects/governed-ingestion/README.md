@@ -1,12 +1,12 @@
 # Governed ingestion with Auto Loader
 
-Status: **Draft — workspace execution pending**
+Status: **Reviewed local implementation — workspace execution pending**
 
 Last reviewed: 2026-08-16
 
 This project increment lands immutable JSON or Parquet files into a Unity Catalog Bronze table. It uses Auto Loader with explicit schema and checkpoint state, a rescued-data policy, source metadata, bounded execution, and separate development and production bundle targets.
 
-The Python configuration and repository checks run locally. The bundle has not yet been validated or executed against a Databricks workspace, so this project must not be presented as a completed production reference.
+The Python contracts, package build, entry-point metadata, and repository checks run locally. The bundle has not yet been validated or executed against a Databricks workspace, so this project must not be presented as a completed production reference.
 
 ## Problem
 
@@ -31,9 +31,35 @@ This first increment includes:
 - one serverless Lakeflow Job with bounded retries and concurrency;
 - Declarative Automation Bundle targets for DEV and PROD;
 - a required production service-principal identity; and
+- an installable Python wheel with separate configuration, pipeline, and CLI modules;
+- version-controlled, parameterized SQL reconciliation queries; and
 - dependency-free local tests for configuration and safety invariants.
 
 It intentionally does not yet include a schedule, file-event notification mode, alert destination, data-quality dashboard, integration test, or automated deployment workflow. Those are follow-up increments, not hidden assumptions.
+
+## Project structure
+
+```text
+governed-ingestion/
+├── databricks.yml
+├── pyproject.toml
+├── resources/
+│   └── ingestion.job.yml
+├── sql/
+│   └── validate_ingestion.sql
+├── src/
+│   ├── governed_ingestion/
+│   │   ├── cli.py
+│   │   ├── config.py
+│   │   └── pipeline.py
+│   └── ingest_files.py
+└── tests/
+    └── test_ingest_files.py
+```
+
+`config.py` contains Spark-independent input invariants. `pipeline.py` owns Spark assembly. `cli.py` is the task boundary. The bundle builds this package into a wheel and installs it as the job task library. The standalone launcher remains a convenient source-level entry point, but the deployed job uses the wheel entry point.
+
+The package declares no application dependencies: Databricks supplies PySpark and the example does not need a third-party library. Build-only dependencies are constrained in `pyproject.toml`, and the generated artifact is a platform-neutral `py3-none-any` wheel. Increment the package version whenever deployed code changes so that the serverless environment does not reuse a cached package. See [Professional engineering block 01](../../docs/certifications/data-engineer-professional/01-python-sql-and-testing.md) for the dependency and test-layer decisions.
 
 ## Architecture and guarantees
 
@@ -55,6 +81,7 @@ Input data must not define these names.
 - A Databricks workspace with Unity Catalog and serverless jobs support.
 - Workspace files enabled.
 - Databricks CLI `0.218.0` or later, authenticated with OAuth or another approved method.
+- Python `3.10` or later with compatible `pip`, `setuptools`, and `wheel` on the build runner.
 - Permission to use the target catalog, create or use the schema, read the landing volume, write the operations volume, and create the target table.
 - A service-principal application ID and corresponding permissions before any PROD deployment.
 
@@ -92,10 +119,13 @@ From the repository root:
 
 ```bash
 python -m unittest discover -s projects/governed-ingestion/tests -v
+python -m pip wheel --no-cache-dir --no-build-isolation --no-deps \
+  --wheel-dir projects/governed-ingestion/dist \
+  projects/governed-ingestion
 python scripts/check_repository.py
 ```
 
-These checks validate pure-Python configuration and repository policy. They do not emulate Spark, Auto Loader, Unity Catalog, serverless compute, permissions, or cloud storage.
+The wheel is generated evidence and is ignored by Git. These checks validate pure-Python configuration, package construction, and repository policy. They do not emulate Spark, Auto Loader, Unity Catalog, serverless compute, permissions, or cloud storage.
 
 ## Validate, deploy, and run in DEV
 
@@ -121,6 +151,8 @@ FROM main.governed_ingestion_dev.orders_raw;
 
 DESCRIBE HISTORY main.governed_ingestion_dev.orders_raw;
 ```
+
+Then run [`sql/validate_ingestion.sql`](sql/validate_ingestion.sql) in the Databricks SQL editor with the named parameter `target_table` bound to `main.governed_ingestion_dev.orders_raw`. The queries fail visibly on missing lineage metadata, reconcile record counts per source file, and expose rescued records for investigation.
 
 Run the job again without adding a file and verify that the row count does not increase. Then add one new immutable file and verify only that file is processed. Capture both results before changing the project status to **Reviewed**.
 
@@ -166,6 +198,9 @@ Dropping managed volumes removes their managed data according to Databricks rete
 ## Evidence required for promotion
 
 - [ ] Current CLI successfully runs `databricks bundle validate` for DEV and PROD.
+- [x] Local wheel builds from `pyproject.toml` and contains the expected package entry point.
+- [x] Twelve local unit tests cover the package contract, configuration, CLI mapping, schema collisions, and stream assembly.
+- [x] Parameterized SQL validation is version controlled with the implementation.
 - [ ] DEV deployment is linked to a commit SHA.
 - [ ] Initial load, empty rerun, and one-new-file run are recorded.
 - [ ] A schema-drift example produces a visible rescued record.
