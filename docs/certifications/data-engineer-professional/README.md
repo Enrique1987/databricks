@@ -30,6 +30,8 @@ The official guide is an organizing baseline, not the limit of this portfolio. C
 ## Navigate the hub
 
 - [Professional engineering block 01: Python, SQL, dependencies, and testing](01-python-sql-and-testing.md) — connects the first exam domain to an installable package, SQL controls, automated tests, and explicit platform gates.
+- [Legacy knowledge summary](legacy-knowledge-summary.md) — maps the useful historical topics to the ten current domains and identifies the next evidence to build.
+- [Legacy notes audit](legacy-notes-audit.md) — records the verified local inventory and the promote, rewrite, archive, restricted, and deletion-candidate decisions.
 - [Objectives and evidence matrix](objectives-matrix.md) — maps every official domain to existing and planned portfolio evidence.
 - [Learning and evidence log](learning-log.md) — records reviewed milestones without exposing private exam information.
 - [Source and practice-question policy](source-and-practice-policy.md) — defines what can and cannot move from the private study archive into this public repository.
@@ -57,7 +59,7 @@ Two preserved drafts contain useful conversation-derived explanations:
 
 They remain drafts because some claims use former product names, simplified mental models, old APIs, or unverified examples. They must be rewritten by domain and checked against primary sources before promotion.
 
-The private historical archive also contains third-party course resources and practice-question collections. Those files are inputs for identifying concepts only; they will not be copied, paraphrased question by question, or committed here.
+The private historical archive also contains third-party course resources and practice-question collections. Those files are inputs for identifying concepts only; they will not be copied, paraphrased question by question, or committed here. The [legacy notes audit](legacy-notes-audit.md) accounts for every source family without publishing its restricted content.
 
 ## Evidence standard
 
