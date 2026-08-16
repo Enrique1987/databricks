@@ -26,6 +26,10 @@ Only documents explicitly marked **Reviewed** should be treated as current refer
 
 Production-style projects will live under `projects/` and must include runnable code, automated checks, governance, observability, cost considerations, failure recovery, and teardown instructions.
 
+Current work:
+
+- [Governed ingestion with Auto Loader](projects/governed-ingestion/README.md) — **Draft**; local tests are available and workspace execution evidence is pending.
+
 Planned sequence:
 
 1. Governed ingestion with Auto Loader or Lakeflow Connect.

@@ -1,0 +1,49 @@
+resources:
+  jobs:
+    governed_ingestion_job:
+      name: governed-ingestion
+      description: Incrementally land immutable files in a governed Bronze Delta table.
+      max_concurrent_runs: 1
+      tags:
+        layer: bronze
+        project: governed-ingestion
+      parameters:
+        - name: source_path
+          default: ${var.source_path}
+        - name: target_table
+          default: ${var.catalog}.${var.schema}.${var.table_name}
+        - name: checkpoint_path
+          default: ${var.operations_path}/checkpoints/orders
+        - name: schema_path
+          default: ${var.operations_path}/schemas/orders
+        - name: source_format
+          default: ${var.source_format}
+        - name: max_files_per_trigger
+          default: "1000"
+      tasks:
+        - task_key: ingest_orders
+          description: Run one bounded Auto Loader ingestion cycle.
+          spark_python_task:
+            python_file: ../src/ingest_files.py
+            parameters:
+              - --source-path
+              - "{{job.parameters.source_path}}"
+              - --target-table
+              - "{{job.parameters.target_table}}"
+              - --checkpoint-path
+              - "{{job.parameters.checkpoint_path}}"
+              - --schema-path
+              - "{{job.parameters.schema_path}}"
+              - --source-format
+              - "{{job.parameters.source_format}}"
+              - --max-files-per-trigger
+              - "{{job.parameters.max_files_per_trigger}}"
+          environment_key: default
+          timeout_seconds: 3600
+          max_retries: 2
+          min_retry_interval_millis: 60000
+          retry_on_timeout: true
+      environments:
+        - environment_key: default
+          spec:
+            environment_version: "2"
