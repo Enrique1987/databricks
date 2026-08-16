@@ -1,6 +1,7 @@
 # 🪶 Bronze Ingestion Patterns in Databricks
 
-Status: **Draft — technical review in progress**  
+Status: **Draft — technical review in progress**
+
 Last reviewed: 2026-08-16
 
 > [!CAUTION]

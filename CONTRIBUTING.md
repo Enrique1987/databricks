@@ -14,4 +14,3 @@ Thanks for helping improve this Databricks learning and architecture repository.
 Describe the problem, the change, how it was validated, and any limitations. For product behavior, link to the official documentation or release note used during review.
 
 By contributing, you agree that your contribution is licensed under this repository's MIT License.
-

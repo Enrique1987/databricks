@@ -43,4 +43,3 @@ Priority order:
 ## Recommended next repository milestone
 
 Add the first end-to-end project under `projects/`: a small governed ingestion pipeline deployed with Declarative Automation Bundles, tested in CI, and documented with cost, monitoring, failure recovery, and teardown guidance.
-

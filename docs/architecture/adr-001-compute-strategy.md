@@ -1,6 +1,7 @@
 # ADR: Databricks Compute Strategy by Environment (DEV / QA / PROD)
 
-Status: **Draft — technical review in progress**  
+Status: **Draft — technical review in progress**
+
 Last reviewed: 2026-08-16
 
 This ADR is an example policy, not a universal Databricks recommendation. Re-evaluate it against workload compatibility, regional serverless availability, network controls, isolation requirements, startup latency, and total cost.

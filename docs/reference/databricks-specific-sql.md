@@ -1,6 +1,7 @@
 # Databricks-Specific SQL Reference
 
-Status: **Reviewed**  
+Status: **Reviewed**
+
 Last reviewed: 2026-08-16
 
 This page separates Databricks platform extensions from standard SQL and Apache Spark SQL. It is a navigation aid, not a substitute for the runtime-specific documentation.

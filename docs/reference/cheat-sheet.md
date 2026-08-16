@@ -1,6 +1,7 @@
 # Databricks Cheat Sheet
 
-Status: **Reviewed**  
+Status: **Reviewed**
+
 Last reviewed: 2026-08-16
 
 A compact map of the Databricks Data Intelligence Platform. Availability, naming, and limits can differ by cloud, region, runtime, and Preview status; follow the linked official documentation for implementation details.
