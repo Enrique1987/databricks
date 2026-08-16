@@ -14,6 +14,7 @@ This log records public technical evidence and review milestones. It deliberatel
 | 2026-08-16 | Bronze ingestion design reviewed | [Bronze ingestion patterns](../../guides/bronze-ingestion-patterns.md) | Connect the guide to a runnable governed-ingestion implementation |
 | 2026-08-16 | Professional knowledge hub established | [Objectives and evidence matrix](objectives-matrix.md) | Promote one narrowly scoped domain per pull request |
 | 2026-08-16 | Python, SQL, dependency, and testing block reviewed locally | [Professional engineering block 01](01-python-sql-and-testing.md) and [governed-ingestion project](../../../projects/governed-ingestion/) | Validate the bundle and capture DEV integration evidence |
+| 2026-08-16 | Historical Professional notes audited and summarized | [Legacy notes audit](legacy-notes-audit.md) and [legacy knowledge summary](legacy-knowledge-summary.md) | Build the original streaming and CDC failure lab |
 
 ## Entry requirements
 

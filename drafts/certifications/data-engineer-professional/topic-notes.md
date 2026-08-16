@@ -50,10 +50,6 @@
 
   * [Bronze Silver Gold](#bronze-silver-gold)
   * [Final Mental Model](#final-mental-model)
-* [Exam Notes](#exam-notes)
-
-  * [Question 1](#question-1)
-  * [Question 2](#question-2)
 
 ---
 
@@ -890,80 +886,3 @@ Many features aim to:
 * Improve performance
 * Increase governance
 * Make pipelines more reliable
-
----
-
-## Exam Notes
-
-### Question 1
-
-**Question**
-
-A data analyst is running a shell script in all the notebooks attached to the cluster. The shell script contains a long set of commands which is taking a lot of time to complete. As a data engineer, which of the following statements will you suggest to the data analyst?
-
-**Correct answer**
-
-* **Use an init script to execute the shell script faster**
-
-**Why this is correct**
-
-In Databricks, long-running shell or environment setup commands should usually be moved to a **cluster init script** instead of being executed repeatedly inside notebooks.
-
-Init scripts run during **cluster startup**, so the environment is prepared before notebook execution begins.
-
-**Why the other options are wrong**
-
-* **Run the script as Workspace admin**
-  Permissions do not make the shell script run faster.
-
-* **Use `%md` to run the script faster**
-  `%md` is for Markdown, not shell execution.
-
-* **Increase the number of worker nodes**
-  Worker nodes help distributed Spark workloads, not notebook-side shell setup.
-
-* **Run the notebook using Databricks API**
-  That changes how the notebook is triggered, not how fast the shell script executes.
-
-**Exam takeaway**
-
-* Cluster or OS setup → use **init scripts**
-* Notebook shell commands → use `%sh` only for small ad hoc tasks
-* Cluster scaling helps Spark jobs, not general shell initialization
-
----
-
-### Question 2
-
-**Question**
-
-Which of the following is a valid response to a JSON workload passed to the `2.0/jobs/create` endpoint of the Databricks REST API?
-
-**Correct answer**
-
-```json
-{
-  "job_id": 13746
-}
-```
-
-**Exam takeaway**
-
-* The `jobs/create` endpoint returns a **job identifier**
-* That `job_id` is then used for later operations on the job
-
----
-
-## Notes About Clickable Links
-
-These links should work better in a normal `.md` renderer such as GitHub because the headings use:
-
-* simple text
-* no numbering in the heading itself
-* minimal punctuation
-
-If you want, next I can turn this into an even cleaner **GitHub study guide version** with:
-
-* consistent emoji-free style
-* shorter bullets
-* exam-focused phrasing
