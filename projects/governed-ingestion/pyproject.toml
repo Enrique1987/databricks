@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68,<76", "wheel>=0.38,<1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "governed_ingestion"
+version = "0.1.0"
+description = "Bounded Auto Loader ingestion with explicit governance and recovery controls."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+governed-ingestion = "governed_ingestion.cli:main"
+
+[project.entry-points.packages]
+main = "governed_ingestion.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.coverage.run]
+source = ["governed_ingestion"]
+branch = true

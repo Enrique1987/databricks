@@ -23,6 +23,7 @@ Public credential verification: link pending. No credential identifier or privat
 | --- | --- | --- |
 | Platform | [Databricks cheat sheet](docs/reference/cheat-sheet.md) | 2026-08-16 |
 | SQL | [Databricks-specific SQL reference](docs/reference/databricks-specific-sql.md) | 2026-08-16 |
+| Professional engineering | [Python, SQL, dependencies, and testing](docs/certifications/data-engineer-professional/01-python-sql-and-testing.md) | Reviewed locally 2026-08-16 |
 | Data engineering | [Bronze ingestion patterns](docs/guides/bronze-ingestion-patterns.md) | Reviewed 2026-08-16 |
 | Architecture | [ADR 001: compute selection and environment controls](docs/architecture/adr-001-compute-strategy.md) | Reviewed 2026-08-16 |
 | Certification | [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) | Reviewed 2026-08-16 |
@@ -32,6 +33,10 @@ Only documents explicitly marked **Reviewed** should be treated as current refer
 ## Portfolio projects
 
 Production-style projects will live under `projects/` and must include runnable code, automated checks, governance, observability, cost considerations, failure recovery, and teardown instructions.
+
+Current work:
+
+- [Governed ingestion with Auto Loader](projects/governed-ingestion/README.md) — **Reviewed locally**; package and tests are verified, while bundle and workspace execution evidence remain pending.
 
 Planned sequence:
 

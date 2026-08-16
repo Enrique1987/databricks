@@ -1,0 +1,62 @@
+bundle:
+  name: governed_ingestion
+  databricks_cli_version: ">= 0.218.0"
+
+include:
+  - resources/*.yml
+
+artifacts:
+  default:
+    type: whl
+    path: .
+    build: python -m pip wheel --no-cache-dir --no-build-isolation --no-deps --wheel-dir dist .
+
+variables:
+  catalog:
+    description: Unity Catalog catalog that owns the target schema and volumes.
+    default: main
+  schema:
+    description: Unity Catalog schema for this project.
+    default: governed_ingestion_dev
+  source_path:
+    description: Immutable JSON or Parquet source directory in a Unity Catalog volume.
+    default: /Volumes/main/governed_ingestion_dev/landing/orders
+  operations_path:
+    description: Durable volume path for Auto Loader schema and checkpoint state.
+    default: /Volumes/main/governed_ingestion_dev/operations
+  source_format:
+    description: Auto Loader source format; this example supports json or parquet.
+    default: json
+  table_name:
+    description: Unqualified Bronze table name.
+    default: orders_raw
+  prod_service_principal:
+    description: Application ID used as the production Run as identity.
+
+sync:
+  exclude:
+    - .venv/
+    - build/
+    - dist/
+    - "*.egg-info/"
+    - tests/
+    - __pycache__/
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+  prod:
+    mode: production
+    workspace:
+      root_path: /Workspace/Production/.bundle/${bundle.name}/${bundle.target}
+    run_as:
+      service_principal_name: ${var.prod_service_principal}
+    variables:
+      catalog: main
+      schema: governed_ingestion_prod
+      source_path: /Volumes/main/governed_ingestion_prod/landing/orders
+      operations_path: /Volumes/main/governed_ingestion_prod/operations
