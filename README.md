@@ -11,6 +11,12 @@ The goal is not to collect notes. It is to publish original, reproducible work t
 
 This portfolio supports technical readiness; it does not replace the separate Databricks nomination and acceptance process. Start with the [Databricks Champion readiness roadmap](docs/roadmap/databricks-champion-roadmap.md).
 
+## Professional certification
+
+The portfolio owner earned the **Databricks Certified Data Engineer Professional** credential in 2026. The [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) maps the certification domains to reviewed explanations, production evidence, and the remaining technical backlog.
+
+Public credential verification: link pending. No credential identifier or private certificate is stored in this repository.
+
 ## Reviewed references
 
 | Area | Resource | Review date |
@@ -19,6 +25,7 @@ This portfolio supports technical readiness; it does not replace the separate Da
 | SQL | [Databricks-specific SQL reference](docs/reference/databricks-specific-sql.md) | 2026-08-16 |
 | Data engineering | [Bronze ingestion patterns](docs/guides/bronze-ingestion-patterns.md) | Reviewed 2026-08-16 |
 | Architecture | [ADR 001: compute selection and environment controls](docs/architecture/adr-001-compute-strategy.md) | Reviewed 2026-08-16 |
+| Certification | [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) | Reviewed 2026-08-16 |
 
 Only documents explicitly marked **Reviewed** should be treated as current reference material. Older certification and interview notes live under `drafts/` until they are verified, rewritten, or removed.
 
