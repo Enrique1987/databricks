@@ -23,6 +23,14 @@ Readiness has two parallel tracks:
 
 Neither track substitutes for the other.
 
+## Architecture-first learning model
+
+Technical mastery is organized around architecture problems rather than a feature checklist. Each learning cycle begins with business and non-functional requirements, compares credible alternatives, identifies the specific value and boundaries of Databricks, and produces implementation or decision evidence.
+
+The [Architecture-first learning path](architecture-lab-learning-path.md) defines the lab sequence from OLTP and event-driven systems through governance, serving, AI, and portability. Every lab uses the [Architecture Lab template](../architecture/architecture-lab-template.md) so problem framing, alternatives, failure recovery, cost, and exit criteria are reviewed consistently.
+
+Architecture Labs and portfolio projects serve different purposes: a lab isolates and validates an architecture decision; a project combines multiple decisions into production-style evidence. A useful lab should feed an ADR, benchmark, implementation slice, or runbook into one of the projects below.
+
 ## Capability matrix
 
 | Domain | Required depth | Portfolio evidence |

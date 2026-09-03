@@ -11,6 +11,8 @@ The goal is not to collect notes. It is to publish original, reproducible work t
 
 This portfolio supports technical readiness; it does not replace the separate Databricks nomination and acceptance process. Start with the [Databricks Champion readiness roadmap](docs/roadmap/databricks-champion-roadmap.md).
 
+Learning is organized around business problems and architecture decisions. Use the [Architecture-first learning path](docs/roadmap/architecture-lab-learning-path.md) and its [Architecture Lab template](docs/architecture/architecture-lab-template.md) to turn new concepts into comparable, evidence-backed designs rather than isolated feature notes.
+
 ## Professional certification
 
 The portfolio owner earned the **Databricks Certified Data Engineer Professional** credential in 2026. The [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) maps the certification domains to reviewed explanations, production evidence, and the remaining technical backlog.
@@ -28,6 +30,8 @@ Public credential verification: link pending. No credential identifier or privat
 | Semi-structured data | [Modeling semi-structured data with `VARIANT`](docs/guides/variant-for-semi-structured-data.md) | Reviewed 2026-09-03 |
 | Architecture | [ADR 001: compute selection and environment controls](docs/architecture/adr-001-compute-strategy.md) | Reviewed 2026-08-16 |
 | Architecture | [Databricks platform capability map](docs/architecture/platform-capability-map.md) | Reviewed 2026-09-03 |
+| Architecture | [Architecture Lab template](docs/architecture/architecture-lab-template.md) | Reviewed 2026-09-03 |
+| Roadmap | [Architecture-first learning path](docs/roadmap/architecture-lab-learning-path.md) | Reviewed 2026-09-03 |
 | Certification | [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) | Reviewed 2026-08-16 |
 
 Only documents explicitly marked **Reviewed** should be treated as current reference material. Older certification and interview notes live under `drafts/` until they are verified, rewritten, or removed.
