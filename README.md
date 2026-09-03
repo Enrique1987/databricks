@@ -25,7 +25,9 @@ Public credential verification: link pending. No credential identifier or privat
 | SQL | [Databricks-specific SQL reference](docs/reference/databricks-specific-sql.md) | 2026-08-16 |
 | Professional engineering | [Python, SQL, dependencies, and testing](docs/certifications/data-engineer-professional/01-python-sql-and-testing.md) | Reviewed locally 2026-08-16 |
 | Data engineering | [Bronze ingestion patterns](docs/guides/bronze-ingestion-patterns.md) | Reviewed 2026-08-16 |
+| Semi-structured data | [Modeling semi-structured data with `VARIANT`](docs/guides/variant-for-semi-structured-data.md) | Reviewed 2026-09-03 |
 | Architecture | [ADR 001: compute selection and environment controls](docs/architecture/adr-001-compute-strategy.md) | Reviewed 2026-08-16 |
+| Architecture | [Databricks platform capability map](docs/architecture/platform-capability-map.md) | Reviewed 2026-09-03 |
 | Certification | [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) | Reviewed 2026-08-16 |
 
 Only documents explicitly marked **Reviewed** should be treated as current reference material. Older certification and interview notes live under `drafts/` until they are verified, rewritten, or removed.
