@@ -13,6 +13,12 @@ This portfolio supports technical readiness; it does not replace the separate Da
 
 Learning is organized around business problems and architecture decisions. Use the [Architecture-first learning path](docs/roadmap/architecture-lab-learning-path.md) and its [Architecture Lab template](docs/architecture/architecture-lab-template.md) to turn new concepts into comparable, evidence-backed designs rather than isolated feature notes.
 
+## Databricks Champion
+
+The [Partner Champion learning workspace](01_Databricks_Champions/README.md) adds a persistent certification and conversational-learning track to the [Champion readiness roadmap](docs/roadmap/databricks-champion-roadmap.md). It includes Fundamentals tracking, the GenAI Engineer Associate syllabus, session history, mastery evidence, and open gaps.
+
+Start with the [learning roadmap](01_Databricks_Champions/ROADMAP.md) and [next oral session](01_Databricks_Champions/sessions/NEXT_SESSION.md). Imported mastery estimates are provisional; current program eligibility and nomination details must be verified privately through official partner channels.
+
 ## Professional certification
 
 The portfolio owner earned the **Databricks Certified Data Engineer Professional** credential in 2026. The [Data Engineer Professional knowledge hub](docs/certifications/data-engineer-professional/README.md) maps the certification domains to reviewed explanations, production evidence, and the remaining technical backlog.

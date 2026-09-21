@@ -105,6 +105,8 @@ Every project must include a problem statement, assumptions, architecture decisi
 
 ## Certification and learning track
 
+The [Partner Champion learning workspace](../../01_Databricks_Champions/README.md) tracks the Fundamentals and GenAI Associate path, oral-session summaries, provisional mastery, and active gaps. Use its [learning roadmap](../../01_Databricks_Champions/ROADMAP.md) for study milestones while retaining this roadmap for broader architecture and delivery evidence. Private program and employer details remain outside the public repository.
+
 Certifications and private partner learning paths can support the knowledge plan, but they do not by themselves demonstrate architecture judgment or guarantee Champion acceptance.
 
 - Use the current official program guide to identify mandatory private courses, badges, or assessments.
