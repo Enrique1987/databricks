@@ -1,12 +1,12 @@
 # Project context
 
-Status: Draft learning record. Last reviewed: 2026-09-21.
+Status: Draft learning record. Last reviewed: 2026-09-22.
 
 The learner reports a Data Engineer Professional certification, several years of Databricks implementation experience, and employment at a Databricks partner. Credential expiry, accreditation records, employer tier, and region remain unverified.
 
 The goal is Partner Champion through the employer, with durable Data & AI / Solution Architecture expertise. GenAI Engineer Associate broadens existing experience instead of repeating familiar Data Engineering material.
 
-Learning uses approximately 20-minute oral sessions: explain in one's own words, receive corrections, solve scenarios, and recap. This directory preserves context between conversations.
+Learning uses approximately 20-minute oral sessions: start with a simple mental model, add formal detail once it clicks, explain in one's own words, receive corrections, solve scenarios, and recap. This directory preserves context between conversations.
 
 Read README, ROADMAP, GAPS, MASTERY_MATRIX, and the latest session before continuing. Follow WORKFLOW.md for new summaries. Keep administrative completion separate from conceptual mastery. Initial mastery is imported from a summary, not independently assessed.
 
