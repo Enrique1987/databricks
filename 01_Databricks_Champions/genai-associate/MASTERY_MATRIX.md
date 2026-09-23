@@ -1,6 +1,6 @@
 # Mastery matrix
 
-Status: Draft learning record. Last reviewed: 2026-09-21.
+Status: Draft learning record. Last reviewed: 2026-09-23.
 
 UNKNOWN means no evidence, not inability. Broader exam objectives remain unassessed even where foundational intuition exists. No SOLVE or TEACH states; no readiness percentage inferred.
 
@@ -79,18 +79,35 @@ UNKNOWN means no evidence, not inability. Broader exam objectives remain unasses
 
 ## Foundational estimates
 
-Evidence: [imported Session 001](../sessions/2026-09-21-session-001-rag-embeddings-chunking.md), provisional; no transcript or new assessment. Similarity-math evidence is particularly weak and requires re-test.
+Evidence: [Sessions 001–003](../sessions/), supplied as summaries rather than transcripts. States remain provisional until cold recall or scenario evidence is recorded. Similarity math and Databricks implementation remain weak.
 
 | Topic | State | Evidence | Last reviewed | Next action |
 | --- | --- | --- | --- | --- |
-| RAG conceptual purpose | EXPLAIN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
+| RAG conceptual purpose | EXPLAIN | Sessions 001–002 summary estimates | 2026-09-22 | Independent re-explanation |
 | Full RAG architecture | UNDERSTAND | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
-| Embedding intuition | EXPLAIN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
-| Mathematical vector intuition | EXPLAIN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
-| Vector search purpose | UNDERSTAND | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
+| RAG versus model training | EXPLAIN | Session 002 summary estimate | 2026-09-22 | Explain a changing-policy scenario |
+| Embedding intuition | EXPLAIN | Sessions 001–002 summary estimates | 2026-09-22 | Distinguish vector from ID/hash |
+| Mathematical vector intuition | EXPLAIN | Sessions 001–002 summary estimates | 2026-09-22 | Explain numeric operations |
+| Classical word embeddings | UNDERSTAND | Session 002 summary estimate | 2026-09-22 | Explain ambiguity of a fixed word vector |
+| Embedding training intuition | UNDERSTAND | Session 002 summary estimate | 2026-09-22 | Explain learned co-occurrence patterns |
+| Hash versus embedding | EXPLAIN | Session 002 summary estimate | 2026-09-22 | Choose representation in a scenario |
+| Contextual embeddings | UNDERSTAND | Session 002 mastery-table estimate | 2026-09-22 | Explain two meanings of "bank" independently |
+| Vector search purpose | EXPLAIN | Session 002 summary estimate | 2026-09-22 | Describe query/document comparison |
+| Semantic versus lexical matching | EXPLAIN | Session 002 summary estimate | 2026-09-22 | Compare retrieval choices in Q7 |
 | Similarity math | UNDERSTAND | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
 | Basic chunking trade-off | EXPLAIN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
 | Chunking strategy selection | UNDERSTAND | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
 | Advanced chunking | UNKNOWN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
 | Embedding model trade-offs | UNKNOWN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
 | Databricks Vector Search implementation | UNKNOWN | Session 001 imported estimate | 2026-09-21 | Independent re-test or initial lesson |
+| Staging role | EXPLAIN | Session 003 summary estimate | 2026-09-23 | Recall the offline path without help |
+| Bronze ingestion/control role | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Choose persistence for a scenario |
+| Parsing versus cleaning | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Diagnose noisy-document input |
+| Chunking evaluation | UNDERSTAND | Session 003 reports proposed experiments | 2026-09-23 | Compare strategies with retrieval evidence |
+| Token and tokenizer intuition | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Explain model-specific boundaries |
+| Tokens versus parameters | EXPLAIN | Session 003 summary estimate | 2026-09-23 | Re-explain without prompts |
+| Embedding versus vector | EXPLAIN | Session 003 summary estimate | 2026-09-23 | Trace chunk to indexed vector |
+| Vector index purpose | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Explain top-k retrieval next |
+| Hash versus vector index | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Select an index for two scenarios |
+| Model versus algorithm | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Give independent examples |
+| Offline RAG indexing path | UNDERSTAND | Session 003 summary estimate | 2026-09-23 | Cold-recall entire path |
