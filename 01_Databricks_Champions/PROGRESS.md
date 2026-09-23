@@ -1,6 +1,14 @@
 # Progress
 
-Status: Draft learning record. Last reviewed: 2026-09-22.
+Status: Draft learning record. Last reviewed: 2026-09-23.
+
+## 2026-09-23 — Session 003 integrated
+
+The learner traced a large document through a plausible offline RAG indexing path and clarified where files, control metadata, parsed content, chunks, embeddings, and indexes fit. The durable architecture separates raw retention, parsing, optional cleaning, retrieval records, embedding generation, and indexing while treating Bronze/Silver placement as a design choice.
+
+New provisional evidence covers staging and chunking at EXPLAIN; Bronze control, parsing/cleaning, tokenizer ownership, vector indexes, and the offline path at UNDERSTAND; and tokens versus parameters and embedding versus vector at EXPLAIN. No cold recall or scored scenario was recorded, so there is no SOLVE/TEACH upgrade.
+
+Next: cold-recall the offline path, then learn the online path with top-k, similarity scores, metadata authorization, context construction, and generation.
 
 ## 2026-09-22 — Session 002 integrated
 

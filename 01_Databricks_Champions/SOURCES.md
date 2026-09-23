@@ -1,6 +1,6 @@
 # Sources and freshness
 
-Status: Draft learning record. Last reviewed: 2026-09-22.
+Status: Draft learning record. Last reviewed: 2026-09-23.
 
 | Source | Check on 2026-09-21 | Governs / recheck |
 | --- | --- | --- |
@@ -12,6 +12,7 @@ Status: Draft learning record. Last reviewed: 2026-09-22.
 | [Partner community response](https://community.databricks.com/t5/get-started-discussions/how-can-i-become-a-databricks-partner-champion-through-technical/m-p/168458/highlight/true) | Read; secondary evidence | Confirm through official partner channel before nomination |
 | Learner-supplied bootstrap document | Read in full | Personal context and Session 001; refresh with learner evidence |
 | Learner-supplied Session 002 summary, 2026-09-22 | Read in full | Learning evidence for embeddings, Vector Search, chunking; no transcript or scored answers |
+| Learner-supplied Session 003 summary, 2026-09-23 | Read in full | Learning evidence for offline RAG ingestion/indexing; no transcript or scored answers |
 
 The checked PDF describes 45 scored items, 90 minutes, no mandatory prerequisite, and two-year validity. Unscored items may be included. Its availability does not prove no newer guide exists.
 

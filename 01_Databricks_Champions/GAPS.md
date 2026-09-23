@@ -1,12 +1,12 @@
 # Active learning gaps
 
-Status: Draft learning record. Last reviewed: 2026-09-22.
+Status: Draft learning record. Last reviewed: 2026-09-23.
 
-All items remain open after Session 002. Close only with linked re-test evidence. The basic pipeline was described, but the complete design was not independently demonstrated.
+The offline indexing path was covered in Session 003 but still requires cold recall. Close gaps only with linked re-test or scenario evidence.
 
 
 
-1. Explain the full RAG pipeline precisely from ingestion to generation.
+1. Explain the full RAG pipeline precisely from ingestion through online generation; independently recall the offline half.
 2. Distinguish:
    - RAG
    - fine-tuning
@@ -27,3 +27,7 @@ All items remain open after Session 002. Close only with linked re-test evidence
 15. Distinguish Delta Sync from other Vector Search index approaches using current Databricks documentation.
 16. Evaluate retrieval with representative queries, relevance labels, and metrics such as recall@k; separate retrieval from answer quality.
 17. Design source citations, freshness checks, and monitoring for an enterprise RAG application.
+
+18. Understand top-k and similarity scores, including the effect of too few or too many candidates.
+19. Design index synchronization and deletion/update handling when sources change.
+20. Decide which raw, parsed, chunked, and embedding artifacts to persist for a replay, cost, and governance scenario.

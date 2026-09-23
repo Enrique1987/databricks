@@ -1,8 +1,8 @@
 # Misconceptions and re-tests
 
-Status: Draft learning record. Last reviewed: 2026-09-22.
+Status: Draft learning record. Last reviewed: 2026-09-23.
 
-Sources: [Session 001](../sessions/2026-09-21-session-001-rag-embeddings-chunking.md) and [Session 002](../sessions/2026-09-22-session-002-rag-embeddings-vector-search-chunking.md). Reported corrections, not verbatim statements. All re-tests pending.
+Sources: [Sessions 001–003](../sessions/). Reported corrections, not verbatim statements. All re-tests remain pending unless a later record states otherwise.
 
 ## M1 — RAG means training on company data
 
@@ -39,3 +39,27 @@ Re-test: explain how the two meanings of "bank" challenge a single fixed word ve
 Correction: an embedding model maps input to numbers; Vector Search compares those numbers. Semantic relationships are learned, not usually stored as explicit category labels in each vector.
 Why it matters: retrieval quality depends on the model, corpus, query, and search configuration.
 Re-test: explain how differently worded requests can match and why a semantic match can still fail.
+
+## M7 — Bronze must contain the full extracted document
+
+Correction: a valid design can keep the raw file in governed storage and store path, version, status, and source metadata in an ingestion-control table. Other persistence choices are also valid.
+Why it matters: medallion labels do not prescribe one physical RAG layout.
+Re-test: choose what to persist when parsing must be replayed after a library upgrade.
+
+## M8 — Parsing means removing punctuation and stop words
+
+Correction: parsing extracts content and structure; cleaning removes demonstrated retrieval noise. Natural language normally retains useful context for modern embeddings.
+Why it matters: destructive preprocessing can reduce retrieval quality.
+Re-test: classify heading extraction, repeated-footer removal, and deletion of all stop words.
+
+## M9 — A 500-token chunk is a standard
+
+Correction: it is one possible experiment baseline. Choose chunking from structure, model limits, question patterns, and measured retrieval quality.
+Why it matters: copied defaults can make a good model appear ineffective.
+Re-test: propose alternatives for a policy manual with section-level exceptions.
+
+## M10 — Tokens, embeddings, vectors, and indexes are interchangeable stages
+
+Correction: tokenization creates model input units; an embedding model outputs a vector; a vector index organizes vectors for similarity retrieval. Parameters are learned values inside the model.
+Why it matters: each concept has a different owner and lifecycle.
+Re-test: trace one chunk from text through tokenization to an indexed vector and distinguish parameters.
