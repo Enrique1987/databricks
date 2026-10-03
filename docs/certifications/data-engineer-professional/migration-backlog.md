@@ -21,6 +21,12 @@ Third-party courseware and commercial practice questions remain private and are 
 
 ## Promotion sequence
 
+### Study documentation incorporated on 2026-10-03
+
+The [study index](../../study/README.md) tracks assimilation separately from the deeper engineering sequence below. The [views guide](../../reference/databricks-views.md), [metadata-driven processing comparison](../../guides/metadata-driven-processing.md), and [project-membership security example](../../guides/project-membership-row-security.md) recover useful local learning as reviewed documentation. Their examples do not establish completed workspace or security validation. ML/retrieval notes, serving, and historical practice collections still require reconciliation.
+
+### Engineering evidence sequence
+
 | Batch | Deliverable | Official domains | Evidence required | Status |
 | --- | --- | --- | --- | --- |
 | 1 | Python, SQL, dependency, and testing guide | 1, 9 | Modular package, unit tests, bundle target, and CI checks | Reviewed local evidence merged; workspace validation pending |

@@ -23,6 +23,8 @@ The official exam outline supplies the domains. The mastery questions and eviden
 
 ## Cross-domain proof bar
 
+Documentation update, 2026-10-03: the [metadata-driven processing guide](../../guides/metadata-driven-processing.md) adds a design explanation relevant to domains 2 and 9; the [project-membership security guide](../../guides/project-membership-row-security.md) adds an illustrative example for domains 7 and 8. These additions do not change the matrix's outstanding execution and access-test requirements.
+
 Every implementation promoted from this matrix should include:
 
 - requirements and non-functional constraints;

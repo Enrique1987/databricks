@@ -20,6 +20,10 @@ A compact map of the Databricks Data Intelligence Platform. Availability, naming
 
 **Row filters and column masks** — Unity Catalog policies implemented with SQL UDFs to enforce row- and column-level access at query time.
 
+**Views and semantic objects** — Reuse query logic, maintain precomputed results, or define shared business measures. See the [views guide and visual reminder](databricks-views.md).
+
+**Project membership** — A mapping table records access relationships; an attached row filter enforces them. See the [worked security example](../guides/project-membership-row-security.md).
+
 ## Ingestion and transformation
 
 **Lakeflow Connect** — Managed and standard connectors for ingesting data from SaaS applications, databases, cloud storage, and other sources.
@@ -31,6 +35,8 @@ A compact map of the Databricks Data Intelligence Platform. Availability, naming
 **Change Data Feed (CDF)** — Row-level Delta change records for downstream incremental processing; consumers must account for retention.
 
 **Medallion architecture** — A common Bronze/Silver/Gold design pattern, not a mandatory platform hierarchy. Define each layer by contract and business purpose.
+
+**Metadata-driven processing** — Reuse a processing pattern across approved dataset configurations. Keep configuration, execution history, and checkpoints distinct; see the [design comparison](../guides/metadata-driven-processing.md).
 
 ## Compute and orchestration
 
