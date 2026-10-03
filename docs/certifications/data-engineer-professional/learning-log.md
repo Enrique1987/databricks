@@ -8,6 +8,7 @@ This log records public technical evidence and review milestones. It deliberatel
 
 | Date | Milestone | Public evidence | Follow-up |
 | --- | --- | --- | --- |
+| 2026-10-03 | Local study concepts consolidated into linked documentation | [Study index](../../study/README.md), [views](../../reference/databricks-views.md), [metadata-driven processing](../../guides/metadata-driven-processing.md), and [project-membership security](../../guides/project-membership-row-security.md) | Execute illustrative examples; run multi-user access checks; continue remaining source reconciliation |
 | 2026 | Databricks Certified Data Engineer Professional earned | Public credential URL pending | Add the official verification URL without storing private certificate data |
 | 2026-08-16 | Legacy certification material isolated during repository cleanup | Drafts retained under `drafts/certifications/` | Review by domain; do not promote wholesale |
 | 2026-08-16 | Serverless-first compute strategy reviewed | [ADR 001](../../architecture/adr-001-compute-strategy.md) | Add measured workload and cost comparisons |

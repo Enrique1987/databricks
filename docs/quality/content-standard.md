@@ -1,8 +1,8 @@
 # Content Standard
 
-Last reviewed: 2026-08-16
+Last reviewed: 2026-10-03 (study purpose and validation guidance; terminology table retains its earlier review baseline)
 
-This repository is a public technical portfolio. Every promoted document or project must be original, reproducible, current, and useful to another practitioner.
+This repository is a public personal knowledge base with engineering projects. Preserve useful explanations, mental models, and learning context in one canonical home per topic. Reviewed documentation needs current sources and clear examples; executable projects additionally need reproducible evidence. A study guide can be useful before a full production lab exists, provided its validation limits are explicit.
 
 ## Required for reviewed content
 
@@ -19,9 +19,11 @@ This repository is a public technical portfolio. Every promoted document or proj
 
 - **Reviewed** — checked against current primary sources and validated where practical.
 - **Draft** — original work in progress; not yet suitable as a reference.
-- **Legacy** — retained only for migration or historical context and excluded from the main navigation.
+- **Legacy** — retained for migration or historical context; accessible through a clearly labelled historical section of the study index, not presented as current reference material.
 
 Unlabelled content is not considered reviewed.
+
+For illustrative SQL, Python, or configuration, say whether it was executed and where. A documentation review does not prove runtime behavior, performance, or access-control outcomes. Record those separately.
 
 ## Review checklist
 

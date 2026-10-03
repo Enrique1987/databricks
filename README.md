@@ -1,17 +1,28 @@
-# Databricks Engineering and Architecture Portfolio
+# Databricks — My Study and Engineering Knowledge Base
 
-A public, evolving portfolio of Databricks data engineering, platform architecture, data warehousing, machine learning, and AI work.
+My public second brain for Databricks: concepts I learn, explanations I return to, quick reminders, practice, and engineering projects. It reflects my interests and experience while helping me keep learning.
 
 > [!NOTE]
 > This independent repository is not affiliated with or endorsed by Databricks. Product behavior, Preview status, and certification objectives change over time. Validate important details against the [official Databricks documentation](https://docs.databricks.com/).
 
-## North star
+## Start studying
 
-The goal is not to collect notes. It is to publish original, reproducible work that demonstrates the broad and deep technical judgment expected of a Databricks Champion candidate: engineering reliable data products, designing governed platforms, explaining trade-offs, and operating workloads in production.
+Use the [study index](docs/study/README.md) to navigate maintained explanations, practice, and clearly labelled historical notes.
+
+| What I need | Start here |
+| --- | --- |
+| A quick reminder | [Platform cheat sheet](docs/reference/cheat-sheet.md), [views visual](img/databricks-views-cheat-sheet.png), and [SQL reference](docs/reference/databricks-specific-sql.md) |
+| A detailed explanation | [Views and semantic objects](docs/reference/databricks-views.md), [metadata-driven processing](docs/guides/metadata-driven-processing.md), and [project-membership security](docs/guides/project-membership-row-security.md) |
+| Practice and previous learning | [Study paths and historical notes](docs/study/README.md) |
+| Runnable engineering work | [Governed ingestion project](projects/governed-ingestion/README.md) |
+
+The repository improves one concept at a time. Keep useful detail, link related topics, and add visual reminders where they help recall. Documentation review and execution in a Databricks workspace are recorded separately.
+
+## Engineering and architecture development
 
 This portfolio supports technical readiness; it does not replace the separate Databricks nomination and acceptance process. Start with the [Databricks Champion readiness roadmap](docs/roadmap/databricks-champion-roadmap.md).
 
-Learning is organized around business problems and architecture decisions. Use the [Architecture-first learning path](docs/roadmap/architecture-lab-learning-path.md) and its [Architecture Lab template](docs/architecture/architecture-lab-template.md) to turn new concepts into comparable, evidence-backed designs rather than isolated feature notes.
+Use the [Architecture-first learning path](docs/roadmap/architecture-lab-learning-path.md) and its [Architecture Lab template](docs/architecture/architecture-lab-template.md) to explore business problems, compare designs, and build evidence alongside the study notes.
 
 ## Databricks Champion
 
@@ -30,6 +41,9 @@ Public credential verification: link pending. No credential identifier or privat
 | Area | Resource | Review date |
 | --- | --- | --- |
 | Platform | [Databricks cheat sheet](docs/reference/cheat-sheet.md) | 2026-08-16 |
+| Views | [Views guide and visual reminder](docs/reference/databricks-views.md) | Documentation reviewed 2026-10-03; examples illustrative |
+| Data engineering | [Metadata-driven processing](docs/guides/metadata-driven-processing.md) | Documentation reviewed 2026-10-03; workspace execution pending |
+| Governance | [Project-membership row security](docs/guides/project-membership-row-security.md) | Documentation reviewed 2026-10-03; access tests pending |
 | SQL | [Databricks-specific SQL reference](docs/reference/databricks-specific-sql.md) | 2026-08-16 |
 | Professional engineering | [Python, SQL, dependencies, and testing](docs/certifications/data-engineer-professional/01-python-sql-and-testing.md) | Reviewed locally 2026-08-16 |
 | Data engineering | [Bronze ingestion patterns](docs/guides/bronze-ingestion-patterns.md) | Reviewed 2026-08-16 |

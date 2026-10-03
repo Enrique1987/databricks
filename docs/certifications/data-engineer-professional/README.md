@@ -29,6 +29,9 @@ The official guide is an organizing baseline, not the limit of this portfolio. C
 
 ## Navigate the hub
 
+- [Personal study index](../../study/README.md) — quick recall, detailed explanations, practice, and historical notes across certification paths.
+- [Metadata-driven processing](../../guides/metadata-driven-processing.md) — compares repeated notebooks with shared workers and governed configuration; workspace implementation remains pending.
+- [Project-membership row security](../../guides/project-membership-row-security.md) — mapping-table example with expected multi-user outcomes; access tests remain pending.
 - [Professional engineering block 01: Python, SQL, dependencies, and testing](01-python-sql-and-testing.md) — connects the first exam domain to an installable package, SQL controls, automated tests, and explicit platform gates.
 - [Legacy knowledge summary](legacy-knowledge-summary.md) — maps the useful historical topics to the ten current domains and identifies the next evidence to build.
 - [Legacy notes audit](legacy-notes-audit.md) — records the verified local inventory and the promote, rewrite, archive, restricted, and deletion-candidate decisions.
