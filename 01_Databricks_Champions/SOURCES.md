@@ -2,10 +2,10 @@
 
 Status: Draft learning record. Last reviewed: 2026-09-23.
 
-| Source | Check on 2026-09-21 | Governs / recheck |
+| Source | Check / date | Governs / recheck |
 | --- | --- | --- |
 | [Official March 2026 guide](https://www.databricks.com/sites/default/files/2026-03/Databricks-Certified-Generative-AI-Engineer-Associate-Exam-Guide-Mar26.pdf) | Read; effective 2026-03-18 | Exam baseline; discover replacements before booking and two weeks before exam |
-| [Certification page](https://www.databricks.com/learn/certification/generative-ai-engineer-associate) | Tool returned internal error | Latest-guide discovery not confirmed; retry before booking |
+| [Certification page](https://www.databricks.com/learn/certification/genai-engineer-associate) | HTTP 200; link checked 2026-10-22 | Certification landing page restored; recheck the latest exam guide before booking |
 | [GenAI Fundamentals course](https://partner-academy.databricks.com/learn/course/external/view/elearning/1765/generative-ai-fundamentals) | Opened; no readable content | Learner verifies signed-in course version |
 | [GenAI accreditation](https://partner-academy.databricks.com/learn/course/external/view/elearning/1811/generative-ai-fundamentals-accreditation) | Supplied URL, not independently opened | Verify at enrollment |
 | [Databricks Fundamentals accreditation](https://partner-academy.databricks.com/learn/course/external/view/elearning/2308/databricks-fundamentals-accreditation) | Supplied URL, not independently opened | Verify at enrollment |
@@ -13,6 +13,8 @@ Status: Draft learning record. Last reviewed: 2026-09-23.
 | Learner-supplied bootstrap document | Read in full | Personal context and Session 001; refresh with learner evidence |
 | Learner-supplied Session 002 summary, 2026-09-22 | Read in full | Learning evidence for embeddings, Vector Search, chunking; no transcript or scored answers |
 | Learner-supplied Session 003 summary, 2026-09-23 | Read in full | Learning evidence for offline RAG ingestion/indexing; no transcript or scored answers |
+
+Unless dated otherwise, source checks above are from 2026-09-21. The link check on 2026-10-22 does not update the exam baseline or learning progress.
 
 The checked PDF describes 45 scored items, 90 minutes, no mandatory prerequisite, and two-year validity. Unscored items may be included. Its availability does not prove no newer guide exists.
 
